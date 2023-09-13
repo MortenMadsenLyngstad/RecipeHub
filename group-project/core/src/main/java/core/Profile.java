@@ -47,7 +47,7 @@ public class Profile {
      * @param password - String value to check
      * @throws IllegalArgumeentException if password is invalid
      */
-    private void isValidPassword(String password) {
+    public static void isValidPassword(String password) {
         if (password.length() < 8) {
             throw new IllegalArgumentException("Password is too short");
         }
