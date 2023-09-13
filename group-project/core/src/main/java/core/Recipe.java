@@ -13,12 +13,15 @@ public class Recipe {
     private String name;
     private String description;
     private Map<String, Double> ingredients;
+    private Map<String, String> ingredientUnits;
+    private Profile author;
 
     public Recipe(String name, int portions) {
         setName(name);
         setPortions(portions);
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
+        ingredientUnits = new HashMap<>();
     }
 
     public void setName(String name) {
@@ -72,7 +75,7 @@ public class Recipe {
         return ingredients.get(ingredient);
     }
 
-    public void addIngredient(String ingredient, Double amount) {
+    public void addIngredient(String ingredient, Double amount, String unit) {
         if (amount < 0) {
             throw new IllegalArgumentException("Amount must be over 0");
         }
@@ -81,6 +84,7 @@ public class Recipe {
             ingredients.put(ingredient, newAmount);
         } else {
             ingredients.put(ingredient, amount);
+            ingredientUnits.put(ingredient, unit);
         }
     }
 
@@ -89,6 +93,7 @@ public class Recipe {
             throw new IllegalArgumentException("Ingredient not found in recipe");
         else {
             ingredients.remove(ingredient);
+            ingredientUnits.remove(ingredient);
         }
     }
 
@@ -103,25 +108,18 @@ public class Recipe {
         ingredients.put(ingredient, newAmount);
     }
 
-    public static void main(String[] args) {
-        Recipe r = new Recipe("Tikka masala", 4);
-        r.setDescription("Indian dish, with chicken in spiced cream sauce. May be served with rice");
-        r.addIngredient("Chicken thigh", 5.0);
-        r.addIngredient("Garam masala", 10.0);
-        r.addIngredient("Heavy cream", 500.0);
-        r.addStep("Cook chicken");
-        r.addStep("Add garam masala and cream, cook for 20 minutes");
+    public String getIngredientUnit(String ingredient) {
+        return ingredientUnits.get(ingredient);
+    }
 
-        System.out.println(r.getName());
-        System.out.println(r.getPortions() + " portions");
-        for (String i : r.getIngredients()) {
-            System.out.println(i + " : " + r.getIngredientAmount(i));
-        }
-        int i = 1;
-        for (String step : r.getSteps()) {
-            System.out.println(i + " : " + step);
-            i++;
-        }
+    public void setAuthor(Profile author) {
+    }
+
+    public Profile getAuthor() {
+        return author;
+    }
+
+    public static void main(String[] args) {
     }
 
 }
