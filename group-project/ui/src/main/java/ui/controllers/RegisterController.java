@@ -1,15 +1,15 @@
-package ui;
+package ui.controllers;
 
 import java.io.IOException;
 
 import core.Profile;
-import core.User_filehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import ui.User_filehandler;
 
 public class RegisterController {
     private User_filehandler user_filehandler = new User_filehandler();
