@@ -7,17 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class User_filehandler {
-    public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-    private URL url = getClass().getResource("userinfo.csv");
+  public Hashtable<String, String> userinfo = new Hashtable<String, String>();
+  private URL url = getClass().getResource("userinfo.csv");
 
-
-    public void writeUserinfo(String username, String password) {
+  public void writeUserinfo(String username, String password) {
     try {
       StringBuilder sb = new StringBuilder();
       sb.append(username + "," + password);
@@ -44,7 +41,7 @@ public class User_filehandler {
         listOfLines.get(i).split(",");
       }
       return listOfLines;
-      
+
     } catch (IOException | URISyntaxException e) {
       System.out.println("Error reading file");
       System.out.println(e.getMessage());
@@ -61,4 +58,3 @@ public class User_filehandler {
     return userinfo;
   }
 }
-

@@ -21,7 +21,7 @@ public class SwitchController {
     stage.setResizable(false);
     stage.show();
   }
-  
+
   public void switchToMainScreen(ActionEvent event) throws IOException {
     switchSceneMain(event, "MainScreen.fxml");
   }

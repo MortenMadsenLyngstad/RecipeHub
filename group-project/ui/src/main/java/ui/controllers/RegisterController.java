@@ -34,8 +34,8 @@ public class RegisterController {
     public void register(ActionEvent event) throws IOException {
         if (usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false
                 && confirmPasswordField.getText().isBlank() == false) {
-            if (passwordField.getText().equals(confirmPasswordField.getText()) 
-            && validateRegister(usernameField.getText(), passwordField.getText())) {
+            if (passwordField.getText().equals(confirmPasswordField.getText())
+                    && validateRegister(usernameField.getText(), passwordField.getText())) {
                 SwitchController.switchToMainScreen(event);
             }
         } else {
