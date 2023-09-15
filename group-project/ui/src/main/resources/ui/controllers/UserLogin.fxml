@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.RegisterController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.LoginController">
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #AEF359;" BorderPane.alignment="CENTER">
          <children>
@@ -31,22 +31,21 @@
             <PasswordField fx:id="passwordField" layoutX="101.0" layoutY="227.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
             <FontAwesomeIconView fill="#aef359" glyphName="USER" layoutX="76.0" layoutY="190.0" size="20" />
             <FontAwesomeIconView fill="#aef359" glyphName="LOCK" layoutX="77.0" layoutY="246.0" size="20" />
-            <Button fx:id="registerButton" layoutX="129.0" layoutY="333.0" mnemonicParsing="false" onAction="#register" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #AEF359;" text="Register" />
-            <Hyperlink layoutX="135.0" layoutY="430.0" onAction="#switchToLoginScreen" text="Log in here!" />
-            <Text layoutX="98.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?">
+            <Button fx:id="loginButton" layoutX="129.0" layoutY="283.0" mnemonicParsing="false" onAction="#login" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #AEF359;" text="Login" />
+            <Hyperlink layoutX="122.0" layoutY="404.0" prefHeight="24.0" prefWidth="104.0" style="-fx-background-color: transparent;" text="Forgot password?" />
+            <Hyperlink layoutX="135.0" layoutY="380.0" onAction="#switchToRegisterScreen" text="Sign up here!" />
+            <Text layoutX="168.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="or">
                <font>
-                  <Font size="13.0" />
+                  <Font size="16.0" />
                </font>
             </Text>
-            <Text fill="#aef359" layoutX="130.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
+            <Text fill="#aef359" layoutX="121.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User login">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="151.0" layoutY="85.0" size="40" />
-            <PasswordField fx:id="confirmPasswordField" layoutX="102.0" layoutY="279.0" promptText="Confirm password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
-            <FontAwesomeIconView fill="#aef359" glyphName="LOCK" layoutX="78.0" layoutY="298.0" size="20" />
-            <Label fx:id="registerMessageLabel" layoutX="91.0" layoutY="140.0" text="Enter username and password" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" />
+            <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="151.0" layoutY="95.0" size="40" />
+            <Label fx:id="loginMessageLabel" layoutX="101.0" layoutY="140.0" nodeOrientation="LEFT_TO_RIGHT" text="Enter username and password" />
          </children>
       </AnchorPane>
    </right>
