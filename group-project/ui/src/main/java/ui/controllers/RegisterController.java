@@ -14,7 +14,7 @@ import ui.User_filehandler;
 public class RegisterController {
     private User_filehandler user_filehandler = new User_filehandler();
     private SwitchController SwitchController = new SwitchController();
-    public Profile currentProfile;
+    private static Profile currentProfile;
 
     @FXML
     private Label registerMessageLabel;
@@ -36,7 +36,7 @@ public class RegisterController {
                 && confirmPasswordField.getText().isBlank() == false) {
             if (passwordField.getText().equals(confirmPasswordField.getText())
                     && validateRegister(usernameField.getText(), passwordField.getText())) {
-                SwitchController.switchToMainScreen(event);
+                SwitchController.switchSceneMain(event, "Mainscreen.fxml");
             }
         } else {
             registerMessageLabel.setText("Please enter a username and password");
@@ -62,14 +62,9 @@ public class RegisterController {
 
     }
 
-    public Profile currentProfile(String uname, String pword) {
-        try {
-            currentProfile = new Profile(usernameField.getText(),
-                    passwordField.getText());
+    public static Profile currentProfile(String uname, String pword) {
+        currentProfile = new Profile(uname,
+                    pword);
             return currentProfile;
-        } catch (IllegalArgumentException e) {
-            registerMessageLabel.setText(e.getMessage());
-        }
-        return null;
     }
 }
