@@ -2,6 +2,7 @@ package ui.controllers;
 
 import java.io.IOException;
 
+import core.Profile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import ui.User_filehandler;
 public class LoginController {
     private User_filehandler user_filehandler = new User_filehandler();
     private SwitchController SwitchController = new SwitchController();
+    public Profile currentProfile;
 
     @FXML
     private Label loginMessageLabel;
@@ -57,7 +59,7 @@ public class LoginController {
     public void login(ActionEvent event) throws Exception {
         if (usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false) {
             if (validateLogin(usernameField.getText(), passwordField.getText())) {
-                SwitchController.switchToMainScreen(event);
+                SwitchController.switchSceneMain(event, "Mainscreen.fxml");
             }
         } else {
             loginMessageLabel.setText("Please enter a username and password");
