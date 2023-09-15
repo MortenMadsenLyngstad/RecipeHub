@@ -58,7 +58,6 @@ public class RegisterController {
         user_filehandler.writeUserinfo(uname, pword);
         user_filehandler.getUserinfo().put(uname, pword);
         currentProfile(uname, pword);
-        System.out.println(user_filehandler.getUserinfo());
         return true;
 
     }
