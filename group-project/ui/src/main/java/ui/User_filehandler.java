@@ -5,30 +5,28 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class User_filehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-  private URL url = getClass().getResource("userinfo.csv");
+  private File file = new File("group-project/ui/src/main/resources/ui/userinfo.csv");
 
   public void writeUserinfo(String username, String password) {
     try {
       StringBuilder sb = new StringBuilder();
       sb.append(username + "," + password);
-      FileWriter filewriter = new FileWriter(new File(url.toURI()), true);
+      FileWriter filewriter = new FileWriter(file, true);
       filewriter.write(sb.toString() + "\n");
       filewriter.close();
-    } catch (IOException | URISyntaxException e) {
+    } catch (IOException e) {
       System.out.println("Error writing to file");
       System.out.println(e.getMessage());
     }
   }
 
   public ArrayList<String> infoList() {
-    try (BufferedReader bufReader = new BufferedReader(new FileReader(new File(url.toURI())))) {
+    try (BufferedReader bufReader = new BufferedReader(new FileReader(file))) {
       ArrayList<String> listOfLines = new ArrayList<>();
 
       String line = bufReader.readLine();
@@ -42,7 +40,7 @@ public class User_filehandler {
       }
       return listOfLines;
 
-    } catch (IOException | URISyntaxException e) {
+    } catch (IOException e) {
       System.out.println("Error reading file");
       System.out.println(e.getMessage());
     }

@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 public class AddRecipeController {
-    private Recipe newRecipe;
+    private Recipe newRecipe; 
     private SwitchController switchController = new SwitchController();
 
     @FXML
