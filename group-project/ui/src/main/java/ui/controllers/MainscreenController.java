@@ -2,6 +2,7 @@ package ui.controllers;
 
 import java.io.IOException;
 
+import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
 import javafx.event.ActionEvent;
@@ -135,9 +136,11 @@ public class MainscreenController {
      * @return RecipeLibrary filles with similar recipes
      */
     public RecipeLibrary makeRecipeLibrary() {
+        Profile profile = new Profile("Username", "Password");
+
         RecipeLibrary recipeLibrary = new RecipeLibrary();
         for (int i = 0; i < 15; i++) {
-            recipeLibrary.addRecipe(new Recipe("Sjokoladekake", 5));
+            recipeLibrary.addRecipe(new Recipe("Sjokoladekake", 5, profile));
         }
         return recipeLibrary;
     }
