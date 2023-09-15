@@ -2,6 +2,7 @@ package ui.controllers;
 
 import java.io.IOException;
 
+import core.Profile;
 import core.Recipe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +46,8 @@ public class AddRecipeController {
     }
 
     private void createNewRecipe(String newRecipeName) {
-        newRecipe = new Recipe(newRecipeName, 1);
+        Profile profile = new Profile("Username", "Password");
+        newRecipe = new Recipe(newRecipeName, 1, profile);
     }
 
     public void validateNewRecipeName() throws IOException {
