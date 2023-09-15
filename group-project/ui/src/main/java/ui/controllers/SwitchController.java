@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ui.App;
 import javafx.scene.Node;
 
 public class SwitchController {
@@ -15,7 +14,7 @@ public class SwitchController {
   private Stage stage;
 
   public void switchSceneMain(ActionEvent event, String file) throws IOException {
-    Parent root = FXMLLoader.load(App.class.getResource(file));
+    Parent root = FXMLLoader.load(this.getClass().getResource(file));
     scene = new Scene(root);
     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);

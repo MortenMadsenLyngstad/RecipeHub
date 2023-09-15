@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.AddRecipeController">
    <children>
-      <Text fx:id="NameText" layoutX="15.0" layoutY="117.0" onInputMethodTextChanged="#NameDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Write in the name of the recipe:" />
+      <Text fx:id="NameText" layoutX="15.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Write in the name of the recipe:" />
       <Text fx:id="IngredientsText" layoutX="15.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Write in the needed ingredients:" />
       <TextField alignment="CENTER" layoutX="15.0" layoutY="170.0" prefHeight="26.0" prefWidth="105.0" text="Ingredient name" />
       <TextField fx:id="Amount1" alignment="CENTER" layoutX="125.0" layoutY="170.0" prefHeight="26.0" prefWidth="65.0" text="Amount" />
