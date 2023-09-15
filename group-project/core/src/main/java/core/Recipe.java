@@ -16,9 +16,10 @@ public class Recipe {
     private Map<String, String> ingredientUnits;
     private Profile author;
 
-    public Recipe(String name, int portions) {
+    public Recipe(String name, int portions, Profile author) {
         setName(name);
         setPortions(portions);
+        setAuthor(author);
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();
@@ -180,7 +181,7 @@ public class Recipe {
     }
 
     /**
-     * Method to nremove a specific amount of an ingredient
+     * Method to remove a specific amount of an ingredient
      * 
      * @param ingredient The ingredient to remove
      * @param amount     The amount of the ingredient to remove, must be lower than
@@ -238,6 +239,7 @@ public class Recipe {
      */
     public void setAuthor(Profile author) {
         this.author = author;
+        author.addRecipe(this);
     }
 
     /**
