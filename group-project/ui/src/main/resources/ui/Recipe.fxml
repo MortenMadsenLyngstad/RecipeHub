@@ -18,7 +18,7 @@
                <font>
                   <Font size="36.0" />
                </font></TextField>
-            <Button fx:id="backButton" layoutX="26.0" layoutY="31.0" mnemonicParsing="false" onMouseClicked="#backButtonClick" text="Back">
+            <Button fx:id="backButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#backButtonClick" text="Back">
                <graphic>
                   <FontAwesomeIconView disable="true" glyphName="LONG_ARROW_LEFT" selectionEnd="0" size="40" stroke="BLACK" wrappingWidth="45.80854034423828" />
                </graphic>
