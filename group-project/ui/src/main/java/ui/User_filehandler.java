@@ -5,13 +5,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class User_filehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
   private File file = new File("group-project/ui/src/main/resources/ui/userinfo.csv");
-
+  private URL url = getClass().getResource("userinfo.csv");
   public void writeUserinfo(String username, String password) {
     try {
       StringBuilder sb = new StringBuilder();
@@ -26,7 +28,7 @@ public class User_filehandler {
   }
 
   public ArrayList<String> infoList() {
-    try (BufferedReader bufReader = new BufferedReader(new FileReader(file))) {
+    try (BufferedReader bufReader = new BufferedReader(new FileReader(new File(url.toURI())))) {
       ArrayList<String> listOfLines = new ArrayList<>();
 
       String line = bufReader.readLine();
@@ -40,7 +42,7 @@ public class User_filehandler {
       }
       return listOfLines;
 
-    } catch (IOException e) {
+    } catch (IOException | URISyntaxException e) {
       System.out.println("Error reading file");
       System.out.println(e.getMessage());
     }
