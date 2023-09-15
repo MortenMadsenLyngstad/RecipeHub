@@ -1,15 +1,15 @@
-package ui;
+package ui.controllers;
 
 import java.io.IOException;
 
 import core.Profile;
-import core.User_filehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import ui.User_filehandler;
 
 public class RegisterController {
     private User_filehandler user_filehandler = new User_filehandler();
@@ -34,8 +34,8 @@ public class RegisterController {
     public void register(ActionEvent event) throws IOException {
         if (usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false
                 && confirmPasswordField.getText().isBlank() == false) {
-            if (passwordField.getText().equals(confirmPasswordField.getText()) 
-            && validateRegister(usernameField.getText(), passwordField.getText())) {
+            if (passwordField.getText().equals(confirmPasswordField.getText())
+                    && validateRegister(usernameField.getText(), passwordField.getText())) {
                 SwitchController.switchToMainScreen(event);
             }
         } else {
