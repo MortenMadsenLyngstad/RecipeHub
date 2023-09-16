@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import ui.User_filehandler;
+import file.User_filehandler;
 
 public class RegisterController extends AbstractController{
     private User_filehandler user_filehandler = new User_filehandler();
