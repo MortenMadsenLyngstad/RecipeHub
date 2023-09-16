@@ -133,7 +133,7 @@ public class MainscreenController extends AbstractController{
      * @return RecipeLibrary filles with similar recipes
      */
     public RecipeLibrary makeRecipeLibrary() {
-        Profile profile = new Profile("Username", "Password");
+        Profile profile = new Profile("Username123", "Password123");
 
         RecipeLibrary recipeLibrary = new RecipeLibrary();
         for (int i = 0; i < 15; i++) {
