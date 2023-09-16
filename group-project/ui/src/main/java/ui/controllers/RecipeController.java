@@ -1,6 +1,8 @@
 package ui.controllers;
 
 import java.io.IOException;
+
+import core.Profile;
 import core.Recipe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,8 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class RecipeController {
-    private SwitchController SwitchController = new SwitchController();
+public class RecipeController extends AbstractController{
 
     @FXML
     private TextField nameField;
@@ -30,7 +31,7 @@ public class RecipeController {
     }
 
     public void backButtonClick(ActionEvent event) throws IOException {
-        SwitchController.switchSceneMain(event, "Mainscreen.fxml");
+        switchSceneMain(event, "Mainscreen.fxml");
     }
 
     public void populate() {
@@ -48,5 +49,10 @@ public class RecipeController {
             i++;
         }
         stepsArea.setText(s);
+    }
+
+    @Override
+    protected void currentProfile(Profile profile) {
+        currentProfile = null;
     }
 }

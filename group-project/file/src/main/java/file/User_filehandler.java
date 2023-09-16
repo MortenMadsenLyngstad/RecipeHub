@@ -27,10 +27,10 @@ public class User_filehandler {
   }
 
   public ArrayList<String> infoList() {
+    ArrayList<String> listOfLines = new ArrayList<>();
     try (BufferedReader bufReader = new BufferedReader(
         new FileReader(new File(filePath)))) {
-      ArrayList<String> listOfLines = new ArrayList<>();
-
+      
       String line = bufReader.readLine();
       while (line != null) {
         listOfLines.add(line);
@@ -46,13 +46,13 @@ public class User_filehandler {
       System.out.println("Error reading file");
       System.out.println(e.getMessage());
     }
-    return null;
+    return listOfLines;
   }
 
   public Hashtable<String, String> getUserinfo() {
-    ArrayList<String> infoList = infoList();
-    for (int i = 0; i < infoList.size(); i++) {
-      String[] split = infoList.get(i).split(",");
+    ArrayList<String> listOfLines = infoList();
+    for (int i = 0; i < listOfLines.size(); i++) {
+      String[] split = listOfLines.get(i).split(",");
       userinfo.put(split[0], split[1]);
     }
     return userinfo;
