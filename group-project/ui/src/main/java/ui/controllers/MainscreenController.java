@@ -18,10 +18,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class MainscreenController {
-
-    private SwitchController switchController = new SwitchController();
-
+public class MainscreenController extends AbstractController{
     @FXML
     private ScrollPane scrollPane;
 
@@ -152,7 +149,7 @@ public class MainscreenController {
      */
     @FXML
     public void addRecipe(ActionEvent event) throws IOException {
-        switchController.switchSceneMain(event, "addRecipe.fxml");
+        switchSceneWithInfo(event, "addRecipe.fxml",currentProfile);
     }
 
     /**
@@ -162,6 +159,10 @@ public class MainscreenController {
      */
     @FXML
     public void logout(ActionEvent event) throws IOException {
-        switchController.switchSceneMain(event, "UserLogin.fxml");
+        switchSceneWithInfo(event, "UserLogin.fxml", null);
+    }
+
+    protected void currentProfile(Profile profile) {
+        currentProfile = profile;
     }
 }

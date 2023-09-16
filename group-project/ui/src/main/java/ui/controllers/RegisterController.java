@@ -5,16 +5,17 @@ import java.io.IOException;
 import core.Profile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import ui.User_filehandler;
 
-public class RegisterController {
+public class RegisterController extends AbstractController{
     private User_filehandler user_filehandler = new User_filehandler();
-    private SwitchController SwitchController = new SwitchController();
-    private static Profile currentProfile;
 
     @FXML
     private Label registerMessageLabel;
@@ -26,20 +27,20 @@ public class RegisterController {
     private PasswordField passwordField;
     @FXML
     private PasswordField confirmPasswordField;
+    @FXML
+    private Scene scene;
+    @FXML
+    private Stage stage;
+    @FXML
+    private Parent root;
 
     public void switchToLoginScreen(ActionEvent event) throws IOException {
-        SwitchController.switchSceneMain(event, "UserLogin.fxml");
+        switchSceneMain(event, "UserLogin.fxml");
     }
 
     public void register(ActionEvent event) throws IOException {
-        if (usernameField.getText().isBlank() == false && passwordField.getText().isBlank() == false
-                && confirmPasswordField.getText().isBlank() == false) {
-            if (passwordField.getText().equals(confirmPasswordField.getText())
-                    && validateRegister(usernameField.getText(), passwordField.getText())) {
-                SwitchController.switchSceneMain(event, "Mainscreen.fxml");
-            }
-        } else {
-            registerMessageLabel.setText("Please enter a username and password");
+        if (validateRegister(usernameField.getText(), passwordField.getText())) {
+            switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         }
     }
 
@@ -50,21 +51,26 @@ public class RegisterController {
             registerMessageLabel.setText(e.getMessage());
             return false;
         }
-
         if (user_filehandler.getUserinfo().get(uname) != null) {
             registerMessageLabel.setText("Username already exists");
             return false;
+        } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
+                || confirmPasswordField.getText().isBlank()) {
+            registerMessageLabel.setText("Please enter a username and password");
+            return false;
+        } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
+            registerMessageLabel.setText("Passwords do not match");
+            return false;
+        } else {
+            user_filehandler.writeUserinfo(uname, pword);
+            user_filehandler.getUserinfo().put(uname, pword);
+            currentProfile = new Profile(uname, pword);
+            return true;
         }
-        user_filehandler.writeUserinfo(uname, pword);
-        user_filehandler.getUserinfo().put(uname, pword);
-        currentProfile(uname, pword);
-        return true;
-
     }
 
-    public static Profile currentProfile(String uname, String pword) {
-        currentProfile = new Profile(uname,
-                    pword);
-            return currentProfile;
+    @Override
+    protected void currentProfile(Profile profile) {
+        currentProfile = profile;
     }
 }

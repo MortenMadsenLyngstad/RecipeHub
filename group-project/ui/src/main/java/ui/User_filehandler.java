@@ -12,16 +12,16 @@ import java.util.Hashtable;
 
 public class User_filehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-  private File file = new File("group-project/ui/src/main/resources/ui/userinfo.csv");
   private URL url = getClass().getResource("userinfo.csv");
+  
   public void writeUserinfo(String username, String password) {
     try {
       StringBuilder sb = new StringBuilder();
       sb.append(username + "," + password);
-      FileWriter filewriter = new FileWriter(file, true);
+      FileWriter filewriter = new FileWriter(new File(url.toURI()), true);
       filewriter.write(sb.toString() + "\n");
       filewriter.close();
-    } catch (IOException e) {
+    } catch (IOException | URISyntaxException e) {
       System.out.println("Error writing to file");
       System.out.println(e.getMessage());
     }

@@ -10,9 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-public class AddRecipeController {
+public class AddRecipeController extends AbstractController{
     private Recipe newRecipe; 
-    private SwitchController switchController = new SwitchController();
 
     @FXML
     private Button BackButton;
@@ -37,12 +36,12 @@ public class AddRecipeController {
      * 
      * @param event
      * @throws Exception   if the validateLogin method throws an exception
-     * @throws IOException if the SwitchController.switchToMainScreen method throws
+     * @throws IOException if the switchToMainScreen method throws
      *                     an exception
      * @see SwitchController#switchSceneMain(ActionEvent, String)
      */
     public void backButtonClick(ActionEvent event) throws IOException {
-        switchController.switchSceneMain(event, "Mainscreen.fxml");
+        switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
     }
 
     private void createNewRecipe(String newRecipeName) {
@@ -56,8 +55,11 @@ public class AddRecipeController {
             AddName.setVisible(false);
             NameText.setVisible(false);
             IngredientsText.setVisible(true);
-
         }
     }
 
+    @Override
+    protected void currentProfile(Profile profile) {
+        currentProfile = profile;
+    }
 }
