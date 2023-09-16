@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import ui.User_filehandler;
+import file.User_filehandler;
 
 public class RegisterController {
     private User_filehandler user_filehandler = new User_filehandler();
@@ -64,7 +64,7 @@ public class RegisterController {
 
     public static Profile currentProfile(String uname, String pword) {
         currentProfile = new Profile(uname,
-                    pword);
-            return currentProfile;
+                pword);
+        return currentProfile;
     }
 }
