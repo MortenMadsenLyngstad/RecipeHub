@@ -31,7 +31,7 @@ public class Profile {
      * @param username - String value to check
      * @throws IllegalArgumeentException if username is invalid
      */
-    private void isValidUsername(String username) {
+    public static void isValidUsername(String username) {
         if (username.length() < 5) {
             throw new IllegalArgumentException("Username is too short");
         }
@@ -58,6 +58,9 @@ public class Profile {
         }
         if (!Pattern.matches(".*[A-Z].*", password)) {
             throw new IllegalArgumentException("Password must contain an upper case letter");
+        }
+        if (!Pattern.matches(".*[0-9].*", password)) {
+            throw new IllegalArgumentException("Password must contain a number");
         }
     }
 
@@ -112,4 +115,5 @@ public class Profile {
         recipes.addRecipe(recipe);
     }
     
+
 }
