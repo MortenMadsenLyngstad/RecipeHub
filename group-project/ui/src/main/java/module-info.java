@@ -1,5 +1,6 @@
 module ui {
-    requires calc.core;
+    requires core;
+    requires file;
     requires javafx.controls;
     requires javafx.fxml;
 

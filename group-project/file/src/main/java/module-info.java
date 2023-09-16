@@ -1,0 +1,3 @@
+module file {
+    exports file; 
+}

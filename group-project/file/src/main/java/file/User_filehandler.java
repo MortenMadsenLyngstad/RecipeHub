@@ -1,24 +1,23 @@
-package ui;
+package file;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class User_filehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-  private File file = new File("group-project/ui/src/main/resources/ui/userinfo.csv");
-  private URL url = getClass().getResource("userinfo.csv");
+  private String filePath = Path.of(System.getProperty("user.home")).toString() + "/userinfo.csv";
+
   public void writeUserinfo(String username, String password) {
     try {
       StringBuilder sb = new StringBuilder();
       sb.append(username + "," + password);
-      FileWriter filewriter = new FileWriter(file, true);
+      FileWriter filewriter = new FileWriter(new File(filePath), true);
       filewriter.write(sb.toString() + "\n");
       filewriter.close();
     } catch (IOException e) {
@@ -28,7 +27,8 @@ public class User_filehandler {
   }
 
   public ArrayList<String> infoList() {
-    try (BufferedReader bufReader = new BufferedReader(new FileReader(new File(url.toURI())))) {
+    try (BufferedReader bufReader = new BufferedReader(
+        new FileReader(new File(filePath)))) {
       ArrayList<String> listOfLines = new ArrayList<>();
 
       String line = bufReader.readLine();
@@ -42,7 +42,7 @@ public class User_filehandler {
       }
       return listOfLines;
 
-    } catch (IOException | URISyntaxException e) {
+    } catch (IOException e) {
       System.out.println("Error reading file");
       System.out.println(e.getMessage());
     }

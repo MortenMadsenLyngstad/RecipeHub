@@ -23,20 +23,27 @@ public class RecipeController {
     @FXML
     private TextArea stepsArea;
 
+    private Recipe recipe;
+
+    public RecipeController(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
     public void backButtonClick(ActionEvent event) throws IOException {
         SwitchController.switchSceneMain(event, "Mainscreen.fxml");
     }
 
-    public void populate(Recipe r) {
-        nameField.setText(r.getName());
-        descriptionArea.setText("Posted by: " + r.getAuthor().getUsername() + "\n" + r.getDescription());
-        for (String ingredient : r.getIngredients()) {
+    public void populate() {
+        nameField.setText(recipe.getName());
+        descriptionArea.setText("Posted by: " + recipe.getAuthor().getUsername() + "\n" + recipe.getDescription());
+        for (String ingredient : recipe.getIngredients()) {
             ingredientsView.getItems().add(
-                    r.getIngredientAmount(ingredient) + " " + r.getIngredientUnit(ingredient) + " : " + ingredient);
+                    recipe.getIngredientAmount(ingredient) + " " + recipe.getIngredientUnit(ingredient) + " : "
+                            + ingredient);
         }
         int i = 1;
         String s = "";
-        for (String step : r.getSteps()) {
+        for (String step : recipe.getSteps()) {
             s += i + ".  " + step + "\n";
             i++;
         }
