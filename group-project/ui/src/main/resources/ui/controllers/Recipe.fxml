@@ -2,9 +2,9 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -27,11 +27,12 @@
       </AnchorPane>
       <ScrollPane fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" layoutX="100.0" layoutY="90.0" pannable="true" prefHeight="410.0" prefWidth="500.0" vmax="1000.0">
          <content>
-            <VBox prefWidth="500.0">
+            <VBox>
                <children>
-                  <TextArea fx:id="descriptionArea" prefWidth="500.0" VBox.vgrow="SOMETIMES" />
-                  <ListView fx:id="ingredientsView" prefWidth="500.0" VBox.vgrow="SOMETIMES" />
-                  <TextArea fx:id="stepsArea" prefWidth="500.0" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="authorLabel" text="Author" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="descriptionLabel" text="Description" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="ingredientsView" fixedCellSize="20.0" prefWidth="500.0" VBox.vgrow="SOMETIMES" />
+                  <Label fx:id="stepsLabel" text="Label" wrapText="true" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
          </content></ScrollPane>
