@@ -33,17 +33,41 @@ public class RegisterController extends AbstractController{
     private Stage stage;
     @FXML
     private Parent root;
-
+    
+    /**
+     * Switches to the login screen
+     * 
+     * @param event
+     * @throws IOException if the switchSceneMain method throws an
+     *                     exception
+     */
     public void switchToLoginScreen(ActionEvent event) throws IOException {
         switchSceneMain(event, "UserLogin.fxml");
     }
 
+    /**
+     * Registers the user if the register information is correct
+     * 
+     * @param event
+     * @throws IOException if the switchceneWithInfo method throws
+     *                     an exception
+     * @see AbstractController#switchSceneWithInfo(ActionEvent, String, Profile)
+     */
     public void register(ActionEvent event) throws IOException {
         if (validateRegister(usernameField.getText(), passwordField.getText())) {
             switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         }
     }
 
+    /**
+     * Validates the register information
+     * 
+     * @param uname
+     * @param pword
+     * @return true if the register information is correct, false otherwise
+     * 
+     * @see Profile#isValidPassword(String)
+     */
     private boolean validateRegister(String uname, String pword) {
         try {
             Profile.isValidPassword(pword);
@@ -69,6 +93,9 @@ public class RegisterController extends AbstractController{
         }
     }
 
+    /**
+     * Sets the current profile
+     */
     @Override
     protected void currentProfile(Profile profile) {
         currentProfile = profile;

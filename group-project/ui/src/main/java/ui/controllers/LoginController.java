@@ -75,6 +75,9 @@ public class LoginController extends AbstractController{
         }
     }
 
+    /**
+     * Sets the current profile to null
+     */
     @Override
     protected void currentProfile(Profile profile) {
         currentProfile = null;

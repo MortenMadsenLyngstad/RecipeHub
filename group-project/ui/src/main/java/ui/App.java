@@ -11,6 +11,12 @@ import ui.controllers.AbstractController;
 
 public class App extends Application {
 
+    /**
+     * Starts the application
+     * 
+     * @param stage
+     * @throws IOException if the FXMLLoader.load method throws an exception
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AbstractController.class.getResource("UserLogin.fxml"));
@@ -19,6 +25,11 @@ public class App extends Application {
         stage.show();
     }
 
+    /**
+     * Launches the application
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }
