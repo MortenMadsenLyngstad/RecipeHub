@@ -32,7 +32,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
      * @return The recipe with index n in recipes
      */
     public Recipe getRecipe(int n) {
-        if (n < 0 || n > getSize()) {
+        if (n < 0 || n >= getSize()) {
             throw new IllegalArgumentException("The index is invalid");
         }
         return recipes.get(n);
