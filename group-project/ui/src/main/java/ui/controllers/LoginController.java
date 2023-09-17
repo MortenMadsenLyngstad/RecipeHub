@@ -59,7 +59,7 @@ public class LoginController extends AbstractController{
      *                   exception
      * @see User_filehandler#getUserinfo()
      */
-    private boolean validateLogin(String uname, String pword) throws Exception {
+    public boolean validateLogin(String uname, String pword) throws Exception {
         if (user_filehandler.getUserinfo().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;

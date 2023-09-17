@@ -67,8 +67,9 @@ public class RegisterController extends AbstractController{
      * @return true if the register information is correct, false otherwise
      * 
      * @see Profile#isValidPassword(String)
+     * @see User_filehandler#getUserinfo()
      */
-    private boolean validateRegister(String uname, String pword) {
+    public boolean validateRegister(String uname, String pword) {
         try {
             Profile.isValidPassword(pword);
         } catch (IllegalArgumentException e) {
