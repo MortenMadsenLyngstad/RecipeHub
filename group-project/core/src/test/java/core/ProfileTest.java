@@ -135,10 +135,6 @@ public class ProfileTest {
         Recipe r2 = new Recipe("Pasta Bolognese", 5, profile);
         Recipe r3 = new Recipe("Pizza", 1, profile);
         Recipe r4 = new Recipe("Hamburger", 1, profile);
-        profile.addRecipe(r1);
-        profile.addRecipe(r2);
-        profile.addRecipe(r3);
-        profile.addRecipe(r4);
 
         Assertions.assertTrue(profile.getRecipes().getSize() == 4, "The RecipeLibrary should have size 4");
         Assertions.assertEquals(r1, profile.getRecipes().getRecipe(0), "r1 should be the first recipe in the RecipeLibrary");
