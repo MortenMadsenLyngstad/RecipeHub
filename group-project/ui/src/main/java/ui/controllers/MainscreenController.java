@@ -7,9 +7,12 @@ import core.Recipe;
 import core.RecipeLibrary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -17,6 +20,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class MainscreenController extends SuperController{
     @FXML
@@ -111,6 +115,13 @@ public class MainscreenController extends SuperController{
 
         Label label = new Label(recipe.getName());
         Button btn = new Button("Read more");
+        btn.setOnAction(event -> {
+            try {
+                switchSceneRecipe(event, "Recipe.fxml", recipe);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         vBox1.getChildren().add(label);
         vBox2.getChildren().add(btn);
@@ -160,5 +171,20 @@ public class MainscreenController extends SuperController{
     @FXML
     public void logout(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "UserLogin.fxml", null);
+    }
+
+    protected void switchSceneRecipe(ActionEvent event, String file, Recipe recipe) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
+        root = loader.load();
+
+        RecipeController controller = loader.getController();
+        controller.setRecipe(recipe);
+        controller.populate();
+
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 }

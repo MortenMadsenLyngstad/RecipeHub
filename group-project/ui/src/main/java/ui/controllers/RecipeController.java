@@ -25,10 +25,6 @@ public class RecipeController extends SuperController{
 
     private Recipe recipe;
 
-    public RecipeController(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
     public void backButtonClick(ActionEvent event) throws IOException {
         switchSceneMain(event, "Mainscreen.fxml");
     }
@@ -48,5 +44,9 @@ public class RecipeController extends SuperController{
             i++;
         }
         stepsArea.setText(s);
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }
