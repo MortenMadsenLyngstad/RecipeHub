@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import core.Profile;
 
-public abstract class AbstractController {
+public class SuperController {
 
     protected Scene scene;
     protected Stage stage;
@@ -29,8 +29,8 @@ public abstract class AbstractController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
         root = loader.load();
 
-        AbstractController controller = loader.getController();
-        controller.currentProfile(profile);
+        SuperController controller = loader.getController();
+        controller.setProfile(profile);
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -39,5 +39,7 @@ public abstract class AbstractController {
         stage.show();
     }
 
-    protected abstract void currentProfile(Profile profile);
+    protected void setProfile(Profile profile) {
+        currentProfile = profile;
+    }
 }

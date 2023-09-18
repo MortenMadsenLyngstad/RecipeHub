@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-public class AddRecipeController extends AbstractController{
+public class AddRecipeController extends SuperController{
     private Recipe newRecipe; 
 
     @FXML
@@ -56,10 +56,5 @@ public class AddRecipeController extends AbstractController{
             NameText.setVisible(false);
             IngredientsText.setVisible(true);
         }
-    }
-
-    @Override
-    protected void currentProfile(Profile profile) {
-        currentProfile = profile;
     }
 }

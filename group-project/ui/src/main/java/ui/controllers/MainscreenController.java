@@ -18,7 +18,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class MainscreenController extends AbstractController{
+public class MainscreenController extends SuperController{
     @FXML
     private ScrollPane scrollPane;
 
@@ -79,7 +79,7 @@ public class MainscreenController extends AbstractController{
         titleLabel.setText(myBtn.getText());
         // Uses makeRecipeLibrary temporarly
         //Supposed to be the RecipeLibrary from the logged in profile
-        loadGrid(makeRecipeLibrary());
+        loadGrid(currentProfile.getRecipes());
     }
 
     /**
@@ -149,7 +149,7 @@ public class MainscreenController extends AbstractController{
      */
     @FXML
     public void addRecipe(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "addRecipe.fxml",currentProfile);
+        switchSceneWithInfo(event, "addRecipe.fxml", currentProfile);
     }
 
     /**
@@ -160,9 +160,5 @@ public class MainscreenController extends AbstractController{
     @FXML
     public void logout(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "UserLogin.fxml", null);
-    }
-
-    protected void currentProfile(Profile profile) {
-        currentProfile = profile;
     }
 }
