@@ -19,7 +19,8 @@ public class Recipe {
     public Recipe(String name, int portions, Profile author) {
         setName(name);
         setPortions(portions);
-        setAuthor(author);
+        this.author = author;
+        author.addRecipe(this);
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();
@@ -230,16 +231,6 @@ public class Recipe {
         if (!(unit.equals("pcs") || unit.equals("g") || unit.equals("dL")))
             throw new IllegalArgumentException("Unit must be pcs, g or dL");
         ingredientUnits.put(ingredient, unit);
-    }
-
-    /**
-     * Sets the author of the recipe
-     * 
-     * @param author the author to be set
-     */
-    public void setAuthor(Profile author) {
-        this.author = author;
-        author.addRecipe(this);
     }
 
     /**
