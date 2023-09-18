@@ -9,15 +9,15 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class User_filehandler {
+public class UserFilehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-  private String filePath = Path.of(System.getProperty("user.home")).toString();
+  private String filePath = Path.of(System.getProperty("user.home")).toString() + "/userinfo.csv";
 
-  public void writeUserinfo(String username, String password, String file) {
+  public void writeUserinfo(String username, String password) {
     try {
       StringBuilder sb = new StringBuilder();
       sb.append(username + "," + password);
-      FileWriter filewriter = new FileWriter(new File(filePath + file), true);
+      FileWriter filewriter = new FileWriter(new File(filePath), true);
       filewriter.write(sb.toString() + "\n");
       filewriter.close();
     } catch (IOException e) {
@@ -26,10 +26,10 @@ public class User_filehandler {
     }
   }
 
-  public ArrayList<String> infoList(String file) {
+  public ArrayList<String> infoList() {
     ArrayList<String> listOfLines = new ArrayList<>();
     try (BufferedReader bufReader = new BufferedReader(
-        new FileReader(new File(filePath + file)))) {
+        new FileReader(new File(filePath)))) {
       
       String line = bufReader.readLine();
       while (line != null) {
@@ -49,8 +49,8 @@ public class User_filehandler {
     return listOfLines;
   }
 
-  public Hashtable<String, String> getUserinfo(String file) {
-    ArrayList<String> listOfLines = infoList(file);
+  public Hashtable<String, String> getUserinfo() {
+    ArrayList<String> listOfLines = infoList();
     for (int i = 0; i < listOfLines.size(); i++) {
       String[] split = listOfLines.get(i).split(",");
       userinfo.put(split[0], split[1]);

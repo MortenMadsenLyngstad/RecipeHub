@@ -20,7 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import file.User_filehandler;
+import file.UserFilehandler;
 
 
 public class RegisterControllerTest extends ApplicationTest {
@@ -33,14 +33,13 @@ public class RegisterControllerTest extends ApplicationTest {
     private PasswordField confirmPasswordField;
     private Label registerMessageLabel;
     private Hashtable<String, String> userInfo = new Hashtable<>();
-    private User_filehandler mockUserFileHandler = mock(User_filehandler.class);
+    private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("RegisterScreen.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
-        controller.setFile("/test.csv");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -55,7 +54,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateRegisterWithValidData() {
-        when(mockUserFileHandler.getUserinfo(controller.file)).thenReturn(userInfo);
+        when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("newuser");
@@ -64,7 +63,7 @@ public class RegisterControllerTest extends ApplicationTest {
         });
 
         Platform.runLater(() -> {
-            Assertions.assertTrue(controller.validateRegister("newuser", "Password123", controller.file, mockUserFileHandler));
+            Assertions.assertTrue(controller.validateRegister("newuser", "Password123", mockUserFileHandler));
             Assertions.assertEquals("Enter username and password", registerMessageLabel.getText());
         });
     }
@@ -72,7 +71,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateRegisterWithInvalidPassword() {
-        when(mockUserFileHandler.getUserinfo(controller.file)).thenReturn(userInfo);
+        when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("testuser");
@@ -81,7 +80,7 @@ public class RegisterControllerTest extends ApplicationTest {
         });
 
         Platform.runLater(() -> {
-            Assertions.assertFalse(controller.validateRegister("testuser", "weak", controller.file, mockUserFileHandler));
+            Assertions.assertFalse(controller.validateRegister("testuser", "weak",  mockUserFileHandler));
             Assertions.assertEquals("Password is too short", registerMessageLabel.getText());
         });
     }
@@ -89,7 +88,7 @@ public class RegisterControllerTest extends ApplicationTest {
     @Test
     public void testValidateRegisterWithUsernameExists() {
         userInfo.put("existinguser", "Password123");
-        when(mockUserFileHandler.getUserinfo(controller.file)).thenReturn(userInfo);
+        when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
 
         // Set a username that already exists
         Platform.runLater(() -> {
@@ -100,7 +99,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
         // Use Platform.runLater() for Assertions as well
         Platform.runLater(() -> {
-            assertFalse(controller.validateRegister("existinguser", "Password123", controller.file, mockUserFileHandler));
+            assertFalse(controller.validateRegister("existinguser", "Password123", mockUserFileHandler));
             assertEquals("Username already exists", registerMessageLabel.getText());
         });
     }

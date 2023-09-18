@@ -4,12 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Hashtable;
 
-import file.User_filehandler;
+import file.UserFilehandler;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +29,7 @@ public class LoginControllerTest extends ApplicationTest {
     private PasswordField passwordField;
     private Label loginMessageLabel;
     private Hashtable<String, String> userInfo = new Hashtable<>();
-    private User_filehandler mockUserFileHandler = mock(User_filehandler.class);
+    private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
 
 
     @Override
@@ -40,7 +37,6 @@ public class LoginControllerTest extends ApplicationTest {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("UserLogin.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
-        controller.setFile("/test.csv");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -52,21 +48,10 @@ public class LoginControllerTest extends ApplicationTest {
         loginMessageLabel = lookup("#loginMessageLabel").query();
     }
 
-
-    private void deleteFile() {
-        try {
-            String filePath = Path.of(System.getProperty("user.home")).toString() + "/test.csv";
-            Files.delete(Paths.get(filePath));
-        }
-        catch (Exception e) {
-            System.out.println("Error deleting file");
-        }
-    }
-
     @Test
     public void testValidateLoginWithValidCredentials() throws Exception {
         userInfo.put("testuser", "Password123");
-        when(mockUserFileHandler.getUserinfo(controller.file)).thenReturn(userInfo);
+        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("testuser");
@@ -74,15 +59,14 @@ public class LoginControllerTest extends ApplicationTest {
         });
 
         Platform.runLater(() -> {
-            assertTrue(controller.validateLogin("testuser", "Password123", controller.file, mockUserFileHandler));
+            assertTrue(controller.validateLogin("testuser", "Password123", mockUserFileHandler));
             assertEquals("Enter username and password", loginMessageLabel.getText());
         });
-        this.deleteFile();
     }
 
     @Test
     public void testValidateLoginWithInvalidUsername() throws Exception {
-        when(mockUserFileHandler.getUserinfo(controller.file)).thenReturn(userInfo);
+        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("invaliduser");
@@ -90,16 +74,15 @@ public class LoginControllerTest extends ApplicationTest {
         });
 
         Platform.runLater(() -> {
-            assertFalse(controller.validateLogin("invaliduser", "Password123", controller.file, mockUserFileHandler));
+            assertFalse(controller.validateLogin("invaliduser", "Password123", mockUserFileHandler));
             assertEquals("Incorrect username or password", loginMessageLabel.getText());
         });
-        this.deleteFile();
     }
 
     @Test
     public void testValidateLoginWithIncorrectPassword() throws Exception {
         userInfo.put("testuser", "Password123");
-        when(mockUserFileHandler.getUserinfo(controller.file)).thenReturn((Hashtable<String, String>) userInfo);
+        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("testuser");
@@ -107,15 +90,14 @@ public class LoginControllerTest extends ApplicationTest {
         });
 
         Platform.runLater(() -> {
-            assertFalse(controller.validateLogin("testuser", "wrongpassword", controller.file, mockUserFileHandler));
+            assertFalse(controller.validateLogin("testuser", "wrongpassword", mockUserFileHandler));
             assertEquals("Incorrect username or password", loginMessageLabel.getText());
         });
-        this.deleteFile();
     }
 
     @Test
     public void testValidateLoginWithBlankFields() throws Exception {
-        when(mockUserFileHandler.getUserinfo(controller.file)).thenReturn(userInfo);
+        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("");
@@ -123,9 +105,8 @@ public class LoginControllerTest extends ApplicationTest {
         });
 
         Platform.runLater(() -> {
-            assertFalse(controller.validateLogin("", "", controller.file, mockUserFileHandler));
+            assertFalse(controller.validateLogin("", "", mockUserFileHandler));
             assertEquals("Incorrect username or password", loginMessageLabel.getText());  
         });
-        this.deleteFile();
     }
 }

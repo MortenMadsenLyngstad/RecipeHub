@@ -12,11 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import file.User_filehandler;
+import file.UserFilehandler;
 
 public class RegisterController extends AbstractController{
-    private User_filehandler user_filehandler = new User_filehandler();
-    protected String file = "/userinfo.csv";
+    private UserFilehandler userFilehandler = new UserFilehandler();
 
     @FXML
     private Label registerMessageLabel;
@@ -56,7 +55,7 @@ public class RegisterController extends AbstractController{
      * @see AbstractController#switchSceneWithInfo(ActionEvent, String, Profile)
      */
     public void register(ActionEvent event) throws IOException {
-        if (validateRegister(usernameField.getText(), passwordField.getText(), this.file, user_filehandler)) {
+        if (validateRegister(usernameField.getText(), passwordField.getText(), userFilehandler)) {
             switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         }
     }
@@ -69,16 +68,16 @@ public class RegisterController extends AbstractController{
      * @return true if the register information is correct, false otherwise
      * 
      * @see Profile#isValidPassword(String)
-     * @see User_filehandler#getUserinfo()
+     * @see UserFilehandler#getUserinfo()
      */
-    public boolean validateRegister(String uname, String pword, String file, User_filehandler user_filehandler) {
+    public boolean validateRegister(String uname, String pword, UserFilehandler userFilehandler) {
         try {
             Profile.isValidPassword(pword);
         } catch (IllegalArgumentException e) {
             registerMessageLabel.setText(e.getMessage());
             return false;
         }
-        if (user_filehandler.getUserinfo(file).get(uname) != null) {
+        if (userFilehandler.getUserinfo().get(uname) != null) {
             registerMessageLabel.setText("Username already exists");
             return false;
         } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
@@ -89,8 +88,8 @@ public class RegisterController extends AbstractController{
             registerMessageLabel.setText("Passwords do not match");
             return false;
         } else {
-            user_filehandler.writeUserinfo(uname, pword, file);
-            user_filehandler.getUserinfo(file).put(uname, pword);
+            userFilehandler.writeUserinfo(uname, pword);
+            userFilehandler.getUserinfo().put(uname, pword);
             currentProfile = new Profile(uname, pword);
             return true;
         }
@@ -102,9 +101,5 @@ public class RegisterController extends AbstractController{
     @Override
     protected void currentProfile(Profile profile) {
         currentProfile = profile;
-    }
-
-    protected void setFile(String file) {
-        this.file = file;
     }
 }

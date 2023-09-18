@@ -9,11 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import file.User_filehandler;
+import file.UserFilehandler;
 
 public class LoginController extends AbstractController{
-    private User_filehandler user_filehandler = new User_filehandler();
-    protected String file = "/userinfo.csv";
+    private UserFilehandler userFilehandler = new UserFilehandler();
 
     @FXML
     private Label loginMessageLabel;
@@ -34,7 +33,7 @@ public class LoginController extends AbstractController{
      * @see SwitchController#switchSceneMain(ActionEvent, String)
      */
     public void login(ActionEvent event) throws Exception {
-        if (validateLogin(usernameField.getText(), passwordField.getText(), file, user_filehandler)) {
+        if (validateLogin(usernameField.getText(), passwordField.getText(), userFilehandler)) {
             switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         }
     }
@@ -56,15 +55,15 @@ public class LoginController extends AbstractController{
      * @param uname
      * @param pword
      * @return true if the login information is correct, false otherwise
-     * @throws Exception if the user_filehandler.getUserinfo() method throws an
+     * @throws Exception if the userFilehandler.getUserinfo() method throws an
      *                   exception
-     * @see User_filehandler#getUserinfo()
+     * @see UserFilehandler#getUserinfo()
      */
-    public boolean validateLogin(String uname, String pword, String file, User_filehandler user_filehandler) {
-        if (user_filehandler.getUserinfo(file).get(uname) == null) {
+    public boolean validateLogin(String uname, String pword, UserFilehandler userFilehandler) {
+        if (userFilehandler.getUserinfo().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (user_filehandler.getUserinfo(file).get(uname).equals(pword)) {
+        } else if (userFilehandler.getUserinfo().get(uname).equals(pword)) {
             currentProfile = new Profile(uname, pword);
             return true;
         } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
@@ -82,9 +81,5 @@ public class LoginController extends AbstractController{
     @Override
     protected void currentProfile(Profile profile) {
         currentProfile = null;
-    }
-
-    protected void setFile(String file) {
-        this.file = file;
     }
 }
