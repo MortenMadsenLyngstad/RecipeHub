@@ -19,7 +19,8 @@ public class AddRecipeController extends AbstractController {
     private AddRecipe_filehandler addRecipe_filehandler = new AddRecipe_filehandler();
 
     @FXML
-    private Button BackButton, AddName, AddIngredientButton, IngredientsNextButton, AddDescriptionButton, AddStepButton, AddStepNext, SaveRecipeButten;
+    private Button BackButton, AddName, AddIngredientButton, IngredientsNextButton, AddDescriptionButton, AddStepButton,
+            AddStepNext, SaveRecipeButten;
 
     @FXML
     private Pane RecipeNamePane, AddIngredientPane, DescriptionPane, AddStepPane, PortionAndConfirmPane;
@@ -58,10 +59,11 @@ public class AddRecipeController extends AbstractController {
         this.newRecipe = new Recipe(newRecipeName, 1, currentProfile);
     }
 
-    
     public void validateAddedIngredient() throws IOException {
-        if (!IngredientNameInput.getText().isEmpty() && IngredientAmount.getText().matches("^[1-9]\\d*$") && !IngredientPropertyMenu.getText().equals("Property")) {
-            newRecipe.addIngredient(IngredientNameInput.getText(), Double.parseDouble(IngredientAmount.getText()), IngredientPropertyMenu.getText());
+        if (!IngredientNameInput.getText().isEmpty() && IngredientAmount.getText().matches("^[1-9]\\d*$")
+                && !IngredientPropertyMenu.getText().equals("Property")) {
+            newRecipe.addIngredient(IngredientNameInput.getText(), Double.parseDouble(IngredientAmount.getText()),
+                    IngredientPropertyMenu.getText());
             newRecipe.setIngredientUnit(IngredientNameInput.getText(), IngredientPropertyMenu.getText());
             createIngredientString();
             cleanIngredientButtons();
@@ -203,7 +205,6 @@ public class AddRecipeController extends AbstractController {
 
     private void saveRecipeToLibrary() {
         currentProfile.addRecipe(newRecipe);
-         addRecipe_filehandler.SaveRecipe(newRecipe.getName(), newRecipe.getDescription(), newRecipe.getIngredients(), newRecipe.returnIngredientAmount(), newRecipe.getSteps(), newRecipe.getPortions());
     }
 
     private boolean valdatePortions() {
