@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import file.User_filehandler;
 
-public class RegisterController extends AbstractController{
+public class RegisterController extends SuperController{
     private User_filehandler user_filehandler = new User_filehandler();
 
     @FXML
@@ -67,10 +67,5 @@ public class RegisterController extends AbstractController{
             currentProfile = new Profile(uname, pword);
             return true;
         }
-    }
-
-    @Override
-    protected void currentProfile(Profile profile) {
-        currentProfile = profile;
     }
 }
