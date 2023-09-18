@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,25 +13,35 @@
    <children>
       <AnchorPane prefHeight="90.0" prefWidth="700.0" style="-fx-background-color: #AEF359;">
          <children>
-            <TextField fx:id="nameField" alignment="CENTER" editable="false" layoutX="100.0" layoutY="15.0" pickOnBounds="false" prefHeight="60.0" prefWidth="500.0" style="-fx-background-color: #AEF359;" text="RECIPE NAME">
-               <font>
-                  <Font size="36.0" />
-               </font></TextField>
             <Button fx:id="backButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" text="Back">
                <graphic>
                   <FontAwesomeIconView disable="true" glyphName="LONG_ARROW_LEFT" selectionEnd="0" size="40" stroke="BLACK" wrappingWidth="45.80854034423828" />
                </graphic>
             </Button>
+            <Label fx:id="nameField" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="15.0" prefHeight="60.0" prefWidth="500.0" text="Recipe name">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <ScrollPane fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" layoutX="100.0" layoutY="90.0" pannable="true" prefHeight="410.0" prefWidth="500.0" vmax="1000.0">
          <content>
             <VBox>
                <children>
-                  <Label fx:id="authorLabel" text="Author" wrapText="true" VBox.vgrow="ALWAYS" />
-                  <Label fx:id="descriptionLabel" text="Description" wrapText="true" VBox.vgrow="ALWAYS" />
-                  <ListView fx:id="ingredientsView" fixedCellSize="20.0" prefWidth="500.0" VBox.vgrow="SOMETIMES" />
-                  <Label fx:id="stepsLabel" text="Steps" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="authorLabel" lineSpacing="4.0" text="Author" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="12.0" />
+                     </font></Label>
+                  <Label fx:id="descriptionLabel" lineSpacing="4.0" text="Description" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <ListView fx:id="ingredientsView" prefWidth="500.0" VBox.vgrow="ALWAYS" />
+                  <Label fx:id="stepsLabel" lineSpacing="4.0" text="Steps" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
                </children>
             </VBox>
          </content></ScrollPane>

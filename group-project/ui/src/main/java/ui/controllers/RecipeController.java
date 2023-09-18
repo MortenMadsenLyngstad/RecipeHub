@@ -3,17 +3,17 @@ package ui.controllers;
 import java.io.IOException;
 
 import core.Recipe;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 
 public class RecipeController extends SuperController {
 
     @FXML
-    private TextField nameField;
+    private Label nameField;
     @FXML
     private Button backButton;
     @FXML
@@ -40,6 +40,7 @@ public class RecipeController extends SuperController {
                     recipe.getIngredientAmount(ingredient) + " " + recipe.getIngredientUnit(ingredient) + " : "
                             + ingredient);
         }
+        ingredientsView.prefHeightProperty().bind(Bindings.size(ingredientsView.getItems()).multiply(25));
         int i = 1;
         String s = "";
         for (String step : recipe.getSteps()) {
