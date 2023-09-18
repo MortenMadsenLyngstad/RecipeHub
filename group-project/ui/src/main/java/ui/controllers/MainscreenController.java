@@ -35,7 +35,7 @@ public class MainscreenController extends SuperController{
     private GridPane gridPane;
 
     /**
-     * This method 
+     * This method initializes the GridPane and the title
      */
     @FXML
     public void initialize() {
@@ -117,7 +117,7 @@ public class MainscreenController extends SuperController{
         Button btn = new Button("Read more");
         btn.setOnAction(event -> {
             try {
-                switchSceneRecipe(event, "Recipe.fxml", recipe);
+                switchSceneRecipe(event, recipe);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -173,8 +173,15 @@ public class MainscreenController extends SuperController{
         switchSceneWithInfo(event, "UserLogin.fxml", null);
     }
 
-    protected void switchSceneRecipe(ActionEvent event, String file, Recipe recipe) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
+    /**
+     * This method will swich scene to Recipe.fxml and give RecipeController the given recipe
+     * @param event - ActionEvent
+     * @param file - The file you want to change to
+     * @param recipe - The recipe the user clicked on
+     * @throws IOException
+     */
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
         root = loader.load();
 
         RecipeController controller = loader.getController();
