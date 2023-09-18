@@ -32,7 +32,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
      * @return The recipe with index n in recipes
      */
     public Recipe getRecipe(int n) {
-        if (n < 0 || n > getSize()) {
+        if (n < 0 || n >= getSize()) {
             throw new IllegalArgumentException("The index is invalid");
         }
         return recipes.get(n);
@@ -51,9 +51,13 @@ public class RecipeLibrary implements Iterable<Recipe> {
      * @param recipe - Recipe object you wish to add
      */
     public void addRecipe(Recipe recipe) {
-        if (!recipes.contains(recipe)) {
-            recipes.add(recipe);
+        if (recipes.contains(recipe)) {
+            throw new IllegalArgumentException("The recipe is already added");
         }
+        if (recipe == null) {
+            throw new IllegalArgumentException("Can't add null");
+        }
+        recipes.add(recipe);
     }
 
     /**
