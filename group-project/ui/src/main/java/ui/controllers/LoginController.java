@@ -13,6 +13,7 @@ import file.User_filehandler;
 
 public class LoginController extends AbstractController{
     private User_filehandler user_filehandler = new User_filehandler();
+    protected String file = "/userinfo.csv";
 
     @FXML
     private Label loginMessageLabel;
@@ -33,7 +34,7 @@ public class LoginController extends AbstractController{
      * @see SwitchController#switchSceneMain(ActionEvent, String)
      */
     public void login(ActionEvent event) throws Exception {
-        if (validateLogin(usernameField.getText(), passwordField.getText())) {
+        if (validateLogin(usernameField.getText(), passwordField.getText(), file, user_filehandler)) {
             switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         }
     }
@@ -59,11 +60,11 @@ public class LoginController extends AbstractController{
      *                   exception
      * @see User_filehandler#getUserinfo()
      */
-    public boolean validateLogin(String uname, String pword) throws Exception {
-        if (user_filehandler.getUserinfo().get(uname) == null) {
+    public boolean validateLogin(String uname, String pword, String file, User_filehandler user_filehandler) {
+        if (user_filehandler.getUserinfo(file).get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (user_filehandler.getUserinfo().get(uname).equals(pword)) {
+        } else if (user_filehandler.getUserinfo(file).get(uname).equals(pword)) {
             currentProfile = new Profile(uname, pword);
             return true;
         } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
@@ -81,5 +82,9 @@ public class LoginController extends AbstractController{
     @Override
     protected void currentProfile(Profile profile) {
         currentProfile = null;
+    }
+
+    protected void setFile(String file) {
+        this.file = file;
     }
 }
