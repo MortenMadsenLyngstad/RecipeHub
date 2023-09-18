@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RecipeTest {
+
     private Profile p = new Profile("User1234", "User12345");
 
     private Recipe makeRecipe() {
@@ -20,8 +21,6 @@ public class RecipeTest {
         returnRecipe.addStep("Mix all wet ingredients");
         returnRecipe.addStep("Mix in all dry ingredients");
         returnRecipe.addStep("Let sit for 30 minutes, then cook in a pan at medium heat");
-
-        returnRecipe.setAuthor(p);
         return returnRecipe;
     }
 
@@ -99,14 +98,5 @@ public class RecipeTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.getIngredientAmount("flour"));
         Assertions.assertTrue(r.getIngredients()
                 .equals(new HashSet<>(Arrays.asList("ham", "eggs", "milk", "salt", "baking powder"))));
-    }
-
-    @Test
-    public void testAuthor() {
-        Recipe r = makeRecipe();
-        Assertions.assertTrue(p.equals(r.getAuthor()));
-        Profile p2 = new Profile("Alphabet23", "Alphabet24");
-        r.setAuthor(p2);
-        Assertions.assertTrue(p2.equals(r.getAuthor()));
     }
 }
