@@ -53,7 +53,7 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
 
-    protected void deleteFile() {
+    private void deleteFile() {
         try {
             String filePath = Path.of(System.getProperty("user.home")).toString() + "/test.csv";
             Files.delete(Paths.get(filePath));
