@@ -7,9 +7,12 @@ import core.Recipe;
 import core.RecipeLibrary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -17,8 +20,9 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class MainscreenController extends AbstractController{
+public class MainscreenController extends SuperController{
     @FXML
     private ScrollPane scrollPane;
 
@@ -31,7 +35,7 @@ public class MainscreenController extends AbstractController{
     private GridPane gridPane;
 
     /**
-     * This method 
+     * This method initializes the GridPane and the title
      */
     @FXML
     public void initialize() {
@@ -79,7 +83,7 @@ public class MainscreenController extends AbstractController{
         titleLabel.setText(myBtn.getText());
         // Uses makeRecipeLibrary temporarly
         //Supposed to be the RecipeLibrary from the logged in profile
-        loadGrid(makeRecipeLibrary());
+        loadGrid(currentProfile.getRecipes());
     }
 
     /**
@@ -111,6 +115,13 @@ public class MainscreenController extends AbstractController{
 
         Label label = new Label(recipe.getName());
         Button btn = new Button("Read more");
+        btn.setOnAction(event -> {
+            try {
+                switchSceneRecipe(event, recipe);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         vBox1.getChildren().add(label);
         vBox2.getChildren().add(btn);
@@ -149,7 +160,7 @@ public class MainscreenController extends AbstractController{
      */
     @FXML
     public void addRecipe(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "addRecipe.fxml",currentProfile);
+        switchSceneWithInfo(event, "addRecipe.fxml", currentProfile);
     }
 
     /**
@@ -162,7 +173,25 @@ public class MainscreenController extends AbstractController{
         switchSceneWithInfo(event, "UserLogin.fxml", null);
     }
 
-    protected void currentProfile(Profile profile) {
-        currentProfile = profile;
+    /**
+     * This method will swich scene to Recipe.fxml and give RecipeController the given recipe
+     * @param event - ActionEvent
+     * @param file - The file you want to change to
+     * @param recipe - The recipe the user clicked on
+     * @throws IOException
+     */
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
+        root = loader.load();
+
+        RecipeController controller = loader.getController();
+        controller.setRecipe(recipe);
+        controller.populate();
+
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 }
