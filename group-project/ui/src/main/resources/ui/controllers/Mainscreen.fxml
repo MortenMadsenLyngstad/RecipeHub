@@ -37,8 +37,8 @@
                </graphic>
             </Button>
          </children></AnchorPane>
-      <Button fx:id="allBtn" layoutX="313.0" layoutY="110.0" mnemonicParsing="false" onAction="#loadAll" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5;" text="All recipes" />
+      <Button fx:id="allBtn" layoutX="313.0" layoutY="110.0" mnemonicParsing="false" onAction="#loadAllRecipes" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5;" text="All recipes" />
       <Button fx:id="addBtn" layoutX="214.0" layoutY="110.0" mnemonicParsing="false" onAction="#addRecipe" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5;" text="+ Add Recipe" />
-      <Button fx:id="myBtn" layoutX="394.0" layoutY="110.0" mnemonicParsing="false" onAction="#loadMy" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5;" text="My recipes" />
+      <Button fx:id="myBtn" layoutX="394.0" layoutY="110.0" mnemonicParsing="false" onAction="#loadMyRecipes" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5;" text="My recipes" />
    </children>
 </AnchorPane>
