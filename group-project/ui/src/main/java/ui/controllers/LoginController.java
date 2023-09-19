@@ -3,12 +3,14 @@ package ui.controllers;
 import java.io.IOException;
 
 import core.Profile;
+import core.Recipe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import file.AddRecipeFilehandler;
 import file.UserFilehandler;
 
 public class LoginController extends SuperController{
@@ -22,6 +24,8 @@ public class LoginController extends SuperController{
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+
+    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler();
 
     /**
      * Logs the user in if the login information is correct
@@ -64,7 +68,7 @@ public class LoginController extends SuperController{
             loginMessageLabel.setText("Incorrect username or password");
             return false;
         } else if (userFilehandler.getUserinfo().get(uname).equals(pword)) {
-            currentProfile = new Profile(uname, pword);
+            loadProfile(uname, pword);
             return true;
         } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
@@ -72,6 +76,23 @@ public class LoginController extends SuperController{
         } else {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
+        }
+    }
+
+    /**
+     * This method will load currentProfile with it's username, password and all it's recipes
+     * @param uname - String with the username for the profile
+     * @param pword - String with the password for the profile
+     */
+    public void loadProfile(String uname, String pword) {
+        for (Recipe r : addRecipeFilehandler.loadRecipeLibrary()) {
+            if (r.getAuthor().getUsername().equals(uname)) {
+                currentProfile = r.getAuthor();
+                break;
+            }
+        }
+        if (currentProfile == null) {
+            currentProfile = new Profile(uname, pword);
         }
     }
 }
