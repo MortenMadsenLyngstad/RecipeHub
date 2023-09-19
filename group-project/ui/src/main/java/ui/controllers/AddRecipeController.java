@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import core.Profile;
 import core.Recipe;
-import file.AddRecipe_filehandler;
+import file.AddRecipeFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 
 public class AddRecipeController extends SuperController{
     private Recipe newRecipe; 
-    private AddRecipe_filehandler addRecipe_filehandler = new AddRecipe_filehandler();
+    private AddRecipeFilehandler addRecipe_filehandler = new AddRecipeFilehandler();
 
     @FXML
     private Button BackButton, AddName, AddIngredientButton, IngredientsNextButton, AddDescriptionButton, AddStepButton,
@@ -204,7 +204,7 @@ public class AddRecipeController extends SuperController{
     }
 
     private void saveRecipeToLibrary() {
-        currentProfile.addRecipe(newRecipe);
+        addRecipe_filehandler.SaveRecipe(newRecipe);
     }
 
     private boolean valdatePortions() {

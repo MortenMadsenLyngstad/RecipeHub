@@ -1,14 +1,18 @@
 package core;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 /**
  * This class is used to contain Profile information
  * @author Adrian Haabpiht Solberg
  */
-public class Profile {
+public class Profile implements Serializable{
+    private static final long serialVersionUID = -7470090944414208496L;
+    private int id = 0;
     private String username;
     private String password;
+    private String name;
     private RecipeLibrary recipes;
 
     /**
@@ -19,6 +23,7 @@ public class Profile {
     public Profile(String username, String password) {
         isValidUsername(username);
         this.username = username;
+        this.name = username;
         isValidPassword(password);
         this.password = password;
         recipes = new RecipeLibrary();
@@ -115,5 +120,11 @@ public class Profile {
         recipes.addRecipe(recipe);
     }
     
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 }

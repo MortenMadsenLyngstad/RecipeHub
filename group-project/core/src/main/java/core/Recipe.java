@@ -1,5 +1,6 @@
 package core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Recipe {
+public class Recipe implements Serializable{
+    private static final long serialVersionUID = -8470090944414208496L;
+    private int id = 0;
     private List<String> steps;
     private int portions;
     private String name;
@@ -24,6 +27,14 @@ public class Recipe {
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
