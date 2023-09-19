@@ -98,6 +98,8 @@ public class MainscreenController extends SuperController{
             SplitPane splitPane = makeSplitPane(recipeLibrary.getRecipe(i));
             gridPane.add(splitPane, i % 4, i / 4);
         }
+
+        gridPane.setFocusTraversable(true);
     }
 
     /**
