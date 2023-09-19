@@ -1,5 +1,6 @@
 package core;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -7,8 +8,21 @@ import java.util.Iterator;
  * This class is used to contain several recipes
  * @author Adrian Haabpiht Solberg
  */
-public class RecipeLibrary implements Iterable<Recipe> {
+public class RecipeLibrary implements Iterable<Recipe>, Serializable {
+    private static final long serialVersionUID = -6470090944414208496L;
+    
     private ArrayList<Recipe> recipes;
+    private String name = "RecipeLibrary";
+    private int id = 1;
+    
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     /**
      * This contructor initilizes an empty ArrayList
@@ -78,9 +92,4 @@ public class RecipeLibrary implements Iterable<Recipe> {
     public Iterator<Recipe> iterator() {
         return recipes.iterator();
     }
-
-
-
-
-    
 }
