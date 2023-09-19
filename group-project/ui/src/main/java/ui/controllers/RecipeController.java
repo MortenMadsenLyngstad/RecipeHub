@@ -3,49 +3,70 @@ package ui.controllers;
 import java.io.IOException;
 
 import core.Recipe;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
-public class RecipeController extends SuperController{
+/**
+ * Controller for displaying the information of a recipe on a RecipeSreen
+ */
+public class RecipeController extends SuperController {
 
     @FXML
-    private TextField nameField;
+    private Label nameField;
     @FXML
     private Button backButton;
     @FXML
-    private TextArea descriptionArea;
+    private Label authorLabel;
+    @FXML
+    private Label descriptionLabel;
     @FXML
     private ListView<String> ingredientsView;
     @FXML
-    private TextArea stepsArea;
+    private Label stepsLabel;
 
     private Recipe recipe;
 
+    /**
+     * Handels the click of the backButton, sends the user back to the mainscreen
+     * 
+     * @param event The click of the backButton
+     * @throws IOException If there is an issue with loading Mainscreen.fxml
+     */
     public void backButtonClick(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
     }
 
+    /**
+     * Populates the RecipeScreen with the information from the recipe
+     */
     public void populate() {
         nameField.setText(recipe.getName());
-        descriptionArea.setText("Posted by: " + recipe.getAuthor().getUsername() + "\n" + recipe.getDescription());
+        authorLabel.setText("Posted by: " + recipe.getAuthor().getUsername());
+        descriptionLabel.setText(recipe.getDescription() + "\nMakes " + recipe.getPortions() + " portions \n  ");
         for (String ingredient : recipe.getIngredients()) {
             ingredientsView.getItems().add(
                     recipe.getIngredientAmount(ingredient) + " " + recipe.getIngredientUnit(ingredient) + " : "
                             + ingredient);
         }
+        ingredientsView.prefHeightProperty().bind(Bindings.size(ingredientsView.getItems()).multiply(25));
         int i = 1;
-        String s = "";
+        String s = "\n";
         for (String step : recipe.getSteps()) {
-            s += i + ".  " + step + "\n";
+            s += "Step " + i + ".  " + step + "\n";
             i++;
         }
-        stepsArea.setText(s);
+        stepsLabel.setText(s);
     }
 
+    /**
+     * Sets the recipe for the controller
+     * 
+     * @param recipe The recipe to be set
+     */
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
