@@ -12,10 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import file.User_filehandler;
+import file.UserFilehandler;
 
 public class RegisterController extends SuperController{
-    private User_filehandler user_filehandler = new User_filehandler();
+    private UserFilehandler userFilehandler = new UserFilehandler();
 
     @FXML
     private Label registerMessageLabel;
@@ -33,25 +33,51 @@ public class RegisterController extends SuperController{
     private Stage stage;
     @FXML
     private Parent root;
-
+    
+    /**
+     * Switches to the login screen
+     * 
+     * @param event
+     * @throws IOException if the switchSceneMain method throws an
+     *                     exception
+     */
     public void switchToLoginScreen(ActionEvent event) throws IOException {
         switchSceneMain(event, "UserLogin.fxml");
     }
 
+
+    /**
+     * Registers the user if the register information is correct
+     * 
+     * @param event
+     * @throws IOException if the switchceneWithInfo method throws
+     *                     an exception
+     * @see AbstractController#switchSceneWithInfo(ActionEvent, String, Profile)
+     */
     public void register(ActionEvent event) throws IOException {
-        if (validateRegister(usernameField.getText(), passwordField.getText())) {
+        if (validateRegister(usernameField.getText(), passwordField.getText(), userFilehandler)) {
             switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         }
     }
 
-    private boolean validateRegister(String uname, String pword) {
+    /**
+     * Validates the register information
+     * 
+     * @param uname
+     * @param pword
+     * @return true if the register information is correct, false otherwise
+     * 
+     * @see Profile#isValidPassword(String)
+     * @see UserFilehandler#getUserinfo()
+     */
+    public boolean validateRegister(String uname, String pword, UserFilehandler userFilehandler) {
         try {
             Profile.isValidPassword(pword);
         } catch (IllegalArgumentException e) {
             registerMessageLabel.setText(e.getMessage());
             return false;
         }
-        if (user_filehandler.getUserinfo().get(uname) != null) {
+        if (userFilehandler.getUserinfo().get(uname) != null) {
             registerMessageLabel.setText("Username already exists");
             return false;
         } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
@@ -62,8 +88,8 @@ public class RegisterController extends SuperController{
             registerMessageLabel.setText("Passwords do not match");
             return false;
         } else {
-            user_filehandler.writeUserinfo(uname, pword);
-            user_filehandler.getUserinfo().put(uname, pword);
+            userFilehandler.writeUserinfo(uname, pword);
+            userFilehandler.getUserinfo().put(uname, pword);
             currentProfile = new Profile(uname, pword);
             return true;
         }
