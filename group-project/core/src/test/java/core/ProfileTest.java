@@ -122,13 +122,13 @@ public class ProfileTest {
     /**
      * This method tests if getters and setters for the recipes works properly
      */
-    // @Test
-    // @DisplayName("Recipes tests")
-    // public void testRecipes() {
+    @Test
+    @DisplayName("Recipes tests")
+    public void testRecipes() {
 
     //     // Checks if getRecipes() works
-    //     Assertions.assertNotNull(profile.getRecipes(), "getREcipes() should return an empty RecipeLibrary");
-    //     Assertions.assertTrue(profile.getRecipes().getSize() == 0, "The RecipeLibrary should be empty");
+        Assertions.assertNotNull(profile.getRecipes(), "getREcipes() should return an empty RecipeLibrary");
+        Assertions.assertTrue(profile.getRecipes().getSize() == 0, "The RecipeLibrary should be empty");
 
         // Checks if addRecipe() works and if getRecipes() works after adding recipes
         Recipe r1 = new Recipe("Pasta Carbonara", 2, profile);
@@ -136,8 +136,8 @@ public class ProfileTest {
         Recipe r3 = new Recipe("Pizza", 1, profile);
         Recipe r4 = new Recipe("Hamburger", 1, profile);
 
-    //     Assertions.assertTrue(profile.getRecipes().getSize() == 4, "The RecipeLibrary should have size 4");
-    //     Assertions.assertEquals(r1, profile.getRecipes().getRecipe(0), "r1 should be the first recipe in the RecipeLibrary");
-    //     Assertions.assertEquals(r4, profile.getRecipes().getRecipe(profile.getRecipes().getSize() - 1), "r4 should be the last recipe in the recipeLibrary");
-    // }
+        Assertions.assertTrue(profile.getRecipes().getSize() == 4, "The RecipeLibrary should have size 4");
+        Assertions.assertEquals(r1, profile.getRecipes().getRecipe(0), "r1 should be the first recipe in the RecipeLibrary");
+        Assertions.assertEquals(r4, profile.getRecipes().getRecipe(profile.getRecipes().getSize() - 1), "r4 should be the last recipe in the recipeLibrary");
+    }
 }
