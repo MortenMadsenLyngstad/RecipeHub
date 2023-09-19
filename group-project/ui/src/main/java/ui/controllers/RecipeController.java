@@ -37,7 +37,7 @@ public class RecipeController extends SuperController {
      * @throws IOException If there is an issue with loading Mainscreen.fxml
      */
     public void backButtonClick(ActionEvent event) throws IOException {
-        switchSceneMain(event, "Mainscreen.fxml");
+        switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
     }
 
     /**
