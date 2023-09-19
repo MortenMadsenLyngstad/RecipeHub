@@ -10,6 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
+/**
+ * Controller for displaying the information of a recipe on a RecipeSreen
+ */
 public class RecipeController extends SuperController {
 
     @FXML
@@ -27,10 +30,19 @@ public class RecipeController extends SuperController {
 
     private Recipe recipe;
 
+    /**
+     * Handels the click of the backButton, sends the user back to the mainscreen
+     * 
+     * @param event The click of the backButton
+     * @throws IOException If there is an issue with loading Mainscreen.fxml
+     */
     public void backButtonClick(ActionEvent event) throws IOException {
         switchSceneMain(event, "Mainscreen.fxml");
     }
 
+    /**
+     * Populates the RecipeScreen with the information from the recipe
+     */
     public void populate() {
         nameField.setText(recipe.getName());
         authorLabel.setText("Posted by: " + recipe.getAuthor().getUsername());
@@ -44,12 +56,17 @@ public class RecipeController extends SuperController {
         int i = 1;
         String s = "";
         for (String step : recipe.getSteps()) {
-            s += i + ".  " + step + "\n";
+            s += "Step " + i + ".  " + step + "\n";
             i++;
         }
         stepsLabel.setText(s);
     }
 
+    /**
+     * Sets the recipe for the controller
+     * 
+     * @param recipe The recipe to be set
+     */
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
     }
