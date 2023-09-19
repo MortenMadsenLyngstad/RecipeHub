@@ -81,8 +81,6 @@ public class MainscreenController extends SuperController{
             return;
         }
         titleLabel.setText(myBtn.getText());
-        // Uses makeRecipeLibrary temporarly
-        //Supposed to be the RecipeLibrary from the logged in profile
         loadGrid(currentProfile.getRecipes());
     }
 
