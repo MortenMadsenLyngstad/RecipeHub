@@ -9,10 +9,15 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class User_filehandler {
+public class UserFilehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
   private String filePath = Path.of(System.getProperty("user.home")).toString() + "/userinfo.csv";
 
+  /**
+   * Writes the username and password to a file
+   * @param username
+   * @param password
+   */
   public void writeUserinfo(String username, String password) {
     try {
       StringBuilder sb = new StringBuilder();
@@ -26,6 +31,11 @@ public class User_filehandler {
     }
   }
 
+    /**
+    * Reads the file and splits it into an arraylist of strings, which are then split into an arraylist of arraylists of strings. 
+    * This makes it easier to access the data in the file. 
+    * @return an arraylist of arraylists of strings or an empty arraylist if file isn't read
+    */
   public ArrayList<String> infoList() {
     ArrayList<String> listOfLines = new ArrayList<>();
     try (BufferedReader bufReader = new BufferedReader(
@@ -49,6 +59,10 @@ public class User_filehandler {
     return listOfLines;
   }
 
+  /**
+   * Gets the userinfo from the file and puts it into a hashtable
+   * @return a hashtable with the userinfo
+   */
   public Hashtable<String, String> getUserinfo() {
     ArrayList<String> listOfLines = infoList();
     for (int i = 0; i < listOfLines.size(); i++) {

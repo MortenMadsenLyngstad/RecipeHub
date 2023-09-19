@@ -126,7 +126,7 @@ public class ProfileTest {
     @DisplayName("Recipes tests")
     public void testRecipes() {
 
-        // Checks if getRecipes() works
+    //     // Checks if getRecipes() works
         Assertions.assertNotNull(profile.getRecipes(), "getREcipes() should return an empty RecipeLibrary");
         Assertions.assertTrue(profile.getRecipes().getSize() == 0, "The RecipeLibrary should be empty");
 
