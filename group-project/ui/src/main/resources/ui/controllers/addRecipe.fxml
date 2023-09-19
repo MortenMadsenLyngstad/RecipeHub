@@ -96,7 +96,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#selectPortions" text="7" />
               </items>
             </MenuButton>
-            <Button fx:id="SaveRecipeButten" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="226.0" layoutY="28.0" mnemonicParsing="false" onAction="#SaveRecipe" prefHeight="26.0" prefWidth="108.0" text="Save Reciepe" textAlignment="JUSTIFY">
+            <Button fx:id="SaveRecipeButten" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="226.0" layoutY="28.0" mnemonicParsing="false" onAction="#SaveRecipe" prefHeight="26.0" prefWidth="108.0" text="Save Recipe" textAlignment="JUSTIFY">
                <graphic>
                   <FontAwesomeIconView fill="#aef359" glyphName="CHECK" selectionFill="#aef359" stroke="BLACK" strokeWidth="0.5" />
                </graphic>
