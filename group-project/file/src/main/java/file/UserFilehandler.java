@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class User_filehandler {
+public class UserFilehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
   private String filePath = Path.of(System.getProperty("user.home")).toString() + "/userinfo.csv";
 
