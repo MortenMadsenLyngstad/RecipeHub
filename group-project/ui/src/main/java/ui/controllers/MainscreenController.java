@@ -117,7 +117,7 @@ public class MainscreenController extends SuperController{
         Button btn = new Button("Read more");
         btn.setOnAction(event -> {
             try {
-                switchSceneRecipe(event, recipe);
+                switchSceneRecipe(event, recipe, currentProfile);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -180,12 +180,13 @@ public class MainscreenController extends SuperController{
      * @param recipe - The recipe the user clicked on
      * @throws IOException
      */
-    protected void switchSceneRecipe(ActionEvent event, Recipe recipe) throws IOException {
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
         root = loader.load();
 
         RecipeController controller = loader.getController();
         controller.setRecipe(recipe);
+        controller.setProfile(profile);
         controller.populate();
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

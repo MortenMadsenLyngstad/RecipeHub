@@ -26,7 +26,7 @@ public class RecipeController extends SuperController{
     private Recipe recipe;
 
     public void backButtonClick(ActionEvent event) throws IOException {
-        switchSceneMain(event, "Mainscreen.fxml");
+        switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
     }
 
     public void populate() {
