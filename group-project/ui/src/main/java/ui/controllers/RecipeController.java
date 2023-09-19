@@ -46,7 +46,7 @@ public class RecipeController extends SuperController {
     public void populate() {
         nameField.setText(recipe.getName());
         authorLabel.setText("Posted by: " + recipe.getAuthor().getUsername());
-        descriptionLabel.setText(recipe.getDescription());
+        descriptionLabel.setText(recipe.getDescription() + "\nMakes " + recipe.getPortions() + " portions \n  ");
         for (String ingredient : recipe.getIngredients()) {
             ingredientsView.getItems().add(
                     recipe.getIngredientAmount(ingredient) + " " + recipe.getIngredientUnit(ingredient) + " : "
@@ -54,7 +54,7 @@ public class RecipeController extends SuperController {
         }
         ingredientsView.prefHeightProperty().bind(Bindings.size(ingredientsView.getItems()).multiply(25));
         int i = 1;
-        String s = "";
+        String s = "\n";
         for (String step : recipe.getSteps()) {
             s += "Step " + i + ".  " + step + "\n";
             i++;

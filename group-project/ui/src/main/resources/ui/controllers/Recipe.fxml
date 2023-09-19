@@ -37,7 +37,7 @@
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <ListView fx:id="ingredientsView" prefWidth="500.0" VBox.vgrow="ALWAYS" />
+                  <ListView fx:id="ingredientsView" minHeight="200.0" prefWidth="500.0" VBox.vgrow="ALWAYS" />
                   <Label fx:id="stepsLabel" lineSpacing="4.0" text="Steps" wrapText="true" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="16.0" />
