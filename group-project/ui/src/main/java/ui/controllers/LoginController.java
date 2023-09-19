@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import file.UserFilehandler;
 
-public class LoginController extends AbstractController{
+public class LoginController extends SuperController{
     private UserFilehandler userFilehandler = new UserFilehandler();
 
     @FXML
@@ -73,13 +73,5 @@ public class LoginController extends AbstractController{
             loginMessageLabel.setText("Incorrect username or password");
             return false;
         }
-    }
-
-    /**
-     * Sets the current profile to null
-     */
-    @Override
-    protected void currentProfile(Profile profile) {
-        currentProfile = null;
     }
 }

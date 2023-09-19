@@ -14,8 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-public class AddRecipeController extends AbstractController {
-    private Recipe newRecipe;
+public class AddRecipeController extends SuperController{
+    private Recipe newRecipe; 
     private AddRecipe_filehandler addRecipe_filehandler = new AddRecipe_filehandler();
 
     @FXML
@@ -232,10 +232,5 @@ public class AddRecipeController extends AbstractController {
      */
     public void backButtonClick(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
-    }
-
-    @Override
-    protected void currentProfile(Profile profile) {
-        currentProfile = profile;
     }
 }
