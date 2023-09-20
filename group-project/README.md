@@ -36,4 +36,4 @@ RecipeHub is a social media platform where you can make and share food recipes, 
 
 ## User Stories
 
-User stories for the app can be found [here](UserStories.md).
+User stories for the app can be found at `docs/userstories/userstories.md`

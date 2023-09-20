@@ -13,8 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-public class AddRecipeController extends SuperController{
-    private Recipe newRecipe; 
+public class AddRecipeController extends SuperController {
+    private Recipe newRecipe;
     private AddRecipeFilehandler addRecipe_filehandler = new AddRecipeFilehandler("/addedRecipes.ser");
 
     @FXML
@@ -84,15 +84,18 @@ public class AddRecipeController extends SuperController{
 
     /**
      * This method validates if an added ingredient follow the requierments:
-     *  - The ingredient name cannot be empty
-     *  - The amount must be an int
-     *  - There must be a selected property
+     * - The ingredient name cannot be empty
+     * - The amount must be an int
+     * - There must be a selected property
      * 
-     * If one or more off the inputs does not mett the requierments the user will recive feedback
+     * If one or more off the inputs does not mett the requierments the user will
+     * recive feedback
      * 
      * If the requirements are met, the ingredient will be added to the recipe
+     * 
      * @see Recipe.addIngredient(String, Double, String)
-     * When the ingredient is added the inputs are cleaned and ready to add more ingredients
+     *      When the ingredient is added the inputs are cleaned and ready to add
+     *      more ingredients
      * 
      * 
      */
@@ -138,10 +141,13 @@ public class AddRecipeController extends SuperController{
         s += "\n";
         Ingredients.setText(s);
     }
+
     /**
      * This methos checks if there is added an ingredient
-     * - If there is added an ingredient the AddIngredient pane will dissapear and the AddStepPane will show up
-     * - If there is not added an ingredient to the recipe the user will get feedback to add an ingredient first
+     * - If there is added an ingredient the AddIngredient pane will dissapear and
+     * the AddStepPane will show up
+     * - If there is not added an ingredient to the recipe the user will get
+     * feedback to add an ingredient first
      */
     public void addedAllIngredients() {
         if (newRecipe.getIngredients().isEmpty()) {
@@ -156,7 +162,8 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * This method changes the text on the menubutton where the user selects a property
+     * This method changes the text on the menubutton where the user selects a
+     * property
      * 
      * @param event Event when the user selects a property
      */
@@ -179,12 +186,12 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * This method adds the user given description to the recipe and show it to 
+     * This method adds the user given description to the recipe and show it to
      * the preview
      * 
      * If there is no added description the user get feedback to add an description
      */
-    public void AddDescription()  {
+    public void AddDescription() {
         if (validateDescrition()) {
             newRecipe.setDescription(AddDescriptionText.getText());
             Description.setText(AddDescriptionText.getText());
@@ -195,15 +202,14 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * this method checks if there is adden an descrition and checks that the descition is a string
-     * @return true if the descrition meets the requierments and false if it does not
+     * this method checks if there is adden an descrition and checks that the
+     * descition is a string
+     * 
+     * @return true if the descrition meets the requierments and false if it does
+     *         not
      */
     private boolean validateDescrition() {
-        if (!AddDescriptionText.getText().isEmpty() && AddDescriptionText.getText().matches("[A-Za-z]+")) {
-            return true;
-        } else {
-            return false;
-        }
+        return !AddDescriptionText.getText().isEmpty();
     }
 
     /**
@@ -215,7 +221,8 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * This method add the input step to the recipe and show it in the prewiew if the step meets the requierment
+     * This method add the input step to the recipe and show it in the prewiew if
+     * the step meets the requierment
      * 
      * If the added step doe not meet the requierments, the user gets feedback.
      */
@@ -232,7 +239,8 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * This method creates a string representation of the added step that will show up in the preview
+     * This method creates a string representation of the added step that will show
+     * up in the preview
      */
     private void createStepString() {
         String s = Ingredients.getText();
@@ -255,7 +263,8 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * This method clean the input variables after a step is added so the user can add more steps
+     * This method clean the input variables after a step is added so the user can
+     * add more steps
      */
     private void cleanStepInput() {
         AddStepText.deleteText(0, AddStepText.getText().length());
@@ -275,7 +284,7 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     *This method hides the AddStepPane and shows the PortionAndConfirmPane
+     * This method hides the AddStepPane and shows the PortionAndConfirmPane
      */
     private void addStepsNext() {
         AddStepPane.setVisible(false);
@@ -283,7 +292,8 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * This method validates if the user has selectet an amount of portions and saves the recipe to file if the amount is selected 
+     * This method validates if the user has selectet an amount of portions and
+     * saves the recipe to file if the amount is selected
      */
     public void SaveRecipe() {
         if (valdatePortions()) {
@@ -304,9 +314,9 @@ public class AddRecipeController extends SuperController{
         addRecipe_filehandler.SaveRecipe(newRecipe);
     }
 
-
     /**
      * This method checks if the user has selected an amount of portions.
+     * 
      * @return boolean true if portions is selected and false if not
      */
     private boolean valdatePortions() {
@@ -318,7 +328,9 @@ public class AddRecipeController extends SuperController{
     }
 
     /**
-     * This method changes the text on the seletedPortions MenuItem when the user selects an amount of portions
+     * This method changes the text on the seletedPortions MenuItem when the user
+     * selects an amount of portions
+     * 
      * @param event event when user clicks on an amount of portions
      */
     public void selectPortions(ActionEvent event) {
