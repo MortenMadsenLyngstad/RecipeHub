@@ -85,14 +85,11 @@ public class LoginController extends SuperController{
      * @param pword - String with the password for the profile
      */
     public void loadProfile(String uname, String pword) {
+        currentProfile = new Profile(uname, pword);
         for (Recipe r : addRecipeFilehandler.loadRecipeLibrary()) {
             if (r.getAuthor().getUsername().equals(uname)) {
-                currentProfile = r.getAuthor();
-                break;
+                currentProfile.addRecipe(r);
             }
-        }
-        if (currentProfile == null) {
-            currentProfile = new Profile(uname, pword);
         }
     }
 }

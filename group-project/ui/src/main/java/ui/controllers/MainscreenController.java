@@ -95,7 +95,7 @@ public class MainscreenController extends SuperController{
         gridPane.getChildren().clear();
 
         for (int i = 0; i < recipeLibrary.getSize(); i++) {
-            SplitPane splitPane = makeSplitPane(recipeLibrary.getRecipe(i));
+            SplitPane splitPane = makeSplitPane(recipeLibrary.getRecipe(recipeLibrary.getSize()-i-1));
             gridPane.add(splitPane, i % 4, i / 4);
         }
 
