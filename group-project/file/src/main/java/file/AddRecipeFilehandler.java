@@ -11,20 +11,20 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 
 public class AddRecipeFilehandler {
-    private String filePath = Path.of(System.getProperty("user.home")).toString() + "/addedRecipies.ser";
+    private String filePath;
     private RecipeLibrary library;
-    
-    public AddRecipeFilehandler() {
+
+    public AddRecipeFilehandler(String file) {
+        this.filePath = Path.of(System.getProperty("user.home")).toString() + file;
         this.library = loadRecipeLibrary();
-    } 
+    }
 
     public void SaveRecipe(Recipe r) {
-        library = loadRecipeLibrary();
         library.addRecipe(r);
 
         for (int i = 0; i < library.getSize(); i++) {
             library.getRecipe(i).setId(100 + i);
-            library.getRecipe(i).getAuthor().setId(i + 10000000);;
+            library.getRecipe(i).getAuthor().setId(i + 10000000);
         }
 
         try (final FileOutputStream fout = new FileOutputStream(new File(filePath));
@@ -38,7 +38,6 @@ public class AddRecipeFilehandler {
 
     public RecipeLibrary loadRecipeLibrary() {
         RecipeLibrary loadedlibrary = new RecipeLibrary();
-
         try (final FileInputStream fin = new FileInputStream(new File(filePath));
                 final ObjectInputStream in = new ObjectInputStream(fin)) {
 
@@ -50,6 +49,4 @@ public class AddRecipeFilehandler {
         }
         return loadedlibrary;
     }
-
 }
-

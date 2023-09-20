@@ -40,7 +40,7 @@ public class MainscreenController extends SuperController{
 
     private GridPane gridPane;
 
-    AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler();
+    AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("/addedRecipes.ser");
 
     /**
      * This method initializes the GridPane and the title
