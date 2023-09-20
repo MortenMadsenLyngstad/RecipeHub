@@ -75,8 +75,8 @@ In the first deliverable, we chose to make the app single device, with the possi
 
 ## Other relevant documentation
 
-There is documentation describing the project at the `root level` about structure, requirements and dependencies.  
-There is documentation about the core features in the finalized product and the app in general inside `group-project`.
+There is documentation about structure, requirements and dependencies [here](../../readme.md).  
+There is documentation about the core features in the finalized product and the app in general [here](../../group-project/README.md).
 
 ## Example data
 

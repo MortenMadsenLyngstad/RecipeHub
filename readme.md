@@ -1,6 +1,6 @@
 # Project Description
 
-This project is an application with both front-end and back-end. The project is structured into three main modules: Core, File, and UI.
+This project is an application with both front-end and back-end. It is structured into three main modules: Core, File, and UI.
 
 - The Core module contains the main logic of the application.
 - The File module is responsible for file handling.
