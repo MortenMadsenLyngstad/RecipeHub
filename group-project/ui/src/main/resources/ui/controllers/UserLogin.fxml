@@ -16,7 +16,7 @@
       <AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #AEF359;" BorderPane.alignment="CENTER">
          <children>
             <FontAwesomeIconView glyphName="SPOON" layoutX="163.0" layoutY="137.0" rotate="56.3" size="100" wrappingWidth="23.74609375" />
-            <Text layoutX="85.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="APP-NAME">
+            <Text layoutX="85.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RecipeHub">
                <font>
                   <Font size="36.0" />
                </font>
@@ -32,20 +32,19 @@
             <FontAwesomeIconView fill="#aef359" glyphName="USER" layoutX="76.0" layoutY="190.0" size="20" />
             <FontAwesomeIconView fill="#aef359" glyphName="LOCK" layoutX="77.0" layoutY="246.0" size="20" />
             <Button fx:id="loginButton" layoutX="129.0" layoutY="283.0" mnemonicParsing="false" onAction="#login" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #AEF359;" text="Login" />
-            <Hyperlink layoutX="122.0" layoutY="404.0" prefHeight="24.0" prefWidth="104.0" style="-fx-background-color: transparent;" text="Forgot password?" />
             <Hyperlink layoutX="135.0" layoutY="380.0" onAction="#switchToRegisterScreen" text="Sign up here!" />
             <Text layoutX="168.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="or">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text fill="#aef359" layoutX="121.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User login">
+            <Text fill="#aef359" layoutX="120.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User login">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="151.0" layoutY="95.0" size="40" />
-            <Label fx:id="loginMessageLabel" layoutX="101.0" layoutY="140.0" nodeOrientation="LEFT_TO_RIGHT" text="Enter username and password" />
+            <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="150.0" layoutY="95.0" size="40" />
+            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="60.0" layoutY="140.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="225.0" text="Enter username and password" textAlignment="CENTER" />
          </children>
       </AnchorPane>
    </right>

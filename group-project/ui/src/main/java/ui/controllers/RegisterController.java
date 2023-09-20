@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import file.UserFilehandler;
 
-public class RegisterController extends SuperController{
+public class RegisterController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler();
 
     @FXML
@@ -33,18 +33,18 @@ public class RegisterController extends SuperController{
     private Stage stage;
     @FXML
     private Parent root;
-    
+
     /**
      * Switches to the login screen
      * 
      * @param event
      * @throws IOException if the switchSceneMain method throws an
      *                     exception
+     * @see SuperController#switchSceneMain(ActionEvent, String)
      */
     public void switchToLoginScreen(ActionEvent event) throws IOException {
         switchSceneMain(event, "UserLogin.fxml");
     }
-
 
     /**
      * Registers the user if the register information is correct
@@ -52,7 +52,7 @@ public class RegisterController extends SuperController{
      * @param event
      * @throws IOException if the switchceneWithInfo method throws
      *                     an exception
-     * @see AbstractController#switchSceneWithInfo(ActionEvent, String, Profile)
+     * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
      */
     public void register(ActionEvent event) throws IOException {
         if (validateRegister(usernameField.getText(), passwordField.getText(), userFilehandler)) {
@@ -67,11 +67,19 @@ public class RegisterController extends SuperController{
      * @param pword
      * @return true if the register information is correct, false otherwise
      * 
-     * @see Profile#isValidPassword(String)
+     * @see Profile#isValidUsername(String)
+     * @see Profile#isValidPassword(String) 
+     * @see UserFilehandler#writeUserinfo(String, String)
      * @see UserFilehandler#getUserinfo()
      */
     public boolean validateRegister(String uname, String pword, UserFilehandler userFilehandler) {
+        if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
+                || confirmPasswordField.getText().isBlank()) {
+            registerMessageLabel.setText("Please enter a username and password");
+            return false;
+        }
         try {
+            Profile.isValidUsername(uname);
             Profile.isValidPassword(pword);
         } catch (IllegalArgumentException e) {
             registerMessageLabel.setText(e.getMessage());
@@ -79,10 +87,6 @@ public class RegisterController extends SuperController{
         }
         if (userFilehandler.getUserinfo().get(uname) != null) {
             registerMessageLabel.setText("Username already exists");
-            return false;
-        } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
-                || confirmPasswordField.getText().isBlank()) {
-            registerMessageLabel.setText("Please enter a username and password");
             return false;
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             registerMessageLabel.setText("Passwords do not match");

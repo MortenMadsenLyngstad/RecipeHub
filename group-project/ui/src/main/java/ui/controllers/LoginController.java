@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import file.AddRecipeFilehandler;
 import file.UserFilehandler;
 
-public class LoginController extends SuperController{
+public class LoginController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler();
 
     @FXML
@@ -34,7 +34,7 @@ public class LoginController extends SuperController{
      * @throws Exception   if the validateLogin method throws an exception
      * @throws IOException if the SwitchController.switchToMainScreen method throws
      *                     an exception
-     * @see SwitchController#switchSceneMain(ActionEvent, String)
+     * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
      */
     public void login(ActionEvent event) throws Exception {
         if (validateLogin(usernameField.getText(), passwordField.getText(), userFilehandler)) {
@@ -48,6 +48,7 @@ public class LoginController extends SuperController{
      * @param event
      * @throws IOException if the SwitchController.switchSceneMain method throws an
      *                     exception
+     * @see SuperController#switchSceneMain(ActionEvent, String)
      */
     public void switchToRegisterScreen(ActionEvent event) throws IOException {
         switchSceneMain(event, "RegisterScreen.fxml");
@@ -64,15 +65,15 @@ public class LoginController extends SuperController{
      * @see UserFilehandler#getUserinfo()
      */
     public boolean validateLogin(String uname, String pword, UserFilehandler userFilehandler) {
-        if (userFilehandler.getUserinfo().get(uname) == null) {
+        if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
+            loginMessageLabel.setText("Please enter a username and password");
+            return false;
+        } else if (userFilehandler.getUserinfo().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
         } else if (userFilehandler.getUserinfo().get(uname).equals(pword)) {
             loadProfile(uname, pword);
             return true;
-        } else if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
-            loginMessageLabel.setText("Please enter a username and password");
-            return false;
         } else {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
