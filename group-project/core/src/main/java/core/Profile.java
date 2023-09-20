@@ -19,6 +19,7 @@ public class Profile implements Serializable{
      * This constructor initializes the username, password and recipes
      * @param username - String value to set as username
      * @param password - String value to set as password
+     * @param name - String value is requierd to make this class Serializable
      */
     public Profile(String username, String password) {
         isValidUsername(username);
@@ -120,10 +121,19 @@ public class Profile implements Serializable{
         recipes.addRecipe(recipe);
     }
     
+
+    /** 
+     * This method will return the profiles id when the profile gets serialized
+     * @return the int value of the profile
+     */
     public int getId() {
         return id;
     }
 
+    /** 
+     * This method set an int value to id to make Porfile-class serializable.
+     * @param id - int value to make the profile serializable.
+     */
     public void setId(int id) {
         this.id = id;
     }

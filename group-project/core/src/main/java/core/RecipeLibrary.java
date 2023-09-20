@@ -15,11 +15,18 @@ public class RecipeLibrary implements Iterable<Recipe>, Serializable {
     private String name = "RecipeLibrary";
     private int id = 1;
     
-
+    /**
+     * This method returns the RecipeLibrarys id when the outputstream serializes the RecipeLibrarys-class.
+     * @return the RecipeLibrarys int id number
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * This method returns the RecipeLibrarys string name when the outputstream serializes the RecipeLibrary
+     * @return the RecipeLibrarys string name 
+     */
     public String getName() {
         return name;
     }
