@@ -17,10 +17,10 @@ public class AddRecipeFilehandler {
     /**
      * Contructor that reads the library from the file
      */
-    public AddRecipeFilehandler() {
+    public AddRecipeFilehandler(String file ) {
+        this.filePath = Path.of(System.getProperty("user.home")).toString() + file;
         this.library = loadRecipeLibrary();
     }
-
     /**
      * This method adds the new recipe to the library and 
      * saves the new library to the file with outputstream
