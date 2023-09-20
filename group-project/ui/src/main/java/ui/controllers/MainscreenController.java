@@ -21,6 +21,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -93,7 +94,14 @@ public class MainscreenController extends SuperController{
      */
     public void loadGrid(RecipeLibrary recipeLibrary) {
         gridPane.getChildren().clear();
-
+        if (recipeLibrary.getSize() == 0) {
+            Label label = new Label("No recipes added yet");
+            label.setFont(new Font(30));
+            scrollPane.setContent(label);
+            scrollPane.getContent().setTranslateX(194);
+            scrollPane.getContent().setTranslateY(105);
+            return;
+        }
         for (int i = 0; i < recipeLibrary.getSize(); i++) {
             SplitPane splitPane = makeSplitPane(recipeLibrary.getRecipe(recipeLibrary.getSize()-i-1));
             gridPane.add(splitPane, i % 4, i / 4);
