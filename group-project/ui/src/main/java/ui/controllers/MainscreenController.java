@@ -47,18 +47,6 @@ public class MainscreenController extends SuperController{
      */
     @FXML
     public void initialize() {
-        gridPane = new GridPane();
-        gridPane.setPrefWidth(scrollPane.getPrefWidth()-37); // Trekker fra scrollbar (17px) og padding (20px)
-        gridPane.setGridLinesVisible(true);
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
-        for (int i = 0; i < 4; i++) {
-            ColumnConstraints columnConstraint = new ColumnConstraints();
-            columnConstraint.setPercentWidth(25);
-            gridPane.getColumnConstraints().add(columnConstraint);
-        }
-
-        scrollPane.setContent(gridPane);
         loadAllRecipes();
     }
 
@@ -93,6 +81,18 @@ public class MainscreenController extends SuperController{
      * @param recipeLibrary - RecipeLibrary with with recipes to fill the grid with
      */
     public void loadGrid(RecipeLibrary recipeLibrary) {
+        gridPane = new GridPane();
+        gridPane.setPrefWidth(scrollPane.getPrefWidth()-37); // Trekker fra scrollbar (17px) og padding (20px)
+        gridPane.setGridLinesVisible(true);
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        for (int i = 0; i < 4; i++) {
+            ColumnConstraints columnConstraint = new ColumnConstraints();
+            columnConstraint.setPercentWidth(25);
+            gridPane.getColumnConstraints().add(columnConstraint);
+        }
+
+        scrollPane.setContent(gridPane);
         gridPane.getChildren().clear();
         if (recipeLibrary.getSize() == 0) {
             Label label = new Label("No recipes added yet");

@@ -199,7 +199,7 @@ public class AddRecipeController extends SuperController{
      * @return true if the descrition meets the requierments and false if it does not
      */
     private boolean validateDescrition() {
-        if (!AddDescriptionText.getText().isEmpty() && !AddDescriptionText.getText().matches("[A-Za-z]+")) {
+        if (!AddDescriptionText.getText().isEmpty() && AddDescriptionText.getText().matches("[A-Za-z]+")) {
             return true;
         } else {
             return false;
