@@ -5,6 +5,7 @@ import java.io.IOException;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
+import file.AddRecipeFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * This controller class is used to connect the mainscreeen to the logic in core
+ * @author Adrian Haabpiht Solberg
+ */
 public class MainscreenController extends SuperController{
     @FXML
     private ScrollPane scrollPane;
@@ -34,13 +39,13 @@ public class MainscreenController extends SuperController{
 
     private GridPane gridPane;
 
+    AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler();
+
     /**
      * This method initializes the GridPane and the title
      */
     @FXML
     public void initialize() {
-        titleLabel.setText(allBtn.getText());
-
         gridPane = new GridPane();
         gridPane.setPrefWidth(scrollPane.getPrefWidth()-37); // Trekker fra scrollbar (17px) og padding (20px)
         gridPane.setGridLinesVisible(true);
@@ -53,21 +58,19 @@ public class MainscreenController extends SuperController{
         }
 
         scrollPane.setContent(gridPane);
-        loadGrid(makeRecipeLibrary());
+        loadAllRecipes();
     }
 
     /**
      * This method will load the gridPane with all recipes when the All Recipes-button is clicked on
      */
     @FXML
-    public void loadAll() {
+    public void loadAllRecipes() {
         if (titleLabel.getText() ==  allBtn.getText()) {
             return;
         }
         titleLabel.setText(allBtn.getText());
-        // Uses makeRecipeLibrary temporarly
-        // Supposed to read all recipes from file
-        loadGrid(makeRecipeLibrary());
+        loadGrid(addRecipeFilehandler.loadRecipeLibrary());
 
     }
 
@@ -76,7 +79,7 @@ public class MainscreenController extends SuperController{
      * when the All Recipes-button is clicked on
      */
     @FXML
-    public void loadMy() {
+    public void loadMyRecipes() {
         if (titleLabel.getText() ==  myBtn.getText()) {
             return;
         }
@@ -92,9 +95,11 @@ public class MainscreenController extends SuperController{
         gridPane.getChildren().clear();
 
         for (int i = 0; i < recipeLibrary.getSize(); i++) {
-            SplitPane splitPane = makeSplitPane(recipeLibrary.getRecipe(i));
+            SplitPane splitPane = makeSplitPane(recipeLibrary.getRecipe(recipeLibrary.getSize()-i-1));
             gridPane.add(splitPane, i % 4, i / 4);
         }
+
+        gridPane.setFocusTraversable(true);
     }
 
     /**
@@ -138,20 +143,6 @@ public class MainscreenController extends SuperController{
     }
 
     /**
-     * Temporary method which makes a RecipeLibrary we can use
-     * @return RecipeLibrary filles with similar recipes
-     */
-    public RecipeLibrary makeRecipeLibrary() {
-        Profile profile = new Profile("Username123", "Password123");
-
-        RecipeLibrary recipeLibrary = new RecipeLibrary();
-        for (int i = 0; i < 15; i++) {
-            recipeLibrary.addRecipe(new Recipe("Sjokoladekake", 5, profile));
-        }
-        return recipeLibrary;
-    }
-
-    /**
      * This method will switch screen to addRecipe.fxml when the addRecipe button is clicked on
      * @param event - The event of the Add Recipe-button beign clicked on
      * @throws IOException
@@ -176,7 +167,7 @@ public class MainscreenController extends SuperController{
      * @param event - ActionEvent
      * @param file - The file you want to change to
      * @param recipe - The recipe the user clicked on
-     * @throws IOException
+     * @throws IOException if there are problems with the filehandling
      */
     protected void switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
