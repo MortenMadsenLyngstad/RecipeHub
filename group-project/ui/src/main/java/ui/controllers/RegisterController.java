@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import file.UserFilehandler;
 
 public class RegisterController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler();
+    private UserFilehandler userFilehandler = new UserFilehandler("/userinfo.csv");
 
     @FXML
     private Label registerMessageLabel;

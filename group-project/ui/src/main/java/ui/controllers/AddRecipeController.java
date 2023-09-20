@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 
 public class AddRecipeController extends SuperController{
     private Recipe newRecipe; 
-    private AddRecipeFilehandler addRecipe_filehandler = new AddRecipeFilehandler();
+    private AddRecipeFilehandler addRecipe_filehandler = new AddRecipeFilehandler("/addedRecipes.ser");
 
     @FXML
     private Button BackButton, AddName, AddIngredientButton, IngredientsNextButton, AddDescriptionButton, AddStepButton,

@@ -11,7 +11,16 @@ import java.util.Hashtable;
 
 public class UserFilehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-  private String filePath = Path.of(System.getProperty("user.home")).toString() + "/userinfo.csv";
+  private String filePath;
+
+  /**
+   * Constructor for UserFilehandler
+   * Used to create a UserFilehandler object with a custom filepath (used for testing)
+   * @param file
+   */
+  public UserFilehandler(String file) {
+    this.filePath = Path.of(System.getProperty("user.home")).toString() + file;
+  }
 
   /**
    * Writes the username and password to a file

@@ -14,7 +14,7 @@ import file.AddRecipeFilehandler;
 import file.UserFilehandler;
 
 public class LoginController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler();
+    private UserFilehandler userFilehandler = new UserFilehandler("/userinfo.csv");
 
     @FXML
     private Label loginMessageLabel;
@@ -25,7 +25,7 @@ public class LoginController extends SuperController {
     @FXML
     private PasswordField passwordField;
 
-    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler();
+    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("/addedRecipes.ser");
 
     /**
      * Logs the user in if the login information is correct
