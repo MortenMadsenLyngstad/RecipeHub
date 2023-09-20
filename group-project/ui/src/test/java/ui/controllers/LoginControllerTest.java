@@ -106,7 +106,7 @@ public class LoginControllerTest extends ApplicationTest {
 
         Platform.runLater(() -> {
             assertFalse(controller.validateLogin("", "", mockUserFileHandler));
-            assertEquals("Incorrect username or password", loginMessageLabel.getText());  
+            assertEquals("Please enter a username and password", loginMessageLabel.getText());  
         });
     }
 }
