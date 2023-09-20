@@ -29,10 +29,18 @@ public class Recipe implements Serializable{
         ingredientUnits = new HashMap<>();
     }
 
+    /**
+     * This method returns the profiles id when the outputstream serializes the Recipe-class.
+     * @return the recipes int id number
+     */
     public int getId() {
         return id;
     }
-
+    
+    /**
+     * This method sets the id to the recipe to make it serializable
+     * @param id int value to make the recipe serializable.
+     */
     public void setId(int id) {
         this.id = id;
     }

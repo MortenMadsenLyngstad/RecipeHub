@@ -26,7 +26,7 @@ public class AddRecipeFilehandlerTest {
 
     private void deleteFile() {
         try {
-            Files.delete(Path.of(System.getProperty("user.home")).resolve("addedRecipes.ser"));
+            Files.delete(Path.of(System.getProperty("user.home")).resolve("testAddedRecipes.ser"));
         } catch (IOException e) {
             System.out.println("Error deleting file");
             System.out.println(e.getMessage());

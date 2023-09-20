@@ -13,12 +13,24 @@ import java.nio.file.Path;
 public class AddRecipeFilehandler {
     private String filePath;
     private RecipeLibrary library;
-
-    public AddRecipeFilehandler(String file) {
+    
+    /**
+     * Contructor that reads the library from the file
+     */
+    public AddRecipeFilehandler(String file ) {
         this.filePath = Path.of(System.getProperty("user.home")).toString() + file;
         this.library = loadRecipeLibrary();
     }
-
+    /**
+     * This method adds the new recipe to the library and 
+     * saves the new library to the file with outputstream
+     * 
+     * To be able to serialize the library all the recices in the library
+     * and their belonging profile are set up with an int id before the library
+     * saved to the file
+     * 
+     * @param r Recipe fram the AddRecipeController
+     */
     public void SaveRecipe(Recipe r) {
         library.addRecipe(r);
 
@@ -36,6 +48,13 @@ public class AddRecipeFilehandler {
         }
     }
 
+
+    /**
+     * This nethod reads the RecipeLibrary from the file with inputstream
+     * 
+     * 
+     * @return RecipeLibrary that are read from the file
+     */
     public RecipeLibrary loadRecipeLibrary() {
         RecipeLibrary loadedlibrary = new RecipeLibrary();
         try (final FileInputStream fin = new FileInputStream(new File(filePath));
