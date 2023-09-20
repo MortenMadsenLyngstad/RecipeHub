@@ -16,7 +16,7 @@
       <AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #AEF359;" BorderPane.alignment="CENTER">
          <children>
             <FontAwesomeIconView glyphName="SPOON" layoutX="163.0" layoutY="137.0" rotate="56.3" size="100" wrappingWidth="23.74609375" />
-            <Text layoutX="85.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="APP-NAME">
+            <Text layoutX="85.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RecipeHub">
                <font>
                   <Font size="36.0" />
                </font>
@@ -38,15 +38,15 @@
                   <Font size="13.0" />
                </font>
             </Text>
-            <Text fill="#aef359" layoutX="130.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
+            <Text fill="#aef359" layoutX="129.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="151.0" layoutY="85.0" size="40" />
+            <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="150.0" layoutY="95.0" size="40" />
             <PasswordField fx:id="confirmPasswordField" layoutX="102.0" layoutY="279.0" promptText="Confirm password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
             <FontAwesomeIconView fill="#aef359" glyphName="LOCK" layoutX="78.0" layoutY="298.0" size="20" />
-            <Label fx:id="registerMessageLabel" layoutX="91.0" layoutY="140.0" text="Enter username and password" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" />
+            <Label fx:id="registerMessageLabel" alignment="CENTER" layoutX="60.0" layoutY="140.0" prefHeight="18.0" prefWidth="222.0" text="Enter username and password" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" />
          </children>
       </AnchorPane>
    </right>

@@ -44,7 +44,9 @@ public class AddRecipeFilehandler {
 
             loadedlibrary = (RecipeLibrary) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            if (new File(filePath).exists()) {
+                System.out.println(e.getMessage());
+            }
         }
         return loadedlibrary;
     }
