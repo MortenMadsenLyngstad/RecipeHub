@@ -40,7 +40,7 @@ public class MainscreenController extends SuperController{
 
     private GridPane gridPane;
 
-    AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("/addedRecipes.ser");
+    AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("recipes.json");
 
     /**
      * This method initializes the GridPane and the title
@@ -59,8 +59,7 @@ public class MainscreenController extends SuperController{
             return;
         }
         titleLabel.setText(allBtn.getText());
-        loadGrid(addRecipeFilehandler.loadRecipeLibrary());
-
+        loadGrid(addRecipeFilehandler.readRecipeLibrary());
     }
 
     /**

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import file.UserFilehandler;
 
 public class RegisterController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler("/userinfo.csv");
+    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
     private Label registerMessageLabel;
@@ -85,15 +85,15 @@ public class RegisterController extends SuperController {
             registerMessageLabel.setText(e.getMessage());
             return false;
         }
-        if (userFilehandler.getUserinfo().get(uname) != null) {
+        if (userFilehandler.readUsernamesAndPasswords().get(uname) != null) {
             registerMessageLabel.setText("Username already exists");
             return false;
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             registerMessageLabel.setText("Passwords do not match");
             return false;
         } else {
-            userFilehandler.writeUserinfo(uname, pword);
-            userFilehandler.getUserinfo().put(uname, pword);
+            userFilehandler.writeProfile(new Profile(uname, pword));
+            userFilehandler.readUsernamesAndPasswords().put(uname, pword);
             currentProfile = new Profile(uname, pword);
             return true;
         }

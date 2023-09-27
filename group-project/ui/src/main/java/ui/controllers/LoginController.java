@@ -14,7 +14,7 @@ import file.AddRecipeFilehandler;
 import file.UserFilehandler;
 
 public class LoginController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler("/userinfo.csv");
+    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
     private Label loginMessageLabel;
@@ -25,7 +25,7 @@ public class LoginController extends SuperController {
     @FXML
     private PasswordField passwordField;
 
-    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("/addedRecipes.ser");
+    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("recipes.json");
 
     /**
      * Logs the user in if the login information is correct
@@ -68,10 +68,10 @@ public class LoginController extends SuperController {
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
             return false;
-        } else if (userFilehandler.getUserinfo().get(uname) == null) {
+        } else if (userFilehandler.readUsernamesAndPasswords().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (userFilehandler.getUserinfo().get(uname).equals(pword)) {
+        } else if (userFilehandler.readUsernamesAndPasswords().get(uname).equals(pword)) {
             loadProfile(uname, pword);
             return true;
         } else {
@@ -87,8 +87,8 @@ public class LoginController extends SuperController {
      */
     public void loadProfile(String uname, String pword) {
         currentProfile = new Profile(uname, pword);
-        for (Recipe r : addRecipeFilehandler.loadRecipeLibrary()) {
-            if (r.getAuthor().getUsername().equals(uname)) {
+        for (Recipe r : addRecipeFilehandler.readRecipeLibrary()) {
+            if (r.getAuthor().equals(uname)) {
                 currentProfile.addRecipe(r);
             }
         }

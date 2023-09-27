@@ -1,18 +1,14 @@
 package core;
 
-import java.io.Serializable;
 import java.util.regex.Pattern;
 
 /**
  * This class is used to contain Profile information
  * @author Adrian Haabpiht Solberg
  */
-public class Profile implements Serializable{
-    private static final long serialVersionUID = -7470090944414208496L;
-    private int id = 0;
+public class Profile  {
     private String username;
     private String password;
-    private String name;
     private RecipeLibrary recipes;
 
     /**
@@ -24,7 +20,6 @@ public class Profile implements Serializable{
     public Profile(String username, String password) {
         isValidUsername(username);
         this.username = username;
-        this.name = username;
         isValidPassword(password);
         this.password = password;
         recipes = new RecipeLibrary();
@@ -119,22 +114,5 @@ public class Profile implements Serializable{
      */
     public void addRecipe(Recipe recipe) {
         recipes.addRecipe(recipe);
-    }
-    
-
-    /** 
-     * This method will return the profiles id when the profile gets serialized
-     * @return the int value of the profile
-     */
-    public int getId() {
-        return id;
-    }
-
-    /** 
-     * This method set an int value to id to make Porfile-class serializable.
-     * @param id - int value to make the profile serializable.
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 }

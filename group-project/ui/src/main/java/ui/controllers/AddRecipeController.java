@@ -15,7 +15,7 @@ import javafx.scene.text.Text;
 
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
-    private AddRecipeFilehandler addRecipe_filehandler = new AddRecipeFilehandler("/addedRecipes.ser");
+    private AddRecipeFilehandler addRecipe_filehandler = new AddRecipeFilehandler("recipes.json");
 
     @FXML
     private Button BackButton, AddName, AddIngredientButton, IngredientsNextButton, AddDescriptionButton, AddStepButton,
@@ -311,7 +311,7 @@ public class AddRecipeController extends SuperController {
      * @see AddRecipeFilehander.SaveRecipe(Recipe)
      */
     private void saveRecipeToLibrary() {
-        addRecipe_filehandler.SaveRecipe(newRecipe);
+        addRecipe_filehandler.writeRecipe(newRecipe);
     }
 
     /**

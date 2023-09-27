@@ -1,83 +1,90 @@
 package file;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
+import core.Profile;
 
 public class UserFilehandler {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-  private String filePath;
+  private Path filePath;
+  private final Gson gson;
 
   /**
    * Constructor for UserFilehandler
-   * Used to create a UserFilehandler object with a custom filepath (used for testing)
+   * Used to create a UserFilehandler object with a custom filepath (used for
+   * testing)
+   * 
    * @param file
    */
   public UserFilehandler(String file) {
-    this.filePath = Path.of(System.getProperty("user.home")).toString() + file;
+    this.filePath = Path.of(System.getProperty("user.home") + System.getProperty("file.separator") + file);
+    this.gson = new GsonBuilder().setPrettyPrinting().create();
+
+    if (!Files.exists(filePath)) {
+      try {
+        Files.createFile(filePath);
+      } catch (IOException e) {
+        System.out.println("Error creating file");
+        System.out.println(e.getMessage());
+      }
+    }
   }
 
-  /**
-   * Writes the username and password to a file
-   * @param username
-   * @param password
-   */
-  public void writeUserinfo(String username, String password) {
-    try {
-      StringBuilder sb = new StringBuilder();
-      sb.append(username + "," + password);
-      FileWriter filewriter = new FileWriter(new File(filePath), true);
-      filewriter.write(sb.toString() + "\n");
-      filewriter.close();
+  public List<Profile> readProfiles() {
+    try (Reader reader = new FileReader(filePath.toFile())) {
+      Type profileListType = new TypeToken<List<Profile>>() {
+      }.getType();
+      return gson.fromJson(reader, profileListType);
+    } catch (IOException e) {
+      System.out.println("Error reading from file");
+      System.out.println(e.getMessage());
+      return new ArrayList<>();
+    }
+  }
+
+  public void writeProfile(Profile profile) {
+    List<Profile> profiles = readProfiles();
+    profiles.add(profile);
+    try (Writer writer = new FileWriter(filePath.toFile())) {
+      gson.toJson(profiles, writer);
     } catch (IOException e) {
       System.out.println("Error writing to file");
       System.out.println(e.getMessage());
     }
   }
 
-    /**
-    * Reads the file and splits it into an arraylist of strings, which are then split into an arraylist of arraylists of strings. 
-    * This makes it easier to access the data in the file. 
-    * @return an arraylist of arraylists of strings or an empty arraylist if file isn't read
-    */
-  public ArrayList<String> infoList() {
-    ArrayList<String> listOfLines = new ArrayList<>();
-    try (BufferedReader bufReader = new BufferedReader(
-        new FileReader(new File(filePath)))) {
-      
-      String line = bufReader.readLine();
-      while (line != null) {
-        listOfLines.add(line);
-        line = bufReader.readLine();
-      }
-      bufReader.close();
-      for (int i = 0; i < listOfLines.size(); i++) {
-        listOfLines.get(i).split(",");
-      }
-      return listOfLines;
+  public Map<String, String> readUsernamesAndPasswords() {
+    Map<String, String> usernamePasswordMap = new HashMap<>();
 
-    } catch (IOException e) {
-      System.out.println("Error reading file");
-      System.out.println(e.getMessage());
-    }
-    return listOfLines;
-  }
+    List<Profile> profiles = readProfiles();
 
-  /**
-   * Gets the userinfo from the file and puts it into a hashtable
-   * @return a hashtable with the userinfo
-   */
-  public Hashtable<String, String> getUserinfo() {
-    ArrayList<String> listOfLines = infoList();
-    for (int i = 0; i < listOfLines.size(); i++) {
-      String[] split = listOfLines.get(i).split(",");
-      userinfo.put(split[0], split[1]);
+    for (Profile profile : profiles) {
+      String username = profile.getUsername();
+      String password = profile.getPassword();
+
+      // Check if the username is not already in the map (to handle duplicates if
+      // necessary)
+      if (!usernamePasswordMap.containsKey(username)) {
+        usernamePasswordMap.put(username, password);
+      }
     }
-    return userinfo;
+    return usernamePasswordMap;
   }
 }

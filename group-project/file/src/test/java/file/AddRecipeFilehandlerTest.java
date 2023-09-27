@@ -21,12 +21,12 @@ public class AddRecipeFilehandlerTest {
     @BeforeEach
     public void setup() {
         this.recipe = new Recipe("testRecipe", 1, new Profile("testUser", "Password123"));
-        this.addRecipeFilehandler = new AddRecipeFilehandler("/testAddedRecipes.ser");
+        this.addRecipeFilehandler = new AddRecipeFilehandler("testAddedRecipes.json");
     }
 
     private void deleteFile() {
         try {
-            Files.delete(Path.of(System.getProperty("user.home")).resolve("testAddedRecipes.ser"));
+            Files.delete(Path.of(System.getProperty("user.home")).resolve("testAddedRecipes.json"));
         } catch (IOException e) {
             System.out.println("Error deleting file");
             System.out.println(e.getMessage());
@@ -36,12 +36,12 @@ public class AddRecipeFilehandlerTest {
     @Test
     @DisplayName("Test if correct info is written to file")
     public void testSaveRecipe() {
-        addRecipeFilehandler.SaveRecipe(this.recipe);
-        RecipeLibrary recipeLibrary = addRecipeFilehandler.loadRecipeLibrary();
+        addRecipeFilehandler.writeRecipe(this.recipe);
+        RecipeLibrary recipeLibrary = addRecipeFilehandler.readRecipeLibrary();
         Recipe loadedRecipe = recipeLibrary.getRecipe(0);
         Assertions.assertEquals(this.recipe.getName(), loadedRecipe.getName(), "The file should contain the recipeName \"testRecipe\".");
         Assertions.assertEquals(this.recipe.getPortions(), loadedRecipe.getPortions(), "The recipe should have 1 portion.");
-        Assertions.assertEquals(this.recipe.getAuthor().getUsername(), loadedRecipe.getAuthor().getUsername(), "The recipe should have the author \"testUser\".");
+        Assertions.assertEquals(this.recipe.getAuthor(), loadedRecipe.getAuthor(), "The recipe should have the author \"testUser\".");
         deleteFile();
     }
 }

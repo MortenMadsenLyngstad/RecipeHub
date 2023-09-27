@@ -1,6 +1,5 @@
 package core;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,41 +7,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Recipe implements Serializable{
-    private static final long serialVersionUID = -8470090944414208496L;
-    private int id = 0;
+public class Recipe {
     private List<String> steps;
     private int portions;
     private String name;
     private String description;
     private Map<String, Double> ingredients;
     private Map<String, String> ingredientUnits;
-    private Profile author;
+    private String authorUsername;
+    // private Profile author;
 
     public Recipe(String name, int portions, Profile author) {
         setName(name);
         setPortions(portions);
-        this.author = author;
+        this.authorUsername = author.getUsername();
+        // this.author = author;
         author.addRecipe(this);
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();
-    }
-
-    /**
-     * This method returns the profiles id when the outputstream serializes the Recipe-class.
-     * @return the recipes int id number
-     */
-    public int getId() {
-        return id;
-    }
-    
-    /**
-     * This method sets the id to the recipe to make it serializable
-     * @param id int value to make the recipe serializable.
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -257,7 +240,7 @@ public class Recipe implements Serializable{
      * 
      * @return The author attribute of the recipe
      */
-    public Profile getAuthor() {
-        return author;
+    public String getAuthor() {
+        return authorUsername;
     }
 }
