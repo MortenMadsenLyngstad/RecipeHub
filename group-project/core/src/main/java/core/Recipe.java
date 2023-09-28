@@ -15,13 +15,11 @@ public class Recipe {
     private Map<String, Double> ingredients;
     private Map<String, String> ingredientUnits;
     private String authorUsername;
-    // private Profile author;
 
     public Recipe(String name, int portions, Profile author) {
         setName(name);
         setPortions(portions);
         this.authorUsername = author.getUsername();
-        // this.author = author;
         author.addRecipe(this);
         ingredients = new HashMap<>();
         steps = new ArrayList<>();

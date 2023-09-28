@@ -85,6 +85,8 @@ public class LoginController extends SuperController {
      * @param uname - String with the username for the profile
      * @param pword - String with the password for the profile
      */
+    // ! This is not a optimal way to get the recipes for the profile
+    // ! Find a way to save the recipes in the profile-file and load them from there
     public void loadProfile(String uname, String pword) {
         currentProfile = new Profile(uname, pword);
         for (Recipe r : addRecipeFilehandler.readRecipeLibrary()) {

@@ -17,6 +17,9 @@ public class AddRecipeFilehandler {
     private Path filePath;
     private final Gson gson;
 
+    // ! This class is very similar to UserFilehandler.java
+    // ! Consider refactoring to use a single class or abstract class?
+
     public AddRecipeFilehandler(String file) {
         this.filePath = Path.of(System.getProperty("user.home") + System.getProperty("file.separator") + file);
         this.gson = new GsonBuilder().setPrettyPrinting().create();
@@ -34,10 +37,6 @@ public class AddRecipeFilehandler {
     public void writeRecipe(Recipe recipe) {
         RecipeLibrary recipeLibrary = readRecipeLibrary();
 
-        if (recipeLibrary == null) {
-            recipeLibrary = new RecipeLibrary();
-        }
-
         recipeLibrary.addRecipe(recipe);
 
         try (Writer writer = new FileWriter(filePath.toFile())) {
@@ -52,7 +51,8 @@ public class AddRecipeFilehandler {
         try (Reader reader = new FileReader(filePath.toFile())) {
             recipeLibrary = gson.fromJson(reader, RecipeLibrary.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error reading from file");
+            System.out.println(e.getMessage());
         }
         if (recipeLibrary == null) {
             return new RecipeLibrary();

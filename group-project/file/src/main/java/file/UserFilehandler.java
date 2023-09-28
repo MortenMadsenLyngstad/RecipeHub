@@ -48,15 +48,19 @@ public class UserFilehandler {
   }
 
   public List<Profile> readProfiles() {
+    List<Profile> profiles = new ArrayList<>();
     try (Reader reader = new FileReader(filePath.toFile())) {
       Type profileListType = new TypeToken<List<Profile>>() {
       }.getType();
-      return gson.fromJson(reader, profileListType);
+      profiles = gson.fromJson(reader, profileListType);
     } catch (IOException e) {
       System.out.println("Error reading from file");
       System.out.println(e.getMessage());
+    }
+    if (profiles == null) {
       return new ArrayList<>();
     }
+    return profiles;
   }
 
   public void writeProfile(Profile profile) {

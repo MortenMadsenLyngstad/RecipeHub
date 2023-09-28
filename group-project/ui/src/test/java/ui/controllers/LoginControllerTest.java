@@ -48,65 +48,65 @@ public class LoginControllerTest extends ApplicationTest {
         loginMessageLabel = lookup("#loginMessageLabel").query();
     }
 
-    // @Test
-    // public void testValidateLoginWithValidCredentials() throws Exception {
-    //     userInfo.put("testuser", "Password123");
-    //     when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+    @Test
+    public void testValidateLoginWithValidCredentials() throws Exception {
+        userInfo.put("testuser", "Password123");
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
-    //     Platform.runLater(() -> {
-    //         usernameField.setText("testuser");
-    //         passwordField.setText("Password123");
-    //     });
+        Platform.runLater(() -> {
+            usernameField.setText("testuser");
+            passwordField.setText("Password123");
+        });
 
-    //     Platform.runLater(() -> {
-    //         assertTrue(controller.validateLogin("testuser", "Password123", mockUserFileHandler));
-    //         assertEquals("Enter username and password", loginMessageLabel.getText());
-    //     });
-    // }
+        Platform.runLater(() -> {
+            assertTrue(controller.validateLogin("testuser", "Password123", mockUserFileHandler));
+            assertEquals("Enter username and password", loginMessageLabel.getText());
+        });
+    }
 
-    // @Test
-    // public void testValidateLoginWithInvalidUsername() throws Exception {
-    //     when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+    @Test
+    public void testValidateLoginWithInvalidUsername() throws Exception {
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
-    //     Platform.runLater(() -> {
-    //         usernameField.setText("invaliduser");
-    //         passwordField.setText("Password123");
-    //     });
+        Platform.runLater(() -> {
+            usernameField.setText("invaliduser");
+            passwordField.setText("Password123");
+        });
 
-    //     Platform.runLater(() -> {
-    //         assertFalse(controller.validateLogin("invaliduser", "Password123", mockUserFileHandler));
-    //         assertEquals("Incorrect username or password", loginMessageLabel.getText());
-    //     });
-    // }
+        Platform.runLater(() -> {
+            assertFalse(controller.validateLogin("invaliduser", "Password123", mockUserFileHandler));
+            assertEquals("Incorrect username or password", loginMessageLabel.getText());
+        });
+    }
 
-    // @Test
-    // public void testValidateLoginWithIncorrectPassword() throws Exception {
-    //     userInfo.put("testuser", "Password123");
-    //     when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+    @Test
+    public void testValidateLoginWithIncorrectPassword() throws Exception {
+        userInfo.put("testuser", "Password123");
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
-    //     Platform.runLater(() -> {
-    //         usernameField.setText("testuser");
-    //         passwordField.setText("wrongpassword");
-    //     });
+        Platform.runLater(() -> {
+            usernameField.setText("testuser");
+            passwordField.setText("wrongpassword");
+        });
 
-    //     Platform.runLater(() -> {
-    //         assertFalse(controller.validateLogin("testuser", "wrongpassword", mockUserFileHandler));
-    //         assertEquals("Incorrect username or password", loginMessageLabel.getText());
-    //     });
-    // }
+        Platform.runLater(() -> {
+            assertFalse(controller.validateLogin("testuser", "wrongpassword", mockUserFileHandler));
+            assertEquals("Incorrect username or password", loginMessageLabel.getText());
+        });
+    }
 
-    // @Test
-    // public void testValidateLoginWithBlankFields() throws Exception {
-    //     when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+    @Test
+    public void testValidateLoginWithBlankFields() throws Exception {
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
-    //     Platform.runLater(() -> {
-    //         usernameField.setText("");
-    //         passwordField.setText("");
-    //     });
+        Platform.runLater(() -> {
+            usernameField.setText("");
+            passwordField.setText("");
+        });
 
-    //     Platform.runLater(() -> {
-    //         assertFalse(controller.validateLogin("", "", mockUserFileHandler));
-    //         assertEquals("Please enter a username and password", loginMessageLabel.getText());  
-    //     });
-    // }
+        Platform.runLater(() -> {
+            assertFalse(controller.validateLogin("", "", mockUserFileHandler));
+            assertEquals("Please enter a username and password", loginMessageLabel.getText());  
+        });
+    }
 }

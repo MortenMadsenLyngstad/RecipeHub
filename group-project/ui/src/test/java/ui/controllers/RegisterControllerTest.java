@@ -52,55 +52,55 @@ public class RegisterControllerTest extends ApplicationTest {
         registerMessageLabel = lookup("#registerMessageLabel").query();
     }
 
-    // @Test
-    // public void testValidateRegisterWithValidData() {
-    //     when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
+    @Test
+    public void testValidateRegisterWithValidData() {
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
 
-    //     Platform.runLater(() -> {
-    //         usernameField.setText("newuser");
-    //         passwordField.setText("Password123");
-    //         confirmPasswordField.setText("Password123");
-    //     });
+        Platform.runLater(() -> {
+            usernameField.setText("newuser");
+            passwordField.setText("Password123");
+            confirmPasswordField.setText("Password123");
+        });
 
-    //     Platform.runLater(() -> {
-    //         Assertions.assertTrue(controller.validateRegister("newuser", "Password123", mockUserFileHandler));
-    //         Assertions.assertEquals("Enter username and password", registerMessageLabel.getText());
-    //     });
-    // }
+        Platform.runLater(() -> {
+            Assertions.assertTrue(controller.validateRegister("newuser", "Password123", mockUserFileHandler));
+            Assertions.assertEquals("Enter username and password", registerMessageLabel.getText());
+        });
+    }
         
 
-    // @Test
-    // public void testValidateRegisterWithInvalidPassword() {
-    //     when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
+    @Test
+    public void testValidateRegisterWithInvalidPassword() {
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
 
-    //     Platform.runLater(() -> {
-    //         usernameField.setText("testuser");
-    //         passwordField.setText("weak");
-    //         confirmPasswordField.setText("weak");
-    //     });
+        Platform.runLater(() -> {
+            usernameField.setText("testuser");
+            passwordField.setText("weak");
+            confirmPasswordField.setText("weak");
+        });
 
-    //     Platform.runLater(() -> {
-    //         Assertions.assertFalse(controller.validateRegister("testuser", "weak",  mockUserFileHandler));
-    //         Assertions.assertEquals("Password is too short", registerMessageLabel.getText());
-    //     });
-    // }
+        Platform.runLater(() -> {
+            Assertions.assertFalse(controller.validateRegister("testuser", "weak",  mockUserFileHandler));
+            Assertions.assertEquals("Password is too short", registerMessageLabel.getText());
+        });
+    }
 
-    // @Test
-    // public void testValidateRegisterWithUsernameExists() {
-    //     userInfo.put("existinguser", "Password123");
-    //     when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
+    @Test
+    public void testValidateRegisterWithUsernameExists() {
+        userInfo.put("existinguser", "Password123");
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
 
-    //     // Set a username that already exists
-    //     Platform.runLater(() -> {
-    //         usernameField.setText("existinguser");
-    //         passwordField.setText("Password123");
-    //         confirmPasswordField.setText("Password123");
-    //     });
+        // Set a username that already exists
+        Platform.runLater(() -> {
+            usernameField.setText("existinguser");
+            passwordField.setText("Password123");
+            confirmPasswordField.setText("Password123");
+        });
 
-    //     // Use Platform.runLater() for Assertions as well
-    //     Platform.runLater(() -> {
-    //         assertFalse(controller.validateRegister("existinguser", "Password123", mockUserFileHandler));
-    //         assertEquals("Username already exists", registerMessageLabel.getText());
-    //     });
-    // }
+        // Use Platform.runLater() for Assertions as well
+        Platform.runLater(() -> {
+            assertFalse(controller.validateRegister("existinguser", "Password123", mockUserFileHandler));
+            assertEquals("Username already exists", registerMessageLabel.getText());
+        });
+    }
 }
