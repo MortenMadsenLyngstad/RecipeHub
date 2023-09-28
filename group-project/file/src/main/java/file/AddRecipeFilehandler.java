@@ -2,58 +2,40 @@ package file;
 
 import core.Recipe;
 import core.RecipeLibrary;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-public class AddRecipeFilehandler {
+public class AddRecipeFilehandler extends FileUtil {
     private Path filePath;
-    private final Gson gson;
 
-    // ! This class is very similar to UserFilehandler.java
-    // ! Consider refactoring to use a single class or abstract class?
-
+    /**
+     * This constructor initializes the filePath
+     * 
+     * @param file
+     */
     public AddRecipeFilehandler(String file) {
         this.filePath = Path.of(System.getProperty("user.home") + System.getProperty("file.separator") + file);
-        this.gson = new GsonBuilder().setPrettyPrinting().create();
-
-        if (!Files.exists(filePath)) {
-            try {
-                Files.createFile(filePath);
-            } catch (IOException e) {
-                System.out.println("Error creating file");
-                System.out.println(e.getMessage());
-            }
-        }
+        createFile(this.filePath);
     }
 
+    /**
+     * This method writes a recipe to the file
+     * 
+     * @param recipe - Recipe object to write
+     */
     public void writeRecipe(Recipe recipe) {
         RecipeLibrary recipeLibrary = readRecipeLibrary();
-
         recipeLibrary.addRecipe(recipe);
-
-        try (Writer writer = new FileWriter(filePath.toFile())) {
-            gson.toJson(recipeLibrary, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeFile(filePath, recipeLibrary);
     }
 
+    /**
+     * This method reads recipes from the file
+     * 
+     * @return - Returns a RecipeLibrary object
+     */
     public RecipeLibrary readRecipeLibrary() {
         RecipeLibrary recipeLibrary = null;
-        try (Reader reader = new FileReader(filePath.toFile())) {
-            recipeLibrary = gson.fromJson(reader, RecipeLibrary.class);
-        } catch (IOException e) {
-            System.out.println("Error reading from file");
-            System.out.println(e.getMessage());
-        }
+        recipeLibrary = readFile(filePath, recipeLibrary, RecipeLibrary.class);
         if (recipeLibrary == null) {
             return new RecipeLibrary();
         }

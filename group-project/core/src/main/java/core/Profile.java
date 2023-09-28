@@ -1,7 +1,7 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
-
 /**
  * This class is used to contain Profile information
  * @author Adrian Haabpiht Solberg
@@ -9,20 +9,20 @@ import java.util.regex.Pattern;
 public class Profile  {
     private String username;
     private String password;
-    private RecipeLibrary recipes;
+    private RecipeLibrary recipeLibrary;
+    private ArrayList<Recipe> recipes;
 
     /**
      * This constructor initializes the username, password and recipes
      * @param username - String value to set as username
      * @param password - String value to set as password
-     * @param name - String value is requierd to make this class Serializable
      */
     public Profile(String username, String password) {
         isValidUsername(username);
         this.username = username;
         isValidPassword(password);
         this.password = password;
-        recipes = new RecipeLibrary();
+        recipes = new ArrayList<>();
     }
 
     /**
@@ -104,15 +104,15 @@ public class Profile  {
      * @return RecipeLibrary with the profile's recipes
      */
     public RecipeLibrary getRecipes() {
-        return recipes;
+        recipeLibrary = new RecipeLibrary(recipes);
+        return recipeLibrary;
     }
 
     /**
      * This method adds the given recipe to the profile's recipes
-     * The method takes use of the validation in the RecipeLibrary method used
      * @param recipe - Recipe to add to the profile's recipes
      */
     public void addRecipe(Recipe recipe) {
-        recipes.addRecipe(recipe);
+        recipes.add(recipe);
     }
 }

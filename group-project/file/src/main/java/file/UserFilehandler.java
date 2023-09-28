@@ -1,81 +1,62 @@
 package file;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
-
 import core.Profile;
 
-public class UserFilehandler {
+public class UserFilehandler extends FileUtil {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
   private Path filePath;
-  private final Gson gson;
 
   /**
-   * Constructor for UserFilehandler
-   * Used to create a UserFilehandler object with a custom filepath (used for
-   * testing)
+   * This constructor initializes the filePath
    * 
    * @param file
    */
   public UserFilehandler(String file) {
     this.filePath = Path.of(System.getProperty("user.home") + System.getProperty("file.separator") + file);
-    this.gson = new GsonBuilder().setPrettyPrinting().create();
-
-    if (!Files.exists(filePath)) {
-      try {
-        Files.createFile(filePath);
-      } catch (IOException e) {
-        System.out.println("Error creating file");
-        System.out.println(e.getMessage());
-      }
-    }
+    createFile(this.filePath);
   }
 
+  /**
+   * This method writes a profile to the file
+   * 
+   * @param profile - Profile object to write
+   */
+  public void writeProfile(Profile profile) {
+    List<Profile> profiles = readProfiles();
+    profiles.add(profile);
+    writeFile(filePath, profiles);
+  }
+
+  /**
+   * This method reads profiles from the file
+   * 
+   * @return - Returns a list of profiles
+   */
   public List<Profile> readProfiles() {
     List<Profile> profiles = new ArrayList<>();
-    try (Reader reader = new FileReader(filePath.toFile())) {
-      Type profileListType = new TypeToken<List<Profile>>() {
-      }.getType();
-      profiles = gson.fromJson(reader, profileListType);
-    } catch (IOException e) {
-      System.out.println("Error reading from file");
-      System.out.println(e.getMessage());
-    }
+    Type profileListType = new TypeToken<List<Profile>>() {
+    }.getType();
+    profiles = readFile(filePath, profiles, profileListType);
     if (profiles == null) {
       return new ArrayList<>();
     }
     return profiles;
   }
 
-  public void writeProfile(Profile profile) {
-    List<Profile> profiles = readProfiles();
-    profiles.add(profile);
-    try (Writer writer = new FileWriter(filePath.toFile())) {
-      gson.toJson(profiles, writer);
-    } catch (IOException e) {
-      System.out.println("Error writing to file");
-      System.out.println(e.getMessage());
-    }
-  }
-
-  public Map<String, String> readUsernamesAndPasswords() {
-    Map<String, String> usernamePasswordMap = new HashMap<>();
+  /**
+   * This method reads usernames and passwords from the file
+   * 
+   * @return - Returns a hashtable with usernames as keys and passwords as values
+   */
+  public Hashtable<String, String> readUsernamesAndPasswords() {
+    Hashtable<String, String> userinfo = new Hashtable<>();
 
     List<Profile> profiles = readProfiles();
 
@@ -85,10 +66,10 @@ public class UserFilehandler {
 
       // Check if the username is not already in the map (to handle duplicates if
       // necessary)
-      if (!usernamePasswordMap.containsKey(username)) {
-        usernamePasswordMap.put(username, password);
+      if (!userinfo.containsKey(username)) {
+        userinfo.put(username, password);
       }
     }
-    return usernamePasswordMap;
+    return userinfo;
   }
 }

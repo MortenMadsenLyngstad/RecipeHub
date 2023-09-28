@@ -312,6 +312,7 @@ public class AddRecipeController extends SuperController {
      */
     private void saveRecipeToLibrary() {
         addRecipe_filehandler.writeRecipe(newRecipe);
+        currentProfile.addRecipe(newRecipe);
     }
 
     /**
