@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
  * @author Adrian Haabpiht Solberg
  */
 public class MainscreenController extends SuperController{
+
     @FXML
     private ScrollPane scrollPane;
 
@@ -38,15 +40,19 @@ public class MainscreenController extends SuperController{
     @FXML
     private Label titleLabel;
 
-    private GridPane gridPane;
+    @FXML
+    private TextField txtField;
 
-    RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
+    private RecipeLibrary allRecipes;
+    private RecipeLibrary currentLibrary;
+    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
 
     /**
      * This method initializes the GridPane and the title
      */
     @FXML
     public void initialize() {
+        allRecipes = recipeFilehandler.readRecipeLibrary();
         loadAllRecipes();
     }
 
@@ -59,7 +65,8 @@ public class MainscreenController extends SuperController{
             return;
         }
         titleLabel.setText(allBtn.getText());
-        loadGrid(recipeFilehandler.readRecipeLibrary());
+        currentLibrary = allRecipes;
+        load();
     }
 
     /**
@@ -72,7 +79,21 @@ public class MainscreenController extends SuperController{
             return;
         }
         titleLabel.setText(myBtn.getText());
-        loadGrid(currentProfile.getRecipes());
+        currentLibrary = currentProfile.getRecipes();
+        load();
+    }
+
+    /**
+     * This support method will decide how to load grid
+     * Made to hinder repetition of code
+     */
+    private void load() {
+        if (txtField.getText().isEmpty()) {
+            loadGrid(currentLibrary);
+        }
+        else {
+            search();
+        }
     }
 
     /**
@@ -80,7 +101,7 @@ public class MainscreenController extends SuperController{
      * @param recipeLibrary - RecipeLibrary with with recipes to fill the grid with
      */
     public void loadGrid(RecipeLibrary recipeLibrary) {
-        gridPane = new GridPane();
+        GridPane gridPane = new GridPane();
         gridPane.setPrefWidth(scrollPane.getPrefWidth()-37); // Trekker fra scrollbar (17px) og padding (20px)
         gridPane.setGridLinesVisible(true);
         gridPane.setHgap(10);
@@ -94,10 +115,10 @@ public class MainscreenController extends SuperController{
         scrollPane.setContent(gridPane);
         gridPane.getChildren().clear();
         if (recipeLibrary.getSize() == 0) {
-            Label label = new Label("No recipes added yet");
+            Label label = new Label("No recipes found");
             label.setFont(new Font(30));
             scrollPane.setContent(label);
-            scrollPane.getContent().setTranslateX(194);
+            scrollPane.getContent().setTranslateX(230);
             scrollPane.getContent().setTranslateY(105);
             return;
         }
@@ -190,5 +211,20 @@ public class MainscreenController extends SuperController{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    /**
+     * This method will handle searching for recipes
+     * It makes a modified RecipeLibrary, in accordance with the search, to be loaded in the grid
+     */
+    @FXML
+    public void search() {
+        RecipeLibrary modifiedLibrary = new RecipeLibrary();
+        for (Recipe recipe : currentLibrary) {
+            if (recipe.getName().trim().toLowerCase().contains(txtField.getText().trim().toLowerCase())) {
+                modifiedLibrary.addRecipe(recipe);
+            }
+        }
+        loadGrid(modifiedLibrary);
     }
 }
