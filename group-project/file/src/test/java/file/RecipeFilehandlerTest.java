@@ -13,20 +13,20 @@ import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
 
-public class AddRecipeFilehandlerTest {
-    private AddRecipeFilehandler addRecipeFilehandler;
+public class RecipeFilehandlerTest {
+    private RecipeFilehandler recipeFilehandler;
     private Recipe recipe;
 
 
     @BeforeEach
     public void setup() {
         this.recipe = new Recipe("testRecipe", 1, new Profile("testUser", "Password123"));
-        this.addRecipeFilehandler = new AddRecipeFilehandler("testAddedRecipes.json");
+        this.recipeFilehandler = new RecipeFilehandler("test.json");
     }
 
     private void deleteFile() {
         try {
-            Files.delete(Path.of(System.getProperty("user.home")).resolve("testAddedRecipes.json"));
+            Files.delete(Path.of(System.getProperty("user.home")).resolve("test.json"));
         } catch (IOException e) {
             System.out.println("Error deleting file");
             System.out.println(e.getMessage());
@@ -36,8 +36,8 @@ public class AddRecipeFilehandlerTest {
     @Test
     @DisplayName("Test if correct info is written to file")
     public void testSaveRecipe() {
-        addRecipeFilehandler.writeRecipe(this.recipe);
-        RecipeLibrary recipeLibrary = addRecipeFilehandler.readRecipeLibrary();
+        recipeFilehandler.writeRecipe(this.recipe);
+        RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
         Recipe loadedRecipe = recipeLibrary.getRecipe(0);
         Assertions.assertEquals(this.recipe.getName(), loadedRecipe.getName(), "The file should contain the recipeName \"testRecipe\".");
         Assertions.assertEquals(this.recipe.getPortions(), loadedRecipe.getPortions(), "The recipe should have 1 portion.");

@@ -5,7 +5,7 @@ import java.io.IOException;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
-import file.AddRecipeFilehandler;
+import file.RecipeFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +40,7 @@ public class MainscreenController extends SuperController{
 
     private GridPane gridPane;
 
-    AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("recipes.json");
+    RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
 
     /**
      * This method initializes the GridPane and the title
@@ -59,7 +59,7 @@ public class MainscreenController extends SuperController{
             return;
         }
         titleLabel.setText(allBtn.getText());
-        loadGrid(addRecipeFilehandler.readRecipeLibrary());
+        loadGrid(recipeFilehandler.readRecipeLibrary());
     }
 
     /**

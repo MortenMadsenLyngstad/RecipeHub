@@ -4,7 +4,7 @@ import core.Recipe;
 import core.RecipeLibrary;
 import java.nio.file.Path;
 
-public class AddRecipeFilehandler extends FileUtil {
+public class RecipeFilehandler extends FileUtil {
     private Path filePath;
 
     /**
@@ -12,7 +12,7 @@ public class AddRecipeFilehandler extends FileUtil {
      * 
      * @param file
      */
-    public AddRecipeFilehandler(String file) {
+    public RecipeFilehandler(String file) {
         this.filePath = Path.of(System.getProperty("user.home") + System.getProperty("file.separator") + file);
         createFile(this.filePath);
     }

@@ -1,6 +1,5 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 /**
  * This class is used to contain Profile information
@@ -10,7 +9,6 @@ public class Profile  {
     private String username;
     private String password;
     private RecipeLibrary recipeLibrary;
-    private ArrayList<Recipe> recipes;
 
     /**
      * This constructor initializes the username, password and recipes
@@ -22,7 +20,7 @@ public class Profile  {
         this.username = username;
         isValidPassword(password);
         this.password = password;
-        recipes = new ArrayList<>();
+        recipeLibrary = new RecipeLibrary();
     }
 
     /**
@@ -104,7 +102,6 @@ public class Profile  {
      * @return RecipeLibrary with the profile's recipes
      */
     public RecipeLibrary getRecipes() {
-        recipeLibrary = new RecipeLibrary(recipes);
         return recipeLibrary;
     }
 
@@ -113,6 +110,6 @@ public class Profile  {
      * @param recipe - Recipe to add to the profile's recipes
      */
     public void addRecipe(Recipe recipe) {
-        recipes.add(recipe);
+        recipeLibrary.addRecipe(recipe);
     }
 }

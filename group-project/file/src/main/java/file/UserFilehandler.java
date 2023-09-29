@@ -30,6 +30,12 @@ public class UserFilehandler extends FileUtil {
    */
   public void writeProfile(Profile profile) {
     List<Profile> profiles = readProfiles();
+
+    profiles.remove(profiles.stream()
+    .filter(p -> p.getUsername().equals(profile.getUsername()))
+    .findFirst()
+    .orElse(null));
+
     profiles.add(profile);
     writeFile(filePath, profiles);
   }
@@ -66,9 +72,7 @@ public class UserFilehandler extends FileUtil {
 
       // Check if the username is not already in the map (to handle duplicates if
       // necessary)
-      if (!userinfo.containsKey(username)) {
-        userinfo.put(username, password);
-      }
+      userinfo.put(username, password);
     }
     return userinfo;
   }

@@ -92,9 +92,9 @@ public class RegisterController extends SuperController {
             registerMessageLabel.setText("Passwords do not match");
             return false;
         } else {
-            userFilehandler.writeProfile(new Profile(uname, pword));
-            userFilehandler.readUsernamesAndPasswords().put(uname, pword);
             currentProfile = new Profile(uname, pword);
+            userFilehandler.writeProfile(currentProfile);
+            userFilehandler.readUsernamesAndPasswords().put(uname, pword);
             return true;
         }
     }

@@ -3,14 +3,12 @@ package ui.controllers;
 import java.io.IOException;
 
 import core.Profile;
-import core.Recipe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import file.AddRecipeFilehandler;
 import file.UserFilehandler;
 
 public class LoginController extends SuperController {
@@ -25,7 +23,6 @@ public class LoginController extends SuperController {
     @FXML
     private PasswordField passwordField;
 
-    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("recipes.json");
 
     /**
      * Logs the user in if the login information is correct
@@ -85,13 +82,10 @@ public class LoginController extends SuperController {
      * @param uname - String with the username for the profile
      * @param pword - String with the password for the profile
      */
-    // ! This is not a optimal way to get the recipes for the profile
-    // ! Find a way to save the recipes in the profile-file and load them from there
     public void loadProfile(String uname, String pword) {
-        currentProfile = new Profile(uname, pword);
-        for (Recipe r : addRecipeFilehandler.readRecipeLibrary()) {
-            if (r.getAuthor().equals(uname)) {
-                currentProfile.addRecipe(r);
+        for (Profile profile : userFilehandler.readProfiles()) {
+            if (profile.getUsername().equals(uname)) {
+                currentProfile = profile;
             }
         }
     }
