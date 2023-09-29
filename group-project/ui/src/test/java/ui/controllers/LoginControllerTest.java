@@ -51,7 +51,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     public void testValidateLoginWithValidCredentials() throws Exception {
         userInfo.put("testuser", "Password123");
-        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("testuser");
@@ -66,7 +66,7 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateLoginWithInvalidUsername() throws Exception {
-        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("invaliduser");
@@ -82,7 +82,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     public void testValidateLoginWithIncorrectPassword() throws Exception {
         userInfo.put("testuser", "Password123");
-        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("testuser");
@@ -97,7 +97,7 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateLoginWithBlankFields() throws Exception {
-        when(mockUserFileHandler.getUserinfo()).thenReturn(userInfo);
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("");

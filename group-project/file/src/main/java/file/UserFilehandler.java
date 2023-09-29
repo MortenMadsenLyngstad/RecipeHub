@@ -1,82 +1,78 @@
 package file;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
-public class UserFilehandler {
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import core.Profile;
+
+public class UserFilehandler extends FileUtil {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
-  private String filePath;
+  private Path filePath;
 
   /**
-   * Constructor for UserFilehandler
-   * Used to create a UserFilehandler object with a custom filepath (used for testing)
+   * This constructor initializes the filePath
+   * 
    * @param file
    */
   public UserFilehandler(String file) {
-    this.filePath = Path.of(System.getProperty("user.home")).toString() + file;
+    this.filePath = Path.of(System.getProperty("user.home") + System.getProperty("file.separator") + file);
+    createFile(this.filePath);
   }
 
   /**
-   * Writes the username and password to a file
-   * @param username
-   * @param password
+   * This method writes a profile to the file
+   * 
+   * @param profile - Profile object to write
    */
-  public void writeUserinfo(String username, String password) {
-    try {
-      StringBuilder sb = new StringBuilder();
-      sb.append(username + "," + password);
-      FileWriter filewriter = new FileWriter(new File(filePath), true);
-      filewriter.write(sb.toString() + "\n");
-      filewriter.close();
-    } catch (IOException e) {
-      System.out.println("Error writing to file");
-      System.out.println(e.getMessage());
-    }
-  }
+  public void writeProfile(Profile profile) {
+    List<Profile> profiles = readProfiles();
 
-    /**
-    * Reads the file and splits it into an arraylist of strings, which are then split into an arraylist of arraylists of strings. 
-    * This makes it easier to access the data in the file. 
-    * @return an arraylist of arraylists of strings or an empty arraylist if file isn't read
-    */
-  public ArrayList<String> infoList() {
-    ArrayList<String> listOfLines = new ArrayList<>();
-    try (BufferedReader bufReader = new BufferedReader(
-        new FileReader(new File(filePath)))) {
-      
-      String line = bufReader.readLine();
-      while (line != null) {
-        listOfLines.add(line);
-        line = bufReader.readLine();
-      }
-      bufReader.close();
-      for (int i = 0; i < listOfLines.size(); i++) {
-        listOfLines.get(i).split(",");
-      }
-      return listOfLines;
+    profiles.remove(profiles.stream()
+    .filter(p -> p.getUsername().equals(profile.getUsername()))
+    .findFirst()
+    .orElse(null));
 
-    } catch (IOException e) {
-      System.out.println("Error reading file");
-      System.out.println(e.getMessage());
-    }
-    return listOfLines;
+    profiles.add(profile);
+    writeFile(filePath, profiles);
   }
 
   /**
-   * Gets the userinfo from the file and puts it into a hashtable
-   * @return a hashtable with the userinfo
+   * This method reads profiles from the file
+   * 
+   * @return - Returns a list of profiles
    */
-  public Hashtable<String, String> getUserinfo() {
-    ArrayList<String> listOfLines = infoList();
-    for (int i = 0; i < listOfLines.size(); i++) {
-      String[] split = listOfLines.get(i).split(",");
-      userinfo.put(split[0], split[1]);
+  public List<Profile> readProfiles() {
+    List<Profile> profiles = new ArrayList<>();
+    Type profileListType = new TypeToken<List<Profile>>() {
+    }.getType();
+    profiles = readFile(filePath, profiles, profileListType);
+    if (profiles == null) {
+      return new ArrayList<>();
+    }
+    return profiles;
+  }
+
+  /**
+   * This method reads usernames and passwords from the file
+   * 
+   * @return - Returns a hashtable with usernames as keys and passwords as values
+   */
+  public Hashtable<String, String> readUsernamesAndPasswords() {
+    Hashtable<String, String> userinfo = new Hashtable<>();
+
+    List<Profile> profiles = readProfiles();
+
+    for (Profile profile : profiles) {
+      String username = profile.getUsername();
+      String password = profile.getPassword();
+
+      // Check if the username is not already in the map (to handle duplicates if
+      // necessary)
+      userinfo.put(username, password);
     }
     return userinfo;
   }
