@@ -52,7 +52,7 @@ public class MainscreenController extends SuperController{
      */
     @FXML
     public void initialize() {
-        allRecipes = addRecipeFilehandler.loadRecipeLibrary();
+        allRecipes = recipeFilehandler.readRecipeLibrary();
         loadAllRecipes();
     }
 
