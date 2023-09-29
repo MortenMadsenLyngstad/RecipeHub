@@ -5,7 +5,7 @@ import java.io.IOException;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
-import file.AddRecipeFilehandler;
+import file.RecipeFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +45,7 @@ public class MainscreenController extends SuperController{
 
     private RecipeLibrary allRecipes;
     private RecipeLibrary currentLibrary;
-    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("/addedRecipes.ser");
+    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
 
     /**
      * This method initializes the GridPane and the title

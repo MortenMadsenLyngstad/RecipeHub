@@ -3,7 +3,8 @@ package ui.controllers;
 import java.io.IOException;
 
 import core.Recipe;
-import file.AddRecipeFilehandler;
+import file.RecipeFilehandler;
+import file.UserFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +16,8 @@ import javafx.scene.text.Text;
 
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
-    private AddRecipeFilehandler addRecipe_filehandler = new AddRecipeFilehandler("/addedRecipes.ser");
+    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
+    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
     private Button BackButton, AddName, AddIngredientButton, IngredientsNextButton, AddDescriptionButton, AddStepButton,
@@ -306,12 +308,14 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method uses the AddReciepFilehandler to save the Recipe to file
-     * 
-     * @see AddRecipeFilehander.SaveRecipe(Recipe)
+     * This method uses the RecipeFilehandler to save the Recipe to file
+     * It also saves the recipe to the logged in profile
+     * @see RecipeFilehandler#writeRecipe(Recipe)
+     * @see UserFilehandler#writeProfile(Profile)
      */
     private void saveRecipeToLibrary() {
-        addRecipe_filehandler.SaveRecipe(newRecipe);
+        recipeFilehandler.writeRecipe(newRecipe);
+        userFilehandler.writeProfile(currentProfile);
     }
 
     /**

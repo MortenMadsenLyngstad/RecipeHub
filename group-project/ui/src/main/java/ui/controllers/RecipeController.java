@@ -45,7 +45,7 @@ public class RecipeController extends SuperController {
      */
     public void populate() {
         nameField.setText(recipe.getName());
-        authorLabel.setText("Posted by: " + recipe.getAuthor().getUsername());
+        authorLabel.setText("Posted by: " + recipe.getAuthor());
         descriptionLabel.setText(recipe.getDescription() + "\nMakes " + recipe.getPortions() + " portions \n  ");
         for (String ingredient : recipe.getIngredients()) {
             ingredientsView.getItems().add(

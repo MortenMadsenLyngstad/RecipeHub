@@ -3,18 +3,16 @@ package ui.controllers;
 import java.io.IOException;
 
 import core.Profile;
-import core.Recipe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import file.AddRecipeFilehandler;
 import file.UserFilehandler;
 
 public class LoginController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler("/userinfo.csv");
+    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
     private Label loginMessageLabel;
@@ -25,7 +23,6 @@ public class LoginController extends SuperController {
     @FXML
     private PasswordField passwordField;
 
-    private AddRecipeFilehandler addRecipeFilehandler = new AddRecipeFilehandler("/addedRecipes.ser");
 
     /**
      * Logs the user in if the login information is correct
@@ -68,10 +65,10 @@ public class LoginController extends SuperController {
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
             return false;
-        } else if (userFilehandler.getUserinfo().get(uname) == null) {
+        } else if (userFilehandler.readUsernamesAndPasswords().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (userFilehandler.getUserinfo().get(uname).equals(pword)) {
+        } else if (userFilehandler.readUsernamesAndPasswords().get(uname).equals(pword)) {
             loadProfile(uname, pword);
             return true;
         } else {
@@ -86,10 +83,9 @@ public class LoginController extends SuperController {
      * @param pword - String with the password for the profile
      */
     public void loadProfile(String uname, String pword) {
-        currentProfile = new Profile(uname, pword);
-        for (Recipe r : addRecipeFilehandler.loadRecipeLibrary()) {
-            if (r.getAuthor().getUsername().equals(uname)) {
-                currentProfile.addRecipe(r);
+        for (Profile profile : userFilehandler.readProfiles()) {
+            if (profile.getUsername().equals(uname)) {
+                currentProfile = profile;
             }
         }
     }

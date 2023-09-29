@@ -54,7 +54,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateRegisterWithValidData() {
-        when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("newuser");
@@ -71,7 +71,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateRegisterWithInvalidPassword() {
-        when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
 
         Platform.runLater(() -> {
             usernameField.setText("testuser");
@@ -88,7 +88,7 @@ public class RegisterControllerTest extends ApplicationTest {
     @Test
     public void testValidateRegisterWithUsernameExists() {
         userInfo.put("existinguser", "Password123");
-        when(mockUserFileHandler.getUserinfo()).thenReturn(this.userInfo);
+        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
 
         // Set a username that already exists
         Platform.runLater(() -> {

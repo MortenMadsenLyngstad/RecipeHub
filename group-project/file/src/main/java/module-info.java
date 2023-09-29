@@ -1,4 +1,5 @@
 module file {
-    requires core;
+    requires transitive core;
+    requires com.google.gson;
     exports file; 
 }
