@@ -80,6 +80,24 @@
                         </execution>
                     </executions>
                 </plugin>
+                 <!-- Run the checkstyle code quality tool -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <failOnViolation>false</failOnViolation>
+                    </configuration>
+                </plugin>
+                <!-- Run the spotbugs code quality tool -->
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.7.3.6</version>
+                    <configuration>
+                        <failOnError>false</failOnError>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
