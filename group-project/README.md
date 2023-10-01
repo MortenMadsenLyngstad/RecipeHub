@@ -70,3 +70,22 @@ The user is in need of an application where they can easily find new recipes to 
 
 - Scroll through a list/feed of recipes
 - Click on a recipee to get in depth information about it (ingredients, preperation steps, etc.)
+
+
+### User story 3: Collecting your favorite recipes
+
+As a home cook, you want to mark a recipe you discovered as one of your favorites, so that you can go back to it at a later occasion.
+
+The user is in need of an application where they can easily mark a recipe as a favorite. It should be easy to find this recipe at a later date, and the user should be able to see all their favorites. In addition, it should be visible which recipes are marked as favorites.
+
+#### Important to be able to see
+
+- All of the user's favorite recipes listed for the user to explore
+- Which recipes are marked as favorites
+- Where you can find your favorite recipes
+
+#### Important to be able to do
+
+- Scroll through a list/feed of your favorite recipes
+- Mark a recipe as a favorite
+- Search for specific recipes among you favorites
