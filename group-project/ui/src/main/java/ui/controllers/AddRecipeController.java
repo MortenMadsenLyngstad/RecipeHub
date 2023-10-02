@@ -29,25 +29,22 @@ public class AddRecipeController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
-    private Button BackButton, AddName, AddIngredientButton, IngredientsNextButton, AddDescriptionButton, AddStepButton,
-            AddStepNext, SaveRecipeButten, RemoveIngredient, RemoveStep;
+    private Button addName, removeStep, backButton, removeIngredient, addIngredientButton, saveRecipeButten, ingredientsNextButton, addStepNext, addDescriptionButton, addStepButton;
 
     @FXML
-    private Pane RecipeNamePane, AddIngredientPane, DescriptionPane, AddStepPane, PortionAndConfirmPane;
+    private Pane recipeNamePane, addIngredientPane, descriptionPane, portionAndConfirmPane, addStepPane;
 
     @FXML
-    private TextField RecipeName, IngredientNameInput, IngredientAmount, AddDescriptionText, AddStepText;
+    private TextField recipeName, ingredientNameInput, ingredientAmount, addStepText, addDescriptionText;
 
     @FXML
-    private MenuButton IngredientPropertyMenu, NumberOfPortionsMenu;
+    private MenuButton ingredientPropertyMenu, numberOfPortionsMenu;
 
     @FXML
-    private Text NameError, DescriptionError, PropertyError, AmountError,
-            IngredientNameError, NoAddedIngredientError, NoAddedStepError, NotValidStepError, NoAddedPortionsError;
+    private Text nameError, descriptionError, propertyError, noAddedPortionsError, amountError, notValidStepError, ingredientNameError, noAddedIngredientError, noAddedStepError;
 
     @FXML
-    private Label Description, Name, IngredientAndSteps;
-
+    private Label description, name, ingredientAndSteps;
 
     /**
      * This method is called when the user clicks on the AddName button
@@ -60,21 +57,22 @@ public class AddRecipeController extends SuperController {
      * DescriptionPane will show up
      * 
      * @throws IllegalArgumentException if the createNewRecipe method throws an
-     * illegal argument exception if the name is empty
+     *                                  illegal argument exception if the name is
+     *                                  empty
      * 
-     * @see #setName(String)
-     * */
+     * @see Recipe #Recipe(String, int, Profile)
+     */
     public void createRecipe() throws IllegalArgumentException {
         if (validateRecipeName()) {
-            this.newRecipe = new Recipe(RecipeName.getText(), 1, currentProfile);
-            RecipeNamePane.setVisible(false);
-            Name.setText(newRecipe.getName());
-            DescriptionPane.setVisible(true);
+            this.newRecipe = new Recipe(recipeName.getText(), 1, currentProfile);
+            recipeNamePane.setVisible(false);
+            name.setText(newRecipe.getName());
+            descriptionPane.setVisible(true);
         } else {
-            NameError.setVisible(true);
-        } 
+            nameError.setVisible(true);
+        }
     }
-    
+
     /**
      * This method is called when the user clicks on the AddName button
      * the method validates if the user has added a name to the recipe
@@ -83,27 +81,28 @@ public class AddRecipeController extends SuperController {
      * 
      */
     public boolean validateRecipeName() {
-        if (!RecipeName.getText().isBlank()) {
-           return true;
+        if (!recipeName.getText().isBlank()) {
+            return true;
         } else {
             return false;
         }
     }
-
 
     /**
      * This method adds the user given description to the recipe and show it to
      * the preview
      * 
      * If there is no added description the user get feedback to add an description
+     * 
+     * @see Recipe #setDescription(String)
      */
-    public void AddDescription() {
+    public void addDescription() {
         if (validateDescrition()) {
-            newRecipe.setDescription(AddDescriptionText.getText());
-            Description.setText(AddDescriptionText.getText());
+            newRecipe.setDescription(addDescriptionText.getText());
+            description.setText(addDescriptionText.getText());
             cleanDescriptionButtons();
         } else {
-            DescriptionError.setVisible(true);
+            descriptionError.setVisible(true);
         }
     }
 
@@ -115,44 +114,41 @@ public class AddRecipeController extends SuperController {
      *         not
      */
     private boolean validateDescrition() {
-        return !AddDescriptionText.getText().isEmpty();
+        return !addDescriptionText.getText().isEmpty();
     }
 
     /**
      * This method removes the AddDescritionPane and show the AddIngredientPane
      */
     private void cleanDescriptionButtons() {
-        DescriptionPane.setVisible(false);
-        AddIngredientPane.setVisible(true);
+        descriptionPane.setVisible(false);
+        addIngredientPane.setVisible(true);
     }
 
     /**
      * This method validates if an added ingredient follow the requierments:
-     * - The ingredient name cannot be empty
-     * - The amount must be an int
-     * - There must be a selected property
-     * 
+     *
      * If one or more off the inputs does not mett the requierments the user will
      * recive feedback
      * 
      * If the requirements are met, the ingredient will be added to the recipe
      * 
-     * @see Recipe.addIngredient(String, Double, String)
+     * @see Recipe #addIngredient(String, Double, String)
      *      When the ingredient is added the inputs are cleaned and ready to add
      *      more ingredients
      */
     public void addIngredient() {
         if (validateIngredient()) {
-            newRecipe.addIngredient(IngredientNameInput.getText(), Double.parseDouble(IngredientAmount.getText()),
-                    IngredientPropertyMenu.getText());
-            newRecipe.setIngredientUnit(IngredientNameInput.getText(), IngredientPropertyMenu.getText());
+            newRecipe.addIngredient(ingredientNameInput.getText(), Double.parseDouble(ingredientAmount.getText()),
+                    ingredientPropertyMenu.getText());
+            newRecipe.setIngredientUnit(ingredientNameInput.getText(), ingredientPropertyMenu.getText());
             showIngredientPreview();
             cleanIngredientButtons();
-            AmountError.setVisible(false);
-            IngredientNameError.setVisible(false);
-            PropertyError.setVisible(false);
-            NoAddedIngredientError.setVisible(false);
-            RemoveIngredient.setVisible(true);
+            amountError.setVisible(false);
+            ingredientNameError.setVisible(false);
+            propertyError.setVisible(false);
+            noAddedIngredientError.setVisible(false);
+            removeIngredient.setVisible(true);
         } else {
             ingredientError();
         }
@@ -165,8 +161,8 @@ public class AddRecipeController extends SuperController {
      *         does not
      */
     private boolean validateIngredient() {
-        if (!IngredientNameInput.getText().isEmpty() && IngredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")
-                && !IngredientPropertyMenu.getText().equals("Property")) {
+        if (!ingredientNameInput.getText().isEmpty() && ingredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")
+                && !ingredientPropertyMenu.getText().equals("Property")) {
             return true;
         } else {
             return false;
@@ -177,9 +173,10 @@ public class AddRecipeController extends SuperController {
      * This method creats a string representation of the added string
      */
     private void showIngredientPreview() {
-        String s = IngredientAndSteps.getText();
-        s +=  newRecipe.getIngredientAmount(IngredientNameInput.getText()) + IngredientPropertyMenu.getText() + "\t" + "\t" + IngredientNameInput.getText() + "\n";
-        IngredientAndSteps.setText(s);
+        String s = ingredientAndSteps.getText();
+        s += newRecipe.getIngredientAmount(ingredientNameInput.getText()) + ingredientPropertyMenu.getText() + "\t"
+                + "\t" + ingredientNameInput.getText() + "\n";
+        ingredientAndSteps.setText(s);
     }
 
     /**
@@ -187,25 +184,25 @@ public class AddRecipeController extends SuperController {
      * requierments and gives feedback to the user
      */
     private void ingredientError() {
-        if (IngredientNameInput.getText().isEmpty() || IngredientNameInput.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")) {
-            IngredientNameError.setVisible(true);
+        if (ingredientNameInput.getText().isEmpty()
+                || ingredientNameInput.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")) {
+            ingredientNameError.setVisible(true);
         } else {
-            IngredientNameError.setVisible(false);
+            ingredientNameError.setVisible(false);
         }
 
-        if (!IngredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$") || IngredientAmount.getText().isEmpty()) {
-            AmountError.setVisible(true);
+        if (!ingredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$") || ingredientAmount.getText().isEmpty()) {
+            amountError.setVisible(true);
         } else {
-            AmountError.setVisible(false);
+            amountError.setVisible(false);
         }
 
-        if (IngredientPropertyMenu.getText().equals("Property")) {
-            PropertyError.setVisible(true);
+        if (ingredientPropertyMenu.getText().equals("Property")) {
+            propertyError.setVisible(true);
         } else {
-            PropertyError.setVisible(false);
+            propertyError.setVisible(false);
         }
     }
-
 
     /**
      * This method changes the text on the menubutton where the user selects a
@@ -216,7 +213,7 @@ public class AddRecipeController extends SuperController {
     public void selectProperty(ActionEvent event) {
         MenuItem selectedProperty = (MenuItem) event.getSource();
         String PropertyAsText = selectedProperty.getText();
-        IngredientPropertyMenu.setText(PropertyAsText);
+        ingredientPropertyMenu.setText(PropertyAsText);
     }
 
     /**
@@ -224,11 +221,11 @@ public class AddRecipeController extends SuperController {
      * so the user can add more ingredients
      */
     private void cleanIngredientButtons() {
-        IngredientNameInput.deleteText(0, IngredientNameInput.getText().length());
-        IngredientNameInput.setPromptText("Ingredient Name");
-        IngredientAmount.deleteText(0, IngredientAmount.getText().length());
-        IngredientAmount.setPromptText("Amount");
-        IngredientPropertyMenu.setText("Property");
+        ingredientNameInput.deleteText(0, ingredientNameInput.getText().length());
+        ingredientNameInput.setPromptText("Ingredient Name");
+        ingredientAmount.deleteText(0, ingredientAmount.getText().length());
+        ingredientAmount.setPromptText("Amount");
+        ingredientPropertyMenu.setText("Property");
     }
 
     /**
@@ -240,12 +237,12 @@ public class AddRecipeController extends SuperController {
      */
     public void addedAllIngredients() {
         if (newRecipe.getIngredients().isEmpty()) {
-            NoAddedIngredientError.setVisible(true);
+            noAddedIngredientError.setVisible(true);
         } else {
-            NoAddedIngredientError.setVisible(false);
-            AddIngredientPane.setVisible(false);
-            AddStepPane.setVisible(true);
-            IngredientAndSteps.setText(IngredientAndSteps.getText() + "\n" + "\n");
+            noAddedIngredientError.setVisible(false);
+            addIngredientPane.setVisible(false);
+            addStepPane.setVisible(true);
+            ingredientAndSteps.setText(ingredientAndSteps.getText() + "\n" + "\n");
         }
 
     }
@@ -253,20 +250,20 @@ public class AddRecipeController extends SuperController {
     /**
      * This method removes the last added ingredient from the recipe and the preview
      */
-    public void RemoveIngredient() {
-        List<String> ingredients =  new ArrayList<>(newRecipe.getIngredients());
+    public void removeIngredient() {
+        List<String> ingredients = new ArrayList<>(newRecipe.getIngredients());
         String ingredient = ingredients.get(0);
         newRecipe.removeIngredient(ingredient);
-        String[] s = IngredientAndSteps.getText().split("\n");
+        String[] s = ingredientAndSteps.getText().split("\n");
         if (s.length >= 2) {
             String newIngredientAndSteps = "";
             for (int i = 0; i < s.length - 1; i++) {
                 newIngredientAndSteps += s[i] + "\n";
             }
-            IngredientAndSteps.setText(newIngredientAndSteps);
+            ingredientAndSteps.setText(newIngredientAndSteps);
         } else {
-            IngredientAndSteps.setText("");
-            RemoveIngredient.setVisible(false);
+            ingredientAndSteps.setText("");
+            removeIngredient.setVisible(false);
         }
     }
 
@@ -278,14 +275,14 @@ public class AddRecipeController extends SuperController {
      */
     public void addStep() {
         if (validateStep()) {
-            newRecipe.addStep(AddStepText.getText());
+            newRecipe.addStep(addStepText.getText());
             showStepsInPreview();
             cleanStepInput();
-            NotValidStepError.setVisible(false);
-            NoAddedStepError.setVisible(false);
-            RemoveStep.setVisible(true);
+            notValidStepError.setVisible(false);
+            noAddedStepError.setVisible(false);
+            removeStep.setVisible(true);
         } else {
-            NotValidStepError.setVisible(true);
+            notValidStepError.setVisible(true);
         }
     }
 
@@ -296,7 +293,7 @@ public class AddRecipeController extends SuperController {
     private void showStepsInPreview() {
         String s = "Step " + (newRecipe.getSteps().size()) + ":" + "\t"
                 + newRecipe.getSteps().get(newRecipe.getSteps().size() - 1) + "\n";
-        IngredientAndSteps.setText(IngredientAndSteps.getText() + s);
+        ingredientAndSteps.setText(ingredientAndSteps.getText() + s);
     }
 
     /**
@@ -305,7 +302,7 @@ public class AddRecipeController extends SuperController {
      * @return true if added step meets the requierment and false if it does not
      */
     private boolean validateStep() {
-        if (!AddStepText.getText().isEmpty() && AddStepText.getText().matches("[a-zA-Z ,.0-9!?.,]+")) {
+        if (!addStepText.getText().isEmpty() && addStepText.getText().matches("[a-zA-Z ,.0-9!?]+")) {
             return true;
         } else {
             return false;
@@ -317,8 +314,8 @@ public class AddRecipeController extends SuperController {
      * add more steps
      */
     private void cleanStepInput() {
-        AddStepText.deleteText(0, AddStepText.getText().length());
-        AddStepText.setPromptText("Step " + (newRecipe.getSteps().size() + 1) + ":" + "\t");
+        addStepText.deleteText(0, addStepText.getText().length());
+        addStepText.setPromptText("Step " + (newRecipe.getSteps().size() + 1) + ":" + "\t");
     }
 
     /**
@@ -329,7 +326,7 @@ public class AddRecipeController extends SuperController {
         if (!newRecipe.getSteps().isEmpty()) {
             addStepsNext();
         } else if (newRecipe.getSteps().isEmpty()) {
-            NoAddedStepError.setVisible(true);
+            noAddedStepError.setVisible(true);
         }
     }
 
@@ -337,8 +334,8 @@ public class AddRecipeController extends SuperController {
      * This method hides the AddStepPane and shows the PortionAndConfirmPane
      */
     private void addStepsNext() {
-        AddStepPane.setVisible(false);
-        PortionAndConfirmPane.setVisible(true);
+        addStepPane.setVisible(false);
+        portionAndConfirmPane.setVisible(true);
     }
 
     /**
@@ -349,9 +346,8 @@ public class AddRecipeController extends SuperController {
         String step = steps.get(0);
         newRecipe.removeStep(step);
 
-        String[] s = IngredientAndSteps.getText().split("\n");
+        String[] s = ingredientAndSteps.getText().split("\n");
 
-        System.out.println(s);
         if (s.length >= 2) {
             if (!s[s.length - 1].contains("Step")) {
                 while (!s[s.length - 1].contains("Step")) {
@@ -364,10 +360,16 @@ public class AddRecipeController extends SuperController {
             for (int i = 0; i < s.length - 1; i++) {
                 newIngredientAndSteps += s[i] + "\n";
             }
-            IngredientAndSteps.setText(newIngredientAndSteps);
+            ingredientAndSteps.setText(newIngredientAndSteps);
+
+            if (newRecipe.getSteps().isEmpty()) {
+                removeStep.setVisible(false);
+            }
+
+            cleanStepInput();
         } else {
-            IngredientAndSteps.setText("");
-            RemoveStep.setVisible(false);
+            ingredientAndSteps.setText("");
+            removeStep.setVisible(false);
         }
     }
 
@@ -375,21 +377,23 @@ public class AddRecipeController extends SuperController {
      * This method validates if the user has selectet an amount of portions and
      * saves the recipe to file if the amount is selected
      */
-    public void SaveRecipe() {
+    public void saveRecipe() {
         if (valdatePortions()) {
-            newRecipe.setPortions(Integer.parseInt(NumberOfPortionsMenu.getText()));
-            PortionAndConfirmPane.setVisible(false);
+            newRecipe.setPortions(Integer.parseInt(numberOfPortionsMenu.getText()));
+            portionAndConfirmPane.setVisible(false);
             saveRecipeToLibrary();
+            newRecipe.setSaved(true);
         } else {
-            NoAddedPortionsError.setVisible(true);
+            noAddedPortionsError.setVisible(true);
         }
     }
 
     /**
      * This method uses the RecipeFilehandler to save the Recipe to file
      * It also saves the recipe to the logged in profile
-     * @see RecipeFilehandler#writeRecipe(Recipe)
-     * @see UserFilehandler#writeProfile(Profile)
+     * 
+     * @see RecipeFilehandler #writeRecipe(Recipe)
+     * @see UserFilehandler #writeProfile(Profile)
      */
     private void saveRecipeToLibrary() {
         recipeFilehandler.writeRecipe(newRecipe);
@@ -402,7 +406,7 @@ public class AddRecipeController extends SuperController {
      * @return boolean true if portions is selected and false if not
      */
     private boolean valdatePortions() {
-        if (NumberOfPortionsMenu.getText().matches("[1-9]")) {
+        if (numberOfPortionsMenu.getText().matches("[1-9]")) {
             return true;
         } else {
             return false;
@@ -418,20 +422,25 @@ public class AddRecipeController extends SuperController {
     public void selectPortions(ActionEvent event) {
         MenuItem selectedPortions = (MenuItem) event.getSource();
         String portionsAsText = selectedPortions.getText();
-        NumberOfPortionsMenu.setText(portionsAsText);
+        numberOfPortionsMenu.setText(portionsAsText);
     }
 
     /**
-     * Logs the user in if the login information is correct
+     * This method is called when the user clicks on the back button
      * 
-     * @param event
-     * @throws Exception   if the validateLogin method throws an exception
-     * @throws IOException if the switchToMainScreen method throws
-     *                     an exception
-     * @see SwitchController#switchSceneMain(ActionEvent, String)
+     * If the recipe is saved the user will be sent back to the mainscreen
+     * 
+     * If the recipe is not saved the user will get a pop up window where the user
+     * can choose to go back without saving the recipe or to go back and complete
+     * the recipe
+     * 
+     * @param event event when the user clicks on the back button
+     * @throws IOException if the switchSceneWithInfo method throws an IOException
+     * @see #showPopUp(ActionEvent)
+     * @see SuperController #switchSceneWithInfo(ActionEvent, String, Profile)
      */
     public void backButtonClick(ActionEvent event) throws IOException {
-        if (newRecipe == null) {
+        if (newRecipe == null || newRecipe.isSaved()) {
             switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         } else {
             showPopUp(event);
@@ -446,13 +455,13 @@ public class AddRecipeController extends SuperController {
      * recipe or to go back and complet the recipe
      * 
      * @param event event when the user clicks on the back button
-     * @see #backButtonClick(event)
+     * @see #backButtonClick(ActionEvent)
      */
     private void showPopUp(ActionEvent event) {
         Stage popUpStage = new Stage();
         popUpStage.initModality(Modality.APPLICATION_MODAL);
         popUpStage.setTitle("Your recipe is not saved!");
-        
+
         VBox vbox = new VBox(20);
         vbox.setAlignment(Pos.CENTER);
         vbox.setPadding(new Insets(10));
@@ -465,7 +474,7 @@ public class AddRecipeController extends SuperController {
 
         yesButton.setOnAction(e -> {
             try {
-                //currentProfile.removeRecipe(newRecipe);
+                currentProfile.removeRecipe(newRecipe);
                 switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
             } catch (IOException e1) {
                 e1.printStackTrace();
