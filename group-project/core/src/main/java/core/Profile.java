@@ -112,4 +112,11 @@ public class Profile  {
     public void addRecipe(Recipe recipe) {
         recipeLibrary.addRecipe(recipe);
     }
+
+    /**
+     * This method will remove the recipe from the profile's recipes
+     */
+    public void removeRecipe(Recipe recipe) {
+        recipeLibrary.removeRecipe(recipe);
+    }
 }
