@@ -5,7 +5,10 @@ import java.io.IOException;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.RecipeFilehandler;
+import file.UserFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +24,10 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -35,7 +41,7 @@ public class MainscreenController extends SuperController{
     private ScrollPane scrollPane;
 
     @FXML
-    private Button addBtn, allBtn, myBtn;
+    private Button addBtn, allBtn, myBtn, favoritesBtn;
 
     @FXML
     private Label titleLabel;
@@ -46,6 +52,7 @@ public class MainscreenController extends SuperController{
     private RecipeLibrary allRecipes;
     private RecipeLibrary currentLibrary;
     private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
+    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     /**
      * This method initializes the GridPane and the title
@@ -53,7 +60,6 @@ public class MainscreenController extends SuperController{
     @FXML
     public void initialize() {
         allRecipes = recipeFilehandler.readRecipeLibrary();
-        loadAllRecipes();
     }
 
     /**
@@ -80,6 +86,20 @@ public class MainscreenController extends SuperController{
         }
         titleLabel.setText(myBtn.getText());
         currentLibrary = currentProfile.getRecipes();
+        load();
+    }
+
+    /**
+     * This method will load the gridPane with the logged in profile's favorite recipes 
+     * when the Favorites-button is clicked on
+     */
+    @FXML
+    public void loadFavoriteRecipes() {
+        if (titleLabel.getText() ==  favoritesBtn.getText()) {
+            return;
+        }
+        titleLabel.setText(favoritesBtn.getText());
+        currentLibrary = currentProfile.getFavorites();
         load();
     }
 
@@ -132,19 +152,26 @@ public class MainscreenController extends SuperController{
 
     /**
      * This method will make a SplitPane for the given recipe.
-     * The top half will contain the recipe name, while the lower half will contain a way 
-     * to go to the recipes own page
+     * The top half will contain the recipe name
+     * The bottom half will contain a two buttons, one for going to the recipe's own page 
+     * and one for marking the recipe as a favorite
      * @param recipe - The recipe to make the SplitPane for
      * @return Splitpane customized for the given recipe
      */
     private SplitPane makeSplitPane(Recipe recipe) {
+        // Makes vertical SplitPane
         SplitPane splitPane = new SplitPane();
         splitPane.setOrientation(Orientation.VERTICAL);
 
-        VBox vBox1 = new VBox();
-        VBox vBox2 = new VBox();
-
+        // Makes top half of SplitPane
+        HBox hBox1 = new HBox();
+        hBox1.setMinHeight(50);
+        hBox1.setPadding(new Insets(0, 5, 0, 5));
+        hBox1.setAlignment(Pos.CENTER);
         Label label = new Label(recipe.getName());
+        hBox1.getChildren().add(label);
+
+        // Makes "Read more"-button
         Button btn = new Button("Read more");
         btn.setOnAction(event -> {
             try {
@@ -154,17 +181,54 @@ public class MainscreenController extends SuperController{
             }
         });
 
-        vBox1.getChildren().add(label);
-        vBox2.getChildren().add(btn);
+        // Maked favorites/heart-button
+        FontAwesomeIconView heart = new FontAwesomeIconView(FontAwesomeIcon.HEART);
+        heart.setStroke(Color.RED);
+        if (currentProfile.getFavorites().containsRecipe(recipe)) {
+            heart.setFill(Color.RED);
+        }
+        else {
+            heart.setFill(Color.WHITE);
+            heart.setOnMouseClicked(event -> {
+                heart.setFill(Color.RED);
+                heart.setOnMouseClicked(null);
+                heart.setOnMouseEntered(null);
+                heart.setOnMouseExited(null);
+                currentProfile.addFavorite(recipe);
+                userFilehandler.writeProfile(currentProfile);
+            });
+            heart.setOnMouseEntered(event -> {
+                heart.setStrokeWidth(2);
+            });
+            heart.setOnMouseExited(event -> {
+                heart.setStrokeWidth(1);;
+            });
+        }
 
-        vBox1.setMinHeight(50);
-        vBox2.setMinHeight(50);
-        vBox1.setAlignment(Pos.CENTER);
-        vBox2.setAlignment(Pos.CENTER);
-        vBox1.setPadding(new Insets(0, 5, 0, 5));
-        vBox2.setPadding(new Insets(0, 5, 0, 5));
+        // Makes bottom part of SplitPane
+        HBox hBox2 = new HBox();
+        hBox2.setMinHeight(50);
 
-        splitPane.getItems().addAll(vBox1, vBox2);
+        VBox subBox1 = new VBox();
+        VBox subBox2 = new VBox();
+        VBox subBox3 = new VBox();
+        HBox.setHgrow(subBox1, Priority.ALWAYS);
+        HBox.setHgrow(subBox2, Priority.ALWAYS);
+        HBox.setHgrow(subBox3, Priority.ALWAYS);
+        subBox1.setAlignment(Pos.CENTER);
+        subBox2.setAlignment(Pos.CENTER);
+        subBox3.setAlignment(Pos.CENTER);
+        subBox1.setMinWidth(25);
+        subBox2.setFillWidth(true);
+        subBox3.setMinWidth(25);
+
+        subBox1.getChildren().add(heart);
+        subBox2.getChildren().add(btn);
+
+        hBox2.getChildren().addAll(subBox1, subBox2, subBox3);
+
+        // Adds top- and bottom part to SplitPane
+        splitPane.getItems().addAll(hBox1, hBox2);
         splitPane.setDividerPositions(0.5);
 
         return splitPane;
@@ -226,5 +290,11 @@ public class MainscreenController extends SuperController{
             }
         }
         loadGrid(modifiedLibrary);
+    }
+
+    @Override
+    protected void setProfile(Profile profile) {
+        currentProfile = profile;
+        loadAllRecipes();
     }
 }
