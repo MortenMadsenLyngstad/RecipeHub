@@ -70,8 +70,11 @@ public class RecipeLibrary implements Iterable<Recipe> {
      * @throws IllegalArgumentException if the recipe given does not exist in recipes
      */
     public void removeRecipe(Recipe recipe) {
-        if (!recipes.remove(recipe))
-            throw new IllegalArgumentException("Recipe not found in recipes");
+        recipes.stream()
+        .filter((r) -> (recipe.getName().equals(r.getName()) && recipe.getAuthor().equals(r.getAuthor())))
+        .findFirst().ifPresentOrElse((r) -> recipes.remove(r), () -> {
+            throw new IllegalArgumentException("The recipe does not exist in the RecipeLibrary");
+        });
     }
 
     /**
