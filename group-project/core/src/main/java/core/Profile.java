@@ -9,6 +9,7 @@ public class Profile  {
     private String username;
     private String password;
     private RecipeLibrary recipeLibrary;
+    private RecipeLibrary favorites;
 
     /**
      * This constructor initializes the username, password and recipes
@@ -21,6 +22,7 @@ public class Profile  {
         isValidPassword(password);
         this.password = password;
         recipeLibrary = new RecipeLibrary();
+        favorites = new RecipeLibrary();
     }
 
     /**
@@ -119,4 +121,21 @@ public class Profile  {
     public void removeRecipe(Recipe recipe) {
         recipeLibrary.removeRecipe(recipe);
     }
+
+    /**
+     * This method will return this profile's favorite recipes
+     * @return RecipeLibrary with the profile's favorite recipes
+     */
+    public RecipeLibrary getFavorites() {
+        return favorites;
+    }
+
+    /**
+     * This method adds the given recipe to the profile's favorites
+     * @param recipe - Recipe to add to the profile's favorites
+     */
+    public void addFavorite(Recipe recipe) {
+        favorites.addRecipe(recipe);
+    }
+
 }
