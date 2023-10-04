@@ -116,6 +116,13 @@ public class Profile  {
     }
 
     /**
+     * This method will remove the recipe from the profile's recipes
+     */
+    public void removeRecipe(Recipe recipe) {
+        recipeLibrary.removeRecipe(recipe);
+    }
+
+    /**
      * This method will return this profile's favorite recipes
      * @return RecipeLibrary with the profile's favorite recipes
      */

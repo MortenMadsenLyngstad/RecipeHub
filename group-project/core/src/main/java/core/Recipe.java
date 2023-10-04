@@ -15,6 +15,7 @@ public class Recipe {
     private Map<String, Double> ingredients;
     private Map<String, String> ingredientUnits;
     private String authorUsername;
+    private boolean isSaved;
 
     public Recipe(String name, int portions, Profile author) {
         setName(name);
@@ -24,6 +25,7 @@ public class Recipe {
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();
+        isSaved = false;
     }
 
     /**
@@ -241,4 +243,23 @@ public class Recipe {
     public String getAuthor() {
         return authorUsername;
     }
+
+    /**
+     * This method returns true if the recipe has been saved to the database
+     * and false if it has not been saved to the database
+     * 
+     * @return boolean value for if the recipe has been saved to the database
+     */
+    public boolean isSaved() {
+        return isSaved;
+    }
+
+    /**
+     * This method sets the boolean value for if the recipe has been saved to the database
+     * @param saved - boolean value for if the recipe has been saved to the database
+     */
+    public void setSaved(boolean saved) {
+        this.isSaved = saved;
+    }
+
 }

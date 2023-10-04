@@ -1,5 +1,7 @@
 # Project Description
 
+[open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2304/gr2304?new)
+
 This project is an application with both front-end and back-end. It is structured into three main modules: Core, File, and UI.
 
 - The Core module contains the main logic of the application.
