@@ -55,7 +55,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
      * @param recipe - Recipe object you wish to add
      */
     public void addRecipe(Recipe recipe) {
-        if (recipes.contains(recipe)) {
+        if (containsRecipe(recipe)) {
             throw new IllegalArgumentException("The recipe is already added");
         }
         if (recipe == null) {
@@ -75,6 +75,11 @@ public class RecipeLibrary implements Iterable<Recipe> {
         .findFirst().ifPresentOrElse((r) -> recipes.remove(r), () -> {
             throw new IllegalArgumentException("The recipe does not exist in the RecipeLibrary");
         });
+    }
+
+    public boolean containsRecipe(Recipe recipe) {
+        return recipes.stream()
+        .anyMatch(r -> (r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor())));
     }
 
     /**
