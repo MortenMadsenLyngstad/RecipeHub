@@ -118,8 +118,12 @@ public class Profile  {
     /**
      * This method will remove the recipe from the profile's recipes
      */
-    public void removeRecipe(Recipe recipe) {
-        this.recipeLibrary.removeRecipe(recipe);
+    public void removeRecipe(Profile profile, Recipe recipe) {
+        profile.recipeLibrary.removeRecipe(recipe);
+    }
+
+    public void removeFromFavorites(Profile profile, Recipe recipe) {
+        profile.favorites.removeRecipe(recipe);
     }
 
     /**

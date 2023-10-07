@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import core.Profile;
+import core.Recipe;
 
 public class UserFilehandler extends FileUtil {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
@@ -54,6 +55,29 @@ public class UserFilehandler extends FileUtil {
       return new ArrayList<>();
     }
     return profiles;
+  }
+
+  /**
+   * This method removes a recipe from a profile
+   * 
+   * @param profile
+   * @param recipe
+   */
+  public void removeRecipe(Profile profile, Recipe recipe) {
+    profile.removeFromFavorites(profile, recipe);
+    profile.removeRecipe(profile, recipe);
+    writeProfile(profile);
+  }
+
+  /**
+   * This method removes a recipe from a profiles favorites
+   * 
+   * @param profile
+   * @param recipe
+   */
+  public void removeFavorite(Profile profile, Recipe recipe) {
+    profile.removeFromFavorites(profile, recipe);
+    writeProfile(profile);
   }
 
   /**
