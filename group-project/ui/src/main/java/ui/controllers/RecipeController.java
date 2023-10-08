@@ -3,12 +3,12 @@ package ui.controllers;
 import java.io.IOException;
 
 import core.Recipe;
-import javafx.beans.binding.Bindings;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 
 /**
  * Controller for displaying the information of a recipe on a RecipeSreen
@@ -16,17 +16,13 @@ import javafx.scene.control.ListView;
 public class RecipeController extends SuperController {
 
     @FXML
-    private Label nameField;
+    private Label nameField, authorLabel, descriptionLabel, stepsLabel, portionsLabel;
     @FXML
     private Button backButton;
     @FXML
-    private Label authorLabel;
+    private TextArea descriptionText, stepsText, ingredientsText;
     @FXML
-    private Label descriptionLabel;
-    @FXML
-    private ListView<String> ingredientsView;
-    @FXML
-    private Label stepsLabel;
+    private FontAwesomeIconView deleteButton, heartButton;
 
     private Recipe recipe;
 
@@ -46,20 +42,21 @@ public class RecipeController extends SuperController {
     public void populate() {
         nameField.setText(recipe.getName());
         authorLabel.setText("Posted by: " + recipe.getAuthor());
-        descriptionLabel.setText(recipe.getDescription() + "\nMakes " + recipe.getPortions() + " portions \n  ");
+        portionsLabel.setText("Portions: " + recipe.getPortions());
+        descriptionText.setText(recipe.getDescription());
+        for (int i = 1; i < recipe.getSteps().size() + 1; i++) {
+            stepsText.appendText("Step " + i + ":  " + recipe.getSteps().get(i - 1) + "\n");
+        }
         for (String ingredient : recipe.getIngredients()) {
-            ingredientsView.getItems().add(
-                    recipe.getIngredientAmount(ingredient) + " " + recipe.getIngredientUnit(ingredient) + " : "
-                            + ingredient);
+            ingredientsText.appendText(
+                recipe.getIngredientAmount(ingredient) + " " +
+                recipe.getIngredientUnit(ingredient) + " : " +
+                ingredient + "\n"
+            );
         }
-        ingredientsView.prefHeightProperty().bind(Bindings.size(ingredientsView.getItems()).multiply(25));
-        int i = 1;
-        String s = "\n";
-        for (String step : recipe.getSteps()) {
-            s += "Step " + i + ".  " + step + "\n";
-            i++;
-        }
-        stepsLabel.setText(s);
+        descriptionText.positionCaret(0);
+        stepsText.positionCaret(0);
+        ingredientsText.positionCaret(0);
     }
 
     /**
