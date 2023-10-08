@@ -3,10 +3,8 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.RecipeController">
@@ -25,25 +23,39 @@
             </Label>
          </children>
       </AnchorPane>
-      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" layoutX="100.0" layoutY="90.0" pannable="true" prefHeight="410.0" prefWidth="500.0" vmax="1000.0">
-         <content>
-            <VBox>
-               <children>
-                  <Label fx:id="authorLabel" lineSpacing="4.0" text="Author" wrapText="true" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="12.0" />
-                     </font></Label>
-                  <Label fx:id="descriptionLabel" lineSpacing="4.0" text="Description" wrapText="true" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-                  <ListView fx:id="ingredientsView" minHeight="200.0" prefWidth="500.0" VBox.vgrow="ALWAYS" />
-                  <Label fx:id="stepsLabel" lineSpacing="4.0" text="Steps" wrapText="true" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-               </children>
-            </VBox>
-         </content></ScrollPane>
+      <Label layoutX="14.0" layoutY="120.0" text="Ingredients">
+         <font>
+            <Font name="Bell MT" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="descriptionLabel" layoutX="252.0" layoutY="120.0" text="Description">
+         <font>
+            <Font name="Bell MT" size="24.0" />
+         </font>
+      </Label>
+      <FontAwesomeIconView fx:id="heartButton" fill="TRANSPARENT" glyphName="HEART" layoutX="652.0" layoutY="126.0" size="22" stroke="#ef0000" strokeWidth="2.0" />
+      <FontAwesomeIconView fx:id="deleteButton" glyphName="TRASH" layoutX="610.0" layoutY="126.0" size="22" stroke="BLACK" strokeWidth="0.2" />
+      <Label fx:id="authorLabel" layoutX="15.0" layoutY="101.0" prefHeight="17.0" prefWidth="237.0" text="Author" />
+      <Label fx:id="portionsLabel" layoutX="252.0" layoutY="101.0" prefHeight="17.0" prefWidth="237.0" text="Portion(s):" />
+      <Label fx:id="stepsLabel" layoutX="250.0" layoutY="250.0" text="Steps">
+         <font>
+            <Font name="Bell MT" size="24.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="ingredientsText" layoutX="14.0" layoutY="150.0" prefHeight="342.0" prefWidth="208.0" wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="stepsText" layoutX="250.0" layoutY="280.0" prefHeight="213.0" prefWidth="431.0" wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="descriptionText" layoutX="250.0" layoutY="150.0" prefHeight="99.0" prefWidth="431.0" wrapText="true">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </TextArea>
    </children>
 </AnchorPane>
