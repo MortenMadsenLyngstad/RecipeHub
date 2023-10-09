@@ -18,7 +18,7 @@ public class SuperController {
     private String fileName;
 
     public String getFileName() {
-        return fileName;
+        return this.fileName;
     }
 
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {

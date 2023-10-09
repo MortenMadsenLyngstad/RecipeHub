@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
@@ -15,6 +16,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import core.Profile;
 import core.Recipe;
+import core.RecipeLibrary;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import javafx.application.Platform;
@@ -406,15 +408,17 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     @Test
     public void testBackButtonClick1() {
+        when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
 
     @Test
     public void testBackButtonClick2() {
+        when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         setUpRecipeName();
+        clickOn(backButton);
         Platform.runLater(() -> {
-            clickOn(backButton);
             assertNotEquals("Mainscreen.fxml", controller.getFileName());
         });
     }
