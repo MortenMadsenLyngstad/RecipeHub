@@ -56,18 +56,20 @@ public class UserFilehandler extends FileUtil {
     }
     return profiles;
   }
-
+  
   /**
    * This method removes a recipe from a profile
    * 
    * @param profile
    * @param recipe
    */
+  /*
   public void removeRecipe(Profile profile, Recipe recipe) {
-    profile.removeFromFavorites(profile, recipe);
+    profile.removeFavorite(profile, recipe);
     profile.removeRecipe(profile, recipe);
     writeProfile(profile);
   }
+  */
 
   /**
    * This method removes a recipe from a profiles favorites
@@ -75,10 +77,12 @@ public class UserFilehandler extends FileUtil {
    * @param profile
    * @param recipe
    */
+  /*
   public void removeFavorite(Profile profile, Recipe recipe) {
-    profile.removeFromFavorites(profile, recipe);
+    profile.removeFavorite(profile, recipe);
     writeProfile(profile);
   }
+  */
 
   /**
    * This method reads usernames and passwords from the file
