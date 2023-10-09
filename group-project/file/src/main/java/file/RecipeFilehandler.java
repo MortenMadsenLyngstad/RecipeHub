@@ -41,4 +41,10 @@ public class RecipeFilehandler extends FileUtil {
         }
         return recipeLibrary;
     }
+
+    public void removeRecipe(Recipe recipe) {
+        RecipeLibrary recipeLibrary = readRecipeLibrary();
+        recipeLibrary.removeRecipe(recipe);
+        writeFile(filePath, recipeLibrary);
+    }
 }
