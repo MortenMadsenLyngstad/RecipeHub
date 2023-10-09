@@ -184,26 +184,7 @@ public class MainscreenController extends SuperController{
         // Maked favorites/heart-button
         FontAwesomeIconView heart = new FontAwesomeIconView(FontAwesomeIcon.HEART);
         heart.setStroke(Color.RED);
-        if (currentProfile.getFavorites().containsRecipe(recipe)) {
-            heart.setFill(Color.RED);
-        }
-        else {
-            heart.setFill(Color.WHITE);
-            heart.setOnMouseClicked(event -> {
-                heart.setFill(Color.RED);
-                heart.setOnMouseClicked(null);
-                heart.setOnMouseEntered(null);
-                heart.setOnMouseExited(null);
-                currentProfile.addFavorite(recipe);
-                userFilehandler.writeProfile(currentProfile);
-            });
-            heart.setOnMouseEntered(event -> {
-                heart.setStrokeWidth(2);
-            });
-            heart.setOnMouseExited(event -> {
-                heart.setStrokeWidth(1);;
-            });
-        }
+        setHeart(heart, recipe, currentProfile);
 
         // Makes bottom part of SplitPane
         HBox hBox2 = new HBox();
@@ -232,6 +213,40 @@ public class MainscreenController extends SuperController{
         splitPane.setDividerPositions(0.5);
 
         return splitPane;
+    }
+
+    /**
+     * This method will set the heart to red if the recipe is a favorite of the current profile
+     * If not, it will set the heart to white and make it clickable
+     * When clicked on, the heart will turn red and the recipe will be added to the current profile's favorites
+     * 
+     * This method is protected because it is used in RecipeController
+     * 
+     * @param heart - The heart to be set
+     * @param recipe - The recipe to check if it is a favorite
+     * @param currentProfile - The profile to check if the recipe is a favorite
+     */
+    protected void setHeart(FontAwesomeIconView heart, Recipe recipe, Profile currentProfile) {
+        if (currentProfile.getFavorites().containsRecipe(recipe)) {
+            heart.setFill(Color.RED);
+        }
+        else {
+            heart.setFill(Color.WHITE);
+            heart.setOnMouseClicked(event -> {
+                heart.setFill(Color.RED);
+                heart.setOnMouseClicked(null);
+                heart.setOnMouseEntered(null);
+                heart.setOnMouseExited(null);
+                currentProfile.addFavorite(recipe);
+                userFilehandler.writeProfile(currentProfile);
+            });
+            heart.setOnMouseEntered(event -> {
+                heart.setStrokeWidth(2);
+            });
+            heart.setOnMouseExited(event -> {
+                heart.setStrokeWidth(1);;
+            });
+        }
     }
 
     /**

@@ -6,7 +6,6 @@ import core.Recipe;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -26,7 +25,10 @@ import javafx.stage.Stage;
 public class RecipeController extends SuperController {
     private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
+    private MainscreenController mainscreenController = new MainscreenController();
     private Recipe recipe;
+    private Boolean flag = false;
+
 
     @FXML
     private Label nameField, authorLabel, descriptionLabel, stepsLabel, portionsLabel;
@@ -36,8 +38,6 @@ public class RecipeController extends SuperController {
     private TextArea descriptionText, stepsText, ingredientsText;
     @FXML
     private FontAwesomeIconView deleteButton, heartButton;
-    @FXML
-    private FontAwesomeIconView deleteButton;
 
 
     /**
@@ -55,12 +55,8 @@ public class RecipeController extends SuperController {
      */
     public void populate() {
         // If the recipe is the users own, show the delete button
-        if (recipe.getAuthor().equals(currentProfile.getUsername())) {
-            deleteButton.setVisible(true);
-        } else {
-            deleteButton.setVisible(false);
-        }
-
+        showDeleteButton();
+        mainscreenController.setHeart(heartButton, recipe, currentProfile);
         nameField.setText(recipe.getName());
         authorLabel.setText("Posted by: " + recipe.getAuthor());
         portionsLabel.setText("Portions: " + recipe.getPortions());
@@ -89,22 +85,48 @@ public class RecipeController extends SuperController {
         this.recipe = recipe;
     }
 
+    private void showDeleteButton() {
+        if (recipe.getAuthor().equals(currentProfile.getUsername())) {
+            deleteButton.setVisible(true);
+        } else {
+            deleteButton.setVisible(false);
+        }
+    }
+
     /**
      * Handels the click of the deleteButton
+     * If the user confirms the deletion, the recipe is deleted and the user is sent back to the mainscreen
      * 
      * @param event The click of the deleteButton
      * @throws IOException If there is an issue with loading Mainscreen.fxml
      */
     public void deleteRecipe(MouseEvent event) throws IOException {
-        confirmationPopUp(event);
+        if (confirmationPopUp(event)) {
+            closeCurrentStage();
+            ActionEvent actionEvent = new ActionEvent(event.getSource(), event.getTarget());
+            try {
+                switchSceneWithInfo(actionEvent, "Mainscreen.fxml", currentProfile);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Helper method to close the current stage
+     */
+    private void closeCurrentStage() {
+        Stage stage = (Stage) backButton.getScene().getWindow();
+        stage.close();
     }
 
     /**
      * Creates a pop up window to confirm the deletion of a recipe
      * 
      * @param event The click of the deleteButton
+     * @return True if the user confirms the deletion, false if not
      */
-    private void confirmationPopUp(MouseEvent event) {
+    private Boolean confirmationPopUp(MouseEvent event) {
         Stage popUpStage = new Stage();
         popUpStage.initModality(Modality.APPLICATION_MODAL);
         popUpStage.setTitle("Delete this recipe?");
@@ -123,8 +145,7 @@ public class RecipeController extends SuperController {
             try {
                 recipeFilehandler.removeRecipe(recipe);
                 userFilehandler.removeRecipe(currentProfile, recipe);
-                // TODO: Make switch to mainscreen work
-                // switchSceneWithInfo(new ActionEvent(yesButton, yesButton), "Mainscreen.fxml", currentProfile);
+                flag = true;
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -136,5 +157,7 @@ public class RecipeController extends SuperController {
         Scene scene = new Scene(vbox);
         popUpStage.setScene(scene);
         popUpStage.showAndWait();
+
+        return flag;
     }
 }

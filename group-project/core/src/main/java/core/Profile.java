@@ -123,7 +123,9 @@ public class Profile  {
     }
 
     public void removeFromFavorites(Profile profile, Recipe recipe) {
-        profile.favorites.removeRecipe(recipe);
+        if (profile.favorites.containsRecipe(recipe)) {
+            profile.favorites.removeRecipe(recipe);
+        }
     }
 
     /**
