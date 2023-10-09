@@ -128,12 +128,6 @@ public class Profile  {
         }
     }
 
-    public void removeFavorite(Recipe recipe) {
-        if (favorites.containsRecipe(recipe)) {
-            favorites.removeRecipe(recipe);
-        }
-    }
-
     /**
      * This method will return this profile's favorite recipes
      * @return RecipeLibrary with the profile's favorite recipes
