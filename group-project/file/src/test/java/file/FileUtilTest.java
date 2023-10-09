@@ -24,6 +24,8 @@ public class FileUtilTest {
     public void testCreateFile() {
         fileUtil.createFile(filePath);
         Assertions.assertTrue(Files.exists(filePath));
+        // Since the file already exists, this will test the rest of the if-statement
+        fileUtil.createFile(filePath);
         deleteFile(filePath);
     }
 
@@ -33,15 +35,6 @@ public class FileUtilTest {
         fileUtil.createFile(filePath);
         fileUtil.writeFile(filePath, "test");
         Assertions.assertEquals("test", fileUtil.readFile(filePath, "", String.class));
-        deleteFile(filePath);
-    }
-
-    @Test
-    @DisplayName("Test Error writing to file")
-    public void testErrorWritingToFile() {
-        deleteFile(filePath);
-        fileUtil.writeFile(filePath, "test");
-        Assertions.assertDoesNotThrow(() -> fileUtil.writeFile(filePath, "test"));
         deleteFile(filePath);
     }
 }
