@@ -44,4 +44,16 @@ public class RecipeFilehandlerTest {
         Assertions.assertEquals(this.recipe.getAuthor(), loadedRecipe.getAuthor(), "The recipe should have the author \"testUser\".");
         deleteFile();
     }
+
+    @Test
+    @DisplayName("Test if remove recipe works")
+    public void testRemoveRecipe() {
+        recipeFilehandler.writeRecipe(this.recipe);
+        RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
+        Assertions.assertEquals(1, recipeLibrary.getSize(), "The recipe should be added.");
+        recipeFilehandler.removeRecipe(this.recipe);
+        recipeLibrary = recipeFilehandler.readRecipeLibrary();
+        Assertions.assertEquals(0, recipeLibrary.getSize(), "The recipe should be removed.");
+        deleteFile();
+    }
 }

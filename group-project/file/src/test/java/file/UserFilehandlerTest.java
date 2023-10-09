@@ -1,6 +1,5 @@
 package file;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,7 +35,9 @@ public class UserFilehandlerTest {
 
     @Test
     public void testWriteUserinfo() {
-        assertDoesNotThrow(() -> userFilehandler.writeProfile(new Profile("testuser", "Password123")));
+        Assertions.assertDoesNotThrow(() -> userFilehandler.writeProfile(new Profile("testuser", "Password123")));
+        userFilehandler.writeProfile(new Profile("testuser", "Password123"));
+        Assertions.assertEquals(userFilehandler.readProfiles().size(), 1);
         deleteFile();
     }
     
