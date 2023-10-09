@@ -74,6 +74,10 @@ public class RecipeController extends SuperController {
         descriptionText.positionCaret(0);
         stepsText.positionCaret(0);
         ingredientsText.positionCaret(0);
+
+        descriptionText.setEditable(false);
+        stepsText.setEditable(false);
+        ingredientsText.setEditable(false);
     }
 
     /**
