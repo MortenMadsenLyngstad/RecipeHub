@@ -73,6 +73,11 @@ public class AddRecipeController extends SuperController {
         }
     }
 
+    public void setFileHander(RecipeFilehandler rf, UserFilehandler uf) {
+        this.recipeFilehandler = rf;
+        this.userFilehandler = uf;
+    }
+
     /**
      * This method is called when the user clicks on the AddName button
      * the method validates if the user has added a name to the recipe
@@ -349,13 +354,6 @@ public class AddRecipeController extends SuperController {
         String[] s = ingredientAndSteps.getText().split("\n");
 
         if (s.length >= 2) {
-            if (!s[s.length - 1].contains("Step")) {
-                while (!s[s.length - 1].contains("Step")) {
-                    for (int i = 0; i < s.length - 2; i++) {
-                        s[i] = s[i];
-                    }
-                }
-            }
             String newIngredientAndSteps = "";
             for (int i = 0; i < s.length - 1; i++) {
                 newIngredientAndSteps += s[i] + "\n";
@@ -367,9 +365,6 @@ public class AddRecipeController extends SuperController {
             }
 
             cleanStepInput();
-        } else {
-            ingredientAndSteps.setText("");
-            removeStep.setVisible(false);
         }
     }
 
