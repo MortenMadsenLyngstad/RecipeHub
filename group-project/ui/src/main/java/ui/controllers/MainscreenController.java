@@ -232,21 +232,27 @@ public class MainscreenController extends SuperController{
         }
         else {
             heart.setFill(Color.WHITE);
-            heart.setOnMouseClicked(event -> {
+        }
+        
+        heart.setOnMouseEntered(event -> {
+            heart.setStrokeWidth(2);
+        });
+        heart.setOnMouseExited(event -> {
+            heart.setStrokeWidth(1);;
+        });
+
+        heart.setOnMouseClicked(event -> {
+            if (heart.getFill().equals(Color.RED)) {
+                heart.setFill(Color.WHITE);
+                currentProfile.removeFavorite(recipe);
+                userFilehandler.writeProfile(currentProfile);
+            }
+            else {
                 heart.setFill(Color.RED);
-                heart.setOnMouseClicked(null);
-                heart.setOnMouseEntered(null);
-                heart.setOnMouseExited(null);
                 currentProfile.addFavorite(recipe);
                 userFilehandler.writeProfile(currentProfile);
-            });
-            heart.setOnMouseEntered(event -> {
-                heart.setStrokeWidth(2);
-            });
-            heart.setOnMouseExited(event -> {
-                heart.setStrokeWidth(1);;
-            });
-        }
+            }
+            });  
     }
 
     /**

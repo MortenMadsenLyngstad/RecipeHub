@@ -88,6 +88,12 @@ public class RecipeController extends SuperController {
     private void showDeleteButton() {
         if (recipe.getAuthor().equals(currentProfile.getUsername())) {
             deleteButton.setVisible(true);
+            deleteButton.setOnMouseEntered(event -> {
+                deleteButton.setStrokeWidth(0.7);
+            });
+            deleteButton.setOnMouseExited(event -> {
+                deleteButton.setStrokeWidth(0.2);;
+            });
         } else {
             deleteButton.setVisible(false);
         }
@@ -144,7 +150,9 @@ public class RecipeController extends SuperController {
         yesButton.setOnAction(e -> {
             try {
                 recipeFilehandler.removeRecipe(recipe);
-                userFilehandler.removeRecipe(currentProfile, recipe);
+                currentProfile.removeFavorite(recipe);
+                currentProfile.removeRecipe(recipe);
+                userFilehandler.writeProfile(currentProfile);
                 flag = true;
             } catch (Exception e1) {
                 e1.printStackTrace();
