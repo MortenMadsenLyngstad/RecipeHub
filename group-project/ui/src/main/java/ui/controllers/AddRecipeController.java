@@ -469,7 +469,7 @@ public class AddRecipeController extends SuperController {
 
         yesButton.setOnAction(e -> {
             try {
-                currentProfile.removeRecipe(newRecipe);
+                currentProfile.removeRecipe(currentProfile, newRecipe);
                 switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
             } catch (IOException e1) {
                 e1.printStackTrace();
