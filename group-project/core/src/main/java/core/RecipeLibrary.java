@@ -71,7 +71,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
      */
     public void removeRecipe(Recipe recipe) {
         recipes.stream()
-        .filter((r) -> (recipe.getName().equals(r.getName()) && recipe.getAuthor().equals(r.getAuthor())))
+        .filter(r -> containsRecipe(r))
         .findFirst().ifPresentOrElse((r) -> recipes.remove(r), () -> {
             throw new IllegalArgumentException("The recipe does not exist in the RecipeLibrary");
         });
