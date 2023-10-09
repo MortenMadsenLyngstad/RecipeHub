@@ -114,7 +114,11 @@ public class RecipeTest {
         Assertions.assertEquals("g", r.getIngredientUnit("flour"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.setIngredientUnit("flour", "Non-unit"));
         r.setIngredientUnit("flour", "dL");
+        r.setIngredientUnit("milk", "g");
+        r.setIngredientUnit("salt", "pcs");
         Assertions.assertEquals("dL", r.getIngredientUnit("flour"));
+        Assertions.assertEquals("g", r.getIngredientUnit("milk"));
+        Assertions.assertEquals("pcs", r.getIngredientUnit("salt"));
     }
 
     @Test
