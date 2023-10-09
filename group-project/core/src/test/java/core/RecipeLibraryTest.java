@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RecipeLibraryTest {
-    
+
     /**
      * This method tests if the contructor with no parameters work
      */
@@ -26,13 +26,16 @@ public class RecipeLibraryTest {
     @Test
     @DisplayName("Non-Empty Contructor test")
     public void testNonEmptyontructor() {
+        // Check that constructor with null as argument throws exception
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new RecipeLibrary(null));
+
         // Makes an ArrayList filled with recipes
         Profile profile = new Profile("Username123", "Password123");
         Recipe r1 = new Recipe("Lasagne", 5, profile);
         Recipe r2 = new Recipe("Cookies", 4, profile);
         Recipe r3 = new Recipe("Fish and chips", 1, profile);
         Recipe r4 = new Recipe("Kebab", 2, profile);
-        ArrayList<Recipe> recipeList = new ArrayList<>(List.of(r1,r2,r3,r4));
+        ArrayList<Recipe> recipeList = new ArrayList<>(List.of(r1, r2, r3, r4));
 
         // Checks if the contructor works properly
         RecipeLibrary recipeLibrary = new RecipeLibrary(recipeList);
@@ -41,11 +44,12 @@ public class RecipeLibraryTest {
 
         // Checks if the recipeLibrary is independent from original list
         recipeList.clear();
-        Assertions.assertTrue(recipeLibrary.getSize() != recipeList.size(), "The RecipeLibrary should not be affected by changes in the original arraylist");
+        Assertions.assertTrue(recipeLibrary.getSize() != recipeList.size(),
+                "The RecipeLibrary should not be affected by changes in the original arraylist");
     }
 
     /**
-     * This metod tests if getSize() and getRecipe(n) works 
+     * This metod tests if getSize() and getRecipe(n) works
      */
     @Test
     @DisplayName("Getters test")
@@ -53,15 +57,16 @@ public class RecipeLibraryTest {
         // Checks if the geetters works for an empty RecipeLibrary
         RecipeLibrary rl1 = new RecipeLibrary();
         Assertions.assertEquals(0, rl1.getSize(), "The size should be 0");
-        Assertions.assertThrows(IllegalArgumentException.class, () -> rl1.getRecipe(0), "Should not be able to ask for element which does not exist");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> rl1.getRecipe(0),
+                "Should not be able to ask for element which does not exist");
 
-        // Makes a non-empty ReecipeLibrary
+        // Makes a non-empty RecipeLibrary
         Profile profile = new Profile("Username123", "Password123");
         Recipe r1 = new Recipe("Lasagne", 5, profile);
         Recipe r2 = new Recipe("Cookies", 4, profile);
         Recipe r3 = new Recipe("Fish and chips", 1, profile);
         Recipe r4 = new Recipe("Kebab", 2, profile);
-        ArrayList<Recipe> recipeList = new ArrayList<>(List.of(r1,r2,r3,r4));
+        ArrayList<Recipe> recipeList = new ArrayList<>(List.of(r1, r2, r3, r4));
         RecipeLibrary rl2 = new RecipeLibrary(recipeList);
 
         // Checks if the geetters return correct values
@@ -69,31 +74,47 @@ public class RecipeLibraryTest {
         Assertions.assertTrue(rl2.getRecipe(0) == r1, "The first recipe should be r1");
 
         // Checks that getRecipe(n) does not accept invalid indexes
-        Assertions.assertThrows(IllegalArgumentException.class, () -> rl2.getRecipe(-1), "Should not be able to ask for recipe with negative index");
-        Assertions.assertThrows(IllegalArgumentException.class, () -> rl2.getRecipe(4), "Should not be able to ask for recipe with too high index");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> rl2.getRecipe(-1),
+                "Should not be able to ask for recipe with negative index");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> rl2.getRecipe(4),
+                "Should not be able to ask for recipe with too high index");
     }
 
     /**
      * This method tests if manipulation of the RecipeLibrary works
-     * This includes testing of both addRecipe(Recipe) and removeREcipe(Recipe)
+     * This includes testing of both addRecipe(Recipe) and removeRecipe(Recipe)
      */
     @Test
     @DisplayName("Manipulation test")
     public void testManipulation() {
         // Set up for test
         RecipeLibrary recipeLibrary = new RecipeLibrary();
-        Profile profile = new Profile("Username123", "Password123");
-        Recipe r1 = new Recipe("Cheesecake", 4, profile);
+        Profile profile1 = new Profile("Username123", "Password123");
+        Profile profile2 = new Profile("Username1234", "Password1234");
+        Recipe r1 = new Recipe("Cheesecake", 4, profile1);
+        Recipe r2 = new Recipe("Cheesecake", 4, profile2);
+        Recipe r3 = new Recipe("Hamburger", 4, profile1);
+        Recipe r4 = new Recipe("Hamburger", 4, profile2);
 
         // Checks if addRecipe(Recipe) and removeRecipe(Recipe) works properly
-        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeLibrary.removeRecipe(r1), "Should throw exceptiopn when trying to remove recipe from empty RecipeLibrary");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeLibrary.removeRecipe(r1),
+                "Should throw exceptiopn when trying to remove recipe from empty RecipeLibrary");
         recipeLibrary.addRecipe(r1);
         Assertions.assertTrue(recipeLibrary.getSize() == 1, "The size should be 1");
-        Assertions.assertEquals(r1, recipeLibrary.getRecipe(0), "The added recipe should be the first recipe in the RecipeLibrary");
-        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeLibrary.addRecipe(r1), "Should not be able to add the same recipe twice");
+        Assertions.assertEquals(r1, recipeLibrary.getRecipe(0),
+                "The added recipe should be the first recipe in the RecipeLibrary");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeLibrary.addRecipe(r1),
+                "Should not be able to add the same recipe twice");
+        recipeLibrary.addRecipe(r3);
+        recipeLibrary.addRecipe(r4);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeLibrary.removeRecipe(r2),
+                "Should not be able to remove a recipe not in the recipeLibrary");
+        recipeLibrary.removeRecipe(r3);
+        recipeLibrary.removeRecipe(r4);
         recipeLibrary.removeRecipe(r1);
         Assertions.assertTrue(recipeLibrary.getSize() == 0, "The size should be 0");
-        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeLibrary.addRecipe(null), "Should not be able to add null");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> recipeLibrary.addRecipe(null),
+                "Should not be able to add null");
     }
 
     /**
@@ -103,7 +124,8 @@ public class RecipeLibraryTest {
     @DisplayName("Iterator test")
     public void testIterator() {
         RecipeLibrary recipeLibrary = new RecipeLibrary();
-        Assertions.assertFalse(recipeLibrary.iterator().hasNext(), "An empty RecipeLibrary should not have a next recipe");
+        Assertions.assertFalse(recipeLibrary.iterator().hasNext(),
+                "An empty RecipeLibrary should not have a next recipe");
 
         Profile profile = new Profile("Username123", "Password123");
         Recipe r1 = new Recipe("Cheesecake", 4, profile);
