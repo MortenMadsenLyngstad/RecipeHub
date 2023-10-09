@@ -42,7 +42,7 @@ public class UserFilehandlerTest {
     
     @Test
     @DisplayName("Test if correct info is written to file")
-    public void testWritToFileAndReadFromFile() {
+    public void testWriteToFileAndReadFromFile() {
         String username = "testuser";
         String password = "Password123";
         userFilehandler.writeProfile(new Profile(username, password));
