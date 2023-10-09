@@ -89,3 +89,21 @@ The user is in need of an application where they can easily mark a recipe as a f
 - Scroll through a list/feed of your favorite recipes
 - Search for specific recipes among you favorites
 - Mark a recipe as a favorite
+- 
+### User story 4: Removing a recipe
+
+As a food enthusiast, you want to remove a recipe you've made so that you can make a new improved one.
+
+The user is in need of an application where they can easily remove a recipe they've made. It should be obvious how to remove a recipe, and they should be asked if they are sure they want to remove it. Other users should not be able to remove a recipe that is not theirs.
+
+#### Important to be able to see
+
+- The button that removes a recipe
+- A confirmation message when removing a recipe
+- That the recipe is removed
+
+#### Important to be able to do
+
+- Remove a recipe
+- Confirm the removal of a recipe
+- Cancel the removal of a recipe
