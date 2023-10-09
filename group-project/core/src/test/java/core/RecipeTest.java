@@ -79,8 +79,20 @@ public class RecipeTest {
         Recipe r = makeRecipe();
         Assertions.assertTrue(r.getIngredients()
                 .equals(new HashSet<>(Arrays.asList("flour", "eggs", "milk", "salt", "baking powder"))));
+        r.addIngredient("ham", 200.0, "g");
+        Assertions.assertEquals(200.0, r.getIngredientAmount("ham"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredient("ingredient45"));
+        r.removeIngredient("flour");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> r.getIngredientAmount("flour"));
+        Assertions.assertTrue(r.getIngredients()
+                .equals(new HashSet<>(Arrays.asList("ham", "eggs", "milk", "salt", "baking powder"))));
+
+    }
+
+    @Test
+    public void testIngredientAmount() {
+        Recipe r = makeRecipe();
         Assertions.assertEquals(400.0, r.getIngredientAmount("flour"));
-        Assertions.assertEquals("g", r.getIngredientUnit("flour"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredientAmount("ham", 30.0));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredientAmount("flour", 401.0));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredientAmount("flour", -10.0));
@@ -92,11 +104,29 @@ public class RecipeTest {
         Assertions.assertEquals(410.0, r.getIngredientAmount("flour"));
         r.addIngredient("ham", 200.0, "g");
         Assertions.assertEquals(200.0, r.getIngredientAmount("ham"));
-        Assertions.assertEquals("g", r.getIngredientUnit("ham"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredient("ingredient45"));
-        r.removeIngredient("flour");
-        Assertions.assertThrows(IllegalArgumentException.class, () -> r.getIngredientAmount("flour"));
-        Assertions.assertTrue(r.getIngredients()
-                .equals(new HashSet<>(Arrays.asList("ham", "eggs", "milk", "salt", "baking powder"))));
     }
+
+    @Test
+    public void testIngredientUnit() {
+        Recipe r = makeRecipe();
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> r.getIngredientUnit("Ingredient that is not in recipe"));
+        Assertions.assertEquals("g", r.getIngredientUnit("flour"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> r.setIngredientUnit("flour", "Non-unit"));
+        r.setIngredientUnit("flour", "dL");
+        Assertions.assertEquals("dL", r.getIngredientUnit("flour"));
+    }
+
+    @Test
+    public void testSaved() {
+        Recipe r = makeRecipe();
+        Assertions.assertFalse(r.isSaved());
+        r.setSaved(true);
+        Assertions.assertTrue(r.isSaved());
+        r.setSaved(true);
+        Assertions.assertTrue(r.isSaved());
+        r.setSaved(false);
+        Assertions.assertFalse(r.isSaved());
+    }
+
 }
