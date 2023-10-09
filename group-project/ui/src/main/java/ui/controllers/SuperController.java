@@ -15,6 +15,11 @@ public class SuperController {
     protected Stage stage;
     protected Parent root;
     protected Profile currentProfile;
+    private String fileName;
+
+    public String getFileName() {
+        return this.fileName;
+    }
 
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(file));
@@ -23,6 +28,7 @@ public class SuperController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        fileName = file;
     }
 
     protected void switchSceneWithInfo(ActionEvent event, String file, Profile profile) throws IOException {
@@ -37,6 +43,7 @@ public class SuperController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        fileName = file;
     }
 
     protected void setProfile(Profile profile) {
