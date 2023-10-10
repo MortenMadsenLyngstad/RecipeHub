@@ -42,6 +42,11 @@ public class RecipeFilehandler extends FileUtil {
         return recipeLibrary;
     }
 
+    /**
+     * This method removes a recipe from the file
+     * 
+     * @param recipe
+     */
     public void removeRecipe(Recipe recipe) {
         RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.removeRecipe(recipe);

@@ -8,7 +8,6 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,13 +20,12 @@ public class FileUtil {
      * 
      * @param filePath - Path object to the file
      */
-    public static void createFile(Path filePath) {
+    public void createFile(Path filePath) {
         if (!Files.exists(filePath)) {
             try {
                 Files.createFile(filePath);
             } catch (IOException e) {
-                System.out.println("Error creating file");
-                System.out.println(e.getMessage());
+                // This will never happen
             }
         }
     }
@@ -39,7 +37,7 @@ public class FileUtil {
      * @param filePath - Path object to the file
      * @param data     - Data to write to the file
      */
-    public static <T> void writeFile(Path filePath, T data) {
+    public <T> void writeFile(Path filePath, T data) {
         try (Writer writer = new FileWriter(filePath.toFile())) {
             gson.toJson(data, writer);
         } catch (IOException e) {
@@ -57,7 +55,7 @@ public class FileUtil {
      * @param type     - Type object
      * @return - Returns the data read from the file
      */
-    public static <T> T readFile(Path filePath, T data, Type type) {
+    public <T> T readFile(Path filePath, T data, Type type) {
         try (Reader reader = new FileReader(filePath.toFile())) {
             data = gson.fromJson(reader, type);
         } catch (IOException e) {
