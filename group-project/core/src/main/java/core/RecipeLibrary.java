@@ -5,10 +5,11 @@ import java.util.Iterator;
 
 /**
  * This class is used to contain several recipes
+ * 
  * @author Adrian Haabpiht Solberg
  */
 public class RecipeLibrary implements Iterable<Recipe> {
-    
+
     private ArrayList<Recipe> recipes;
 
     /**
@@ -20,14 +21,19 @@ public class RecipeLibrary implements Iterable<Recipe> {
 
     /**
      * This contructor initilizes a new ArrayList using the ArrayList sent in
+     * 
      * @param recipes - Arraylist filled with recipes
      */
     public RecipeLibrary(ArrayList<Recipe> recipes) {
+        if (recipes == null) {
+            throw new IllegalArgumentException("Recipes cannot be null");
+        }
         this.recipes = new ArrayList<>(recipes);
     }
 
     /**
      * This metod returns the recipe with the given index
+     * 
      * @param n - The index of the given recipe
      * @throws IllegalArgumentException if the index is invalid
      * @return The recipe with index n in recipes
@@ -41,17 +47,16 @@ public class RecipeLibrary implements Iterable<Recipe> {
 
     /**
      * This method returns the amount of recipes
+     * 
      * @return Integer value with the amount of recipes
      */
     public int getSize() {
-        if (recipes == null) {
-            return 0;
-        }
         return recipes.size();
     }
 
     /**
      * This method will add the recipe to the ArrayList recipes
+     * 
      * @param recipe - Recipe object you wish to add
      */
     public void addRecipe(Recipe recipe) {
@@ -66,24 +71,27 @@ public class RecipeLibrary implements Iterable<Recipe> {
 
     /**
      * This method will remove thee given recipe from the ArrayList recipes
+     * 
      * @param recipe - Recipe object you wish to remove
-     * @throws IllegalArgumentException if the recipe given does not exist in recipes
+     * @throws IllegalArgumentException if the recipe given does not exist in
+     *                                  recipes
      */
     public void removeRecipe(Recipe recipe) {
         recipes.stream()
-        .filter(r -> r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor()))
-        .findFirst().ifPresentOrElse((r) -> recipes.remove(r), () -> {
-            throw new IllegalArgumentException("The recipe does not exist in the RecipeLibrary");
-        });
+                .filter(r -> r.equals(recipe))
+                .findFirst().ifPresentOrElse((r) -> recipes.remove(r), () -> {
+                    throw new IllegalArgumentException("The recipe does not exist in the RecipeLibrary");
+                });
     }
 
     public boolean containsRecipe(Recipe recipe) {
         return recipes.stream()
-        .anyMatch(r -> (r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor())));
+                .anyMatch(r -> (r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor())));
     }
 
     /**
      * This method defines an iterator for the class, which makes it iterable
+     * 
      * @return Iterator which iterates over the elements in recipes
      */
     @Override
