@@ -4,33 +4,40 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import file.UserFilehandler;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import core.Profile;
+import core.RecipeLibrary;
+
 public class LoginControllerTest extends ApplicationTest {
 
     private LoginController controller;
     private Parent root;
 
-    private TextField usernameField;
-    private PasswordField passwordField;
+    private Button loginButton;
+    private Hyperlink registerLink;
+
     private Label loginMessageLabel;
     private Hashtable<String, String> userInfo = new Hashtable<>();
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
-
+    private Profile mockProfile = mock(Profile.class);
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -43,24 +50,50 @@ public class LoginControllerTest extends ApplicationTest {
 
     @BeforeEach
     public void setUp() {
-        usernameField = lookup("#usernameField").query();
-        passwordField = lookup("#passwordField").query();
         loginMessageLabel = lookup("#loginMessageLabel").query();
+        loginButton = lookup("#loginButton").query();
+        controller.currentProfile = mockProfile;
+        controller.setUserFilehandler(mockUserFileHandler);
+        registerLink = findHyperlink(root);
+    }
+
+    private Hyperlink findHyperlink(Parent parent) {
+        if (parent instanceof Hyperlink) {
+            return (Hyperlink) parent;
+        }
+        
+        for (Node child : parent.getChildrenUnmodifiable()) {
+            if (child instanceof Parent) {
+                Hyperlink hyperlink = findHyperlink((Parent) child);
+                if (hyperlink != null) {
+                    return hyperlink;
+                }
+            }
+        }
+        
+        return null;
     }
 
     @Test
     public void testValidateLoginWithValidCredentials() throws Exception {
         userInfo.put("testuser", "Password123");
         when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
+        when(mockProfile.getUsername()).thenReturn("testuser");
+        when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(mockProfile);
+        when(mockUserFileHandler.readProfiles()).thenReturn(profiles);
+
+        write("testuser").push(javafx.scene.input.KeyCode.TAB);
+        write("Password123");
+
+        assertTrue(controller.validateLogin("testuser", "Password123", mockUserFileHandler));
+        assertEquals("Enter username and password", loginMessageLabel.getText());
+
+        clickOn(loginButton);
 
         Platform.runLater(() -> {
-            usernameField.setText("testuser");
-            passwordField.setText("Password123");
-        });
-
-        Platform.runLater(() -> {
-            assertTrue(controller.validateLogin("testuser", "Password123", mockUserFileHandler));
-            assertEquals("Enter username and password", loginMessageLabel.getText());
+            assertEquals("Mainscreen.fxml", controller.getFileName());
         });
     }
 
@@ -68,15 +101,13 @@ public class LoginControllerTest extends ApplicationTest {
     public void testValidateLoginWithInvalidUsername() throws Exception {
         when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
-        Platform.runLater(() -> {
-            usernameField.setText("invaliduser");
-            passwordField.setText("Password123");
-        });
+        write("invaliduser").push(javafx.scene.input.KeyCode.TAB);
+        write("Password123").push(javafx.scene.input.KeyCode.ENTER);
 
         Platform.runLater(() -> {
-            assertFalse(controller.validateLogin("invaliduser", "Password123", mockUserFileHandler));
             assertEquals("Incorrect username or password", loginMessageLabel.getText());
         });
+        
     }
 
     @Test
@@ -84,10 +115,10 @@ public class LoginControllerTest extends ApplicationTest {
         userInfo.put("testuser", "Password123");
         when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
-        Platform.runLater(() -> {
-            usernameField.setText("testuser");
-            passwordField.setText("wrongpassword");
-        });
+        write("testuser").push(javafx.scene.input.KeyCode.TAB);
+        write("wrongpassword");
+
+        clickOn(loginButton);
 
         Platform.runLater(() -> {
             assertFalse(controller.validateLogin("testuser", "wrongpassword", mockUserFileHandler));
@@ -99,14 +130,23 @@ public class LoginControllerTest extends ApplicationTest {
     public void testValidateLoginWithBlankFields() throws Exception {
         when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
 
-        Platform.runLater(() -> {
-            usernameField.setText("");
-            passwordField.setText("");
-        });
+        write("").push(javafx.scene.input.KeyCode.TAB);
+        write("");
+
+        clickOn(loginButton);
 
         Platform.runLater(() -> {
             assertFalse(controller.validateLogin("", "", mockUserFileHandler));
             assertEquals("Please enter a username and password", loginMessageLabel.getText());  
+        });
+    }
+
+    @Test
+    public void testClickOnRegisterHyperlink() throws IOException {
+        clickOn(registerLink);
+
+        Platform.runLater(() -> {
+            assertEquals("RegisterScreen.fxml", controller.getFileName());
         });
     }
 }
