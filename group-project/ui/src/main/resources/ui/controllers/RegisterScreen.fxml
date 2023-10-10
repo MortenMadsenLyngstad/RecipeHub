@@ -27,8 +27,9 @@
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="usernameField" layoutX="101.0" layoutY="172.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField fx:id="passwordField" layoutX="101.0" layoutY="227.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="usernameField" layoutX="101.0" layoutY="172.0" onKeyPressed="#keyPressed" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="passwordField" layoutX="101.0" layoutY="227.0" onKeyPressed="#keyPressed" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="confirmPasswordField" layoutX="102.0" layoutY="279.0" onKeyPressed="#keyPressed" promptText="Confirm password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
             <FontAwesomeIconView fill="#aef359" glyphName="USER" layoutX="76.0" layoutY="190.0" size="20" />
             <FontAwesomeIconView fill="#aef359" glyphName="LOCK" layoutX="77.0" layoutY="246.0" size="20" />
             <Button fx:id="registerButton" layoutX="129.0" layoutY="333.0" mnemonicParsing="false" onAction="#register" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: #AEF359;" text="Register" />
@@ -44,9 +45,8 @@
                </font>
             </Text>
             <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="150.0" layoutY="95.0" size="40" />
-            <PasswordField fx:id="confirmPasswordField" layoutX="102.0" layoutY="279.0" promptText="Confirm password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
             <FontAwesomeIconView fill="#aef359" glyphName="LOCK" layoutX="78.0" layoutY="298.0" size="20" />
-            <Label fx:id="registerMessageLabel" alignment="CENTER" layoutX="60.0" layoutY="140.0" prefHeight="18.0" prefWidth="222.0" text="Enter username and password" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" />
+            <Label fx:id="registerMessageLabel" alignment="CENTER" layoutX="8.0" layoutY="139.0" prefHeight="18.0" prefWidth="326.0" text="Enter username and password" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" />
          </children>
       </AnchorPane>
    </right>

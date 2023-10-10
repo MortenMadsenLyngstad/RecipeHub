@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import file.UserFilehandler;
 
@@ -61,6 +63,15 @@ public class RegisterController extends SuperController {
     }
 
     /**
+     * Changes the userFilehandler
+     * 
+     * @param userFilehandler - the new userFilehandler
+     */
+    public void setUserFilehandler(UserFilehandler userFilehandler) {
+        this.userFilehandler = userFilehandler;
+    }
+
+    /**
      * Validates the register information
      * 
      * @param uname
@@ -97,5 +108,17 @@ public class RegisterController extends SuperController {
             userFilehandler.readUsernamesAndPasswords().put(uname, pword);
             return true;
         }
+    }
+
+    /**
+     * Tries to register the user if the enter key is pressed
+     * 
+     * @param e
+     * @throws IOException if the register method throws an exception
+     * @see RegisterController#register(ActionEvent)
+     */
+    public void keyPressed(KeyEvent e) {
+        if (e.getCode().equals(KeyCode.ENTER))
+            registerButton.fire();
     }
 }
