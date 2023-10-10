@@ -8,7 +8,6 @@ import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import core.Profile;
-import core.Recipe;
 
 public class UserFilehandler extends FileUtil {
   public Hashtable<String, String> userinfo = new Hashtable<String, String>();
