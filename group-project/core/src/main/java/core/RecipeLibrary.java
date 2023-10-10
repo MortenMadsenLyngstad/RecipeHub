@@ -85,6 +85,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
                 return;
             }
         }
+        throw new IllegalArgumentException("The recipe does not exist");
     }
 
     public boolean containsRecipe(Recipe recipe) {

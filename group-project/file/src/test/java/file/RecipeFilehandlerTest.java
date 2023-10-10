@@ -17,13 +17,21 @@ public class RecipeFilehandlerTest {
     private RecipeFilehandler recipeFilehandler;
     private Recipe recipe;
 
-
+    /**
+     * This method is run before each test
+     * This method uses the RecipeFilehandler constructor which uses createFile from
+     * FileUtil
+     * createFile is tested in FileUtilTest
+     */
     @BeforeEach
     public void setup() {
         this.recipe = new Recipe("testRecipe", 1, new Profile("testUser", "Password123"));
         this.recipeFilehandler = new RecipeFilehandler("test.json");
     }
 
+    /**
+     * Helper method to delete testfiles
+     */
     private void deleteFile() {
         try {
             Files.delete(Path.of(System.getProperty("user.home")).resolve("test.json"));
@@ -33,15 +41,36 @@ public class RecipeFilehandlerTest {
         }
     }
 
+    /**
+     * Tests if the recipe is written to and read from file correctly
+     */
     @Test
-    @DisplayName("Test if correct info is written to file")
-    public void testSaveRecipe() {
+    @DisplayName("Test if correct info is written to and read from file")
+    public void testWriteAndReadRecipe() {
         recipeFilehandler.writeRecipe(this.recipe);
         RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
         Recipe loadedRecipe = recipeLibrary.getRecipe(0);
-        Assertions.assertEquals(this.recipe.getName(), loadedRecipe.getName(), "The file should contain the recipeName \"testRecipe\".");
-        Assertions.assertEquals(this.recipe.getPortions(), loadedRecipe.getPortions(), "The recipe should have 1 portion.");
-        Assertions.assertEquals(this.recipe.getAuthor(), loadedRecipe.getAuthor(), "The recipe should have the author \"testUser\".");
+        Assertions.assertEquals(this.recipe.getName(), loadedRecipe.getName(),
+                "The file should contain the recipeName \"testRecipe\".");
+        Assertions.assertEquals(this.recipe.getPortions(), loadedRecipe.getPortions(),
+                "The recipe should have 1 portion.");
+        Assertions.assertEquals(this.recipe.getAuthor(), loadedRecipe.getAuthor(),
+                "The recipe should have the author \"testUser\".");
+        deleteFile();
+    }
+
+    /**
+     * Tests if the recipe is removed from file correctly
+     */
+    @Test
+    @DisplayName("Test if remove recipe works")
+    public void testRemoveRecipe() {
+        recipeFilehandler.writeRecipe(this.recipe);
+        RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
+        Assertions.assertEquals(1, recipeLibrary.getSize(), "The recipe should be added.");
+        recipeFilehandler.removeRecipe(this.recipe);
+        recipeLibrary = recipeFilehandler.readRecipeLibrary();
+        Assertions.assertEquals(0, recipeLibrary.getSize(), "The recipe should be removed.");
         deleteFile();
     }
 }
