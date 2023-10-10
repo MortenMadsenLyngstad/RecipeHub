@@ -2,6 +2,7 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class is used to contain several recipes
@@ -9,8 +10,8 @@ import java.util.Iterator;
  * @author Adrian Haabpiht Solberg
  */
 public class RecipeLibrary implements Iterable<Recipe> {
-
-    private ArrayList<Recipe> recipes;
+    
+    private List<Recipe> recipes;
 
     /**
      * This contructor initilizes an empty ArrayList
@@ -77,11 +78,13 @@ public class RecipeLibrary implements Iterable<Recipe> {
      *                                  recipes
      */
     public void removeRecipe(Recipe recipe) {
-        recipes.stream()
-                .filter(r -> r.equals(recipe))
-                .findFirst().ifPresentOrElse((r) -> recipes.remove(r), () -> {
-                    throw new IllegalArgumentException("The recipe does not exist in the RecipeLibrary");
-                });
+        for (Recipe r : recipes) {
+            System.out.println(r.getName());
+            if (r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor())) {
+                recipes.remove(r);
+                return;
+            }
+        }
     }
 
     public boolean containsRecipe(Recipe recipe) {

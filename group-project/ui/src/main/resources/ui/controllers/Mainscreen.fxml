@@ -27,7 +27,7 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button layoutX="607.0" layoutY="32.0" mnemonicParsing="false" onAction="#logout" text="Log out">
+            <Button fx:id="logoutBtn" layoutX="607.0" layoutY="32.0" mnemonicParsing="false" onAction="#logout" text="Log out">
                <graphic>
                   <FontAwesomeIconView glyphName="USER" />
                </graphic>

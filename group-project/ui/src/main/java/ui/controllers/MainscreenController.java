@@ -55,14 +55,6 @@ public class MainscreenController extends SuperController{
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     /**
-     * This method initializes the GridPane and the title
-     */
-    @FXML
-    public void initialize() {
-        allRecipes = recipeFilehandler.readRecipeLibrary();
-    }
-
-    /**
      * This method will load the gridPane with all recipes when the All Recipes-button is clicked on
      */
     @FXML
@@ -299,6 +291,7 @@ public class MainscreenController extends SuperController{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        setFileName("Recipe.fxml");
     }
 
     /**
@@ -316,9 +309,28 @@ public class MainscreenController extends SuperController{
         loadGrid(modifiedLibrary);
     }
 
+    /**
+     * Custom setProfile-method
+     * This method will set currentProfile to the given profile, and then load all recipes
+     * Custom method needed because of favorites functionality
+     * @param profile - The profile which is logged in
+     */
     @Override
     protected void setProfile(Profile profile) {
         currentProfile = profile;
+        allRecipes = recipeFilehandler.readRecipeLibrary();
         loadAllRecipes();
     }
+
+    /**
+     * This method will set make new filehandlers with new filenames
+     * The method is implemented so that we can run proper tests on the controller
+     * @param recipeFileName - String value for filename to use in recipeFilehandler
+     * @param userFileName - String value for filename to use in userFilehandler
+     */
+    public void setFilehandlers(RecipeFilehandler recipeFilehandler, UserFilehandler userFilehandler) {
+        this.recipeFilehandler = recipeFilehandler;
+        this.userFilehandler = userFilehandler;
+    }
+
 }
