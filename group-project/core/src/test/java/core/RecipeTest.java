@@ -6,10 +6,18 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Junit test class for the Recipe class
+ */
 public class RecipeTest {
 
     private Profile p = new Profile("User1234", "User12345");
 
+    /**
+     * Method for making standard recipe used in amny of the tests
+     * 
+     * @return The finished recipe
+     */
     private Recipe makeRecipe() {
         Recipe returnRecipe = new Recipe("Pancakes", 4, p);
         returnRecipe.setDescription("We're making pancakes for breakfast!");
@@ -24,6 +32,9 @@ public class RecipeTest {
         return returnRecipe;
     }
 
+    /**
+     * Method to test the constructor
+     */
     @Test
     public void testConstructor() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> new Recipe("", 4, p));
@@ -33,6 +44,9 @@ public class RecipeTest {
         Assertions.assertEquals(4, r.getPortions());
     }
 
+    /**
+     * Tests setter and getter for name
+     */
     @Test
     public void testName() {
         Recipe r = makeRecipe();
@@ -42,6 +56,9 @@ public class RecipeTest {
         Assertions.assertEquals("Tikka masala", r.getName());
     }
 
+    /**
+     * Tests setter and getter for description
+     */
     @Test
     public void testDescription() {
         Recipe r = makeRecipe();
@@ -50,6 +67,9 @@ public class RecipeTest {
         Assertions.assertEquals("Pancakes taste good", r.getDescription());
     }
 
+    /**
+     * Tests setter and getter for portions
+     */
     @Test
     public void testPortions() {
         Recipe r = makeRecipe();
@@ -59,12 +79,17 @@ public class RecipeTest {
         Assertions.assertEquals(5, r.getPortions());
     }
 
+    /**
+     * Tests adder, remover and getter for steps
+     */
     @Test
     public void testSteps() {
         Recipe r = makeRecipe();
+        // You should not be able to remove steps which are not in the recipe
         Assertions.assertArrayEquals(new String[] { "Mix all wet ingredients", "Mix in all dry ingredients",
                 "Let sit for 30 minutes, then cook in a pan at medium heat" }, r.getSteps().toArray());
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeStep("This step is not in the recipe"));
+        // Checking that removing an adding steps work
         r.removeStep("Mix all wet ingredients");
         Assertions.assertArrayEquals(new String[] { "Mix in all dry ingredients",
                 "Let sit for 30 minutes, then cook in a pan at medium heat" }, r.getSteps().toArray());
@@ -74,13 +99,20 @@ public class RecipeTest {
                 r.getSteps().toArray());
     }
 
+    /**
+     * Tests adder, remover and getter for ingredients
+     */
     @Test
     public void testIngredients() {
         Recipe r = makeRecipe();
+        // Checking thar added ingredients show up in the recipe
         Assertions.assertTrue(r.getIngredients()
                 .equals(new HashSet<>(Arrays.asList("flour", "eggs", "milk", "salt", "baking powder"))));
         r.addIngredient("ham", 200.0, "g");
-        Assertions.assertEquals(200.0, r.getIngredientAmount("ham"));
+        Assertions.assertTrue(r.getIngredients()
+                .equals(new HashSet<>(Arrays.asList("flour", "ham", "eggs", "milk", "salt", "baking powder"))),
+                "check2");
+        // Testing removeIngredient(String),
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredient("ingredient45"));
         r.removeIngredient("flour");
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.getIngredientAmount("flour"));
@@ -89,13 +121,18 @@ public class RecipeTest {
 
     }
 
+    /**
+     * Tests adder, remover and getter for ingredientamounts
+     */
     @Test
     public void testIngredientAmount() {
         Recipe r = makeRecipe();
+        // Checking that removing illegal amounts throw exceptions
         Assertions.assertEquals(400.0, r.getIngredientAmount("flour"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredientAmount("ham", 30.0));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredientAmount("flour", 401.0));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.removeIngredientAmount("flour", -10.0));
+        // Checking removing and adding amounts of ingredients
         r.removeIngredientAmount("flour", 40.0);
         Assertions.assertEquals(360.0, r.getIngredientAmount("flour"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.addIngredient("flour", -10.0, "g"));
@@ -106,12 +143,17 @@ public class RecipeTest {
         Assertions.assertEquals(200.0, r.getIngredientAmount("ham"));
     }
 
+    /**
+     * Tests setter and getter for ingredientunits
+     */
     @Test
     public void testIngredientUnit() {
         Recipe r = makeRecipe();
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> r.getIngredientUnit("Ingredient that is not in recipe"));
         Assertions.assertEquals("g", r.getIngredientUnit("flour"));
+        // Checking that changing units for ingredients works in legal and not in
+        // illegal cases
         Assertions.assertThrows(IllegalArgumentException.class, () -> r.setIngredientUnit("flour", "Non-unit"));
         r.setIngredientUnit("flour", "dL");
         r.setIngredientUnit("milk", "g");
@@ -121,6 +163,9 @@ public class RecipeTest {
         Assertions.assertEquals("pcs", r.getIngredientUnit("salt"));
     }
 
+    /**
+     * Tests setter and getter for saved
+     */
     @Test
     public void testSaved() {
         Recipe r = makeRecipe();
