@@ -3,25 +3,23 @@ package ui.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import core.Recipe;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
@@ -29,7 +27,8 @@ public class AddRecipeController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
-    private Button addName, removeStep, backButton, removeIngredient, addIngredientButton, saveRecipeButten, ingredientsNextButton, addStepNext, addDescriptionButton, addStepButton;
+    private Button addName, removeStep, backButton, removeIngredient, addIngredientButton, saveRecipeButten,
+            ingredientsNextButton, addStepNext, addDescriptionButton, addStepButton;
 
     @FXML
     private Pane recipeNamePane, addIngredientPane, descriptionPane, portionAndConfirmPane, addStepPane;
@@ -41,7 +40,8 @@ public class AddRecipeController extends SuperController {
     private MenuButton ingredientPropertyMenu, numberOfPortionsMenu;
 
     @FXML
-    private Text nameError, descriptionError, propertyError, noAddedPortionsError, amountError, notValidStepError, ingredientNameError, noAddedIngredientError, noAddedStepError;
+    private Text nameError, descriptionError, propertyError, noAddedPortionsError, amountError, notValidStepError,
+            ingredientNameError, noAddedIngredientError, noAddedStepError;
 
     @FXML
     private Label description, name, ingredientAndSteps;
@@ -438,49 +438,32 @@ public class AddRecipeController extends SuperController {
         if (newRecipe == null || newRecipe.isSaved()) {
             switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
         } else {
-            showPopUp(event);
+            showAlert(event);
         }
     }
 
+
     /**
-     * This method shows a pop up window when the user tries to go back without
-     * saving the recipe
+     * This method shows a pop up window where the user can choose to go back
+     * to the mainscreen without saving the recipe or keep working on the recipe
      * 
-     * The pop up window gives the user the option to go back without saving the
-     * recipe or to go back and complet the recipe
-     * 
-     * @param event event when the user clicks on the back button
-     * @see #backButtonClick(ActionEvent)
+     * @param event
      */
-    private void showPopUp(ActionEvent event) {
-        Stage popUpStage = new Stage();
-        popUpStage.initModality(Modality.APPLICATION_MODAL);
-        popUpStage.setTitle("Your recipe is not saved!");
+    @FXML
+    public void showAlert(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Your recipe is not saved!");
+        alert.setHeaderText("Delete on-going recipe");
+        alert.setContentText("If you go back now your recipe will not be saved. Do you want to go back?");
 
-        VBox vbox = new VBox(20);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(10));
-
-        Label label = new Label("If you go back now your recipe will not be saved. Do you want to go back?");
-        Button noButton = new Button("No");
-        noButton.setOnAction(e -> popUpStage.close());
-
-        Button yesButton = new Button("Yes");
-
-        yesButton.setOnAction(e -> {
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            currentProfile.removeRecipe(newRecipe);
             try {
-                currentProfile.removeRecipe(newRecipe);
                 switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
-            } catch (IOException e1) {
-                e1.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            popUpStage.close();
-        });
-
-        vbox.getChildren().addAll(label, yesButton, noButton);
-
-        Scene scene = new Scene(vbox);
-        popUpStage.setScene(scene);
-        popUpStage.showAndWait();
+        }
     }
 }

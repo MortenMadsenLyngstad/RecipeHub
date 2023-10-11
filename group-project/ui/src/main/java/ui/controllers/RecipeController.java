@@ -1,23 +1,24 @@
 package ui.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+import core.Profile;
 import core.Recipe;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * Controller for displaying the information of a recipe on a RecipeSreen
@@ -111,8 +112,7 @@ public class RecipeController extends SuperController {
      * @throws IOException If there is an issue with loading Mainscreen.fxml
      */
     public void deleteRecipe(MouseEvent event) throws IOException {
-        if (confirmationPopUp(event)) {
-            closeCurrentStage();
+        if (showAlert()) {
             ActionEvent actionEvent = new ActionEvent(event.getSource(), event.getTarget());
             try {
                 switchSceneWithInfo(actionEvent, "Mainscreen.fxml", currentProfile);
@@ -123,53 +123,38 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * Helper method to close the current stage
-     */
-    private void closeCurrentStage() {
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        stage.close();
-    }
-
-    /**
-     * Creates a pop up window to confirm the deletion of a recipe
+     * Shows an alert to the user to confirm the deletion of the recipe
      * 
-     * @param event The click of the deleteButton
-     * @return True if the user confirms the deletion, false if not
+     * @return Boolean value for if the user confirmed the deletion
      */
-    private Boolean confirmationPopUp(MouseEvent event) {
-        Stage popUpStage = new Stage();
-        popUpStage.initModality(Modality.APPLICATION_MODAL);
-        popUpStage.setTitle("Delete this recipe?");
+    @FXML
+    public boolean showAlert() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Delete this recipe?");
+        alert.setHeaderText("Delete recipe");
+        alert.setContentText("If you delete this recipe, it will be gone forever. Are you sure?");
 
-        VBox vbox = new VBox(20);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setPadding(new Insets(10));
-
-        Label label = new Label("If you delete this recipe, it will be gone forever. Are you sure?");
-        Button noButton = new Button("No");
-        noButton.setOnAction(e -> popUpStage.close());
-
-        Button yesButton = new Button("Yes");
-
-        yesButton.setOnAction(e -> {
-            try {
-                recipeFilehandler.removeRecipe(recipe);
-                currentProfile.removeFavorite(recipe);
-                currentProfile.removeRecipe(recipe);
-                userFilehandler.writeProfile(currentProfile);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            recipeFilehandler.removeRecipe(recipe);
+                // If another profile has the removed recipe favorited it is also removed from their favorites
+                List<Profile> profiles = new ArrayList<>();
+                for (Profile p : userFilehandler.readProfiles()) {
+                    if (p.getUsername().equals(currentProfile.getUsername())){
+                        currentProfile.removeFavorite(recipe);
+                        currentProfile.removeRecipe(recipe);
+                        profiles.add(currentProfile);
+                    }
+                    else {
+                        p.removeFavorite(recipe);
+                        profiles.add(p);
+                    }
+                }
+                userFilehandler.writeAllProfiles(profiles);
                 flag = true;
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-            popUpStage.close();
-        });
-
-        vbox.getChildren().addAll(label, yesButton, noButton);
-
-        Scene scene = new Scene(vbox);
-        popUpStage.setScene(scene);
-        popUpStage.showAndWait();
-
+        } else {
+            flag = false;
+        }
         return flag;
     }
 }

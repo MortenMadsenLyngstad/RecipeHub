@@ -238,9 +238,12 @@ public class MainscreenController extends SuperController{
                 heart.setFill(Color.WHITE);
                 currentProfile.removeFavorite(recipe);
                 userFilehandler.writeProfile(currentProfile);
-                if ((this instanceof MainscreenController) && titleLabel.getText().equals("Favorites")) {
-                    load();
+                if (this.titleLabel != null) {
+                    if (this.titleLabel.getText().equals("Favorites")) {
+                        load();
+                    }
                 }
+
             }
             else {
                 heart.setFill(Color.RED);

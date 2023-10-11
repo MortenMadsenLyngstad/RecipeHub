@@ -57,6 +57,15 @@ public class UserFilehandler extends FileUtil {
   }
 
   /**
+   * This method writes all profiles to the file
+   * 
+   * @param profiles - List of profiles to write
+   */
+  public void writeAllProfiles(List<Profile> profiles) {
+    writeFile(filePath, profiles);
+  }
+
+  /**
    * This method reads usernames and passwords from the file
    * 
    * @return - Returns a hashtable with usernames as keys and passwords as values

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
+
 /**
  * This class is used to contain several recipes
  * 
@@ -79,7 +81,6 @@ public class RecipeLibrary implements Iterable<Recipe> {
      */
     public void removeRecipe(Recipe recipe) {
         for (Recipe r : recipes) {
-            System.out.println(r.getName());
             if (r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor())) {
                 recipes.remove(r);
                 return;
@@ -88,10 +89,17 @@ public class RecipeLibrary implements Iterable<Recipe> {
         throw new IllegalArgumentException("The recipe does not exist");
     }
 
+    /**
+     * This method will check if the given recipe exists in the ArrayList recipes
+     * 
+     * @param recipe - Recipe object you wish to check
+     * @return Boolean value, true if the recipe exists in recipes, false if not
+     */
     public boolean containsRecipe(Recipe recipe) {
         return recipes.stream()
                 .anyMatch(r -> (r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor())));
     }
+
 
     /**
      * This method defines an iterator for the class, which makes it iterable
