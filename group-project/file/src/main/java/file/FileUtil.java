@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import com.google.gson.Gson;
@@ -38,7 +39,7 @@ public class FileUtil {
      * @param data     - Data to write to the file
      */
     public <T> void writeFile(Path filePath, T data) {
-        try (Writer writer = new FileWriter(filePath.toFile())) {
+        try (Writer writer = new FileWriter(filePath.toFile(), Charset.forName("UTF-8"))) {
             gson.toJson(data, writer);
         } catch (IOException e) {
             System.out.println("Error writing to file");
@@ -56,7 +57,7 @@ public class FileUtil {
      * @return - Returns the data read from the file
      */
     public <T> T readFile(Path filePath, T data, Type type) {
-        try (Reader reader = new FileReader(filePath.toFile())) {
+        try (Reader reader = new FileReader(filePath.toFile(), Charset.forName("UTF-8"))) {
             data = gson.fromJson(reader, type);
         } catch (IOException e) {
             System.out.println("Error reading from file");

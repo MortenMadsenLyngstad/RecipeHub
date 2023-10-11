@@ -1,0 +1,38 @@
+@startuml sequenceDiagramUserStory3
+
+!define MyGreen #009000
+
+skinparam participant {
+  BackgroundColor MyGreen
+}
+
+Actor User
+participant App
+participant LoginController
+participant MainscreenController
+participant UserFilehandler
+participant FileUtil
+database userinfo.json
+
+User -> App: Opens the application
+activate App
+User -> LoginController: Enters login information
+activate LoginController
+User -> LoginController: Clicks on: "Login"
+LoginController -> MainscreenController: login(ActionEvent event)
+deactivate LoginController
+activate MainscreenController
+User <-- MainscreenController: Shows all recipes to user
+User -> MainscreenController: Clicks on: Heart-icon
+User <-- MainscreenController: Heart turns red
+MainscreenController -> UserFilehandler: setHeart(FontAwesomeIconView heart, Recipe recipe, Profile currentProfile)
+activate UserFilehandler
+UserFilehandler -> FileUtil: writeProfile(Profile profile)
+activate FileUtil
+deactivate UserFilehandler
+FileUtil -> userinfo.json: writeFile(Path filepath, T data)
+deactivate FileUtil
+User -> MainscreenController: Clicks on: "Favorites"
+User <-- MainscreenController: Shows favorited recipe(s) to user
+
+@enduml

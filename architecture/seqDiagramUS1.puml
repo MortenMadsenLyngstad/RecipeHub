@@ -1,0 +1,62 @@
+@startuml sequenceDiagramUserStory1
+
+!define MyGreen #009000
+
+skinparam participant {
+  BackgroundColor MyGreen
+}
+
+Actor User
+participant App
+participant LoginController
+participant MainscreenController
+participant AddRecipeController
+participant RecipeFilehandler
+participant UserFilehandler
+participant FileUtil
+database recipes.json
+database userinfo.json
+
+User -> App: Opens the application
+activate App
+User -> LoginController: Enters login information
+activate LoginController
+User -> LoginController: Clicks on: "Login"
+LoginController -> MainscreenController: login(ActionEvent event)
+deactivate LoginController
+activate MainscreenController
+User -> MainscreenController: Clicks on: "+ Add Recipe"
+MainscreenController -> AddRecipeController: addRecipe(ActionEvent event)
+deactivate MainscreenController
+activate AddRecipeController
+User -> AddRecipeController: Fills in recipe details
+User -> AddRecipeController: Clicks on: "Save Recipe"
+AddRecipeController -> AddRecipeController: saveRecipe()
+AddRecipeController -> RecipeFilehandler: saveRecipeToLibrary()
+activate RecipeFilehandler
+RecipeFilehandler -> FileUtil: writeRecipe(Recipe recipe)
+deactivate RecipeFilehandler
+activate FileUtil
+FileUtil -> recipes.json: writeFile(Path filePath, T data)
+deactivate FileUtil
+AddRecipeController -> UserFilehandler: saveRecipeToLibrary()
+activate UserFilehandler
+UserFilehandler -> FileUtil: writeProfile(Profile profile)
+deactivate UserFilehandler
+activate FileUtil
+FileUtil -> userinfo.json: writeFile(Path filePath, T data)
+deactivate FileUtil
+User -> AddRecipeController: Clicks on: "Back"
+AddRecipeController -> MainscreenController: back(ActionEvent event)
+deactivate AddRecipeController
+activate MainscreenController
+User <-- MainscreenController: Recipe shows in feed
+User -> MainscreenController: Clicks on: "Logout"
+MainscreenController -> LoginController: logout(ActionEvent event)
+deactivate MainscreenController
+activate LoginController
+User -> App: Closes the application
+deactivate LoginController
+deactivate App
+
+@enduml

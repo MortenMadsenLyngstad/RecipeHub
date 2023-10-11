@@ -1,0 +1,76 @@
+@startuml classDiagramCore
+
+package recipehub.core {
+    class Profile {
+        - username: String 
+        - password: String
+        - recipeLibrary: RecipeLibrary
+        - favorites: RecipeLibrary
+        + Profile(username: String, password: String)
+        + static void isValidUsername(username: String)
+        + static void isValidPassword(password: String)
+        + string getUsername()
+        + string getPassword()
+        + void setUsername(username: String)
+        + void setPassword(password: String)
+        + RecipeLibrary getRecipes()
+        + void addRecipe(recipe: Recipe)
+        + void removeRecipe(recipe: Recipe)
+        + RecipeLibrary getFavorites()
+        + void addFavorite(recipe: Recipe)
+        + void removeFavorite(recipe: Recipe)
+    }
+
+    class Recipe {
+        - steps: List<String>
+        - portions: int
+        - name: String
+        - description: String
+        - ingredients: Map<String, Double>
+        - ingredientsUnits: Map<String, String>
+        - authorUsername: String
+        - isSaved: boolean
+        + Recipe(name: String, portions: int, author: Profile)
+        + void setName(name: String)
+        + String getName()
+        + void setDescription(description: String)
+        + String getDescription()
+        + void setPortions(portions: int)
+        + int getPortions()
+        + void addStep(step: String)
+        + void removeStep(step: String)
+        + Set<String> getIngredients()
+        + double getIngredientAmount(ingredient: String)
+        + void addIngredient(ingredient: String, amount: Double, unit: String)
+        + void removeIngredient(ingredient: String)
+        + void removeIngredientAmount(ingredient: String, amount: Double)
+        + String getIngredientUnit(ingredient: String)
+        + void setIngredientUnit(ingredient: String, unit: String)
+        + String getAuthor()
+        + boolean isSaved()
+        + void setSaved(saved: boolean) 
+    }
+
+    class RecipeLibrary {
+        - recipes: List<Recipe>
+        + RecipeLibrary()
+        + RecipeLibrary(ArrayList<Recipe> recipes)
+        + Recipe getRecipe(n: int)
+        + int getSize()
+        + void addRecipe(recipe: Recipe)
+        + void removeRecipe(recipe: Recipe)
+        + boolean containsRecipe(recipe: Recipe)
+        + Iterator<Recipe> iterator()
+    }
+
+    interface Iterable {
+        + Iterator<T> iterator()
+    }
+
+RecipeLibrary  -right-> "recipes: *" Recipe
+Profile -up-> "recipeLibraries: 2" RecipeLibrary
+Recipe -right-> "profiles: 1" Profile
+Iterable <|.left. RecipeLibrary
+}
+
+@enduml
