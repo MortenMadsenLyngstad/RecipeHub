@@ -81,14 +81,34 @@
                     </executions>
                 </plugin>
                  <!-- Run the checkstyle code quality tool -->
-                <plugin>
+               <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.2.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>10.3.4</version>
+                        </dependency>
+                    </dependencies>
                     <configuration>
-                        <failOnViolation>false</failOnViolation>
+                        <configLocation>config/checkstyle/checkstyle-checker.xml</configLocation>
+                        <consoleOutput>false</consoleOutput>
+                        <failsOnError>false</failsOnError>
+                        <linkXRef>false</linkXRef>
                     </configuration>
+                    <executions>
+                        <execution>
+                        <id>checkstyle-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        </execution>
+                    </executions>
                 </plugin>
+
                 <!-- Run the spotbugs code quality tool -->
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
@@ -96,6 +116,7 @@
                     <version>4.7.3.6</version>
                     <configuration>
                         <failOnError>false</failOnError>
+                        <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
                     </configuration>
                 </plugin>
             </plugins>
