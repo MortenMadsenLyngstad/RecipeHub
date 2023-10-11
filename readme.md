@@ -22,6 +22,8 @@ These are the requirements for the project:
 - Mockito version 5.5.0
 - JaCoCo version 0.8.7
 - FontAwesomeFX-FontAwesome version 4.7.0-9.1.2
+- Checkstyle version 3.2.0
+- Spotbugs 4.7.3.6
 
 ## Dependencies
 
@@ -30,11 +32,14 @@ These are the dependencies for the project:
 - JavaFX
 - TestFX
 - JUnit
+- GSON
 - Maven
 - JaCoCo
 - Mockito
 - Hamcrest
 - FontAwesomeFX-FontAwesome
+- Checkstyle
+- Spotbugs
 
 ## Instructions
 
@@ -64,11 +69,15 @@ The following figure shows the directory structure of the project:
     │   
     ├───file
     │   ├───src
-    │       └───main
+    │       │───main
+    │       │    └───java
+    │       │        └───file
+    │       │            -- The file-handling for the project is located in this file.
+    │       └───test
     │           └───java
-    │               └───file
-    │                   -- The file-handling for the project is located in this file.
-    │   
+    │               └───core 
+    │                    -- The testfiles for the file module are located in thios file
+    │       
     └───ui
         ├───src
             ├───main
