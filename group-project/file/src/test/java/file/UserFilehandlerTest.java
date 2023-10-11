@@ -3,8 +3,10 @@ package file;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
@@ -79,8 +81,26 @@ public class UserFilehandlerTest {
         String password = "Password123";
         userFilehandler.writeProfile(new Profile(username, password));
         Assertions.assertEquals(new Hashtable<>(Map.of(username, password)),
-                userFilehandler.readUsernamesAndPasswords());
+                userFilehandler.readUsernamesAndPasswords(), "The hashtable should contain the username \"testuser\".");
         deleteFile();
         Assertions.assertEquals(new HashMap<String, String>(), userFilehandler.readUsernamesAndPasswords());
+    }
+
+    @Test
+    @DisplayName("Test if writeAllProfiles writes all profiles to file")
+    public void testWriteAllProfiles() {
+        List<Profile> profiles = new ArrayList<>();
+        profiles.add(new Profile("Testuser1", "Easypass1"));
+        profiles.add(new Profile("Testuser2", "Easypass2"));
+        profiles.add(new Profile("Testuser3", "Easypass3"));
+        
+        userFilehandler.writeAllProfiles(profiles);
+        
+        List<Profile> readProfiles = new ArrayList<>();
+        readProfiles = userFilehandler.readProfiles();
+        Assertions.assertEquals(readProfiles.get(0).getUsername(), readProfiles.get(0).getUsername(), "The first profile should have the username \"Testuser1\".");
+        Assertions.assertEquals(readProfiles.get(1).getUsername(), readProfiles.get(1).getUsername(), "The second profile should have the username \"Testuser2\".");
+        Assertions.assertEquals(readProfiles.get(2).getUsername(), readProfiles.get(2).getUsername(), "The third profile should have the username \"Testuser3\".");
+        deleteFile();
     }
 }
