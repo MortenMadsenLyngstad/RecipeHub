@@ -42,7 +42,9 @@ public class RegisterControllerTest extends ApplicationTest {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("RegisterScreen.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
+        stage.setScene(scene);
         stage.show();
     }
 

@@ -86,7 +86,7 @@ public class AddRecipeController extends SuperController {
      * 
      */
     public boolean validateRecipeName() {
-        if (!recipeName.getText().isBlank()) {
+        if (!recipeName.getText().isBlank() && recipeName.getText().length() <= 20) {
             return true;
         } else {
             return false;

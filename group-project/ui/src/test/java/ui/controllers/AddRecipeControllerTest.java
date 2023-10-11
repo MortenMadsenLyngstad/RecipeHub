@@ -62,7 +62,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("addRecipe.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -179,6 +181,14 @@ public class AddRecipeControllerTest extends ApplicationTest {
     @Test
     public void testCreateRecipeWithBlankName() {
         recipeNameField.setText("");
+        assertFalse(controller.validateRecipeName());
+        clickOn(addRecipeNameButton);
+        assertTrue(testNameError.isVisible());
+    }
+
+    @Test
+    public void testCreateRecipeWithTooLongName() {
+        recipeNameField.setText("This string is too long to be accepted");
         assertFalse(controller.validateRecipeName());
         clickOn(addRecipeNameButton);
         assertTrue(testNameError.isVisible());

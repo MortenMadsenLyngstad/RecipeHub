@@ -165,6 +165,7 @@ public class MainscreenController extends SuperController{
 
         // Makes "Read more"-button
         Button btn = new Button("Read more");
+        btn.getStyleClass().add("green_button");
         btn.setOnAction(event -> {
             try {
                 switchSceneRecipe(event, recipe, currentProfile);
@@ -291,6 +292,7 @@ public class MainscreenController extends SuperController{
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

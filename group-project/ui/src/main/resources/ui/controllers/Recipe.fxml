@@ -11,12 +11,12 @@
    <children>
       <AnchorPane prefHeight="90.0" prefWidth="700.0" style="-fx-background-color: #AEF359;">
          <children>
-            <Button fx:id="backButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" text="Back">
+            <Button fx:id="backButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" styleClass="blue_button" text="Back">
                <graphic>
                   <FontAwesomeIconView disable="true" glyphName="LONG_ARROW_LEFT" selectionEnd="0" size="40" stroke="BLACK" wrappingWidth="45.80854034423828" />
                </graphic>
             </Button>
-            <Label fx:id="nameField" alignment="CENTER" contentDisplay="CENTER" layoutX="100.0" layoutY="15.0" prefHeight="60.0" prefWidth="500.0" text="Recipe name">
+            <Label fx:id="nameField" alignment="CENTER" contentDisplay="CENTER" layoutX="120.0" layoutY="15.0" maxWidth="461.0" prefHeight="60.0" prefWidth="461.0" text="Recipe name">
                <font>
                   <Font size="36.0" />
                </font>
