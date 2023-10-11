@@ -23,7 +23,7 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Text>
-            <Button fx:id="backButton" alignment="CENTER" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="49.0" prefWidth="94.5" text="Back">
+            <Button fx:id="backButton" alignment="CENTER" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="49.0" prefWidth="94.5" styleClass="blue_button" text="Back">
                <graphic>
                   <FontAwesomeIconView disable="true" glyphName="LONG_ARROW_LEFT" size="40">
                      <font>
@@ -38,8 +38,8 @@
          <children>
             <Text layoutX="15.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Write in the name of the recipe:" />
             <TextField fx:id="recipeName" layoutX="188.0" layoutY="18.0" prefHeight="26.0" prefWidth="99.0" promptText="Dish" />
-            <Button fx:id="addName" layoutX="298.0" layoutY="18.0" mnemonicParsing="false" onAction="#createRecipe" text="AddName" />
-            <Text fx:id="nameError" disable="true" fill="RED" layoutX="163.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please write in a name here!" visible="false" />
+            <Button fx:id="addName" layoutX="298.0" layoutY="18.0" mnemonicParsing="false" onAction="#createRecipe" styleClass="green_button" text="AddName" />
+            <Text fx:id="nameError" disable="true" fill="RED" layoutX="188.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The name is invalid!" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="addIngredientPane" layoutX="-1.0" layoutY="200.0" prefHeight="111.0" prefWidth="391.0" visible="false">
@@ -47,27 +47,27 @@
             <Text layoutX="15.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Write in the needed ingredients:" />
             <TextField fx:id="ingredientNameInput" alignment="CENTER" layoutX="15.0" layoutY="27.0" prefHeight="26.0" prefWidth="105.0" promptText="Ingredient name" />
             <TextField fx:id="ingredientAmount" alignment="CENTER" layoutX="125.0" layoutY="27.0" prefHeight="26.0" prefWidth="65.0" promptText="Amount" />
-            <MenuButton fx:id="ingredientPropertyMenu" layoutX="195.0" layoutY="27.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" text="Property">
+            <MenuButton fx:id="ingredientPropertyMenu" layoutX="195.0" layoutY="27.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="82.0" styleClass="green_button" text="Property">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#selectProperty" text="g" />
                 <MenuItem mnemonicParsing="false" onAction="#selectProperty" text="pcs" />
                   <MenuItem mnemonicParsing="false" onAction="#selectProperty" text="dL" />
               </items>
             </MenuButton>
-            <Button fx:id="addIngredientButton" layoutX="283.0" layoutY="27.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="26.0" prefWidth="43.0" text="Add" />
-            <Button fx:id="ingredientsNextButton" layoutX="332.0" layoutY="27.0" mnemonicParsing="false" onAction="#addedAllIngredients" text="Next" />
+            <Button fx:id="addIngredientButton" layoutX="283.0" layoutY="27.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="26.0" prefWidth="43.0" styleClass="green_button" text="Add" />
+            <Button fx:id="ingredientsNextButton" layoutX="332.0" layoutY="27.0" mnemonicParsing="false" onAction="#addedAllIngredients" styleClass="green_button" text="Next" />
             <Text fx:id="ingredientNameError" fill="RED" layoutX="18.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add an ingredient!" visible="false" />
             <Text fx:id="propertyError" fill="#f80000" layoutX="18.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select property!" visible="false" />
             <Text fx:id="amountError" fill="RED" layoutX="18.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add amount as number!" visible="false" />
             <Text fx:id="noAddedIngredientError" fill="RED" layoutX="196.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Need to add at least one ingredient!" visible="false" />
-            <Button fx:id="removeIngredient" layoutX="263.0" layoutY="57.0" mnemonicParsing="false" onAction="#removeIngredient" text="Remove Igredient" visible="false" />
+            <Button fx:id="removeIngredient" layoutX="263.0" layoutY="57.0" mnemonicParsing="false" onAction="#removeIngredient" styleClass="green_button" text="Remove Igredient" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="descriptionPane" layoutY="136.0" prefHeight="64.0" prefWidth="391.0" visible="false">
          <children>
             <Text layoutX="15.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" />
             <TextField fx:id="addDescriptionText" layoutX="15.0" layoutY="28.0" prefHeight="26.0" prefWidth="252.0" promptText="Describe your dish:" />
-            <Button fx:id="addDescriptionButton" layoutX="273.0" layoutY="28.0" mnemonicParsing="false" onAction="#addDescription" text="Add" />
+            <Button fx:id="addDescriptionButton" layoutX="273.0" layoutY="28.0" mnemonicParsing="false" onAction="#addDescription" styleClass="green_button" text="Add" />
             <Text fx:id="descriptionError" fill="#ff0505" layoutX="94.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please write in a discription!" visible="false" />
          </children>
       </Pane>
@@ -75,17 +75,17 @@
          <children>
             <Text layoutX="15.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please descpribe step by step how to make the dish:" />
             <TextField fx:id="addStepText" layoutX="15.0" layoutY="31.0" prefHeight="26.0" prefWidth="230.0" promptText="Step 1:" />
-            <Button fx:id="addStepButton" layoutX="257.0" layoutY="31.0" mnemonicParsing="false" onAction="#addStep" text="Add Step" />
-            <Button fx:id="addStepNext" layoutX="331.0" layoutY="31.0" mnemonicParsing="false" onAction="#addedAllSteps" text="Next" />
+            <Button fx:id="addStepButton" layoutX="257.0" layoutY="31.0" mnemonicParsing="false" onAction="#addStep" styleClass="green_button" text="Add Step" />
+            <Button fx:id="addStepNext" layoutX="331.0" layoutY="31.0" mnemonicParsing="false" onAction="#addedAllSteps" styleClass="green_button" text="Next" />
             <Text fx:id="notValidStepError" fill="RED" layoutX="15.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nedd to add åa descriptive step!" visible="false" />
             <Text fx:id="noAddedStepError" fill="RED" layoutX="257.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Need to add a step first!" visible="false" />
-            <Button fx:id="removeStep" layoutX="284.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeStep" text="Remove Step" visible="false" />
+            <Button fx:id="removeStep" layoutX="284.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeStep" styleClass="green_button" text="Remove Step" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="portionAndConfirmPane" layoutX="-4.0" layoutY="328.0" prefHeight="84.0" prefWidth="391.0" visible="false">
          <children>
             <Text layoutX="15.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated portions:" />
-            <MenuButton fx:id="numberOfPortionsMenu" layoutX="130.0" layoutY="28.0" mnemonicParsing="false" text="Portions">
+            <MenuButton fx:id="numberOfPortionsMenu" layoutX="130.0" layoutY="28.0" mnemonicParsing="false" styleClass="green_button" text="Portions">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#selectPortions" text="1" />
                 <MenuItem mnemonicParsing="false" onAction="#selectPortions" text="2" />
@@ -96,9 +96,9 @@
                   <MenuItem mnemonicParsing="false" onAction="#selectPortions" text="7" />
               </items>
             </MenuButton>
-            <Button fx:id="saveRecipeButten" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="226.0" layoutY="28.0" mnemonicParsing="false" onAction="#saveRecipe" prefHeight="26.0" prefWidth="108.0" text="Save Recipe" textAlignment="JUSTIFY">
+            <Button fx:id="saveRecipeButten" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="226.0" layoutY="28.0" mnemonicParsing="false" onAction="#saveRecipe" prefHeight="26.0" prefWidth="108.0" styleClass="green_button" text="Save Recipe" textAlignment="JUSTIFY">
                <graphic>
-                  <FontAwesomeIconView fill="#aef359" glyphName="CHECK" selectionFill="#aef359" stroke="BLACK" strokeWidth="0.5" />
+                  <FontAwesomeIconView fill="GREEN" glyphName="CHECK" selectionFill="#aef359" stroke="BLACK" strokeWidth="0.5" />
                </graphic>
             </Button>
             <Text fx:id="noAddedPortionsError" fill="RED" layoutX="103.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select number of portions!" visible="false" />

@@ -27,17 +27,17 @@
                   <Font size="36.0" />
                </font>
             </Label>
-            <Button fx:id="logoutBtn" layoutX="607.0" layoutY="32.0" mnemonicParsing="false" onAction="#logout" text="Log out">
+            <Button fx:id="logoutBtn" layoutX="581.0" layoutY="21.0" mnemonicParsing="false" onAction="#logout" prefHeight="49.0" prefWidth="94.5" styleClass="blue_button" text="Log out">
                <graphic>
-                  <FontAwesomeIconView glyphName="USER" />
+                  <FontAwesomeIconView glyphName="USER" size="30" text="" />
                </graphic>
             </Button>
             <FontAwesomeIconView glyphName="SPOON" layoutX="64.0" layoutY="49.0" rotate="56.3" size="50" />
          </children></AnchorPane>
-      <Button fx:id="allBtn" layoutX="310.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadAllRecipes" prefWidth="80.0" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5;" text="All recipes" />
-      <Button fx:id="addBtn" layoutX="171.0" layoutY="98.0" mnemonicParsing="false" onAction="#addRecipe" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5;" text="+ Add Recipe" />
-      <Button fx:id="myBtn" layoutX="395.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadMyRecipes" prefWidth="80.0" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5; -fx-background-radius: 5;" text="My recipes" />
+      <Button fx:id="allBtn" layoutX="310.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadAllRecipes" prefWidth="80.0" styleClass="green_button" text="All recipes" />
+      <Button fx:id="addBtn" layoutX="171.0" layoutY="98.0" mnemonicParsing="false" onAction="#addRecipe" styleClass="green_button" text="+ Add Recipe" />
+      <Button fx:id="myBtn" layoutX="395.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadMyRecipes" prefWidth="80.0" styleClass="green_button" text="My recipes" />
       <TextField fx:id="txtField" layoutX="270.0" layoutY="99.0" onKeyTyped="#search" promptText="Search here..." />
-      <Button fx:id="favoritesBtn" layoutX="225.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadFavoriteRecipes" prefHeight="28.0" prefWidth="80.0" style="-fx-background-color: AEF359; -fx-border-color: black; -fx-border-radius: 5;" text="Favorites" />
+      <Button fx:id="favoritesBtn" layoutX="225.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadFavoriteRecipes" prefHeight="28.0" prefWidth="80.0" styleClass="green_button" text="Favorites" />
    </children>
 </AnchorPane>

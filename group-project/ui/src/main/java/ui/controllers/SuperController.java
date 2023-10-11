@@ -20,6 +20,7 @@ public class SuperController {
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(file));
         scene = new Scene(root);
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setResizable(false);
@@ -36,6 +37,7 @@ public class SuperController {
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

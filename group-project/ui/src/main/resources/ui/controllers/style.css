@@ -1,0 +1,25 @@
+.green_button {
+    -fx-background-color: #AEF359;
+    background-color:  #AEF359;
+}
+.green_button:hover {
+    -fx-background-color: #7edb5c;
+    background-color: #7edb5c;
+}
+.green_button:pressed {
+    -fx-background-color: #64a84b;
+    background-color: #64a84b;
+}
+
+.blue_button {
+    -fx-background-color: lightblue;
+    background-color:  lightblue;
+}
+.blue_button:hover {
+    -fx-background-color: rgb(126, 167, 181);
+    background-color: rgb(126, 167, 181);
+}
+.blue_button:pressed {
+    -fx-background-color: rgb(93, 144, 161);
+    background-color: rgb(93, 144, 161);
+}
