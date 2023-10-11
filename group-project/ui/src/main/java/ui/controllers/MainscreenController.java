@@ -59,7 +59,7 @@ public class MainscreenController extends SuperController{
      */
     @FXML
     public void loadAllRecipes() {
-        if (titleLabel.getText() ==  allBtn.getText()) {
+        if (titleLabel.getText().equals(allBtn.getText())) {
             return;
         }
         titleLabel.setText(allBtn.getText());
@@ -73,7 +73,7 @@ public class MainscreenController extends SuperController{
      */
     @FXML
     public void loadMyRecipes() {
-        if (titleLabel.getText() ==  myBtn.getText()) {
+        if (titleLabel.getText().equals(myBtn.getText())) {
             return;
         }
         titleLabel.setText(myBtn.getText());
@@ -87,7 +87,7 @@ public class MainscreenController extends SuperController{
      */
     @FXML
     public void loadFavoriteRecipes() {
-        if (titleLabel.getText() ==  favoritesBtn.getText()) {
+        if (titleLabel.getText().equals(favoritesBtn.getText())) {
             return;
         }
         titleLabel.setText(favoritesBtn.getText());

@@ -25,6 +25,7 @@ public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
     private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
+    private Alert alert;
 
     @FXML
     private Button addName, removeStep, backButton, removeIngredient, addIngredientButton, saveRecipeButten,
@@ -376,8 +377,8 @@ public class AddRecipeController extends SuperController {
         if (valdatePortions()) {
             newRecipe.setPortions(Integer.parseInt(numberOfPortionsMenu.getText()));
             portionAndConfirmPane.setVisible(false);
-            saveRecipeToLibrary();
             newRecipe.setSaved(true);
+            saveRecipeToLibrary();
         } else {
             noAddedPortionsError.setVisible(true);
         }
@@ -442,6 +443,10 @@ public class AddRecipeController extends SuperController {
         }
     }
 
+    public Alert getAlert() {
+        return this.alert;
+    }
+
 
     /**
      * This method shows a pop up window where the user can choose to go back
@@ -451,7 +456,7 @@ public class AddRecipeController extends SuperController {
      */
     @FXML
     public void showAlert(ActionEvent event) {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
+        this.alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Your recipe is not saved!");
         alert.setHeaderText("Delete on-going recipe");
         alert.setContentText("If you go back now your recipe will not be saved. Do you want to go back?");
@@ -465,5 +470,6 @@ public class AddRecipeController extends SuperController {
                 e.printStackTrace();
             }
         }
+        this.alert = null;
     }
 }

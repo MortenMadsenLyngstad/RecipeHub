@@ -29,6 +29,7 @@ public class RecipeController extends SuperController {
     private MainscreenController mainscreenController = new MainscreenController();
     private Recipe recipe;
     private Boolean flag = false;
+    private Alert alert;
 
 
     @FXML
@@ -57,13 +58,17 @@ public class RecipeController extends SuperController {
     public void populate() {
         // If the recipe is the users own, show the delete button
         showDeleteButton();
+        
         mainscreenController.setHeart(heartButton, recipe, currentProfile);
         nameField.setText(recipe.getName());
         authorLabel.setText("Posted by: " + recipe.getAuthor());
         portionsLabel.setText("Portions: " + recipe.getPortions());
         descriptionText.setText(recipe.getDescription());
-        for (int i = 1; i < recipe.getSteps().size() + 1; i++) {
-            stepsText.appendText("Step " + i + ":  " + recipe.getSteps().get(i - 1) + "\n");
+
+        List<String> steps = recipe.getSteps();
+
+        for (int i = 1; i < steps.size() + 1; i++) {
+            stepsText.appendText("Step " + i + ":  " + steps.get(i - 1) + "\n");
         }
         for (String ingredient : recipe.getIngredients()) {
             ingredientsText.appendText(
@@ -123,13 +128,22 @@ public class RecipeController extends SuperController {
     }
 
     /**
+     * Sets the alert for the controller
+     * 
+     * @param alert The alert to be set
+     */
+    public Alert getAlert() {
+        return this.alert;
+    }
+
+    /**
      * Shows an alert to the user to confirm the deletion of the recipe
      * 
      * @return Boolean value for if the user confirmed the deletion
      */
     @FXML
     public boolean showAlert() {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Delete this recipe?");
         alert.setHeaderText("Delete recipe");
         alert.setContentText("If you delete this recipe, it will be gone forever. Are you sure?");
@@ -155,6 +169,19 @@ public class RecipeController extends SuperController {
         } else {
             flag = false;
         }
+        this.alert = null;
         return flag;
+    }
+
+    /**
+     * Sets the filehandlers for the controller
+     * 
+     * @param mockRecipeFilehandler The mock RecipeFilehandler to be set
+     * @param mockUserFilehandler The mock UserFilehandler to be set
+     */
+    public void setFilehandlers(RecipeFilehandler mockRecipeFilehandler, UserFilehandler mockUserFilehandler) {
+        this.recipeFilehandler = mockRecipeFilehandler;
+        this.userFilehandler = mockUserFilehandler;
+        mainscreenController.setFilehandlers(recipeFilehandler, userFilehandler);
     }
 }
