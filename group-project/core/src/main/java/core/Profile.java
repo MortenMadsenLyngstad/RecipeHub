@@ -122,12 +122,6 @@ public class Profile  {
         this.recipeLibrary.removeRecipe(recipe);
     }
 
-    public void removeFavorite(Recipe recipe) {
-        if (favorites.containsRecipe(recipe)) {
-            favorites.removeRecipe(recipe);
-        }
-    }
-
     /**
      * This method will return this profile's favorite recipes
      * @return RecipeLibrary with the profile's favorite recipes
@@ -142,6 +136,16 @@ public class Profile  {
      */
     public void addFavorite(Recipe recipe) {
         favorites.addRecipe(recipe);
+    }
+
+    /**
+     * This method will remove the given recipee from the profile's favorites
+     * @param recipe - Recipe to remove from the profile's favorite
+     */
+    public void removeFavorite(Recipe recipe) {
+        if (favorites.containsRecipe(recipe)) {
+            favorites.removeRecipe(recipe);
+        }
     }
 
 }
