@@ -1,0 +1,26 @@
+@startuml packageDiagram
+
+component "core" {
+    package "recipehub.core"
+}
+
+component "file" {
+    package "recipehub.file"
+}
+
+component "ui" {
+    package "recipehub.ui.controllers"
+    package "recipehub.ui"
+}
+
+component Gson { 
+}
+
+recipehub.ui.controllers .right.> recipehub.core
+recipehub.ui.controllers ..> recipehub.ui
+recipehub.ui.controllers .right.> recipehub.file
+recipehub.file .right.> recipehub.core
+recipehub.file ..> Gson
+
+@enduml
+

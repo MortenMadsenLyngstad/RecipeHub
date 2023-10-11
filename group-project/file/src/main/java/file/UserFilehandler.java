@@ -10,7 +10,6 @@ import java.lang.reflect.Type;
 import core.Profile;
 
 public class UserFilehandler extends FileUtil {
-  public Hashtable<String, String> userinfo = new Hashtable<String, String>();
   private Path filePath;
 
   /**

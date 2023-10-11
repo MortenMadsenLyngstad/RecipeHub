@@ -1,0 +1,51 @@
+@startuml sequenceDiagramUserStory4
+
+!define MyGreen #009000
+
+skinparam participant {
+  BackgroundColor MyGreen
+}
+
+Actor User
+participant App
+participant LoginController
+participant MainscreenController
+participant RecipeController
+participant RecipeFilehandler
+participant UserFilehandler
+participant Profile
+participant FileUtil
+database recipes.json
+database userinfo.json
+
+User -> App: Opens the application
+activate App
+User -> LoginController: Enters login information
+activate LoginController
+User -> LoginController: Clicks on: "Login"
+LoginController -> MainscreenController: login(ActionEvent event)
+deactivate LoginController
+activate MainscreenController
+User <-- MainscreenController: Shows all recipes to user
+User -> MainscreenController: Clicks on: "Read more" on own recipe
+MainscreenController -> RecipeController: showRecipe(ActionEvent event, Recipe recipe, Profile profile)
+deactivate MainscreenController
+activate RecipeController
+User <-- RecipeController: Shows recipe to user
+User -> RecipeController: Clicks on trash-icon
+RecipeController -> RecipeController: deleteRecipe(MouseEvent event)
+User <-- RecipeController: Shows confirmation popup
+User -> RecipeController: Clicks on: "OK"
+RecipeController -> RecipeFilehandler: "OK-click"
+RecipeFilehandler -> FileUtil: removeRecipe(recipe)
+FileUtil -> recipes.json: writeFile(Path filepath, Data T)
+loop profiles.size() times
+    RecipeController -> Profile: removeFavorite(Recipe recipe)
+    RecipeController -> Profile: removeRecipe(Recipe recipe)
+end
+RecipeController -> UserFilehandler: "OK-click"
+UserFilehandler -> FileUtil: writeAllProfiles(List<Profile> profiles)
+FileUtil -> userinfo.json: writeFile(Path filepath, Data T)
+RecipeController -> MainscreenController: switchSceneWithInfo(actionEvent, "Mainscreen.fxml", currentProfile);
+
+@enduml

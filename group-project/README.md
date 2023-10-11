@@ -4,7 +4,7 @@
 
 RecipeHub is a social media platform where you can make and share food recipes, while also exploring recipes posted by others. When you make a recipe, it will be saved in your profile, making RecipeHub a helpful tool for those who enjoy making food. A feed of all recipes posted on the app also gives the user the oppertunity to explore others new and exciting recipes. All in all, RecipeHub is applicable in several ways by having the oppertunity for saving, sharing and exploring new recipes, which makes it the perfect app for those with an interest for cooking.
 
-![Mainscreen](https://i.imgur.com/n9q75rS.png)
+![Mainscreen](https://i.imgur.com/Ojy8xZQ.png)
 
 ## Core feratures for final finished product
 
@@ -28,7 +28,7 @@ RecipeHub is a social media platform where you can make and share food recipes, 
   - You can choose recipes you want to mark as your favorites
   - The main recipe feed can be sorted so that it only shows your favorites
 - **Reviews**
-  - You can review a recipe by giving it a rating and a comment
+  - You can review a recipe by giving it a rating
   - These reviews shows up when viewing the recipe
 - **Searh bar**
   - You can search for a given recipe based on it's name
@@ -41,6 +41,7 @@ RecipeHub is a social media platform where you can make and share food recipes, 
 As a home cook, you want to save a new recipe that you've made so that you can look at it at a later occation.
 
 The user is in need of an application which can store their new recipe for a later date. Information about the recipe which needs to be stored inclues a name, description, ingredients with amounts, preperation steps and the number of portions the ingredient amounts is ments for. The process of writing the recipe should be easy and result in a recipe written in typical format, which the user can view when they wish.
+
 
 #### Important to be able to see
 
@@ -55,11 +56,16 @@ The user is in need of an application which can store their new recipe for a lat
 - Read a previously made recipe
 
 
+#### Sequence diagram for user story 1: 
+![User story 1 sequence diagram](https://i.imgur.com/770zMrO.png)
+
+
 ### User story 2: Finding new recipes
 
 As a student, you want to explore different recipes so that you can get inspiration for what you should have for dinner.
 
 The user is in need of an application where they can easily find new recipes to make. It should be easy to scroll through the recipes, so that the user can find something they want to make. However, one should also be able to get in depth information about each recipe, so that one could just follow the recipe.
+
 
 #### Important to be able to see
 
@@ -72,11 +78,17 @@ The user is in need of an application where they can easily find new recipes to 
 - Click on a recipee to get in depth information about it (ingredients, preperation steps, etc.)
 
 
+#### Sequence diagram for user story 2: 
+![User story 2 sequence diagram](https://i.imgur.com/ifausrt.png)
+
+
+
 ### User story 3: Collecting your favorite recipes
 
 As a home cook, you want to mark a recipe you discovered as one of your favorites so that you can go back to it at a later occasion.
 
 The user is in need of an application where they can easily mark a recipe as a favorite. It should be easy to find this recipe at a later date, and the user should be able to see all their favorites. In addition, it should be visible which recipes are marked as favorites.
+
 
 #### Important to be able to see
 
@@ -89,7 +101,13 @@ The user is in need of an application where they can easily mark a recipe as a f
 - Scroll through a list/feed of your favorite recipes
 - Search for specific recipes among you favorites
 - Mark a recipe as a favorite
-- 
+
+
+
+#### Sequence diagram for user story 3: 
+![User story 3 sequence diagram](https://i.imgur.com/dXIv6rc.png)
+
+
 ### User story 4: Removing a recipe
 
 As a food enthusiast, you want to remove a recipe you've made so that you can make a new improved one.
@@ -107,3 +125,7 @@ The user is in need of an application where they can easily remove a recipe they
 - Remove a recipe
 - Confirm the removal of a recipe
 - Cancel the removal of a recipe
+
+
+#### Sequence diagram for user story 4: 
+![User story 4 sequence diagram](https://i.imgur.com/SrmVIpg.png)

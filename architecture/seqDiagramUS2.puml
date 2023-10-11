@@ -1,0 +1,30 @@
+@startuml sequenceDiagramUserStory2
+
+!define MyGreen #009000
+
+skinparam participant {
+  BackgroundColor MyGreen
+}
+
+Actor User
+participant App
+participant LoginController
+participant MainscreenController
+participant RecipeController
+
+User -> App: Opens the application
+activate App
+User -> LoginController: Enters login information
+activate LoginController
+User -> LoginController: Clicks on: "Login"
+LoginController -> MainscreenController: login(ActionEvent event)
+deactivate LoginController
+activate MainscreenController
+User <-- MainscreenController: Shows all recipes to user
+User -> MainscreenController: Clicks on: "Read more" on a recipe
+MainscreenController -> RecipeController: switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile)
+activate RecipeController
+deactivate MainscreenController
+User <-- RecipeController: Shows recipe to user
+
+@enduml
