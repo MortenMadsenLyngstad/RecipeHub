@@ -33,17 +33,20 @@ Following are screengrabs of the current functionality of the app in use:
 
 ### Mainscreen:
 
-![Mainscreen](link)
+![Mainscreen](https://i.imgur.com/Ojy8xZQ.png)
 
 ### Adding a new recipe:
 
-![Addrecipe](link)
+![Addrecipe](https://i.imgur.com/aoiwNPQ.png)
 
 ### Viewing a recipe:
 
-![Recipe](link)
+![Recipe](https://i.imgur.com/7zn5XQL.png)
 
+### Searching 
 
+![Search](https://i.imgur.com/vhrTvLk.png)
+    
 ## Workflow and issues in second sprint
 
 The following paragraphs aims to explain our workflow and issues during the second sprint.
@@ -85,3 +88,10 @@ We tried to test every aspect of application as it is rigth now, and plan to exp
 
 There is documentation about structure, requirements and dependencies [here](../../readme.md).  
 There is documentation about the the app in general, core features in the finalized product and user stories [here](../../group-project/README.md).
+
+## Example data
+
+To have some example recipes and users to run the project with, we have run the project for a while and added the files in the [exampledata](./exampledata/) directory. Move the files from the directory to the position "user.home" on your computer, and the app can use them as example data.  
+Logininfo for example users:  
+**Username:** Profile1 , **Password:** Password1  
+**Username:** Exampleuser1 , **Password:** Exampleuser1Pass  

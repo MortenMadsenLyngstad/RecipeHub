@@ -1,0 +1,261 @@
+{
+  "recipes": [
+    {
+      "steps": [
+        "Cook the meat",
+        "Shred cheese",
+        "Heat tortillas",
+        "Put everything together and enjoy"
+      ],
+      "portions": 4,
+      "name": "Taco",
+      "description": "I like tacos",
+      "ingredients": {
+        "salad": 100.0,
+        "meat": 500.0,
+        "tortillas": 4.0,
+        "cheese": 200.0
+      },
+      "ingredientUnits": {
+        "salad": "g",
+        "meat": "g",
+        "tortillas": "pcs",
+        "cheese": "g"
+      },
+      "authorUsername": "Exampleuser1",
+      "isSaved": true
+    },
+    {
+      "steps": [
+        "Stretch out dough",
+        "Put sauce and cheese on the dough",
+        "Top wioth pepperoni",
+        "Enjoy!"
+      ],
+      "portions": 4,
+      "name": "Pizza",
+      "description": "Who does not love pizza?",
+      "ingredients": {
+        "Pizza dough": 1.0,
+        "Tomato sauce": 1.0,
+        "Cheese": 300.0,
+        "Pepperoni": 100.0
+      },
+      "ingredientUnits": {
+        "Pizza dough": "pcs",
+        "Tomato sauce": "dL",
+        "Cheese": "g",
+        "Pepperoni": "g"
+      },
+      "authorUsername": "Exampleuser1",
+      "isSaved": true
+    },
+    {
+      "steps": [
+        "Form the bread ",
+        "Cook in a hot oven for 30 minutes",
+        "Let cool down, then enjoy"
+      ],
+      "portions": 4,
+      "name": "Bread",
+      "description": "I like bread",
+      "ingredients": {
+        "Bread dough": 500.0
+      },
+      "ingredientUnits": {
+        "Bread dough": "g"
+      },
+      "authorUsername": "Exampleuser1",
+      "isSaved": true
+    },
+    {
+      "steps": [
+        "Mix all ingredients",
+        "Pre heat a pan at medium heat",
+        "Cook the pancakes, serve while hot"
+      ],
+      "portions": 3,
+      "name": "Pancakes",
+      "description": "We\u0027re making pancakes for breakfast!",
+      "ingredients": {
+        "eggs": 2.0,
+        "salt": 2.0,
+        "Flour": 300.0,
+        "Milk": 2.0
+      },
+      "ingredientUnits": {
+        "eggs": "pcs",
+        "salt": "g",
+        "Flour": "g",
+        "Milk": "dL"
+      },
+      "authorUsername": "Exampleuser1",
+      "isSaved": true
+    },
+    {
+      "steps": [
+        "Rinse the rice in cold water",
+        "Add rinsed rice, water and salt to a pot",
+        "Bring the pot to a boil",
+        "Lower the heat and let steam, until the water is gone and the rice is cooked through",
+        "Serve"
+      ],
+      "portions": 2,
+      "name": "Rice",
+      "description": "Simple recipe for rice",
+      "ingredients": {
+        "Water": 2.0,
+        "Salt": 3.0,
+        "Rice": 100.0
+      },
+      "ingredientUnits": {
+        "Water": "dL",
+        "Salt": "g",
+        "Rice": "g"
+      },
+      "authorUsername": "Exampleuser1",
+      "isSaved": true
+    },
+    {
+      "steps": [
+        "Pre heat a frying pan at high heat",
+        "Dry your salmon with a paper towel",
+        "Salt all sides of your salmon",
+        "Add the vegetable oil to your pan",
+        "Add the salmon skin side down, let it sit in the pan until it releases from the surface",
+        "Flip the salmon and lower the heat to low, cook until cooked through",
+        "Serve while hot"
+      ],
+      "portions": 1,
+      "name": "Salmon",
+      "description": "Easy cooked salmon",
+      "ingredients": {
+        "Salt": 5.0,
+        "Salmon": 1.0,
+        "Vegetable oil": 20.0
+      },
+      "ingredientUnits": {
+        "Salt": "g",
+        "Salmon": "pcs",
+        "Vegetable oil": "g"
+      },
+      "authorUsername": "Exampleuser1",
+      "isSaved": true
+    },
+    {
+      "steps": [
+        "Toast pine nuts",
+        "Add pine nuts, basil and parmesan to a morter",
+        "Grind to a rough paste, add olive oil to accieve the right texture",
+        "Season to taste with salt, pepper and olive oil"
+      ],
+      "portions": 4,
+      "name": "Pesto",
+      "description": "Simple tutorial for pesto",
+      "ingredients": {
+        "Pine nuts ": 30.0,
+        "Salt": 10.0,
+        "Parmesan": 40.0,
+        "Pepper": 10.0,
+        "Lemon(optional)": 1.0,
+        "Basil": 100.0,
+        "Good olive oil": 1.0
+      },
+      "ingredientUnits": {
+        "Pine nuts ": "g",
+        "Salt": "g",
+        "Parmesan": "g",
+        "Pepper": "g",
+        "Lemon(optional)": "pcs",
+        "Basil": "g",
+        "Good olive oil": "dL"
+      },
+      "authorUsername": "Exampleuser1",
+      "isSaved": true
+    },
+    {
+      "steps": [
+        "Cook burger pattys and bacon in frying pan",
+        "When almost done, place cheese on top",
+        "Toast the burger buns",
+        "Build the burger with all the ingredients",
+        "Enjoy!"
+      ],
+      "portions": 2,
+      "name": "Hamburger",
+      "description": "Big tasty bacon hamburger!",
+      "ingredients": {
+        "Burger patty": 2.0,
+        "Lettuce": 2.0,
+        "Hamburger sauce": 1.0,
+        "Cheese": 4.0,
+        "Onion rings": 4.0,
+        "Burger buns": 2.0,
+        "Bacon": 6.0
+      },
+      "ingredientUnits": {
+        "Burger patty": "pcs",
+        "Lettuce": "pcs",
+        "Hamburger sauce": "dL",
+        "Cheese": "pcs",
+        "Onion rings": "pcs",
+        "Burger buns": "pcs",
+        "Bacon": "pcs"
+      },
+      "authorUsername": "Profile1",
+      "isSaved": false
+    },
+    {
+      "steps": [
+        "Put the pita bread int the owen on 200 degrees for 30 min",
+        "Cook the kebab meat in a frying pan",
+        "When the pita is done, put kebab meat, vegetables and dressing in the pita",
+        "Enjoy the meal!"
+      ],
+      "portions": 1,
+      "name": "Kebab",
+      "description": "Tasty kebab in pita!",
+      "ingredients": {
+        "Vegetables of your choice": 100.0,
+        "Pita": 1.0,
+        "Kebab meat": 200.0,
+        "Kebab dressing": 1.0
+      },
+      "ingredientUnits": {
+        "Vegetables of your choice": "g",
+        "Pita": "pcs",
+        "Kebab meat": "g",
+        "Kebab dressing": "dL"
+      },
+      "authorUsername": "Profile1",
+      "isSaved": false
+    },
+    {
+      "steps": [
+        "Spread butter on the sandwich bread",
+        "Apply cheese and ham",
+        "Cut paprika into thin strips and put on sandwich",
+        "Have a nice meal!"
+      ],
+      "portions": 1,
+      "name": "Sandwich",
+      "description": "Good sanwich for lunch!",
+      "ingredients": {
+        "Paprika": 20.0,
+        "Ham": 4.0,
+        "Butter": 10.0,
+        "Cheese": 4.0,
+        "Sandwich bread": 1.0
+      },
+      "ingredientUnits": {
+        "Paprika": "g",
+        "Ham": "pcs",
+        "Butter": "g",
+        "Cheese": "pcs",
+        "Sandwich bread": "pcs"
+      },
+      "authorUsername": "Profile1",
+      "isSaved": false
+    }
+  ]
+}
