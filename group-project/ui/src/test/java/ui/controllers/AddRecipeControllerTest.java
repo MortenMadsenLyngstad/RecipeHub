@@ -2,7 +2,6 @@ package ui.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -24,6 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -111,6 +111,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         controller.currentProfile = mockProfile;
     }
 
+    /**
+     * This method will test the functionality of the mockMenuItems
+     */
     private void fixMockMenuItems() {
         testIngredientPropertyMenu.getItems().forEach(item -> {
             if (item instanceof MenuItem) {
@@ -132,6 +135,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     }
 
+    /*
+     * This method will set up the recipeNameField and create a recipe
+     */
     private void setUpRecipeName() {
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
@@ -139,6 +145,10 @@ public class AddRecipeControllerTest extends ApplicationTest {
         });
     }
 
+    /*
+     * This method will set up the recipeNameField, create a recipe and add a
+     * description
+     */
     private void setUpDescription() {
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
@@ -148,6 +158,10 @@ public class AddRecipeControllerTest extends ApplicationTest {
         });
     }
 
+    /*
+     * This method will set up the recipeNameField, create a recipe, add a
+     * description and add an ingredient
+     */
     private void setUpIngredient() {
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
@@ -161,6 +175,10 @@ public class AddRecipeControllerTest extends ApplicationTest {
         });
     }
 
+    /*
+     * This method will set up the recipeNameField, create a recipe, add a
+     * description, add an ingredient and add a step
+     */
     private void setUpStep() {
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
@@ -178,6 +196,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         });
     }
 
+    /**
+     * This method will test the functionality of the createRecipe method
+     */
     @Test
     public void testCreateRecipeWithBlankName() {
         recipeNameField.setText("");
@@ -186,6 +207,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertTrue(testNameError.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the createRecipe method
+     */
     @Test
     public void testCreateRecipeWithTooLongName() {
         recipeNameField.setText("This string is too long to be accepted");
@@ -205,6 +229,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertEquals("testRecipe", name.getText());
     }
 
+    /**
+     * This method will test the functionality of the addDescription method
+     */
     @Test
     public void testAddDescriptionWithInvalidDescription() {
         addRecipePane.setVisible(false);
@@ -218,6 +245,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     }
 
+    /**
+     * This method will test the functionality of the addDescription method
+     */
     @Test
     public void testAddDescriptionWithValidDescription() {
         addRecipePane.setVisible(false);
@@ -233,6 +263,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertEquals("Enjoy the best test recipe ever!", description.getText());
     }
 
+    /**
+     * This method will test the functionality of the addIngredient method
+     */
     @Test
     public void testAddInvalidIngredient() {
         addRecipePane.setVisible(false);
@@ -271,6 +304,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertTrue(noAddedIngredientError.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the addIngredient method
+     */
     @Test
     public void testAddValidIngredient() {
         addRecipePane.setVisible(false);
@@ -292,6 +328,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertFalse(addIngredientPane.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the addIngredient method
+     */
     @Test
     public void testRemoveIngredient() {
         addRecipePane.setVisible(false);
@@ -317,6 +356,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertFalse(removeIngredient.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the addStep method
+     */
     @Test
     public void testAddInvalidStep() {
         addRecipePane.setVisible(false);
@@ -335,6 +377,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertTrue(notValidStepError.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the addStep method
+     */
     @Test
     public void testAddValidStep() {
         addRecipePane.setVisible(false);
@@ -359,6 +404,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     }
 
+    /**
+     * This method will test the functionality of the addStep method
+     */
     @Test
     public void testRemoveStep() {
         addRecipePane.setVisible(false);
@@ -388,6 +436,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     }
 
+    /**
+     * This method will test the functionality of the addStep method
+     */
     @Test
     public void testNotValidPortions() {
         addRecipePane.setVisible(false);
@@ -398,6 +449,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertTrue(noAddedPortionsError.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the addStep method
+     */
     @Test
     public void testValidPortions() {
         controller.setFileHander(mockRecipeFileHandler, mockUserFileHandler);
@@ -416,20 +470,34 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertFalse(portionAndConfirmPane.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the backButton
+     */
     @Test
-    public void testBackButtonClick1() {
+    public void testBackButtonClick() {
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
-
+    
+    /**
+     * This method will test the functionality of the backButton
+     */
     @Test
-    public void testBackButtonClick2() {
+    public void testAlert() {
+        controller.setFileName("addRecipe.fxml");
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         setUpRecipeName();
         clickOn(backButton);
+        Button cancelButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.CANCEL);
+        clickOn(cancelButton);
+        assertEquals("addRecipe.fxml", controller.getFileName());
+        clickOn(backButton);
+        Button okButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.OK);
+        clickOn(okButton);
         Platform.runLater(() -> {
-            assertNotEquals("Mainscreen.fxml", controller.getFileName());
+            assertEquals("Mainscreen.fxml", controller.getFileName());
         });
     }
+    
 }
