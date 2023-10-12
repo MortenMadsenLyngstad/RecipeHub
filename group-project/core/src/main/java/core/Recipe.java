@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Information centered class for storing and changing recipes.
+ */
 public class Recipe {
     private List<String> steps;
     private int portions;
@@ -17,6 +20,13 @@ public class Recipe {
     private String authorUsername;
     private boolean isSaved;
 
+    /**
+     * Contructor for creating a new Recipe object.
+     * 
+     * @param name     The name of the recipe.
+     * @param portions The amount of portions this recipe makes.
+     * @param author   The author of this recipe, a Profile object
+     */
     public Recipe(String name, int portions, Profile author) {
         setName(name);
         setPortions(portions);
@@ -36,12 +46,14 @@ public class Recipe {
      */
 
     public void setName(String name) {
-        if (name.equals(""))
+        if (name.equals("")) {
             throw new IllegalArgumentException("Name cannot be an empty String");
+        }
         this.name = name;
     }
 
     /**
+     * Getter for the name attribute.
      * 
      * @return The name attribute of the recipe
      */
@@ -51,7 +63,7 @@ public class Recipe {
     }
 
     /**
-     * Sets the description of the recipe
+     * Sets the description of the recipe.
      * 
      * @param description The description to be set
      */
@@ -61,6 +73,7 @@ public class Recipe {
     }
 
     /**
+     * Getter for the decription attribute.
      * 
      * @return The String description of the recipe
      */
@@ -70,19 +83,21 @@ public class Recipe {
     }
 
     /**
-     * Sets the portions attribute for the recipe
+     * Sets the portions attribute for the recipe.
      * 
      * @param portions The amount of portions the ingredients for this recipe make
      * @throws IllegalArgumentException If portions is less than one
      */
 
     public void setPortions(int portions) {
-        if (portions < 1)
+        if (portions < 1) {
             throw new IllegalArgumentException("Portions must be at least one");
+        }
         this.portions = portions;
     }
 
     /**
+     * Getter for the portions attribute.
      * 
      * @return The portions attribute for the recipe
      */
@@ -92,7 +107,7 @@ public class Recipe {
     }
 
     /**
-     * A method to fetch the preparation steps of the recipe
+     * A method to fetch the preparation steps of the recipe.
      * 
      * @return A List of the steps in the recipe
      */
@@ -101,7 +116,7 @@ public class Recipe {
     }
 
     /**
-     * Method to add a step to the list of steps in the recipe
+     * Method to add a step to the list of steps in the recipe.
      * 
      * @param step The step to add
      */
@@ -110,18 +125,19 @@ public class Recipe {
     }
 
     /**
-     * Method to remove a step from the list of steps in the recipe
+     * Method to remove a step from the list of steps in the recipe.
      * 
      * @param step The step to remove
      * @throws IllegalArgumentException If the step is not in the list of steps
      */
     public void removeStep(String step) {
-        if (!steps.remove(step))
+        if (!steps.remove(step)) {
             throw new IllegalArgumentException("Step not found in steps");
+        }
     }
 
     /**
-     * Method to fetch all the different ingredients in the recipe
+     * Method to fetch all the different ingredients in the recipe.
      * 
      * @return A set containing every ingredient in the set
      */
@@ -130,20 +146,21 @@ public class Recipe {
     }
 
     /**
-     * A method to get the amount needed for a single ingredient in the recipe
+     * A method to get the amount needed for a single ingredient in the recipe.
      * 
      * @param ingredient The ingredient in question
      * @throws IllegalArgumentException If the ingredient is not in the recipe
      * @return The amount needed as a double
      */
     public Double getIngredientAmount(String ingredient) {
-        if (!ingredients.containsKey(ingredient))
+        if (!ingredients.containsKey(ingredient)) {
             throw new IllegalArgumentException("Ingredient not found in recipe");
+        }
         return ingredients.get(ingredient);
     }
 
     /**
-     * Add an amount of an ingredient as a double
+     * Add an amount of an ingredient as a double.
      * 
      * @param ingredient The ingredient to be added
      * @param amount     The amount to be added, must be over 0
@@ -158,8 +175,9 @@ public class Recipe {
             throw new IllegalArgumentException("Amount must be over 0");
         }
         if (ingredients.keySet().contains(ingredient)) {
-            if (!getIngredientUnit(ingredient).equals(unit))
+            if (!getIngredientUnit(ingredient).equals(unit)) {
                 throw new IllegalArgumentException("Unit must be the same as previously given");
+            }
             Double newAmount = ingredients.getOrDefault(ingredient, 0.0) + amount;
             ingredients.put(ingredient, newAmount);
         } else {
@@ -169,22 +187,22 @@ public class Recipe {
     }
 
     /**
-     * A method to remove an ingredient completely from the recipe
+     * A method to remove an ingredient completely from the recipe.
      * 
      * @param ingredient The ingredient to remove
      * @throws IllegalArgumentException if the ingredient is not in the keyset
      */
     public void removeIngredient(String ingredient) {
-        if (!ingredients.containsKey(ingredient))
+        if (!ingredients.containsKey(ingredient)) {
             throw new IllegalArgumentException("Ingredient not found in recipe");
-        else {
+        } else {
             ingredients.remove(ingredient);
             ingredientUnits.remove(ingredient);
         }
     }
 
     /**
-     * Method to remove a specific amount of an ingredient
+     * Method to remove a specific amount of an ingredient.
      * 
      * @param ingredient The ingredient to remove
      * @param amount     The amount of the ingredient to remove, must be lower than
@@ -197,18 +215,21 @@ public class Recipe {
      */
 
     public void removeIngredientAmount(String ingredient, Double amount) {
-        if (amount < 0)
+        if (amount < 0) {
             throw new IllegalArgumentException("Removed amount must be over 0");
-        if (!ingredients.containsKey(ingredient))
+        }
+        if (!ingredients.containsKey(ingredient)) {
             throw new IllegalArgumentException("Ingredient not found in recipe");
-        if (ingredients.get(ingredient) < amount)
+        }
+        if (ingredients.get(ingredient) < amount) {
             throw new IllegalArgumentException("Cannot remove more than already in ingredients");
+        }
         Double newAmount = ingredients.get(ingredient) - amount;
         ingredients.put(ingredient, newAmount);
     }
 
     /**
-     * Method to get the ingredientunit of an ingredient in the recipe
+     * Method to get the ingredientunit of an ingredient in the recipe.
      * 
      * @param ingredient The ingredient to find the unit of
      * @return A string of the unit of the ingredient
@@ -216,13 +237,14 @@ public class Recipe {
      * @throws IllegalargumentException If the ingredient is not in the recipe
      */
     public String getIngredientUnit(String ingredient) {
-        if (!ingredientUnits.containsKey(ingredient))
+        if (!ingredientUnits.containsKey(ingredient)) {
             throw new IllegalArgumentException();
+        }
         return ingredientUnits.get(ingredient);
     }
 
     /**
-     * Used to set the unit of the ingredient
+     * Used to set the unit of the ingredient.
      * 
      * @param ingredient The ingredient to set the unit of
      * @param unit       the unit to be set
@@ -230,13 +252,14 @@ public class Recipe {
      */
 
     public void setIngredientUnit(String ingredient, String unit) {
-        if (!(unit.equals("pcs") || unit.equals("g") || unit.equals("dL")))
+        if (!(unit.equals("pcs") || unit.equals("g") || unit.equals("dL"))) {
             throw new IllegalArgumentException("Unit must be pcs, g or dL");
+        }
         ingredientUnits.put(ingredient, unit);
     }
 
     /**
-     * Gets the author of the recipe
+     * Gets the author of the recipe.
      * 
      * @return The author attribute of the recipe
      */
@@ -245,17 +268,18 @@ public class Recipe {
     }
 
     /**
-     * This method returns true if the recipe has been saved to the database
-     * and false if it has not been saved to the database
+     * Gets the isSaved attribute of the recipe.
      * 
-     * @return boolean value for if the recipe has been saved to the database
+     * @return boolean value for the isSaved boolean value
      */
     public boolean isSaved() {
         return isSaved;
     }
 
     /**
-     * This method sets the boolean value for if the recipe has been saved to the database
+     * This method sets the boolean value for if the recipe has been saved to the
+     * database.
+     * 
      * @param saved - boolean value for if the recipe has been saved to the database
      */
     public void setSaved(boolean saved) {

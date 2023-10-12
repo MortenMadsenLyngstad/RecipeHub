@@ -6,8 +6,16 @@ This project is an application with both front-end and back-end. It is structure
 
 - The Core module contains the main logic of the application.
 - The File module is responsible for file handling.
-  - The files are stored in user.home
+    - The files are stored in user.home
 - The UI module contains all the user interface related code.
+
+## Package diagram for RecipeHub project
+
+![Diagram](https://i.imgur.com/snBvFjR.png)
+
+## Class diagram for core module
+
+![Diagram](https://i.imgur.com/3Fc1ZcB.png)
 
 ## Requirements
 
@@ -88,7 +96,7 @@ The following figure shows the directory structure of the project:
             │   └───resources
             │       └───ui
             │           └───controllers
-            │               -- This is where the fxml-files for the UI are located.
+            │               -- This is where the fxml-files and style.css for the UI are located.
             └───test
                └───java
                    └───ui

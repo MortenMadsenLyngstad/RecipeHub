@@ -1,18 +1,22 @@
 package core;
 
 import java.util.regex.Pattern;
+
 /**
- * This class is used to contain Profile information
+ * This class is used to contain Profile information.
+ * 
  * @author Adrian Haabpiht Solberg
  */
-public class Profile  {
+
+public class Profile {
     private String username;
     private String password;
     private RecipeLibrary recipeLibrary;
     private RecipeLibrary favorites;
 
     /**
-     * This constructor initializes the username, password and recipes
+     * This constructor initializes the username, password and recipes.
+     * 
      * @param username - String value to set as username
      * @param password - String value to set as password
      */
@@ -26,9 +30,11 @@ public class Profile  {
     }
 
     /**
-     * This metod checks if a username is valid according to the following criterias:
+     * This metod checks if a username is valid according to the following
+     * criterias:
      * - Must have length of at least 5
      * - Must only contain letters and numbers
+     * 
      * @param username - String value to check
      * @throws IllegalArgumeentException if username is invalid
      */
@@ -42,7 +48,8 @@ public class Profile  {
     }
 
     /**
-     * This metod checks if a password is valid according to the following criterias:
+     * This metod checks if a password is valid according to the following
+     * criterias:
      * - Must have length of at least 8
      * - Must contain a lower case letter
      * - Must contain an upper case letter
@@ -66,7 +73,8 @@ public class Profile  {
     }
 
     /**
-     * This method will return the username of the given profile
+     * This method will return the username of the given profile.
+     * 
      * @return String value for username
      */
     public String getUsername() {
@@ -74,7 +82,8 @@ public class Profile  {
     }
 
     /**
-     * This method will return the password of the given profile
+     * This method will return the password of the given profile.
+     * 
      * @return String value for password
      */
     public String getPassword() {
@@ -82,7 +91,9 @@ public class Profile  {
     }
 
     /**
-     * This method will set thee prfile's username to the string sent in if the string is a valid username
+     * This method will set thee prfile's username to the string sent in if the
+     * string is a valid username.
+     * 
      * @param username - String value to set as username
      */
     public void setUsername(String username) {
@@ -91,7 +102,9 @@ public class Profile  {
     }
 
     /**
-     * This method will set thee prfile's password to the string sent in if the string is a valid password
+     * This method will set thee prfile's password to the string sent in if the
+     * string is a valid password.
+     * 
      * @param password - String value to set as password
      */
     public void setPassword(String password) {
@@ -100,7 +113,8 @@ public class Profile  {
     }
 
     /**
-     * This method will return the recipes made by the profile
+     * This method will return the recipes made by the profile.
+     * 
      * @return RecipeLibrary with the profile's recipes
      */
     public RecipeLibrary getRecipes() {
@@ -108,7 +122,8 @@ public class Profile  {
     }
 
     /**
-     * This method adds the given recipe to the profile's recipes
+     * This method adds the given recipe to the profile's recipes.
+     * 
      * @param recipe - Recipe to add to the profile's recipes
      */
     public void addRecipe(Recipe recipe) {
@@ -116,14 +131,15 @@ public class Profile  {
     }
 
     /**
-     * This method will remove the recipe from the profile's recipes
+     * This method will remove the recipe from the profile's recipes.
      */
     public void removeRecipe(Recipe recipe) {
         this.recipeLibrary.removeRecipe(recipe);
     }
 
     /**
-     * This method will return this profile's favorite recipes
+     * This method will return this profile's favorite recipes.
+     * 
      * @return RecipeLibrary with the profile's favorite recipes
      */
     public RecipeLibrary getFavorites() {
@@ -131,7 +147,8 @@ public class Profile  {
     }
 
     /**
-     * This method adds the given recipe to the profile's favorites
+     * This method adds the given recipe to the profile's favorites.
+     * 
      * @param recipe - Recipe to add to the profile's favorites
      */
     public void addFavorite(Recipe recipe) {
@@ -139,7 +156,8 @@ public class Profile  {
     }
 
     /**
-     * This method will remove the given recipee from the profile's favorites
+     * This method will remove the given recipee from the profile's favorites.
+     * 
      * @param recipe - Recipe to remove from the profile's favorite
      */
     public void removeFavorite(Recipe recipe) {
