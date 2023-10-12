@@ -76,7 +76,7 @@ In the first deliverable, we chose to make the app single device, with the possi
 ## Other relevant documentation
 
 There is documentation about structure, requirements and dependencies [here](../../readme.md).  
-There is documentation about the the app in general, core features in the finalized product and user stories [here](../../group-project/README.md).
+There is documentation about the the app in general, core features in the finalized product and user stories [here](../../recipehub/README.md).
 
 ## Example data
 
