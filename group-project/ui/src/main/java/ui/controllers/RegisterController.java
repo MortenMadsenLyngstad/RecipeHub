@@ -1,8 +1,8 @@
 package ui.controllers;
 
-import java.io.IOException;
-
 import core.Profile;
+import file.UserFilehandler;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -14,8 +14,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import file.UserFilehandler;
 
+/**
+ * This controller class is used to connect the registercreeen to the logic in core.
+ */
 public class RegisterController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
@@ -37,9 +39,9 @@ public class RegisterController extends SuperController {
     private Parent root;
 
     /**
-     * Switches to the login screen
+     * Switches to the login screen.
      * 
-     * @param event
+     * @param event - The ActionEvent that triggers the screen switch
      * @throws IOException if the switchSceneMain method throws an
      *                     exception
      * @see SuperController#switchSceneMain(ActionEvent, String)
@@ -49,10 +51,10 @@ public class RegisterController extends SuperController {
     }
 
     /**
-     * Registers the user if the register information is correct
+     * Registers the user if the register information is correct. 
      * 
-     * @param event
-     * @throws IOException if the switchceneWithInfo method throws
+     * @param event - The ActionEvent triggered by a register button click
+     * @throws IOException if the switchSceneWithInfo method throws
      *                     an exception
      * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
      */
@@ -63,7 +65,7 @@ public class RegisterController extends SuperController {
     }
 
     /**
-     * Changes the userFilehandler
+     * Changes the userFilehandler.
      * 
      * @param userFilehandler - the new userFilehandler
      */
@@ -72,10 +74,10 @@ public class RegisterController extends SuperController {
     }
 
     /**
-     * Validates the register information
+     * Validates the register information.
      * 
-     * @param uname
-     * @param pword
+     * @param uname The username to validate
+     * @param pword The password to validate
      * @return true if the register information is correct, false otherwise
      * 
      * @see Profile#isValidUsername(String)
@@ -111,14 +113,15 @@ public class RegisterController extends SuperController {
     }
 
     /**
-     * Tries to register the user if the enter key is pressed
+     * Tries to register the user if the enter key is pressed.
      * 
-     * @param e
+     * @param e - The KeyEvent associated with the a key press
      * @throws IOException if the register method throws an exception
      * @see RegisterController#register(ActionEvent)
      */
     public void keyPressed(KeyEvent e) {
-        if (e.getCode().equals(KeyCode.ENTER))
+        if (e.getCode().equals(KeyCode.ENTER)) {
             registerButton.fire();
+        }
     }
 }

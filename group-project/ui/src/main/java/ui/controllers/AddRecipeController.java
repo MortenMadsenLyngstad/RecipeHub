@@ -1,13 +1,13 @@
 package ui.controllers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import core.Recipe;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -21,6 +21,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
+/**
+ * This class is the controller for the AddRecipe.fxml file
+ */
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
     private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
@@ -28,27 +31,30 @@ public class AddRecipeController extends SuperController {
     private Alert alert;
 
     @FXML
-    private Button addName, removeStep, backButton, removeIngredient, addIngredientButton, saveRecipeButten,
-            ingredientsNextButton, addStepNext, addDescriptionButton, addStepButton;
+    private Button addName, removeStep, backButton, removeIngredient, addIngredientButton,
+            saveRecipeButten, ingredientsNextButton, addStepNext, addDescriptionButton, 
+            addStepButton;
 
     @FXML
-    private Pane recipeNamePane, addIngredientPane, descriptionPane, portionAndConfirmPane, addStepPane;
+    private Pane recipeNamePane, addIngredientPane, descriptionPane, portionAndConfirmPane,
+            addStepPane;
 
     @FXML
-    private TextField recipeName, ingredientNameInput, ingredientAmount, addStepText, addDescriptionText;
+    private TextField recipeName, ingredientNameInput, ingredientAmount, addStepText,
+            addDescriptionText;
 
     @FXML
     private MenuButton ingredientPropertyMenu, numberOfPortionsMenu;
 
     @FXML
-    private Text nameError, descriptionError, propertyError, noAddedPortionsError, amountError, notValidStepError,
-            ingredientNameError, noAddedIngredientError, noAddedStepError;
+    private Text nameError, descriptionError, propertyError, noAddedPortionsError, amountError,
+            notValidStepError, ingredientNameError, noAddedIngredientError, noAddedStepError;
 
     @FXML
     private Label description, name, ingredientAndSteps;
 
     /**
-     * This method is called when the user clicks on the AddName button
+     * This method is called when the user clicks on the AddName button.
      * The method takes the userinput and creates a new recipe with the given name
      * if the name is not empty
      * 
@@ -80,8 +86,9 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method is called when the user clicks on the AddName button
-     * the method validates if the user has added a name to the recipe
+     * This method is called when the user clicks on the AddName button.
+     * 
+     * The method validates if the user has added a name to the recipe.
      * 
      * @return true if the user has added a name and false if not
      * 
@@ -96,7 +103,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method adds the user given description to the recipe and show it to
-     * the preview
+     * the preview.
      * 
      * If there is no added description the user get feedback to add an description
      * 
@@ -114,7 +121,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method checks if there is added an descrition and checks that the
-     * descition is a string
+     * descition is a string.
      * 
      * @return true if the descrition meets the requierments and false if it does
      *         not
@@ -124,7 +131,7 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method removes the AddDescritionPane and show the AddIngredientPane
+     * This method removes the AddDescritionPane and show the AddIngredientPane.
      */
     private void cleanDescriptionButtons() {
         descriptionPane.setVisible(false);
@@ -132,22 +139,23 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method validates if an added ingredient follow the requierments:
+     * This method validates if an added ingredient follow the requierments.
      *
      * If one or more off the inputs does not mett the requierments the user will
-     * recive feedback
+     * recive feedback.
      * 
-     * If the requirements are met, the ingredient will be added to the recipe
+     * If the requirements are met, the ingredient will be added to the recipe.
      * 
      * @see Recipe #addIngredient(String, Double, String)
      *      When the ingredient is added the inputs are cleaned and ready to add
-     *      more ingredients
+     *      more ingredients.
      */
     public void addIngredient() {
         if (validateIngredient()) {
-            newRecipe.addIngredient(ingredientNameInput.getText(), Double.parseDouble(ingredientAmount.getText()),
-                    ingredientPropertyMenu.getText());
-            newRecipe.setIngredientUnit(ingredientNameInput.getText(), ingredientPropertyMenu.getText());
+            newRecipe.addIngredient(ingredientNameInput.getText(), Double.parseDouble(
+                    ingredientAmount.getText()), ingredientPropertyMenu.getText());
+            newRecipe.setIngredientUnit(
+                    ingredientNameInput.getText(), ingredientPropertyMenu.getText());
             showIngredientPreview();
             cleanIngredientButtons();
             amountError.setVisible(false);
@@ -161,13 +169,14 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method validates if the added ingredient meets the requierments
+     * This method validates if the added ingredient meets the requierments.
      * 
      * @return true if the added ingredient meets the requierments and false if it
      *         does not
      */
     private boolean validateIngredient() {
-        if (!ingredientNameInput.getText().isEmpty() && ingredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")
+        if (!ingredientNameInput.getText().isEmpty() 
+                && ingredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")
                 && !ingredientPropertyMenu.getText().equals("Property")) {
             return true;
         } else {
@@ -176,18 +185,19 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method creats a string representation of the added string
+     * This method creats a string representation of the added string.
      */
     private void showIngredientPreview() {
         String s = ingredientAndSteps.getText();
-        s += newRecipe.getIngredientAmount(ingredientNameInput.getText()) + ingredientPropertyMenu.getText() + "\t"
-                + "\t" + ingredientNameInput.getText() + "\n";
+        s += newRecipe.getIngredientAmount(ingredientNameInput.getText()) 
+                + ingredientPropertyMenu.getText() + "\t" + "\t" 
+                + ingredientNameInput.getText() + "\n";
         ingredientAndSteps.setText(s);
     }
 
     /**
      * This method is called when the added ingredient does not meet the
-     * requierments and gives feedback to the user
+     * requierments and gives feedback to the user.
      */
     private void ingredientError() {
         if (ingredientNameInput.getText().isEmpty()
@@ -197,7 +207,8 @@ public class AddRecipeController extends SuperController {
             ingredientNameError.setVisible(false);
         }
 
-        if (!ingredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$") || ingredientAmount.getText().isEmpty()) {
+        if (!ingredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")
+                || ingredientAmount.getText().isEmpty()) {
             amountError.setVisible(true);
         } else {
             amountError.setVisible(false);
@@ -212,19 +223,19 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method changes the text on the menubutton where the user selects a
-     * property
+     * property.
      * 
      * @param event Event when the user selects a property
      */
     public void selectProperty(ActionEvent event) {
         MenuItem selectedProperty = (MenuItem) event.getSource();
-        String PropertyAsText = selectedProperty.getText();
-        ingredientPropertyMenu.setText(PropertyAsText);
+        String propertyAsText = selectedProperty.getText();
+        ingredientPropertyMenu.setText(propertyAsText);
     }
 
     /**
      * This method cleans the input variables where the user has added an ingredient
-     * so the user can add more ingredients
+     * so the user can add more ingredients.
      */
     private void cleanIngredientButtons() {
         ingredientNameInput.deleteText(0, ingredientNameInput.getText().length());
@@ -235,11 +246,11 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This methos checks if there is added an ingredient
+     * This methos checks if there is added an ingredient.
      * - If there is added an ingredient the AddIngredient pane will dissapear and
-     * the AddStepPane will show up
+     *   the AddStepPane will show up.
      * - If there is not added an ingredient to the recipe the user will get
-     * feedback to add an ingredient first
+     *   feedback to add an ingredient first.
      */
     public void addedAllIngredients() {
         if (newRecipe.getIngredients().isEmpty()) {
@@ -254,18 +265,19 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method removes the last added ingredient from the recipe and the preview
+     * This method removes the last added ingredient from the recipe and the preview.
      */
     public void removeIngredient() {
         List<String> ingredients = new ArrayList<>(newRecipe.getIngredients());
         String ingredient = ingredients.get(0);
         newRecipe.removeIngredient(ingredient);
         String[] s = ingredientAndSteps.getText().split("\n");
+        StringBuffer newIngredientAndStepsBuffer = new StringBuffer();
         if (s.length >= 2) {
-            String newIngredientAndSteps = "";
             for (int i = 0; i < s.length - 1; i++) {
-                newIngredientAndSteps += s[i] + "\n";
+                newIngredientAndStepsBuffer.append(s[i] + "\n");
             }
+            String newIngredientAndSteps = newIngredientAndStepsBuffer.toString();
             ingredientAndSteps.setText(newIngredientAndSteps);
         } else {
             ingredientAndSteps.setText("");
@@ -275,7 +287,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method add the input step to the recipe and show it in the prewiew if
-     * the step meets the requierment
+     * the step meets the requierment.
      * 
      * If the added step doe not meet the requierments, the user gets feedback.
      */
@@ -294,7 +306,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method creates a string representation of the added step that will show
-     * up in the preview
+     * up in the preview.
      */
     private void showStepsInPreview() {
         String s = "Step " + (newRecipe.getSteps().size()) + ":" + "\t"
@@ -303,12 +315,13 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method checks if the added step meets the requierments
+     * This method checks if the added step meets the requierments.
      * 
      * @return true if added step meets the requierment and false if it does not
      */
     private boolean validateStep() {
-        if (!addStepText.getText().isEmpty() && addStepText.getText().matches("[a-zA-Z ,.0-9!?]+")) {
+        if (!addStepText.getText().isEmpty() 
+                && addStepText.getText().matches("[a-zA-Z ,.0-9!?]+")) {
             return true;
         } else {
             return false;
@@ -317,7 +330,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method clean the input variables after a step is added so the user can
-     * add more steps
+     * add more steps.
      */
     private void cleanStepInput() {
         addStepText.deleteText(0, addStepText.getText().length());
@@ -326,7 +339,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method validates if there is added a step or not
-     * Gives feedback if there is not added any step
+     * Gives feedback if there is not added any step.
      */
     public void addedAllSteps() {
         if (!newRecipe.getSteps().isEmpty()) {
@@ -337,7 +350,7 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method hides the AddStepPane and shows the PortionAndConfirmPane
+     * This method hides the AddStepPane and shows the PortionAndConfirmPane.
      */
     private void addStepsNext() {
         addStepPane.setVisible(false);
@@ -345,7 +358,7 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method removes the last added step from the recipe and the preview
+     * This method removes the last added step from the recipe and the preview.
      */
     public void removeStep() {
         List<String> steps = newRecipe.getSteps();
@@ -353,12 +366,13 @@ public class AddRecipeController extends SuperController {
         newRecipe.removeStep(step);
 
         String[] s = ingredientAndSteps.getText().split("\n");
-
+        
         if (s.length >= 2) {
-            String newIngredientAndSteps = "";
+            StringBuffer newIngredientAndStepsBuffer = new StringBuffer();
             for (int i = 0; i < s.length - 1; i++) {
-                newIngredientAndSteps += s[i] + "\n";
+                newIngredientAndStepsBuffer.append(s[i] + "\n");
             }
+            String newIngredientAndSteps = newIngredientAndStepsBuffer.toString();
             ingredientAndSteps.setText(newIngredientAndSteps);
 
             if (newRecipe.getSteps().isEmpty()) {
@@ -371,7 +385,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method validates if the user has selectet an amount of portions and
-     * saves the recipe to file if the amount is selected
+     * saves the recipe to file if the amount is selected.
      */
     public void saveRecipe() {
         if (valdatePortions()) {
@@ -386,7 +400,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method uses the RecipeFilehandler to save the Recipe to file
-     * It also saves the recipe to the logged in profile
+     * It also saves the recipe to the logged in profile.
      * 
      * @see RecipeFilehandler #writeRecipe(Recipe)
      * @see UserFilehandler #writeProfile(Profile)
@@ -411,7 +425,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method changes the text on the seletedPortions MenuItem when the user
-     * selects an amount of portions
+     * selects an amount of portions.
      * 
      * @param event event when user clicks on an amount of portions
      */
@@ -422,13 +436,13 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method is called when the user clicks on the back button
+     * This method is called when the user clicks on the back button.
      * 
-     * If the recipe is saved the user will be sent back to the mainscreen
+     * If the recipe is saved the user will be sent back to the mainscreen.
      * 
      * If the recipe is not saved the user will get a pop up window where the user
      * can choose to go back without saving the recipe or to go back and complete
-     * the recipe
+     * the recipe.
      * 
      * @param event event when the user clicks on the back button
      * @throws IOException if the switchSceneWithInfo method throws an IOException
@@ -450,16 +464,17 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method shows a pop up window where the user can choose to go back
-     * to the mainscreen without saving the recipe or keep working on the recipe
+     * to the mainscreen without saving the recipe or keep working on the recipe.
      * 
-     * @param event
+     * @param event event when the user clicks on the back button
      */
     @FXML
     public void showAlert(ActionEvent event) {
         this.alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Your recipe is not saved!");
         alert.setHeaderText("Delete on-going recipe");
-        alert.setContentText("If you go back now your recipe will not be saved. Do you want to go back?");
+        alert.setContentText(
+                    "If you go back now your recipe will not be saved. Do you want to go back?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
