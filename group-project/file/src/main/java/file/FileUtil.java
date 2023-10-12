@@ -1,5 +1,7 @@
 package file;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,15 +11,16 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
+/**
+ * This is a utility class for filehandling.
+ */
 public class FileUtil {
 
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     /**
-     * This method creates a file if it does not already exist
+     * This method creates a file if it does not already exist.
      * 
      * @param filePath - Path object to the file
      */
@@ -32,7 +35,7 @@ public class FileUtil {
     }
 
     /**
-     * This method writes data to a file
+     * This method writes data to a file.
      * 
      * @param <T>      - Generic type
      * @param filePath - Path object to the file
@@ -48,7 +51,7 @@ public class FileUtil {
     }
 
     /**
-     * This method reads data from a file
+     * This method reads data from a file.
      * 
      * @param <T>      - Generic type
      * @param filePath - Path object to the file

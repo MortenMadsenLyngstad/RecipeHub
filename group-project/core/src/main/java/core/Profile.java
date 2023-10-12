@@ -30,8 +30,8 @@ public class Profile {
     }
 
     /**
-     * This metod checks if a username is valid according to the following
-     * criterias:
+     * This metod checks if a username is valid.
+     * These are the criterias:
      * - Must have length of at least 5
      * - Must only contain letters and numbers
      * 
@@ -48,8 +48,8 @@ public class Profile {
     }
 
     /**
-     * This metod checks if a password is valid according to the following
-     * criterias:
+     * This metod checks if a password is valid.
+     * These are the criterias:
      * - Must have length of at least 8
      * - Must contain a lower case letter
      * - Must contain an upper case letter

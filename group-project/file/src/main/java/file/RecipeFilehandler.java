@@ -4,21 +4,25 @@ import core.Recipe;
 import core.RecipeLibrary;
 import java.nio.file.Path;
 
+/**
+ * This class handles file operations for recipes.
+ */
 public class RecipeFilehandler extends FileUtil {
     private Path filePath;
 
     /**
-     * This constructor initializes the filePath
+     * This constructor initializes the filePath.
      * 
-     * @param file
+     * @param file - File to write to
      */
     public RecipeFilehandler(String file) {
-        this.filePath = Path.of(System.getProperty("user.home") + System.getProperty("file.separator") + file);
+        this.filePath = Path.of(System.getProperty("user.home") 
+        + System.getProperty("file.separator") + file);
         createFile(this.filePath);
     }
 
     /**
-     * This method writes a recipe to the file
+     * This method writes a recipe to the file.
      * 
      * @param recipe - Recipe object to write
      */
@@ -29,7 +33,7 @@ public class RecipeFilehandler extends FileUtil {
     }
 
     /**
-     * This method reads recipes from the file
+     * This method reads recipes from the file.
      * 
      * @return - Returns a RecipeLibrary object
      */
@@ -43,9 +47,9 @@ public class RecipeFilehandler extends FileUtil {
     }
 
     /**
-     * This method removes a recipe from the file
+     * This method removes a recipe from the file.
      * 
-     * @param recipe
+     * @param recipe - Recipe object to remove
      */
     public void removeRecipe(Recipe recipe) {
         RecipeLibrary recipeLibrary = readRecipeLibrary();

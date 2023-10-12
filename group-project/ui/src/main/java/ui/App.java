@@ -1,7 +1,6 @@
 package ui;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +8,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ui.controllers.SuperController;
 
+/**
+ * This class starts the application.
+ */
 public class App extends Application {
 
     /**
-     * Starts the application
+     * Starts the application.
      * 
-     * @param stage
+     * @param stage - Stage object
      * @throws IOException if the FXMLLoader.load method throws an exception
      */
     @Override
@@ -28,9 +30,9 @@ public class App extends Application {
     }
 
     /**
-     * Launches the application
+     * Launches the application.
      * 
-     * @param args
+     * @param args - arguments
      */
     public static void main(String[] args) {
         launch();
