@@ -4,26 +4,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-
 /**
- * This class is used to contain several recipes
+ * This class is used to contain several recipes.
  * 
  * @author Adrian Haabpiht Solberg
  */
 public class RecipeLibrary implements Iterable<Recipe> {
-    
+
     private List<Recipe> recipes;
 
     /**
-     * This contructor initilizes an empty ArrayList
+     * This contructor initilizes an empty ArrayList.
      */
     public RecipeLibrary() {
         recipes = new ArrayList<>();
     }
 
     /**
-     * This contructor initilizes a new ArrayList using the ArrayList sent in
+     * This contructor initilizes a new ArrayList using the ArrayList sent in.
      * 
      * @param recipes - Arraylist filled with recipes
      */
@@ -35,7 +33,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This metod returns the recipe with the given index
+     * This metod returns the recipe with the given index.
      * 
      * @param n - The index of the given recipe
      * @throws IllegalArgumentException if the index is invalid
@@ -49,7 +47,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method returns the amount of recipes
+     * Method to get the amount of recipes in the RecipeLibrary.
      * 
      * @return Integer value with the amount of recipes
      */
@@ -58,7 +56,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will add the recipe to the ArrayList recipes
+     * This method will add the recipe to the ArrayList recipes.
      * 
      * @param recipe - Recipe object you wish to add
      */
@@ -73,7 +71,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will remove thee given recipe from the ArrayList recipes
+     * This method will remove thee given recipe from the ArrayList recipes.
      * 
      * @param recipe - Recipe object you wish to remove
      * @throws IllegalArgumentException if the recipe given does not exist in
@@ -90,19 +88,19 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will check if the given recipe exists in the ArrayList recipes
+     * This method will check if the given recipe exists in the ArrayList recipes.
      * 
      * @param recipe - Recipe object you wish to check
      * @return Boolean value, true if the recipe exists in recipes, false if not
      */
     public boolean containsRecipe(Recipe recipe) {
         return recipes.stream()
-                .anyMatch(r -> (r.getName().equals(recipe.getName()) && r.getAuthor().equals(recipe.getAuthor())));
+                .anyMatch(r -> (r.getName().equals(recipe.getName())
+                        && r.getAuthor().equals(recipe.getAuthor())));
     }
 
-
     /**
-     * This method defines an iterator for the class, which makes it iterable
+     * This method defines an iterator for the class, which makes it iterable.
      * 
      * @return Iterator which iterates over the elements in recipes
      */
