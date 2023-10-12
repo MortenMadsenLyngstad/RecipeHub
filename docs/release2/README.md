@@ -88,7 +88,7 @@ We tried to test every aspect of application as it is rigth now, and plan to exp
 ## Other relevant documentation
 
 There is documentation about structure, requirements and dependencies [here](../../readme.md).  
-There is documentation about the the app in general, core features in the finalized product and user stories with sequence diagrams [here](../../group-project/README.md).
+There is documentation about the the app in general, core features in the finalized product and user stories with sequence diagrams [here](../../recipehub/README.md).
 
 ## Example data
 

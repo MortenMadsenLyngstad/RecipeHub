@@ -51,9 +51,9 @@ These are the dependencies for the project:
 
 ## Instructions
 
-- To run the project, navigate to the group-project file and use the command `mvn clean install`.  
+- To run the project, navigate to the recipehub file and use the command `mvn clean install`.  
 - After the build is successful, you can navigate to the ui-directory and run the application using the command `mvn javafx:run`.  
-- To run the tests, use the command `mvn test` in the group-project directory. This will run all the tests in the project.  
+- To run the tests, use the command `mvn test` in the recipehub directory. This will run all the tests in the project.  
 - To generate a test coverage report, use the command `mvn jacoco:report`. The report can be found in the target/site/jacoco/index.html file.
 
 ## Directory Structure
@@ -62,7 +62,7 @@ The following figure shows the directory structure of the project:
 
     
 ```
-└───group-project
+└───recipehub
     ├───core
     │   ├───src
     │       ├───main
