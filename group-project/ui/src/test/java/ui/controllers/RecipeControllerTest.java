@@ -50,7 +50,6 @@ public class RecipeControllerTest extends ApplicationTest {
     private Profile mockProfile = mock(Profile.class);
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
-    private MainscreenController mainscreenController = new MainscreenController();
 
     /**
      * This method will start the application
@@ -118,8 +117,7 @@ public class RecipeControllerTest extends ApplicationTest {
         deleteButton = lookup("#deleteButton").query();
         heartButton = lookup("#heartButton").query();
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
-        controller.currentProfile = mockProfile;
-        mainscreenController.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
+        controller.currentProfile = profiles.get(0);
     }
 
     /**
@@ -147,6 +145,9 @@ public class RecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void backButtonTest() {
+        when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
+        when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
+        when(mockProfile.getUsername()).thenReturn("Username");
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }

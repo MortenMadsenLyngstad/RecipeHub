@@ -1,15 +1,14 @@
 package ui.controllers;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import core.Profile;
 import core.Recipe;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -21,7 +20,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Controller for displaying the information of a recipe on a RecipeSreen
+ * Controller for displaying the information of a recipe on a RecipeSreen.
  */
 public class RecipeController extends SuperController {
     private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
@@ -30,7 +29,6 @@ public class RecipeController extends SuperController {
     private Recipe recipe;
     private Boolean flag = false;
     private Alert alert;
-
 
     @FXML
     private Label nameField, authorLabel, descriptionLabel, stepsLabel, portionsLabel;
@@ -41,9 +39,8 @@ public class RecipeController extends SuperController {
     @FXML
     private FontAwesomeIconView deleteButton, heartButton;
 
-
     /**
-     * Handels the click of the backButton, sends the user back to the mainscreen
+     * Handels the click of the backButton, sends the user back to the mainscreen.
      * 
      * @param event The click of the backButton
      * @throws IOException If there is an issue with loading Mainscreen.fxml
@@ -53,12 +50,12 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * Populates the RecipeScreen with the information from the recipe
+     * Populates the RecipeScreen with the information from the recipe.
      */
     public void populate() {
         // If the recipe is the users own, show the delete button
         showDeleteButton();
-        
+
         mainscreenController.setHeart(heartButton, recipe, currentProfile);
         nameField.setText(recipe.getName());
         authorLabel.setText("Posted by: " + recipe.getAuthor());
@@ -72,10 +69,9 @@ public class RecipeController extends SuperController {
         }
         for (String ingredient : recipe.getIngredients()) {
             ingredientsText.appendText(
-                recipe.getIngredientAmount(ingredient) + " " +
-                recipe.getIngredientUnit(ingredient) + " : " +
-                ingredient + "\n"
-            );
+                    recipe.getIngredientAmount(ingredient) 
+                    + " " + recipe.getIngredientUnit(ingredient) 
+                    + " : " + ingredient + "\n");
         }
         descriptionText.positionCaret(0);
         stepsText.positionCaret(0);
@@ -87,7 +83,7 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * Sets the recipe for the controller
+     * Sets the recipe for the controller.
      * 
      * @param recipe The recipe to be set
      */
@@ -102,7 +98,8 @@ public class RecipeController extends SuperController {
                 deleteButton.setStrokeWidth(0.7);
             });
             deleteButton.setOnMouseExited(event -> {
-                deleteButton.setStrokeWidth(0.2);;
+                deleteButton.setStrokeWidth(0.2);
+                ;
             });
         } else {
             deleteButton.setVisible(false);
@@ -110,8 +107,10 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * Handels the click of the deleteButton
-     * If the user confirms the deletion, the recipe is deleted and the user is sent back to the mainscreen
+     * Handels the click of the deleteButton.
+     * 
+     * If the user confirms the deletion, the recipe is deleted and the user is sent
+     * back to the mainscreen.
      * 
      * @param event The click of the deleteButton
      * @throws IOException If there is an issue with loading Mainscreen.fxml
@@ -128,16 +127,16 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * Sets the alert for the controller
+     * Sets the current profile for the controller.
      * 
-     * @param alert The alert to be set
+     * @return The current Alert
      */
     public Alert getAlert() {
         return this.alert;
     }
 
     /**
-     * Shows an alert to the user to confirm the deletion of the recipe
+     * Shows an alert to the user to confirm the deletion of the recipe.
      * 
      * @return Boolean value for if the user confirmed the deletion
      */
@@ -151,21 +150,21 @@ public class RecipeController extends SuperController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             recipeFilehandler.removeRecipe(recipe);
-                // If another profile has the removed recipe favorited it is also removed from their favorites
-                List<Profile> profiles = new ArrayList<>();
-                for (Profile p : userFilehandler.readProfiles()) {
-                    if (p.getUsername().equals(currentProfile.getUsername())){
-                        currentProfile.removeFavorite(recipe);
-                        currentProfile.removeRecipe(recipe);
-                        profiles.add(currentProfile);
-                    }
-                    else {
-                        p.removeFavorite(recipe);
-                        profiles.add(p);
-                    }
+            // If another profile has the removed recipe favorited it is also removed from
+            // their favorites
+            List<Profile> profiles = new ArrayList<>();
+            for (Profile p : userFilehandler.readProfiles()) {
+                if (p.getUsername().equals(currentProfile.getUsername())) {
+                    currentProfile.removeFavorite(recipe);
+                    currentProfile.removeRecipe(recipe);
+                    profiles.add(currentProfile);
+                } else {
+                    p.removeFavorite(recipe);
+                    profiles.add(p);
                 }
-                userFilehandler.writeAllProfiles(profiles);
-                flag = true;
+            }
+            userFilehandler.writeAllProfiles(profiles);
+            flag = true;
         } else {
             flag = false;
         }
@@ -174,12 +173,13 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * Sets the filehandlers for the controller
+     * Sets the filehandlers for the controller.
      * 
      * @param mockRecipeFilehandler The mock RecipeFilehandler to be set
-     * @param mockUserFilehandler The mock UserFilehandler to be set
+     * @param mockUserFilehandler   The mock UserFilehandler to be set
      */
-    public void setFilehandlers(RecipeFilehandler mockRecipeFilehandler, UserFilehandler mockUserFilehandler) {
+    public void setFilehandlers(RecipeFilehandler mockRecipeFilehandler,
+            UserFilehandler mockUserFilehandler) {
         this.recipeFilehandler = mockRecipeFilehandler;
         this.userFilehandler = mockUserFilehandler;
         mainscreenController.setFilehandlers(recipeFilehandler, userFilehandler);
