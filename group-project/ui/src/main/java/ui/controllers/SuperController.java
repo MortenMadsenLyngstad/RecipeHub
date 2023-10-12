@@ -1,14 +1,18 @@
 package ui.controllers;
 
+import core.Profile;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import core.Profile;
 
+/**
+ * This controller class is a superclass which the other controllers extends.
+ * It contains methods needed by all the controllers
+ */
 public class SuperController {
 
     protected Scene scene;
@@ -18,7 +22,7 @@ public class SuperController {
     private String fileName;
 
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(file));
+        Parent root = FXMLLoader.load(SuperController.class.getResource(file));
         scene = new Scene(root);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -28,8 +32,9 @@ public class SuperController {
         setFileName(file);
     }
 
-    protected void switchSceneWithInfo(ActionEvent event, String file, Profile profile) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
+    protected void switchSceneWithInfo(ActionEvent event, String file, Profile profile) 
+            throws IOException {
+        FXMLLoader loader = new FXMLLoader(SuperController.class.getResource(file));
         root = loader.load();
 
         SuperController controller = loader.getController();

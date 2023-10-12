@@ -1,8 +1,8 @@
 package ui.controllers;
 
-import java.io.IOException;
-
 import core.Profile;
+import file.UserFilehandler;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,8 +11,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import file.UserFilehandler;
 
+/**
+ * This controller class is used to connect the loginscreen to the logic in core.
+ */
 public class LoginController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
@@ -26,10 +28,10 @@ public class LoginController extends SuperController {
     private PasswordField passwordField;
 
     /**
-     * Logs the user in if the login information is correct
+     * Logs the user in if the login information is correct.
      * 
-     * @param event
-     * @throws Exception   if the validateLogin method throws an exception
+     * @param event The ActionEvent triggered by a login button click
+     * @throws Exception if the validateLogin method throws an exception
      * @throws IOException if the SwitchController.switchToMainScreen method throws
      *                     an exception
      * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
@@ -41,9 +43,9 @@ public class LoginController extends SuperController {
     }
 
     /**
-     * Switches to the register screen
+     * Switches to the register screen.
      * 
-     * @param event
+     * @param event The ActionEvent that triggers the screen switch
      * @throws IOException if the SwitchController.switchSceneMain method throws an
      *                     exception
      * @see SuperController#switchSceneMain(ActionEvent, String)
@@ -53,7 +55,7 @@ public class LoginController extends SuperController {
     }
 
     /**
-     * Changes the userFilehandler
+     * Changes the userFilehandler.
      * 
      * @param userFilehandler - the new userFilehandler
      */
@@ -62,10 +64,10 @@ public class LoginController extends SuperController {
     }
 
     /**
-     * Validates the login information
+     * Validates the login information.
      * 
-     * @param uname
-     * @param pword
+     * @param uname The username to validate
+     * @param pword The password to validate
      * @return true if the login information is correct, false otherwise
      * @throws Exception if the userFilehandler.getUserinfo() method throws an
      *                   exception
@@ -88,7 +90,7 @@ public class LoginController extends SuperController {
     }
 
     /**
-     * This method will load currentProfile with it's username, password and all
+     * This method will load currentProfile with it's username, password and all.
      * it's recipes
      * 
      * @param uname - String with the username for the profile
@@ -103,14 +105,15 @@ public class LoginController extends SuperController {
     }
 
     /**
-     * This method will try to log the user in if the enter key is pressed
+     * This method will try to log the user in if the enter key is pressed.
      * 
      * @param e - KeyEvent
      * @throws Exception if the validateLogin method throws an exception
      * @see #validateLogin(String, String, UserFilehandler)
      */
     public void keyPressed(KeyEvent e) {
-        if (e.getCode().equals(KeyCode.ENTER))
+        if (e.getCode().equals(KeyCode.ENTER)) {
             loginButton.fire();
+        }
     }
 }
