@@ -60,6 +60,6 @@
       </TextArea>
       <TextField fx:id="portionsField" layoutX="341.0" layoutY="97.0" prefHeight="26.0" prefWidth="52.0" onAction="#handlePortions"/>
       <FontAwesomeIconView fx:id="minusButton" glyphName="MINUS" layoutX="320.0" layoutY="114.0" onMouseClicked="#minusButtonClick" />
-      <FontAwesomeIconView fx:id="plussButton" glyphName="PLUS" layoutX="401.0" layoutY="114.0" onMouseClicked="#plussButtonClick" selectionEnd="1" />
+      <FontAwesomeIconView fx:id="plussButton" glyphName="PLUS" layoutX="401.0" layoutY="114.0" onMouseClicked="#plusButtonClick" selectionEnd="1" />
    </children>
 </AnchorPane>

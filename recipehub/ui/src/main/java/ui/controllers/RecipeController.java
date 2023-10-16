@@ -42,7 +42,7 @@ public class RecipeController extends SuperController {
     @FXML
     private TextField portionsField;
     @FXML
-    private FontAwesomeIconView deleteButton, heartButton, minusButton, plussButton;
+    private FontAwesomeIconView deleteButton, heartButton, minusButton, plusButton;
 
     /**
      * Handels the click of the backButton, sends the user back to the mainscreen.
@@ -123,9 +123,9 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * Handles the click of the pluss button to add a portion to the recipe.
+     * Handles the click of the plus button to add a portion to the recipe.
      */
-    public void plussButtonClick() {
+    public void plusButtonClick() {
         portions += 1;
         scale = scale();
         clearText();
