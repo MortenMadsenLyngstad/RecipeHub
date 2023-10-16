@@ -101,7 +101,7 @@ public class RecipeController extends SuperController {
             portionsField.setText(fault);
             portionsField.positionCaret((fault).length());
         }
-        if (por <= 0) {
+        if (por <= 0 || por > 50) {
             portionsField.setText(fault);
             portionsField.positionCaret((fault).length());
         } else {
