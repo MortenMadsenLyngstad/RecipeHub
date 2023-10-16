@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -29,6 +30,8 @@ public class RecipeController extends SuperController {
     private Recipe recipe;
     private Boolean flag = false;
     private Alert alert;
+    private double scale = 1.0;
+    private int portions = 0;
 
     @FXML
     private Label nameField, authorLabel, descriptionLabel, stepsLabel, portionsLabel;
@@ -37,7 +40,9 @@ public class RecipeController extends SuperController {
     @FXML
     private TextArea descriptionText, stepsText, ingredientsText;
     @FXML
-    private FontAwesomeIconView deleteButton, heartButton;
+    private TextField portionsField;
+    @FXML
+    private FontAwesomeIconView deleteButton, heartButton, minusButton, plussButton;
 
     /**
      * Handels the click of the backButton, sends the user back to the mainscreen.
@@ -59,7 +64,7 @@ public class RecipeController extends SuperController {
         mainscreenController.setHeart(heartButton, recipe, currentProfile);
         nameField.setText(recipe.getName());
         authorLabel.setText("Posted by: " + recipe.getAuthor());
-        portionsLabel.setText("Portions: " + recipe.getPortions());
+        portionsField.setText("" + portions);
         descriptionText.setText(recipe.getDescription());
 
         List<String> steps = recipe.getSteps();
@@ -68,9 +73,9 @@ public class RecipeController extends SuperController {
             stepsText.appendText("Step " + i + ":  " + steps.get(i - 1) + "\n");
         }
         for (String ingredient : recipe.getIngredients()) {
-            ingredientsText.appendText(
-                    recipe.getIngredientAmount(ingredient) 
-                    + " " + recipe.getIngredientUnit(ingredient) 
+            String amount = String.format("%.1f", recipe.getIngredientAmount(ingredient) * scale);
+            ingredientsText.appendText(amount
+                    + " " + recipe.getIngredientUnit(ingredient)
                     + " : " + ingredient + "\n");
         }
         descriptionText.positionCaret(0);
@@ -83,14 +88,87 @@ public class RecipeController extends SuperController {
     }
 
     /**
+     * Handles the adding of portions through writing in the portionsField.
+     * Portions must be an int larger than 0.
+     */
+
+    public void handlePortions() {
+        int por = 0;
+        String fault = "" + portions;
+        try {
+            por = Integer.parseInt(portionsField.getText());
+        } catch (Exception e) {
+            portionsField.setText(fault);
+            portionsField.positionCaret((fault).length());
+        }
+        if (por <= 0) {
+            portionsField.setText(fault);
+            portionsField.positionCaret((fault).length());
+        } else {
+            portions = por;
+            scale = scale();
+            clearText();
+            populate();
+        }
+    }
+
+    /**
+     * Clears the text from stepsText and ingredientsText to avoid dupliucates.
+     * Intended use with scale operations.
+     */
+
+    private void clearText() {
+        ingredientsText.setText("");
+        stepsText.setText("");
+    }
+
+    /**
+     * Handles the click of the pluss button to add a portion to the recipe.
+     */
+    public void plussButtonClick() {
+        portions += 1;
+        scale = scale();
+        clearText();
+        populate();
+    }
+
+    /**
+     * Handles the click of the minus button to remove a portion from the recipe.
+     * Portions may not be 0 or less.
+     */
+    public void minusButtonClick() {
+        if (portions == 1) {
+            return;
+        }
+        portions -= 1;
+        scale = scale();
+        clearText();
+        populate();
+    }
+
+    /**
+     * Computes a scalar for scaling the recipe.
+     * 
+     * @return A double to set as the scalar
+     */
+    private double scale() {
+        return ((double) portions / (double) recipe.getPortions());
+    }
+
+    /**
      * Sets the recipe for the controller.
      * 
      * @param recipe The recipe to be set
      */
     public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+        portions = recipe.getPortions();
     }
 
+    /**
+     * Method for showing the delete button or not.
+     * Will show the delete button if the user is the author of the recipe.
+     */
     private void showDeleteButton() {
         if (recipe.getAuthor().equals(currentProfile.getUsername())) {
             deleteButton.setVisible(true);
