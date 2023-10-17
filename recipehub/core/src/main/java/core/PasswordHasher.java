@@ -67,9 +67,9 @@ public class PasswordHasher {
      * @param salt     - Salt used in hashing
      * @return Byte array for hashed password
      * @throws RuntimeException - Exception thrown if hashing algorithm
-     *                                  is not found
+     *                          is not found
      */
-    private byte[] hashPasswordWithSalt(String password, byte[] salt)
+    private byte[] hashPasswordWithSalt(String password, byte[] salt) {
         try {
             MessageDigest message = MessageDigest.getInstance(HASHING_ALGORITHM);
             message.update(salt);
@@ -78,7 +78,7 @@ public class PasswordHasher {
             return hashedPassword;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(
-                "Hashing algorithm \"" + HASHING_ALGORITHM + "\" is not found");
+                    "Hashing algorithm \"" + HASHING_ALGORITHM + "\" is not found");
         }
     }
 
