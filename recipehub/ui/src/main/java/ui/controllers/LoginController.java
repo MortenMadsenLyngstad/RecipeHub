@@ -1,5 +1,6 @@
 package ui.controllers;
 
+import core.PasswordHasher;
 import core.Profile;
 import file.UserFilehandler;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javafx.scene.input.KeyEvent;
  */
 public class LoginController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
+    private PasswordHasher passwordHasher = new PasswordHasher();
 
     @FXML
     private Label loginMessageLabel;
@@ -74,14 +76,15 @@ public class LoginController extends SuperController {
      * @see UserFilehandler#getUserinfo()
      */
     public boolean validateLogin(String uname, String pword, UserFilehandler userFilehandler) {
+        String storedPassword = userFilehandler.readUsernamesAndPasswords().get(uname);
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
             return false;
         } else if (userFilehandler.readUsernamesAndPasswords().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (userFilehandler.readUsernamesAndPasswords().get(uname).equals(pword)) {
-            loadProfile(uname, pword);
+        } else if (passwordHasher.verifyPassword(pword, storedPassword)) {
+            loadProfile(uname, passwordHasher.hashPassword(pword));
             return true;
         } else {
             loginMessageLabel.setText("Incorrect username or password");

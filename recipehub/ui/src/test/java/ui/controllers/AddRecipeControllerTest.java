@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import core.PasswordHasher;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
@@ -52,6 +53,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
     private MenuButton testIngredientPropertyMenu, testAddPortionMenu;
 
     private MenuItem testGrams, testPortion1;
+    private PasswordHasher mockPasswordHasher = mock(PasswordHasher.class);
     private RecipeFilehandler mockRecipeFileHandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
@@ -109,6 +111,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         fixMockMenuItems();
 
         controller.currentProfile = mockProfile;
+        controller.currentProfile.setHashedPassword(mockPasswordHasher.hashPassword("testPassword"));
     }
 
     /**
@@ -479,7 +482,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
-    
+
     /**
      * This method will test the functionality of the backButton
      */
@@ -499,5 +502,5 @@ public class AddRecipeControllerTest extends ApplicationTest {
             assertEquals("Mainscreen.fxml", controller.getFileName());
         });
     }
-    
+
 }

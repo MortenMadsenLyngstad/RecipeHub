@@ -9,12 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import core.PasswordHasher;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
 
 public class RecipeFilehandlerTest {
     private RecipeFilehandler recipeFilehandler;
+    private PasswordHasher passwordHasher = new PasswordHasher();
     private Recipe recipe;
 
     /**
@@ -25,7 +27,9 @@ public class RecipeFilehandlerTest {
      */
     @BeforeEach
     public void setup() {
-        this.recipe = new Recipe("testRecipe", 1, new Profile("testUser", "Password123"));
+        Profile profile = new Profile("testUser", "Password123");
+        profile.setHashedPassword(passwordHasher.hashPassword(profile.getPassword()));
+        this.recipe = new Recipe("testRecipe", 1, profile);
         this.recipeFilehandler = new RecipeFilehandler("test.json");
     }
 

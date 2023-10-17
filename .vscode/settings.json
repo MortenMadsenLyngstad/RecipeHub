@@ -1,5 +1,6 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.project.sourcePaths": [],
-    "java.checkstyle.configuration": "/google_checks.xml"
+    "java.checkstyle.configuration": "/google_checks.xml",
+    "editor.rulers": [100]
 }
