@@ -20,17 +20,13 @@ public class PasswordHasher {
      * @return String value for hashed password
      */
     public String hashPassword(String password) {
-        try {
-            byte[] salt = generateSalt();
-            byte[] hashedPassword = hashPasswordWithSalt(password, salt);
+        byte[] salt = generateSalt();
+        byte[] hashedPassword = hashPasswordWithSalt(password, salt);
 
-            String saltBase64 = bytesToHex(salt);
-            String hashedPasswordBase64 = bytesToHex(hashedPassword);
+        String saltBase64 = bytesToHex(salt);
+        String hashedPasswordBase64 = bytesToHex(hashedPassword);
 
-            return saltBase64 + ":" + hashedPasswordBase64;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        return saltBase64 + ":" + hashedPasswordBase64;
     }
 
     /**
@@ -41,20 +37,16 @@ public class PasswordHasher {
      * @return Boolean value for whether the password is verified or not
      */
     public Boolean verifyPassword(String input, String storedPassword) {
-        try {
-            String[] parts = storedPassword.split(":");
-            if (parts.length != 2) {
-                return false;
-            }
-            byte[] salt = hexToBytes(storedPassword.split(":")[0]);
-            byte[] storedHashedPassword = hexToBytes(storedPassword.split(":")[1]);
-
-            byte[] hashedInput = hashPasswordWithSalt(input, salt);
-
-            return MessageDigest.isEqual(storedHashedPassword, hashedInput);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error verifying password");
+        String[] parts = storedPassword.split(":");
+        if (parts.length != 2) {
+            return false;
         }
+        byte[] salt = hexToBytes(storedPassword.split(":")[0]);
+        byte[] storedHashedPassword = hexToBytes(storedPassword.split(":")[1]);
+
+        byte[] hashedInput = hashPasswordWithSalt(input, salt);
+
+        return MessageDigest.isEqual(storedHashedPassword, hashedInput);
     }
 
     /**
@@ -74,11 +66,10 @@ public class PasswordHasher {
      * @param password - Password to be hashed
      * @param salt     - Salt used in hashing
      * @return Byte array for hashed password
-     * @throws NoSuchAlgorithmException - Exception thrown if hashing algorithm
+     * @throws RuntimeException - Exception thrown if hashing algorithm
      *                                  is not found
      */
     private byte[] hashPasswordWithSalt(String password, byte[] salt)
-            throws NoSuchAlgorithmException {
         try {
             MessageDigest message = MessageDigest.getInstance(HASHING_ALGORITHM);
             message.update(salt);
@@ -86,7 +77,8 @@ public class PasswordHasher {
             byte[] hashedPassword = message.digest(passwordBytes);
             return hashedPassword;
         } catch (NoSuchAlgorithmException e) {
-            throw new NoSuchAlgorithmException("Error hashing password", e);
+            throw new RuntimeException(
+                "Hashing algorithm \"" + HASHING_ALGORITHM + "\" is not found");
         }
     }
 
