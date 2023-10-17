@@ -14,10 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import core.PasswordHasher;
 import core.Profile;
 
 public class UserFilehandlerTest {
     private UserFilehandler userFilehandler;
+    private PasswordHasher passwordHasher = new PasswordHasher();
 
     /**
      * This method is run before each test
@@ -61,10 +63,13 @@ public class UserFilehandlerTest {
     public void testWriteToFileAndReadFromFile() {
         String username = "testuser";
         String password = "Password123";
-        userFilehandler.writeProfile(new Profile(username, password));
+        String hashedPassword = passwordHasher.hashPassword(password);
+        Profile profile = new Profile(username, password);
+        profile.setHashedPassword(hashedPassword);
+        userFilehandler.writeProfile(profile);
         Map<String, String> readFileInfo = userFilehandler.readUsernamesAndPasswords();
         Assertions.assertTrue(readFileInfo.containsKey(username), "The files should contain \"testuser\".");
-        Assertions.assertEquals(password, readFileInfo.get(username),
+        Assertions.assertEquals(hashedPassword, readFileInfo.get(username),
                 "The file should contain the password \"Password123\" for the username \"testuser\".");
         deleteFile();
     }
@@ -79,8 +84,11 @@ public class UserFilehandlerTest {
     public void testReadUsernamesAndPasswords() {
         String username = "testuser";
         String password = "Password123";
-        userFilehandler.writeProfile(new Profile(username, password));
-        Assertions.assertEquals(new Hashtable<>(Map.of(username, password)),
+        String hashedPassword = passwordHasher.hashPassword(password);
+        Profile profile = new Profile(username, password);
+        profile.setHashedPassword(hashedPassword);
+        userFilehandler.writeProfile(profile);
+        Assertions.assertEquals(new Hashtable<>(Map.of(username, hashedPassword)),
                 userFilehandler.readUsernamesAndPasswords(), "The hashtable should contain the username \"testuser\".");
         deleteFile();
         Assertions.assertEquals(new HashMap<String, String>(), userFilehandler.readUsernamesAndPasswords());
@@ -93,14 +101,17 @@ public class UserFilehandlerTest {
         profiles.add(new Profile("Testuser1", "Easypass1"));
         profiles.add(new Profile("Testuser2", "Easypass2"));
         profiles.add(new Profile("Testuser3", "Easypass3"));
-        
+
         userFilehandler.writeAllProfiles(profiles);
-        
+
         List<Profile> readProfiles = new ArrayList<>();
         readProfiles = userFilehandler.readProfiles();
-        Assertions.assertEquals(readProfiles.get(0).getUsername(), readProfiles.get(0).getUsername(), "The first profile should have the username \"Testuser1\".");
-        Assertions.assertEquals(readProfiles.get(1).getUsername(), readProfiles.get(1).getUsername(), "The second profile should have the username \"Testuser2\".");
-        Assertions.assertEquals(readProfiles.get(2).getUsername(), readProfiles.get(2).getUsername(), "The third profile should have the username \"Testuser3\".");
+        Assertions.assertEquals(readProfiles.get(0).getUsername(), readProfiles.get(0).getUsername(),
+                "The first profile should have the username \"Testuser1\".");
+        Assertions.assertEquals(readProfiles.get(1).getUsername(), readProfiles.get(1).getUsername(),
+                "The second profile should have the username \"Testuser2\".");
+        Assertions.assertEquals(readProfiles.get(2).getUsername(), readProfiles.get(2).getUsername(),
+                "The third profile should have the username \"Testuser3\".");
         deleteFile();
     }
 }

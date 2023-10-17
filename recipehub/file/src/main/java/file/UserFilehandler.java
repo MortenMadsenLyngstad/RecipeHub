@@ -79,11 +79,11 @@ public class UserFilehandler extends FileUtil {
 
         for (Profile profile : profiles) {
             String username = profile.getUsername();
-            String password = profile.getPassword();
+            String hashedPassword = profile.getHashedPassword();
 
             // Check if the username is not already in the map (to handle duplicates if
             // necessary)
-            userinfo.put(username, password);
+            userinfo.put(username, hashedPassword);
         }
         return userinfo;
     }

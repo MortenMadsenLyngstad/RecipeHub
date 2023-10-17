@@ -1,5 +1,6 @@
 package ui.controllers;
 
+import core.PasswordHasher;
 import core.Profile;
 import file.UserFilehandler;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
  */
 public class RegisterController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
+    private PasswordHasher passwordHasher = new PasswordHasher();
 
     @FXML
     private Label registerMessageLabel;
@@ -82,8 +84,8 @@ public class RegisterController extends SuperController {
      * 
      * @see Profile#isValidUsername(String)
      * @see Profile#isValidPassword(String) 
-     * @see UserFilehandler#writeUserinfo(String, String)
-     * @see UserFilehandler#getUserinfo()
+     * @see UserFilehandler#writeProfile(String, String)
+     * @see UserFilehandler#readUsernamesAndPasswords()
      */
     public boolean validateRegister(String uname, String pword, UserFilehandler userFilehandler) {
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
@@ -104,10 +106,12 @@ public class RegisterController extends SuperController {
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             registerMessageLabel.setText("Passwords do not match");
             return false;
-        } else {
+        } else { 
+            String hashedInput = passwordHasher.hashPassword(pword);
             currentProfile = new Profile(uname, pword);
+            currentProfile.setHashedPassword(hashedInput);
             userFilehandler.writeProfile(currentProfile);
-            userFilehandler.readUsernamesAndPasswords().put(uname, pword);
+            userFilehandler.readUsernamesAndPasswords().put(uname, hashedInput);
             return true;
         }
     }
