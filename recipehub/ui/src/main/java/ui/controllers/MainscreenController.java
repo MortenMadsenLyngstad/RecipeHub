@@ -8,6 +8,10 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +35,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * This controller class is used to connect the mainscreeen to the logic in core.
+ * This controller class is used to connect the mainscreeen to the logic in
+ * core.
+ * 
  * @author Adrian Haabpiht Solberg
  */
 public class MainscreenController extends SuperController {
@@ -54,7 +60,8 @@ public class MainscreenController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     /**
-     * This method will load the gridPane with all recipes when the All Recipes-button 
+     * This method will load the gridPane with all recipes when the All
+     * Recipes-button
      * is clicked on.
      */
     @FXML
@@ -68,7 +75,7 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will load the gridPane with the logged in profile's recipes 
+     * This method will load the gridPane with the logged in profile's recipes
      * when the All Recipes-button is clicked on.
      */
     @FXML
@@ -82,7 +89,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will load the gridPane with the logged in profile's favorite recipes 
+     * This method will load the gridPane with the logged in profile's favorite
+     * recipes
      * when the Favorites-button is clicked on.
      */
     @FXML
@@ -109,6 +117,7 @@ public class MainscreenController extends SuperController {
 
     /**
      * This method will fill the grid with the recipes in the given recipeLibrary.
+     * 
      * @param recipeLibrary - RecipeLibrary with with recipes to fill the grid with
      */
     public void loadGrid(RecipeLibrary recipeLibrary) {
@@ -145,8 +154,10 @@ public class MainscreenController extends SuperController {
     /**
      * This method will make a SplitPane for the given recipe.
      * The top half will contain the recipe name
-     * The bottom half will contain a two buttons, one for going to the recipe's own page 
+     * The bottom half will contain a two buttons, one for going to the recipe's own
+     * page
      * and one for marking the recipe as a favorite
+     * 
      * @param recipe - The recipe to make the SplitPane for
      * @return Splitpane customized for the given recipe
      */
@@ -209,15 +220,17 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will set the heart to red if the recipe is a favorite of the current profile.
+     * This method will set the heart to red if the recipe is a favorite of the
+     * current profile.
      * If not, it will set the heart to white and make it clickable
-     * When clicked on, the heart will turn red and the recipe will be added to the current 
+     * When clicked on, the heart will turn red and the recipe will be added to the
+     * current
      * profile's favorites
      * 
      * This method is protected because it is used in RecipeController
      * 
-     * @param heart - The heart to be set
-     * @param recipe - The recipe to check if it is a favorite
+     * @param heart          - The heart to be set
+     * @param recipe         - The recipe to check if it is a favorite
      * @param currentProfile - The profile to check if the recipe is a favorite
      */
     protected void setHeart(FontAwesomeIconView heart, Recipe recipe, Profile currentProfile) {
@@ -226,12 +239,13 @@ public class MainscreenController extends SuperController {
         } else {
             heart.setFill(Color.WHITE);
         }
-        
+
         heart.setOnMouseEntered(event -> {
             heart.setStrokeWidth(2);
         });
         heart.setOnMouseExited(event -> {
-            heart.setStrokeWidth(1);;
+            heart.setStrokeWidth(1);
+            ;
         });
 
         heart.setOnMouseClicked(event -> {
@@ -250,11 +264,13 @@ public class MainscreenController extends SuperController {
                 currentProfile.addFavorite(recipe);
                 userFilehandler.writeProfile(currentProfile);
             }
-        });  
+        });
     }
 
     /**
-     * This method will switch screen to addRecipe.fxml when the addRecipe button is clicked on.
+     * This method will switch screen to addRecipe.fxml when the addRecipe button is
+     * clicked on.
+     * 
      * @param event - The event of the Add Recipe-button beign clicked on
      * @throws IOException - if the switchSceneWithInfo method throws an exception
      */
@@ -264,7 +280,9 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch screen to UserLogin.fxml when the addRecipe button is clicked on.
+     * This method will switch screen to UserLogin.fxml when the addRecipe button is
+     * clicked on.
+     * 
      * @param event - The event of the Log Out-button beign clicked on
      * @throws IOException - if the switchSceneWithInfo method throws an exception
      */
@@ -274,13 +292,15 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will swich scene to Recipe.fxml and give RecipeController the given recipe.
-     * @param event - ActionEvent
-     * @param file - The file you want to change to
-     * @param recipe - The recipe the user clicked on
+     * This method will switch scene to Recipe.fxml and give RecipeController the
+     * given recipe.
+     * 
+     * @param event   - ActionEvent
+     * @param recipe  - The recipe the user clicked on
+     * @param profile - the current profile
      * @throws IOException if there are problems with the filehandling
      */
-    protected void switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile) 
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile)
             throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
         root = loader.load();
@@ -301,24 +321,38 @@ public class MainscreenController extends SuperController {
 
     /**
      * This method will handle searching for recipes.
-     * It makes a modified RecipeLibrary, in accordance with the search, to be loaded in the grid
+     * It makes a modified RecipeLibrary, in accordance with the search, to be
+     * loaded in the grid
      */
     @FXML
     public void search() {
-        RecipeLibrary modifiedLibrary = new RecipeLibrary();
-        for (Recipe recipe : currentLibrary) {
-            if (recipe.getName().trim().toLowerCase()
-                    .contains(txtField.getText().trim().toLowerCase())) {
-                modifiedLibrary.addRecipe(recipe);
-            }
+        if (txtField.getText().isEmpty()) {
+            loadGrid(currentLibrary);
+            return;
         }
-        loadGrid(modifiedLibrary);
+
+        String searchTerm = txtField.getText().trim().toLowerCase();
+
+        List<Recipe> modifiedLibrary = currentLibrary.getRecipes().stream()
+                .filter(recipe -> recipe.getName().trim().toLowerCase().contains(searchTerm))
+                .collect(Collectors.toList());
+        Collections.sort(modifiedLibrary, Comparator
+                .comparingInt((Recipe r1) -> r1.getName().toLowerCase().indexOf(searchTerm))
+                .reversed()
+                .thenComparing((r1, r2) -> r2.getName().compareToIgnoreCase(r1.getName())));
+
+        RecipeLibrary modifiedRecipeLibrary = new RecipeLibrary();
+        modifiedRecipeLibrary.setRecipeLibrary(modifiedLibrary);
+
+        loadGrid(modifiedRecipeLibrary);
     }
 
     /**
      * Custom setProfile-method.
-     * This method will set currentProfile to the given profile, and then load all recipes
+     * This method will set currentProfile to the given profile, and then load all
+     * recipes
      * Custom method needed because of favorites functionality
+     * 
      * @param profile - The profile which is logged in
      */
     @Override
@@ -331,10 +365,12 @@ public class MainscreenController extends SuperController {
     /**
      * This method will set make new filehandlers with new filenames.
      * The method is implemented so that we can run proper tests on the controller
-     * @param recipeFilehandler - RecipeFilhandler for the MainscreenController to use
-     * @param userFilehandler - UserFilhandler for the MainscreenController to use
+     * 
+     * @param recipeFilehandler - RecipeFilhandler for the MainscreenController to
+     *                          use
+     * @param userFilehandler   - UserFilhandler for the MainscreenController to use
      */
-    public void setFilehandlers(RecipeFilehandler recipeFilehandler, 
+    public void setFilehandlers(RecipeFilehandler recipeFilehandler,
             UserFilehandler userFilehandler) {
         this.recipeFilehandler = recipeFilehandler;
         this.userFilehandler = userFilehandler;
