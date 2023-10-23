@@ -53,7 +53,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
     private MenuButton testIngredientPropertyMenu, testAddPortionMenu;
 
     private MenuItem testGrams, testPortion1;
-    private PasswordHasher mockPasswordHasher = mock(PasswordHasher.class);
     private RecipeFilehandler mockRecipeFileHandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
@@ -111,7 +110,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         fixMockMenuItems();
 
         controller.currentProfile = mockProfile;
-        controller.currentProfile.setHashedPassword(mockPasswordHasher.hashPassword("testPassword"));
+        controller.currentProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
     }
 
     /**

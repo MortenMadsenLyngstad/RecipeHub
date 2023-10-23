@@ -217,8 +217,7 @@ public class ProfileTest {
     @Test
     @DisplayName("Check if setHashedPassword() works")
     public void testSetAndGetHashedPassword() {
-        PasswordHasher passwordHasher = new PasswordHasher();
-        String hashedPassword = passwordHasher.hashPassword("newHashedPassword");
+        String hashedPassword = PasswordHasher.hashPassword("newHashedPassword");
         profile.setHashedPassword(hashedPassword);
         Assertions.assertEquals(hashedPassword, profile.getHashedPassword(),
                 "The hashed password should be 'newHashedPassword'");
