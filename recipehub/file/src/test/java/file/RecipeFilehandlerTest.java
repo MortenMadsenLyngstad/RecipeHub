@@ -15,8 +15,8 @@ import core.Recipe;
 import core.RecipeLibrary;
 
 public class RecipeFilehandlerTest {
-    private RecipeFilehandler recipeFilehandler;
     private Recipe recipe;
+    private Path filePath = Path.of("user.home" + System.getProperty("file.separator") + "test.json");
 
     /**
      * This method is run before each test
@@ -29,7 +29,6 @@ public class RecipeFilehandlerTest {
         Profile profile = new Profile("testUser", "Password123");
         profile.setHashedPassword(PasswordHasher.hashPassword(profile.getPassword()));
         this.recipe = new Recipe("testRecipe", 1, profile);
-        this.recipeFilehandler = new RecipeFilehandler("test.json");
     }
 
     /**
@@ -50,8 +49,8 @@ public class RecipeFilehandlerTest {
     @Test
     @DisplayName("Test if correct info is written to and read from file")
     public void testWriteAndReadRecipe() {
-        recipeFilehandler.writeRecipe(this.recipe);
-        RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
+        RecipeFilehandler.writeRecipe(filePath, recipe);
+        RecipeLibrary recipeLibrary = RecipeFilehandler.readRecipeLibrary(filePath);
         Recipe loadedRecipe = recipeLibrary.getRecipe(0);
         Assertions.assertEquals(this.recipe.getName(), loadedRecipe.getName(),
                 "The file should contain the recipeName \"testRecipe\".");
@@ -68,11 +67,11 @@ public class RecipeFilehandlerTest {
     @Test
     @DisplayName("Test if remove recipe works")
     public void testRemoveRecipe() {
-        recipeFilehandler.writeRecipe(this.recipe);
-        RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
+        RecipeFilehandler.writeRecipe(filePath, recipe);
+        RecipeLibrary recipeLibrary = RecipeFilehandler.readRecipeLibrary(filePath);
         Assertions.assertEquals(1, recipeLibrary.getSize(), "The recipe should be added.");
-        recipeFilehandler.removeRecipe(this.recipe);
-        recipeLibrary = recipeFilehandler.readRecipeLibrary();
+        RecipeFilehandler.removeRecipe(filePath, recipe);
+        recipeLibrary = RecipeFilehandler.readRecipeLibrary(filePath);
         Assertions.assertEquals(0, recipeLibrary.getSize(), "The recipe should be removed.");
         deleteFile();
     }
