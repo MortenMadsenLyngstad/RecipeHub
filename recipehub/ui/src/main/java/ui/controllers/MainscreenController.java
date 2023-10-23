@@ -56,7 +56,6 @@ public class MainscreenController extends SuperController {
 
     private RecipeLibrary allRecipes;
     private RecipeLibrary currentLibrary;
-    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     /**
@@ -358,7 +357,7 @@ public class MainscreenController extends SuperController {
     @Override
     protected void setProfile(Profile profile) {
         currentProfile = profile;
-        allRecipes = recipeFilehandler.readRecipeLibrary();
+        allRecipes = RecipeFilehandler.readRecipeLibrary(recipePath);
         loadAllRecipes();
     }
 
@@ -372,7 +371,6 @@ public class MainscreenController extends SuperController {
      */
     public void setFilehandlers(RecipeFilehandler recipeFilehandler,
             UserFilehandler userFilehandler) {
-        this.recipeFilehandler = recipeFilehandler;
         this.userFilehandler = userFilehandler;
     }
 
