@@ -30,6 +30,7 @@ public class FileUtil {
                 Files.createFile(filePath);
             } catch (IOException e) {
                 // This will never happen
+                System.out.println(e.getMessage());
             }
         }
     }

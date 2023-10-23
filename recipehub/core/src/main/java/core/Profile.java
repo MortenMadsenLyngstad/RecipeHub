@@ -2,6 +2,7 @@ package core;
 
 import java.util.regex.Pattern;
 
+
 /**
  * This class is used to contain Profile information.
  * 
@@ -10,7 +11,8 @@ import java.util.regex.Pattern;
 
 public class Profile {
     private String username;
-    private String password;
+    private transient String password;
+    private String hashedPassword;
     private RecipeLibrary recipeLibrary;
     private RecipeLibrary favorites;
 
@@ -91,6 +93,14 @@ public class Profile {
     }
 
     /**
+     * This method will return the hashed password of the given profile.
+     * @return String value for hashed password
+     */
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    /**
      * This method will set thee prfile's username to the string sent in if the
      * string is a valid username.
      * 
@@ -110,6 +120,14 @@ public class Profile {
     public void setPassword(String password) {
         isValidPassword(password);
         this.password = password;
+    }
+
+    /**
+     * This method will set the hashed password of the profile.
+     * @param hashedPassword - String value to set as hashed password
+     */
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     /**

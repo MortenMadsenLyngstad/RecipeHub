@@ -99,6 +99,10 @@ public class RecipeLibrary implements Iterable<Recipe> {
                         && r.getAuthor().equals(recipe.getAuthor())));
     }
 
+    public void setRecipeLibrary(List<Recipe> newRecipes) {
+        recipes = newRecipes;
+    }
+
     /**
      * This method defines an iterator for the class, which makes it iterable.
      * 
@@ -107,5 +111,14 @@ public class RecipeLibrary implements Iterable<Recipe> {
     @Override
     public Iterator<Recipe> iterator() {
         return recipes.iterator();
+    }
+
+    /**
+     * This method copies the recipes into a new list.
+     * 
+     * @return List with all the recipes
+     */
+    public List<Recipe> getRecipes() {
+        return new ArrayList<>(recipes);
     }
 }

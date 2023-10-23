@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import ui.App;
@@ -47,7 +48,8 @@ public class RecipeControllerTest extends ApplicationTest {
     private Label nameField, authorLabel, descriptionLabel, stepsLabel, portionsLabel;
     private Button backButton;
     private TextArea descriptionText, stepsText, ingredientsText;
-    private FontAwesomeIconView deleteButton, heartButton;
+    private FontAwesomeIconView deleteButton, heartButton, plusButton, minusButton;
+    private TextField portionsField;
 
     private Profile mockProfile = mock(Profile.class);
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
@@ -127,6 +129,9 @@ public class RecipeControllerTest extends ApplicationTest {
         ingredientsText = lookup("#ingredientsText").query();
         deleteButton = lookup("#deleteButton").query();
         heartButton = lookup("#heartButton").query();
+        plusButton = lookup("#plusButton").query();
+        minusButton = lookup("#minusButton").query();
+        portionsField = lookup("#portionsField").query();
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         controller.currentProfile = profiles.get(0);
     }
@@ -141,14 +146,60 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("Posted by: Username", authorLabel.getText());
         assertEquals("Description", descriptionLabel.getText());
         assertEquals("Steps", stepsLabel.getText());
-        assertEquals("Portions: 4", portionsLabel.getText());
+        assertEquals("Portion(s):", portionsLabel.getText());
+        assertEquals("4", portionsField.getText());
         assertEquals("Back", backButton.getText());
         assertEquals("Best way to start the weekend", descriptionText.getText());
         assertEquals("Step 1:  Make the dough\nStep 2:  Add toppings\n", stepsText.getText());
-        assertEquals("100.0 g : Tomato sauce\n100.0 g : Cheese\n100.0 g : Flour\n100.0 g : Pepperoni\n", ingredientsText.getText());
+        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n", ingredientsText.getText());
         assertEquals("TRASH", deleteButton.getGlyphName());
         assertEquals("HEART", heartButton.getGlyphName());
         assertTrue(deleteButton.isVisible());
+    }
+
+    /**
+     * Tests scaling functionality
+     */
+    @Test
+    public void testScale() {
+        // Checks setUp
+        assertEquals("4", portionsField.getText());
+        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        // Checks that illegal input does not change the scaling
+        clickOn(portionsField).eraseText(1).write("notAnInt").type(javafx.scene.input.KeyCode.ENTER);
+        assertEquals("4", portionsField.getText());
+        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        clickOn(portionsField).eraseText(1).write("12.4").type(javafx.scene.input.KeyCode.ENTER);
+        assertEquals("4", portionsField.getText());
+        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        clickOn(portionsField).eraseText(1).write("51").type(javafx.scene.input.KeyCode.ENTER);
+        assertEquals("4", portionsField.getText());
+        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        clickOn(portionsField).eraseText(1).write("-3").type(javafx.scene.input.KeyCode.ENTER);
+        assertEquals("4", portionsField.getText());
+        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        // Checks minusButton, legal text input and plusButton
+        clickOn(minusButton);
+        assertEquals("3", portionsField.getText());
+        assertEquals("75,0 g : Tomato sauce\n75,0 g : Cheese\n75,0 g : Flour\n75,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        clickOn(portionsField).eraseText(1).write("1").type(javafx.scene.input.KeyCode.ENTER);
+        assertEquals("1", portionsField.getText());
+        assertEquals("25,0 g : Tomato sauce\n25,0 g : Cheese\n25,0 g : Flour\n25,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        clickOn(minusButton);
+        assertEquals("1", portionsField.getText());
+        assertEquals("25,0 g : Tomato sauce\n25,0 g : Cheese\n25,0 g : Flour\n25,0 g : Pepperoni\n",
+                ingredientsText.getText());
+        clickOn(plusButton);
+        assertEquals("2", portionsField.getText());
+        assertEquals("50,0 g : Tomato sauce\n50,0 g : Cheese\n50,0 g : Flour\n50,0 g : Pepperoni\n",
+                ingredientsText.getText());
     }
 
     /**
@@ -164,7 +215,8 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the delete button changes strokewidth when hovered over
+     * This method will test if the delete button changes strokewidth when hovered
+     * over
      */
     @Test
     public void testHoverOverDelete() {
@@ -174,7 +226,8 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if a recipe can be deleted, and switched back to the mainscreen
+     * This method will test if a recipe can be deleted, and switched back to the
+     * mainscreen
      * if the user confirms the deletion
      */
     @Test
@@ -190,7 +243,8 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if a recipe can be deleted, and switched back to the mainscreen
+     * This method will test if a recipe can be deleted, and switched back to the
+     * mainscreen
      * if the user confirms the deletion
      */
     @Test
@@ -223,7 +277,8 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the heart button changes strokewidth when hovered over
+     * This method will test if the heart button changes strokewidth when hovered
+     * over
      */
     @Test
     public void testHoverOverFavorite() {

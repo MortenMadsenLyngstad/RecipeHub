@@ -25,12 +25,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import core.PasswordHasher;
 import core.Profile;
 import core.RecipeLibrary;
 
 public class LoginControllerTest extends ApplicationTest {
 
     private LoginController controller;
+    private PasswordHasher passwordHasher = new PasswordHasher();
     private Parent root;
 
     private Button loginButton;
@@ -85,7 +87,7 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateLoginWithValidCredentials() throws Exception {
-        userInfo.put("testuser", "Password123");
+        userInfo.put("testuser", passwordHasher.hashPassword("Password123"));
         when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
         when(mockProfile.getUsername()).thenReturn("testuser");
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
