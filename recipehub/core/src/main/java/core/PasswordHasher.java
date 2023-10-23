@@ -11,7 +11,7 @@ import java.security.SecureRandom;
 public class PasswordHasher {
     private static final String HASHING_ALGORITHM = "SHA-256";
     private static final int SALT_LENGTH = 16;
-    private SecureRandom random = new SecureRandom();
+    private static final SecureRandom random = new SecureRandom();
 
     /**
      * This method hashes a password.
@@ -19,7 +19,7 @@ public class PasswordHasher {
      * @param password - Password to be hashed
      * @return String value for hashed password
      */
-    public String hashPassword(String password) {
+    public static String hashPassword(String password) {
         byte[] salt = generateSalt();
         byte[] hashedPassword = hashPasswordWithSalt(password, salt);
 
@@ -36,7 +36,7 @@ public class PasswordHasher {
      * @param storedPassword - Stored password used in verification
      * @return Boolean value for whether the password is verified or not
      */
-    public Boolean verifyPassword(String input, String storedPassword) {
+    public static Boolean verifyPassword(String input, String storedPassword) {
         String[] parts = storedPassword.split(":");
         if (parts.length != 2) {
             return false;
@@ -54,7 +54,7 @@ public class PasswordHasher {
      * 
      * @return Byte array for salt
      */
-    private byte[] generateSalt() {
+    private static byte[] generateSalt() {
         byte[] salt = new byte[SALT_LENGTH];
         random.nextBytes(salt);
         return salt;
@@ -69,7 +69,7 @@ public class PasswordHasher {
      * @throws RuntimeException - Exception thrown if hashing algorithm
      *                          is not found
      */
-    private byte[] hashPasswordWithSalt(String password, byte[] salt) {
+    private static byte[] hashPasswordWithSalt(String password, byte[] salt) {
         try {
             MessageDigest message = MessageDigest.getInstance(HASHING_ALGORITHM);
             message.update(salt);
@@ -88,7 +88,7 @@ public class PasswordHasher {
      * @param bytes - Byte array to be converted
      * @return String value for hex string
      */
-    private String bytesToHex(byte[] bytes) {
+    private static String bytesToHex(byte[] bytes) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : bytes) {
             hexString.append(String.format("%02X", b));
@@ -102,7 +102,7 @@ public class PasswordHasher {
      * @param hex - Hex string to be converted
      * @return Byte array for hex string
      */
-    private byte[] hexToBytes(String hex) {
+    private static byte[] hexToBytes(String hex) {
         int len = hex.length();
         byte[] bytes = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {

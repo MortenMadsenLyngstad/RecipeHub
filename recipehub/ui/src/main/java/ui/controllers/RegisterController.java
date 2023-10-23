@@ -21,7 +21,6 @@ import javafx.stage.Stage;
  */
 public class RegisterController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
-    private PasswordHasher passwordHasher = new PasswordHasher();
 
     @FXML
     private Label registerMessageLabel;
@@ -107,7 +106,7 @@ public class RegisterController extends SuperController {
             registerMessageLabel.setText("Passwords do not match");
             return false;
         } else { 
-            String hashedInput = passwordHasher.hashPassword(pword);
+            String hashedInput = PasswordHasher.hashPassword(pword);
             currentProfile = new Profile(uname, pword);
             currentProfile.setHashedPassword(hashedInput);
             userFilehandler.writeProfile(currentProfile);

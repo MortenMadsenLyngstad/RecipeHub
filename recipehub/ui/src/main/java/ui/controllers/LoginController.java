@@ -18,7 +18,6 @@ import javafx.scene.input.KeyEvent;
  */
 public class LoginController extends SuperController {
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
-    private PasswordHasher passwordHasher = new PasswordHasher();
 
     @FXML
     private Label loginMessageLabel;
@@ -83,8 +82,8 @@ public class LoginController extends SuperController {
         } else if (userFilehandler.readUsernamesAndPasswords().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (passwordHasher.verifyPassword(pword, storedPassword)) {
-            loadProfile(uname, passwordHasher.hashPassword(pword));
+        } else if (PasswordHasher.verifyPassword(pword, storedPassword)) {
+            loadProfile(uname, PasswordHasher.hashPassword(pword));
             return true;
         } else {
             loginMessageLabel.setText("Incorrect username or password");
