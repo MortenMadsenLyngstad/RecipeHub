@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.nio.file.Path;
 
 /**
  * This controller class is a superclass which the other controllers extends.
@@ -19,6 +20,8 @@ public class SuperController {
     protected Stage stage;
     protected Parent root;
     protected Profile currentProfile;
+    protected Path userPath = Path.of("user.home" + System.getProperty("file.separator") + "userinfo.json");
+    protected Path recipePath = Path.of("user.home" + System.getProperty("file.separator") + "recipes.json");
     private String fileName;
 
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {
@@ -32,7 +35,7 @@ public class SuperController {
         setFileName(file);
     }
 
-    protected void switchSceneWithInfo(ActionEvent event, String file, Profile profile) 
+    protected void switchSceneWithInfo(ActionEvent event, String file, Profile profile)
             throws IOException {
         FXMLLoader loader = new FXMLLoader(SuperController.class.getResource(file));
         root = loader.load();

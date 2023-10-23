@@ -24,7 +24,6 @@ import javafx.scene.input.MouseEvent;
  * Controller for displaying the information of a recipe on a RecipeSreen.
  */
 public class RecipeController extends SuperController {
-    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
     private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
     private MainscreenController mainscreenController = new MainscreenController();
     private Recipe recipe;
@@ -227,7 +226,7 @@ public class RecipeController extends SuperController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            recipeFilehandler.removeRecipe(recipe);
+            RecipeFilehandler.removeRecipe(recipePath, recipe);
             // If another profile has the removed recipe favorited it is also removed from
             // their favorites
             List<Profile> profiles = new ArrayList<>();
@@ -258,8 +257,6 @@ public class RecipeController extends SuperController {
      */
     public void setFilehandlers(RecipeFilehandler mockRecipeFilehandler,
             UserFilehandler mockUserFilehandler) {
-        this.recipeFilehandler = mockRecipeFilehandler;
         this.userFilehandler = mockUserFilehandler;
-        mainscreenController.setFilehandlers(recipeFilehandler, userFilehandler);
     }
 }
