@@ -34,8 +34,8 @@ jacoco:
     - "cd recipehub"
   script:
     - "mvn jacoco:report --batch-mode"
-    - "cat recipehub/file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/'"
-    - "cat recipehub/core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/'"
+    - "cat file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/'"
+    - "cat core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/'"
   coverage: '/Total.*?([0-9]{1,3})%/'
 
 checkstyle:
