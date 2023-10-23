@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -31,6 +32,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ui.App;
 
 public class AddRecipeControllerTest extends ApplicationTest {
     private AddRecipeController controller;
@@ -56,6 +58,11 @@ public class AddRecipeControllerTest extends ApplicationTest {
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
     private Recipe mockRecipe = mock(Recipe.class);
+
+    @BeforeAll
+    public static void setupHeadless() {
+        App.supportHeadless();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
