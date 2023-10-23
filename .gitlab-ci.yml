@@ -26,12 +26,13 @@ test:
   before_script:
     - "cd recipehub"
   script:
-    - "mvn test --batch-mode -DskipUiTests=true"
+    - "mvn clean test --batch-mode -DskipUiTests=true"
 
 jacoco:
   stage: validation
   before_script:
     - "cd recipehub"
+    - "mvn clean install $MAVEN_CLI_OPTS"
   script:
     - "mvn jacoco:report --batch-mode"
     - "cat file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/'"
@@ -49,5 +50,6 @@ spotbugs:
   stage: validation
   before_script:
     - "cd recipehub"
+    - "mvn clean install $MAVEN_CLI_OPTS"
   script:
     - "mvn spotbugs:check --batch-mode"
