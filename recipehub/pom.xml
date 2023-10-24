@@ -10,7 +10,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
-        <skipTests>false</skipTests>
+        <skipCoreTests>false</skipCoreTests>
+        <skipFileTests>false</skipFileTests>
+        <skipUiTests>false</skipUiTests>
+        <headlessTests>false</headlessTests>
     </properties>
 
     <dependencyManagement>
@@ -95,7 +98,9 @@
                     <configuration>
                         <configLocation>config/checkstyle/checkstyle-checker.xml</configLocation>
                         <consoleOutput>false</consoleOutput>
-                        <failsOnError>false</failsOnError>
+                        <violationSeverity>warning</violationSeverity>
+                        <failsOnError>true</failsOnError>
+                        <failOnViolation>true</failOnViolation>
                         <linkXRef>false</linkXRef>
                     </configuration>
                     <executions>
@@ -115,7 +120,7 @@
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>4.7.3.6</version>
                     <configuration>
-                        <failOnError>false</failOnError>
+                        <failOnError>true</failOnError>
                         <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
                     </configuration>
                 </plugin>
