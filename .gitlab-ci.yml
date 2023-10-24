@@ -1,0 +1,56 @@
+image: maven:3.8.3-openjdk-17
+
+variables:
+  MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode -DskipCoreTests=true -DskipFileTests=true -DskipUiTests=true"
+  MAVEN_TEST_OPTS: "--batch-mode -DskipUiTests=true"
+
+stages:
+  - build
+  - test
+  - validation
+
+cache:
+  paths:
+    - .m2/repository
+  key: "$CI_BUILD_REF_NAME"
+
+build:
+  stage: build
+  before_script: 
+    - "cd recipehub"
+  script:
+    - "mvn clean install $MAVEN_CLI_OPTS"
+
+test:
+  stage: test
+  before_script:
+    - "cd recipehub"
+  script:
+    - "mvn clean test $MAVEN_TEST_OPTS"
+
+jacoco:
+  stage: validation
+  before_script:
+    - "cd recipehub"
+    - "mvn clean test $MAVEN_TEST_OPTS"
+  script:
+    - "mvn jacoco:report --batch-mode"
+    - "cat file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/'"
+    - "cat core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/'"
+  coverage: '/Total.*?([0-9]{1,3})%/'
+
+checkstyle:
+  stage: validation
+  before_script:
+    - "cd recipehub"
+  script:
+    - "mvn checkstyle:check --batch-mode"  
+
+spotbugs:
+  stage: validation
+  before_script:
+    - "cd recipehub"
+    - "mvn clean install $MAVEN_CLI_OPTS"
+  script:
+    - "mvn spotbugs:check --batch-mode"

@@ -37,6 +37,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <skipTests>${skipCoreTests}</skipTests>
                     <argLine>
                         @{jaCoCoArgLine}
                     </argLine>
