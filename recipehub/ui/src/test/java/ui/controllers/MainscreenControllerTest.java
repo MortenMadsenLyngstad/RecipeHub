@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -38,6 +39,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import ui.App;
 
 public class MainscreenControllerTest extends ApplicationTest {
 
@@ -50,6 +52,15 @@ public class MainscreenControllerTest extends ApplicationTest {
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
+    /**
+     * This method will set up the application for headless mode (tests will run without GUI)
+     * @see App#supportHeadless()
+     */
+    @BeforeAll
+    public static void setupHeadless() {
+        App.supportHeadless();
+    }
+    
     /**
      * This method will start the application
      * 

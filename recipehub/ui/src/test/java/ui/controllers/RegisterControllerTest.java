@@ -15,8 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import ui.App;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -36,6 +38,11 @@ public class RegisterControllerTest extends ApplicationTest {
     private Hashtable<String, String> userInfo = new Hashtable<>();
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
+
+    @BeforeAll
+    public static void setupHeadless() {
+        App.supportHeadless();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
