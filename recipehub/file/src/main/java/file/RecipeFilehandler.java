@@ -33,6 +33,14 @@ public class RecipeFilehandler extends FileUtil {
     }
 
     /**
+     * This method writes a RecipeLibrary to the file.
+     * @param recipeLibrary - RecipeLibrary object to write
+     */
+    public void writeRecipeLibrary(RecipeLibrary recipeLibrary) {
+        writeFile(filePath, recipeLibrary);
+    }
+
+    /**
      * This method reads recipes from the file.
      * 
      * @return - Returns a RecipeLibrary object
