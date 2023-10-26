@@ -14,11 +14,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * This controller class is used to connect the loginscreen to the logic in core.
+ * This controller class is used to connect the loginscreen to the logic in
+ * core.
  */
 public class LoginController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
-    private PasswordHasher passwordHasher = new PasswordHasher();
 
     @FXML
     private Label loginMessageLabel;
@@ -33,7 +32,7 @@ public class LoginController extends SuperController {
      * Logs the user in if the login information is correct.
      * 
      * @param event The ActionEvent triggered by a login button click
-     * @throws Exception if the validateLogin method throws an exception
+     * @throws Exception   if the validateLogin method throws an exception
      * @throws IOException if the SwitchController.switchToMainScreen method throws
      *                     an exception
      * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
@@ -57,15 +56,6 @@ public class LoginController extends SuperController {
     }
 
     /**
-     * Changes the userFilehandler.
-     * 
-     * @param userFilehandler - the new userFilehandler
-     */
-    public void setUserFilehandler(UserFilehandler userFilehandler) {
-        this.userFilehandler = userFilehandler;
-    }
-
-    /**
      * Validates the login information.
      * 
      * @param uname The username to validate
@@ -83,8 +73,8 @@ public class LoginController extends SuperController {
         } else if (userFilehandler.readUsernamesAndPasswords().get(uname) == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (passwordHasher.verifyPassword(pword, storedPassword)) {
-            loadProfile(uname, passwordHasher.hashPassword(pword));
+        } else if (PasswordHasher.verifyPassword(pword, storedPassword)) {
+            loadProfile(uname, PasswordHasher.hashPassword(pword));
             return true;
         } else {
             loginMessageLabel.setText("Incorrect username or password");
