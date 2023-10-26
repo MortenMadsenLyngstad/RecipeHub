@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * This class handles file operations for users.
  */
-public class UserFilehandler extends FileUtil {
+public class UserFilehandler {
     private Path filePath;
 
     /**
@@ -20,9 +20,9 @@ public class UserFilehandler extends FileUtil {
      * @param file - File to write to
      */
     public UserFilehandler(String file) {
-        this.filePath = Path.of(System.getProperty("user.home") 
-        + System.getProperty("file.separator") + file);
-        createFile(this.filePath);
+        this.filePath = Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + file);
+        FileUtil.createFile(this.filePath);
     }
 
     /**
@@ -34,12 +34,12 @@ public class UserFilehandler extends FileUtil {
         List<Profile> profiles = readProfiles();
 
         profiles.remove(profiles.stream()
-            .filter(p -> p.getUsername().equals(profile.getUsername()))
-            .findFirst()
-            .orElse(null));
+                .filter(p -> p.getUsername().equals(profile.getUsername()))
+                .findFirst()
+                .orElse(null));
 
         profiles.add(profile);
-        writeFile(filePath, profiles);
+        FileUtil.writeFile(filePath, profiles);
     }
 
     /**
@@ -51,7 +51,7 @@ public class UserFilehandler extends FileUtil {
         List<Profile> profiles = new ArrayList<>();
         Type profileListType = new TypeToken<List<Profile>>() {
         }.getType();
-        profiles = readFile(filePath, profiles, profileListType);
+        profiles = FileUtil.readFile(filePath, profiles, profileListType);
         if (profiles == null) {
             return new ArrayList<>();
         }
@@ -64,7 +64,7 @@ public class UserFilehandler extends FileUtil {
      * @param profiles - List of profiles to write
      */
     public void writeAllProfiles(List<Profile> profiles) {
-        writeFile(filePath, profiles);
+        FileUtil.writeFile(filePath, profiles);
     }
 
     /**
