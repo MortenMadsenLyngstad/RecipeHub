@@ -29,7 +29,6 @@ public class App extends Application {
         }
     }
 
-
     /**
      * Starts the application.
      * 
@@ -39,13 +38,13 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SuperController.class.getResource("UserLogin.fxml"));
-        SuperController controller = fxmlLoader.getController();
-        controller.setFilehandlers(new RecipeFilehandler("recipes.json"),
-                new UserFilehandler("userInfo.json"));
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
+        SuperController controller = fxmlLoader.getController();
+        controller.setFilehandlers(new RecipeFilehandler("recipes.json"),
+                new UserFilehandler("userInfo.json"));
         stage.show();
     }
 
