@@ -29,6 +29,7 @@ public class App extends Application {
         }
     }
 
+
     /**
      * Starts the application.
      * 
