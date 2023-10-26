@@ -8,16 +8,28 @@ import java.nio.file.Path;
  * This class handles file operations for recipes.
  */
 public class RecipeFilehandler extends FileUtil {
+    private Path filePath;
+
+    /**
+     * This constructor initializes the filePath.
+     * 
+     * @param file - File to write to
+     */
+    public RecipeFilehandler(String file) {
+        this.filePath = Path.of(System.getProperty("user.home") 
+        + System.getProperty("file.separator") + file);
+        createFile(this.filePath);
+    }
 
     /**
      * This method writes a recipe to the file.
      * 
      * @param recipe - Recipe object to write
      */
-    public static void writeRecipe(Path filePath, Recipe recipe) {
-        RecipeLibrary recipeLibrary = readRecipeLibrary(filePath);
+    public void writeRecipe(Recipe recipe) {
+        RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.addRecipe(recipe);
-        FileUtil.writeFile(filePath, recipeLibrary);
+        writeFile(filePath, recipeLibrary);
     }
 
     /**
@@ -25,7 +37,7 @@ public class RecipeFilehandler extends FileUtil {
      * 
      * @return - Returns a RecipeLibrary object
      */
-    public static RecipeLibrary readRecipeLibrary(Path filePath) {
+    public RecipeLibrary readRecipeLibrary() {
         RecipeLibrary recipeLibrary = null;
         recipeLibrary = readFile(filePath, recipeLibrary, RecipeLibrary.class);
         if (recipeLibrary == null) {
@@ -39,9 +51,9 @@ public class RecipeFilehandler extends FileUtil {
      * 
      * @param recipe - Recipe object to remove
      */
-    public static void removeRecipe(Path filePath, Recipe recipe) {
-        RecipeLibrary recipeLibrary = readRecipeLibrary(filePath);
+    public void removeRecipe(Recipe recipe) {
+        RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.removeRecipe(recipe);
-        FileUtil.writeFile(filePath, recipeLibrary);
+        writeFile(filePath, recipeLibrary);
     }
 }

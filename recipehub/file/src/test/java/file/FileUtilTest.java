@@ -8,7 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class FileUtilTest {
-    private Path filePath = Path.of("user.home" + System.getProperty("file.separator") + "test.txt");
+    private Path filePath = Path.of("test.txt");
+    private FileUtil fileUtil = new FileUtil();
 
     /**
      * Helper method to delete testfiles
@@ -27,10 +28,10 @@ public class FileUtilTest {
     @Test
     @DisplayName("Test createFile")
     public void testCreateFile() {
-        FileUtil.createFile(filePath);
+        fileUtil.createFile(filePath);
         Assertions.assertTrue(Files.exists(filePath));
         // Since the file already exists, this will test the rest of the if-statement
-        FileUtil.createFile(filePath);
+        fileUtil.createFile(filePath);
         deleteFile(filePath);
     }
 
@@ -40,9 +41,9 @@ public class FileUtilTest {
     @Test
     @DisplayName("Test writeFile and readFile")
     public void testWriteAndReadFile() {
-        FileUtil.createFile(filePath);
-        FileUtil.writeFile(filePath, "test");
-        Assertions.assertEquals("test", FileUtil.readFile(filePath, "", String.class));
+        fileUtil.createFile(filePath);
+        fileUtil.writeFile(filePath, "test");
+        Assertions.assertEquals("test", fileUtil.readFile(filePath, "", String.class));
         deleteFile(filePath);
     }
 }
