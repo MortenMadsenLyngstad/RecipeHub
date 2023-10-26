@@ -14,10 +14,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * This controller class is used to connect the loginscreen to the logic in core.
+ * This controller class is used to connect the loginscreen to the logic in
+ * core.
  */
 public class LoginController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
     private Label loginMessageLabel;
@@ -32,7 +32,7 @@ public class LoginController extends SuperController {
      * Logs the user in if the login information is correct.
      * 
      * @param event The ActionEvent triggered by a login button click
-     * @throws Exception if the validateLogin method throws an exception
+     * @throws Exception   if the validateLogin method throws an exception
      * @throws IOException if the SwitchController.switchToMainScreen method throws
      *                     an exception
      * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
@@ -53,15 +53,6 @@ public class LoginController extends SuperController {
      */
     public void switchToRegisterScreen(ActionEvent event) throws IOException {
         switchSceneMain(event, "RegisterScreen.fxml");
-    }
-
-    /**
-     * Changes the userFilehandler.
-     * 
-     * @param userFilehandler - the new userFilehandler
-     */
-    public void setUserFilehandler(UserFilehandler userFilehandler) {
-        this.userFilehandler = userFilehandler;
     }
 
     /**

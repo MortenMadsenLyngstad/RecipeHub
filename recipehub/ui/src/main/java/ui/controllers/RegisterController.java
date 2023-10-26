@@ -17,10 +17,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
- * This controller class is used to connect the registercreeen to the logic in core.
+ * This controller class is used to connect the registercreeen to the logic in
+ * core.
  */
 public class RegisterController extends SuperController {
-    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     @FXML
     private Label registerMessageLabel;
@@ -52,7 +52,7 @@ public class RegisterController extends SuperController {
     }
 
     /**
-     * Registers the user if the register information is correct. 
+     * Registers the user if the register information is correct.
      * 
      * @param event - The ActionEvent triggered by a register button click
      * @throws IOException if the switchSceneWithInfo method throws
@@ -66,15 +66,6 @@ public class RegisterController extends SuperController {
     }
 
     /**
-     * Changes the userFilehandler.
-     * 
-     * @param userFilehandler - the new userFilehandler
-     */
-    public void setUserFilehandler(UserFilehandler userFilehandler) {
-        this.userFilehandler = userFilehandler;
-    }
-
-    /**
      * Validates the register information.
      * 
      * @param uname The username to validate
@@ -82,7 +73,7 @@ public class RegisterController extends SuperController {
      * @return true if the register information is correct, false otherwise
      * 
      * @see Profile#isValidUsername(String)
-     * @see Profile#isValidPassword(String) 
+     * @see Profile#isValidPassword(String)
      * @see UserFilehandler#writeProfile(String, String)
      * @see UserFilehandler#readUsernamesAndPasswords()
      */
@@ -105,7 +96,7 @@ public class RegisterController extends SuperController {
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             registerMessageLabel.setText("Passwords do not match");
             return false;
-        } else { 
+        } else {
             String hashedInput = PasswordHasher.hashPassword(pword);
             currentProfile = new Profile(uname, pword);
             currentProfile.setHashedPassword(hashedInput);

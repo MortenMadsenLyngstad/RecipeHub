@@ -456,7 +456,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testValidPortions() {
-        controller.setFileHander(mockRecipeFileHandler, mockUserFileHandler);
+        controller.setFilehandlers(mockRecipeFileHandler, mockUserFileHandler);
         doNothing().when(mockRecipeFileHandler).writeRecipe(mockRecipe);
         doNothing().when(mockUserFileHandler).writeProfile(mockProfile);
         addRecipePane.setVisible(false);
