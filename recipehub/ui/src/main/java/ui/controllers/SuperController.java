@@ -3,7 +3,6 @@ package ui.controllers;
 import core.Profile;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
-
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -74,7 +73,8 @@ public class SuperController {
      *                          use
      * @param userFilehandler   - UserFilhandler for the MainscreenController to use
      */
-    public void setFilehandlers(RecipeFilehandler recipeFilehandler, UserFilehandler userFilehandler) {
+    public void setFilehandlers(RecipeFilehandler recipeFilehandler,
+            UserFilehandler userFilehandler) {
         SuperController.recipeFilehandler = recipeFilehandler;
         SuperController.userFilehandler = userFilehandler;
     }

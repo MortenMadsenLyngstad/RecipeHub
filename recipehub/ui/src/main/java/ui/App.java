@@ -1,9 +1,8 @@
 package ui;
 
-import java.io.IOException;
-
 import file.RecipeFilehandler;
 import file.UserFilehandler;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +29,6 @@ public class App extends Application {
         }
     }
 
-
     /**
      * Starts the application.
      * 
@@ -41,7 +39,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SuperController.class.getResource("UserLogin.fxml"));
         SuperController controller = fxmlLoader.getController();
-        controller.setFilehandlers(new RecipeFilehandler("recipes.json"), new UserFilehandler("userInfo.json"));
+        controller.setFilehandlers(new RecipeFilehandler("recipes.json"),
+                new UserFilehandler("userInfo.json"));
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
