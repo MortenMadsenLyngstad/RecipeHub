@@ -23,8 +23,8 @@ public class SuperController {
     protected Parent root;
     protected Profile currentProfile;
     private String fileName;
-    protected static RecipeFilehandler recipeFilehandler;
-    protected static UserFilehandler userFilehandler;
+    static RecipeFilehandler recipeFilehandler;
+    static UserFilehandler userFilehandler;
 
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {
         Parent root = FXMLLoader.load(SuperController.class.getResource(file));
