@@ -19,7 +19,6 @@ import core.Profile;
 
 public class UserFilehandlerTest {
     private UserFilehandler userFilehandler;
-    private PasswordHasher passwordHasher = new PasswordHasher();
 
     /**
      * This method is run before each test
@@ -63,7 +62,7 @@ public class UserFilehandlerTest {
     public void testWriteToFileAndReadFromFile() {
         String username = "testuser";
         String password = "Password123";
-        String hashedPassword = passwordHasher.hashPassword(password);
+        String hashedPassword = PasswordHasher.hashPassword(password);
         Profile profile = new Profile(username, password);
         profile.setHashedPassword(hashedPassword);
         userFilehandler.writeProfile(profile);
@@ -84,7 +83,7 @@ public class UserFilehandlerTest {
     public void testReadUsernamesAndPasswords() {
         String username = "testuser";
         String password = "Password123";
-        String hashedPassword = passwordHasher.hashPassword(password);
+        String hashedPassword = PasswordHasher.hashPassword(password);
         Profile profile = new Profile(username, password);
         profile.setHashedPassword(hashedPassword);
         userFilehandler.writeProfile(profile);

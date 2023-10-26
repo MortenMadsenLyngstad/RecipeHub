@@ -1,6 +1,5 @@
 package ui.controllers;
 
-
 import core.Recipe;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
@@ -26,13 +25,11 @@ import javafx.scene.text.Text;
  */
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
-    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
-    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
     private Alert alert;
 
     @FXML
     private Button addName, removeStep, backButton, removeIngredient, addIngredientButton,
-            saveRecipeButten, ingredientsNextButton, addStepNext, addDescriptionButton, 
+            saveRecipeButten, ingredientsNextButton, addStepNext, addDescriptionButton,
             addStepButton;
 
     @FXML
@@ -78,11 +75,6 @@ public class AddRecipeController extends SuperController {
         } else {
             nameError.setVisible(true);
         }
-    }
-
-    public void setFileHander(RecipeFilehandler rf, UserFilehandler uf) {
-        this.recipeFilehandler = rf;
-        this.userFilehandler = uf;
     }
 
     /**
@@ -175,7 +167,7 @@ public class AddRecipeController extends SuperController {
      *         does not
      */
     private boolean validateIngredient() {
-        if (!ingredientNameInput.getText().isEmpty() 
+        if (!ingredientNameInput.getText().isEmpty()
                 && ingredientAmount.getText().matches("^[1-9][0-9]*([.][0-9]+)?$")
                 && !ingredientPropertyMenu.getText().equals("Property")) {
             return true;
@@ -189,8 +181,8 @@ public class AddRecipeController extends SuperController {
      */
     private void showIngredientPreview() {
         String s = ingredientAndSteps.getText();
-        s += newRecipe.getIngredientAmount(ingredientNameInput.getText()) 
-                + ingredientPropertyMenu.getText() + "\t" + "\t" 
+        s += newRecipe.getIngredientAmount(ingredientNameInput.getText())
+                + ingredientPropertyMenu.getText() + "\t" + "\t"
                 + ingredientNameInput.getText() + "\n";
         ingredientAndSteps.setText(s);
     }
@@ -248,9 +240,9 @@ public class AddRecipeController extends SuperController {
     /**
      * This methos checks if there is added an ingredient.
      * - If there is added an ingredient the AddIngredient pane will dissapear and
-     *   the AddStepPane will show up.
+     * the AddStepPane will show up.
      * - If there is not added an ingredient to the recipe the user will get
-     *   feedback to add an ingredient first.
+     * feedback to add an ingredient first.
      */
     public void addedAllIngredients() {
         if (newRecipe.getIngredients().isEmpty()) {
@@ -265,7 +257,8 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method removes the last added ingredient from the recipe and the preview.
+     * This method removes the last added ingredient from the recipe and the
+     * preview.
      */
     public void removeIngredient() {
         List<String> ingredients = new ArrayList<>(newRecipe.getIngredients());
@@ -320,7 +313,7 @@ public class AddRecipeController extends SuperController {
      * @return true if added step meets the requierment and false if it does not
      */
     private boolean validateStep() {
-        if (!addStepText.getText().isEmpty() 
+        if (!addStepText.getText().isEmpty()
                 && addStepText.getText().matches("[a-zA-Z ,.0-9!?]+")) {
             return true;
         } else {
@@ -366,7 +359,7 @@ public class AddRecipeController extends SuperController {
         newRecipe.removeStep(step);
 
         String[] s = ingredientAndSteps.getText().split("\n");
-        
+
         if (s.length >= 2) {
             StringBuffer newIngredientAndStepsBuffer = new StringBuffer();
             for (int i = 0; i < s.length - 1; i++) {
@@ -461,7 +454,6 @@ public class AddRecipeController extends SuperController {
         return this.alert;
     }
 
-
     /**
      * This method shows a pop up window where the user can choose to go back
      * to the mainscreen without saving the recipe or keep working on the recipe.
@@ -474,7 +466,7 @@ public class AddRecipeController extends SuperController {
         alert.setTitle("Your recipe is not saved!");
         alert.setHeaderText("Delete on-going recipe");
         alert.setContentText(
-                    "If you go back now your recipe will not be saved. Do you want to go back?");
+                "If you go back now your recipe will not be saved. Do you want to go back?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {

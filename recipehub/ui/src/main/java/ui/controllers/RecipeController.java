@@ -3,8 +3,6 @@ package ui.controllers;
 import core.Profile;
 import core.Recipe;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import file.RecipeFilehandler;
-import file.UserFilehandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +22,6 @@ import javafx.scene.input.MouseEvent;
  * Controller for displaying the information of a recipe on a RecipeSreen.
  */
 public class RecipeController extends SuperController {
-    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
-    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
     private MainscreenController mainscreenController = new MainscreenController();
     private Recipe recipe;
     private Boolean flag = false;
@@ -248,18 +244,5 @@ public class RecipeController extends SuperController {
         }
         this.alert = null;
         return flag;
-    }
-
-    /**
-     * Sets the filehandlers for the controller.
-     * 
-     * @param mockRecipeFilehandler The mock RecipeFilehandler to be set
-     * @param mockUserFilehandler   The mock UserFilehandler to be set
-     */
-    public void setFilehandlers(RecipeFilehandler mockRecipeFilehandler,
-            UserFilehandler mockUserFilehandler) {
-        this.recipeFilehandler = mockRecipeFilehandler;
-        this.userFilehandler = mockUserFilehandler;
-        mainscreenController.setFilehandlers(recipeFilehandler, userFilehandler);
     }
 }
