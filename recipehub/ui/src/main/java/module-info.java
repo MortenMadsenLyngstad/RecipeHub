@@ -1,4 +1,4 @@
-module ui.controllers {
+module ui {
     requires core;
     requires file;
     requires java.net.http;
@@ -6,7 +6,7 @@ module ui.controllers {
     requires javafx.fxml;
     requires javafx.base;
     requires de.jensd.fx.glyphs.fontawesome;
+    requires com.google.gson;
 
-    opens ui.controllers to javafx.fxml, javafx.graphics;
     opens ui to javafx.fxml, javafx.graphics;
 }
