@@ -76,15 +76,4 @@ public class RecipeFilehandlerTest {
         Assertions.assertEquals(0, recipeLibrary.getSize(), "The recipe should be removed.");
         deleteFile();
     }
-
-    @Test
-    @DisplayName("Test if adding a RecipeLibrary works")
-    public void testWriteRecipeLibrary() {
-        RecipeLibrary recipeLibrary = new RecipeLibrary();
-        recipeLibrary.addRecipe(this.recipe);
-        recipeFilehandler.writeRecipeLibrary(recipeLibrary);
-        RecipeLibrary loadedRecipeLibrary = recipeFilehandler.readRecipeLibrary();
-        Assertions.assertEquals(1, loadedRecipeLibrary.getSize(), "The recipe should be added.");
-        deleteFile();
-    }
 }

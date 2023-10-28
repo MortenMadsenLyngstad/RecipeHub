@@ -33,14 +33,6 @@ public class RecipeFilehandler {
     }
 
     /**
-     * This method writes a RecipeLibrary to the file.
-     * @param recipeLibrary - RecipeLibrary object to write
-     */
-    public void writeRecipeLibrary(RecipeLibrary recipeLibrary) {
-        FileUtil.writeFile(filePath, recipeLibrary);
-    }
-
-    /**
      * This method reads recipes from the file.
      * 
      * @return - Returns a RecipeLibrary object
