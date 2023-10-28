@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,17 +31,12 @@ public class RecipeHubModelController {
     @Autowired
     public RecipeHubModelController(RecipeHubModelService recipeHubModelService) {
         this.recipeHubModelService = recipeHubModelService;
-    } 
+    }
 
     @GetMapping
     public RecipeHubModel getRecipeHubModel() {
         return recipeHubModelService.getRecipeHubModel();
     }
-
-    /* private void autoSaveRecipeHubModel() {
-        recipeHubModelService.autoSaveRecipeHubModel();
-    } */
-
 
     @GetMapping(path = "/recipelibrary")
     public RecipeLibrary getRecipeLibrary() {
@@ -62,7 +58,6 @@ public class RecipeHubModelController {
             throw new IllegalArgumentException("The recipe is already added");
         }
         recipeHubModelService.getRecipeHubModel().addRecipe(recipe);
-        //autoSaveRecipeHubModel();
         return true;
     }
 
@@ -72,7 +67,6 @@ public class RecipeHubModelController {
             throw new IllegalArgumentException("The recipe does not exist");
         }
         recipeHubModelService.getRecipeHubModel().removeRecipe(recipe);
-        //autoSaveRecipeHubModel();
         return true;
     }
 
@@ -93,10 +87,18 @@ public class RecipeHubModelController {
     @PostMapping(path = "/profiles")
     public boolean addProfile(@RequestBody Profile profile) {
         if (checkProfile(profile) == true) {
-            throw new IllegalArgumentException("The recipe is already added");
+            throw new IllegalArgumentException("The profile is already added");
         }
         recipeHubModelService.getRecipeHubModel().addProfile(profile);
-        //autoSaveRecipeHubModel();
+        return true;
+    }
+
+    @PutMapping(path = "/profiles")
+    public boolean putProfile(@RequestBody Profile profile) {
+        if (checkProfile(profile) == false) {
+            throw new IllegalArgumentException("The profile does not exist");
+        }
+        recipeHubModelService.getRecipeHubModel().putProfile(profile);
         return true;
     }
 }

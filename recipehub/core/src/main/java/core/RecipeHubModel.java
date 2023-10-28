@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeHubModel {
-    
+
     private RecipeLibrary recipeLibrary;
     private List<Profile> profiles;
 
@@ -20,9 +20,9 @@ public class RecipeHubModel {
 
     public Recipe getRecipe(String name) {
         return recipeLibrary.getRecipes().stream()
-        .filter(r -> r.getName().equals(name))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("No recipe with this name"));
+                .filter(r -> r.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No recipe with this name"));
     }
 
     public void removeRecipe(Recipe recipe) {
@@ -43,9 +43,9 @@ public class RecipeHubModel {
 
     public Profile getProfile(String username) {
         return profiles.stream()
-        .filter(p -> p.getUsername().equals(username))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("No profile with this name"));
+                .filter(p -> p.getUsername().equals(username))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No profile with this name"));
     }
 
     public void addProfile(Profile profile) {
@@ -55,6 +55,21 @@ public class RecipeHubModel {
         profiles.add(profile);
     }
 
+    public Profile putProfile(Profile profile) {
+        int index = profiles.stream()
+                .filter(p -> p.getUsername().equals(profile.getUsername()))
+                .findFirst()
+                .map(p -> profiles.indexOf(p)).orElse(-1);
+        if (index >= 0) {
+            Profile oldProfile = profiles.get(index);
+            profiles.set(index, profile);
+            return oldProfile;
+        } else {
+            profiles.add(profile);
+            return null;
+        }
+    }
+
     public boolean containsProfile(Profile profile) {
         return profiles.stream().anyMatch(p -> p.getUsername().equals(profile.getUsername()));
     }
@@ -62,7 +77,7 @@ public class RecipeHubModel {
     public List<Profile> getProfiles() {
         return new ArrayList<>(profiles);
     }
-    
+
     @Override
     public String toString() {
         return "RecipeHubModel [recipeLibrary=" + recipeLibrary + ", profiles=" + profiles + "]";
