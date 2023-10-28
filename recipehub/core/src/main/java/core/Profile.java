@@ -27,6 +27,7 @@ public class Profile {
         this.username = username;
         isValidPassword(password);
         this.password = password;
+        this.hashedPassword = PasswordHasher.hashPassword(password);
         recipeLibrary = new RecipeLibrary();
         favorites = new RecipeLibrary();
     }
