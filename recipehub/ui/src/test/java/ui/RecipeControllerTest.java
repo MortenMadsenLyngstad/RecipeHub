@@ -1,4 +1,4 @@
-package ui.controllers;
+package ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -34,7 +34,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import ui.App;
 
 public class RecipeControllerTest extends ApplicationTest {
 
