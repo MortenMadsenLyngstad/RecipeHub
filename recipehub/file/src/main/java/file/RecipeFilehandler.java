@@ -37,7 +37,7 @@ public class RecipeFilehandler {
      * @param recipeLibrary - RecipeLibrary object to write
      */
     public void writeRecipeLibrary(RecipeLibrary recipeLibrary) {
-        writeFile(filePath, recipeLibrary);
+        FileUtil.writeFile(filePath, recipeLibrary);
     }
 
     /**
