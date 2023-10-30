@@ -5,8 +5,6 @@ import core.Recipe;
 import core.RecipeLibrary;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import file.RecipeFilehandler;
-import file.UserFilehandler;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -60,8 +58,6 @@ public class MainscreenController extends SuperController {
 
     private RecipeLibrary allRecipes;
     private RecipeLibrary currentLibrary;
-    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
-    private UserFilehandler userFilehandler = new UserFilehandler("userinfo.json");
 
     /**
      * This method will load the gridPane with all recipes when the All
@@ -377,19 +373,4 @@ public class MainscreenController extends SuperController {
         allRecipes = recipeFilehandler.readRecipeLibrary();
         loadAllRecipes();
     }
-
-    /**
-     * This method will set make new filehandlers with new filenames.
-     * The method is implemented so that we can run proper tests on the controller
-     * 
-     * @param recipeFilehandler - RecipeFilhandler for the MainscreenController to
-     *                          use
-     * @param userFilehandler   - UserFilhandler for the MainscreenController to use
-     */
-    public void setFilehandlers(RecipeFilehandler recipeFilehandler,
-            UserFilehandler userFilehandler) {
-        this.recipeFilehandler = recipeFilehandler;
-        this.userFilehandler = userFilehandler;
-    }
-
 }

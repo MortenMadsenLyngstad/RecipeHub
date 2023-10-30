@@ -7,7 +7,7 @@ import java.nio.file.Path;
 /**
  * This class handles file operations for recipes.
  */
-public class RecipeFilehandler extends FileUtil {
+public class RecipeFilehandler {
     private Path filePath;
 
     /**
@@ -16,9 +16,9 @@ public class RecipeFilehandler extends FileUtil {
      * @param file - File to write to
      */
     public RecipeFilehandler(String file) {
-        this.filePath = Path.of(System.getProperty("user.home") 
-        + System.getProperty("file.separator") + file);
-        createFile(this.filePath);
+        this.filePath = Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + file);
+        FileUtil.createFile(this.filePath);
     }
 
     /**
@@ -35,7 +35,7 @@ public class RecipeFilehandler extends FileUtil {
             }
             
         recipeLibrary.addRecipe(recipe);
-        writeFile(filePath, recipeLibrary);
+        FileUtil.writeFile(filePath, recipeLibrary);
     }
 
     /**
@@ -45,7 +45,7 @@ public class RecipeFilehandler extends FileUtil {
      */
     public RecipeLibrary readRecipeLibrary() {
         RecipeLibrary recipeLibrary = null;
-        recipeLibrary = readFile(filePath, recipeLibrary, RecipeLibrary.class);
+        recipeLibrary = FileUtil.readFile(filePath, recipeLibrary, RecipeLibrary.class);
         if (recipeLibrary == null) {
             return new RecipeLibrary();
         }
@@ -60,6 +60,6 @@ public class RecipeFilehandler extends FileUtil {
     public void removeRecipe(Recipe recipe) {
         RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.removeRecipe(recipe);
-        writeFile(filePath, recipeLibrary);
+        FileUtil.writeFile(filePath, recipeLibrary);
     }
 }

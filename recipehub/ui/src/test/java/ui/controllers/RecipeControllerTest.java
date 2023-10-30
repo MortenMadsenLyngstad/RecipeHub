@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.controlsfx.control.Rating;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ui.App;
 
 public class RecipeControllerTest extends ApplicationTest {
 
@@ -63,6 +65,15 @@ public class RecipeControllerTest extends ApplicationTest {
     private Profile mockProfile = mock(Profile.class);
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
+
+    /**
+     * This method will set up the application for headless mode (tests will run without GUI)
+     * @see App#supportHeadless()
+     */
+    @BeforeAll
+    public static void setupHeadless() {
+        App.supportHeadless();
+    }
 
     /**
      * This method will start the application

@@ -18,7 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import ui.App;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -30,7 +32,6 @@ import core.RecipeLibrary;
 public class LoginControllerTest extends ApplicationTest {
 
     private LoginController controller;
-    private PasswordHasher passwordHasher = new PasswordHasher();
     private Parent root;
 
     private Button loginButton;
@@ -40,6 +41,11 @@ public class LoginControllerTest extends ApplicationTest {
     private Hashtable<String, String> userInfo = new Hashtable<>();
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
+
+    @BeforeAll
+    public static void setupHeadless() {
+        App.supportHeadless();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -80,7 +86,7 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateLoginWithValidCredentials() throws Exception {
-        userInfo.put("testuser", passwordHasher.hashPassword("Password123"));
+        userInfo.put("testuser", PasswordHasher.hashPassword("Password123"));
         when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
         when(mockProfile.getUsername()).thenReturn("testuser");
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
