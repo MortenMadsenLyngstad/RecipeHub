@@ -263,7 +263,6 @@ public class Recipe {
     /**
      * Adds a rarings to the recipe.
      * 
-     * @param username The username of the user who rated the recipe
      * @param rating  The rating given by the user
      */
     public void addReview(Review rating) {
@@ -288,7 +287,8 @@ public class Recipe {
      * @return The average rating of the recipe
      */
     public double getAverageRating() {
-        String number = String.format("%.2f", reviewList.stream().mapToDouble(r -> r.getRating()).average().orElse(0.0));
+        String number = String.format("%.2f", reviewList.stream()
+                .mapToDouble(r -> r.getRating()).average().orElse(0.0));
         StringBuilder sb = new StringBuilder();
         sb.append(number.charAt(0));
         sb.append('.');
