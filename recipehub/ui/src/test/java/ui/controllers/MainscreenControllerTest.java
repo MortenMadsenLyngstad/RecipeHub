@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.controlsfx.control.Rating;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -20,6 +21,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
+import core.Review;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
@@ -77,6 +79,7 @@ public class MainscreenControllerTest extends ApplicationTest {
         Profile profile2 = new Profile("Username2", "Password2");
 
         Recipe recipe = new Recipe("Pizza", 2, profile1);
+        recipe.addReview(new Review(4, null, profile2.getUsername()));
         profile1.addFavorite(recipe);
 
         recipes.addRecipe(recipe);
@@ -138,7 +141,9 @@ public class MainscreenControllerTest extends ApplicationTest {
         assertFalse(vBox2.getChildren().isEmpty(), "The second VBox should not be empty");
         assertTrue(vBox2.getChildren().get(0) instanceof Button, "There should be a Button in the second VBox");
 
-        assertTrue(vBox3.getChildren().isEmpty(), "The third VBox should be empty");
+        assertFalse(vBox3.getChildren().isEmpty(), "The third VBox should not be empty");
+        assertTrue(vBox3.getChildren().get(0) instanceof Rating,
+                "There should be a Rating in the third VBox");
 
         // Checking that all recipes are showing at initial load
         List<String> recipeNames = getRecipeNames();

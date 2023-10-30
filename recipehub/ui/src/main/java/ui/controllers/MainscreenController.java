@@ -25,6 +25,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -32,7 +34,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.controlsfx.control.Rating;
 
 /**
  * This controller class is used to connect the mainscreeen to the logic in
@@ -188,12 +192,21 @@ public class MainscreenController extends SuperController {
         // Maked favorites/heart-button
         FontAwesomeIconView heart = new FontAwesomeIconView(FontAwesomeIcon.HEART);
         heart.setStroke(Color.RED);
+        heart.setSize("2em");
         setHeart(heart, recipe, currentProfile);
 
+
+        // Makes rating star
+        Rating star = new Rating();
+        star.setRating(1);
+        star.setMax(1);
+        star.setEffect(new Blend(BlendMode.COLOR_BURN));
+        star.setDisable(true);
+        
         // Makes bottom part of SplitPane
         HBox hbox2 = new HBox();
         hbox2.setMinHeight(50);
-
+        
         VBox subBox1 = new VBox();
         VBox subBox2 = new VBox();
         VBox subBox3 = new VBox();
@@ -206,9 +219,12 @@ public class MainscreenController extends SuperController {
         subBox1.setMinWidth(25);
         subBox2.setFillWidth(true);
         subBox3.setMinWidth(25);
-
+        
+        Text ratingText = new Text(String.valueOf(recipe.getAverageRating()));
         subBox1.getChildren().add(heart);
         subBox2.getChildren().add(btn);
+        subBox3.getChildren().add(star);
+        subBox3.getChildren().add(ratingText);
 
         hbox2.getChildren().addAll(subBox1, subBox2, subBox3);
 
