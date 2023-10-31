@@ -70,13 +70,4 @@ public class SuperController {
     public void setRecipeHubModelAccess(RecipeHubModelAccess recipeHubModelAccess) {
         SuperController.recipeHubModelAccess = recipeHubModelAccess;
     }
-
-    public void setFilehandlers(RecipeFilehandler mockRecipeFileHandler, UserFilehandler mockUserFileHandler) {
-        SuperController.recipeFilehandler = mockRecipeFileHandler;
-        SuperController.userFilehandler = mockUserFileHandler;
-    }
-
-    public void setUserFilehandler(UserFilehandler mockUserFileHandler) {
-        SuperController.userFilehandler = mockUserFileHandler;
-    }
 }

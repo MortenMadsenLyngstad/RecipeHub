@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import file.RecipeFilehandler;
 import file.UserFilehandler;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -62,7 +63,10 @@ public class LoginControllerTest extends ApplicationTest {
         loginMessageLabel = lookup("#loginMessageLabel").query();
         loginButton = lookup("#loginButton").query();
         controller.currentProfile = mockProfile;
-        controller.setUserFilehandler(mockUserFileHandler);
+        RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
+        when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(new RecipeLibrary());
+        controller.setRecipeHubModelAccess(
+                new DirectRecipeHubModelAccess(mockUserFileHandler, mockRecipeFilehandler));
         registerLink = findHyperlink(root);
     }
 
@@ -70,7 +74,7 @@ public class LoginControllerTest extends ApplicationTest {
         if (parent instanceof Hyperlink) {
             return (Hyperlink) parent;
         }
-        
+
         for (Node child : parent.getChildrenUnmodifiable()) {
             if (child instanceof Parent) {
                 Hyperlink hyperlink = findHyperlink((Parent) child);
@@ -79,7 +83,7 @@ public class LoginControllerTest extends ApplicationTest {
                 }
             }
         }
-        
+
         return null;
     }
 

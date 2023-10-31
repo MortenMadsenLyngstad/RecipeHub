@@ -55,7 +55,9 @@ public class RecipeControllerTest extends ApplicationTest {
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
-     * This method will set up the application for headless mode (tests will run without GUI)
+     * This method will set up the application for headless mode (tests will run
+     * without GUI)
+     * 
      * @see App#supportHeadless()
      */
     @BeforeAll
@@ -76,7 +78,9 @@ public class RecipeControllerTest extends ApplicationTest {
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
         setUp();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.show();
     }
 
@@ -104,8 +108,9 @@ public class RecipeControllerTest extends ApplicationTest {
         doNothing().when(mockUserFilehandler).writeProfile(profile1);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
 
-        // Makes it so that the controller uses testfiles instead of the main ones
-        controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
+        // Makes it so that we use mocks instead of real filehandlers
+        controller.setRecipeHubModelAccess(
+                new DirectRecipeHubModelAccess(mockUserFilehandler, mockRecipeFilehandler));
 
         controller.setRecipe(recipe);
         controller.setProfile(profile1);
@@ -131,7 +136,6 @@ public class RecipeControllerTest extends ApplicationTest {
         plusButton = lookup("#plusButton").query();
         minusButton = lookup("#minusButton").query();
         portionsField = lookup("#portionsField").query();
-        controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         controller.currentProfile = profiles.get(0);
     }
 
@@ -231,7 +235,6 @@ public class RecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testDeleteRecipe() {
-        controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockProfile.getUsername()).thenReturn("Username");
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
@@ -248,7 +251,6 @@ public class RecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testDeleteRecipe2() {
-        controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
         clickOn(deleteButton);
@@ -263,7 +265,6 @@ public class RecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testDeleteRecipeCancel() {
-        controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockProfile.getUsername()).thenReturn("Username");

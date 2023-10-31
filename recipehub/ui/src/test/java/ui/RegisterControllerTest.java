@@ -23,6 +23,8 @@ import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import core.Profile;
+import core.RecipeLibrary;
+import file.RecipeFilehandler;
 import file.UserFilehandler;
 
 public class RegisterControllerTest extends ApplicationTest {
@@ -59,7 +61,10 @@ public class RegisterControllerTest extends ApplicationTest {
         registerMessageLabel = lookup("#registerMessageLabel").query();
         loginLink = findHyperlink(root);
         registerButton = lookup("#registerButton").query();
-        controller.setUserFilehandler(mockUserFileHandler);
+        RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
+        when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(new RecipeLibrary());
+        controller.setRecipeHubModelAccess(
+                new DirectRecipeHubModelAccess(mockUserFileHandler, mockRecipeFilehandler));
         controller.currentProfile = mockProfile;
     }
 

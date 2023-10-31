@@ -115,8 +115,12 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
         fixMockMenuItems();
 
+        when(mockRecipeFileHandler.readRecipeLibrary()).thenReturn(new RecipeLibrary());
+
         controller.currentProfile = mockProfile;
         controller.currentProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
+        controller.setRecipeHubModelAccess(
+                new DirectRecipeHubModelAccess(mockUserFileHandler, mockRecipeFileHandler));
     }
 
     /**
@@ -462,7 +466,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testValidPortions() {
-        controller.setFilehandlers(mockRecipeFileHandler, mockUserFileHandler);
         doNothing().when(mockRecipeFileHandler).writeRecipe(mockRecipe);
         doNothing().when(mockUserFileHandler).writeProfile(mockProfile);
         addRecipePane.setVisible(false);
