@@ -61,7 +61,8 @@ public class RegisterController extends SuperController {
      */
     public void register(ActionEvent event) throws IOException {
         if (validateRegister(usernameField.getText(), passwordField.getText(), userFilehandler)) {
-            switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
+            setProfile(currentProfile);
+            switchSceneWithInfo(event, "Mainscreen.fxml");
         }
     }
 

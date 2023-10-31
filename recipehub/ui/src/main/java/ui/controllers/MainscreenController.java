@@ -179,7 +179,7 @@ public class MainscreenController extends SuperController {
         btn.getStyleClass().add("green_button");
         btn.setOnAction(event -> {
             try {
-                switchSceneRecipe(event, recipe, currentProfile);
+                switchSceneRecipe(event, recipe);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -288,7 +288,7 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void addRecipe(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "addRecipe.fxml", currentProfile);
+        switchSceneWithInfo(event, "addRecipe.fxml");
     }
 
     /**
@@ -300,7 +300,8 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void logout(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "UserLogin.fxml", null);
+        super.setProfile(null);
+        switchSceneWithInfo(event, "UserLogin.fxml");
     }
 
     /**
@@ -312,14 +313,13 @@ public class MainscreenController extends SuperController {
      * @param profile - the current profile
      * @throws IOException if there are problems with the filehandling
      */
-    protected void switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile)
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe)
             throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
         root = loader.load();
 
         RecipeController controller = loader.getController();
         controller.setRecipe(recipe);
-        controller.setProfile(profile);
         controller.populate();
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -363,13 +363,13 @@ public class MainscreenController extends SuperController {
      * Custom setProfile-method.
      * This method will set currentProfile to the given profile, and then load all
      * recipes
-     * Custom method needed because of favorites functionality
+     * Custom method needed because of favorites functionality and testing
      * 
      * @param profile - The profile which is logged in
      */
     @Override
     protected void setProfile(Profile profile) {
-        currentProfile = profile;
+        super.setProfile(profile);
         allRecipes = recipeFilehandler.readRecipeLibrary();
         loadAllRecipes();
     }

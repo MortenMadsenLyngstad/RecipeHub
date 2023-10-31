@@ -116,8 +116,8 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
         fixMockMenuItems();
 
-        controller.currentProfile = mockProfile;
-        controller.currentProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
+        controller.setProfile(mockProfile);
+        mockProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
     }
 
     /**

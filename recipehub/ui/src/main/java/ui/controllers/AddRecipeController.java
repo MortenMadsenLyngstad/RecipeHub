@@ -444,7 +444,7 @@ public class AddRecipeController extends SuperController {
      */
     public void backButtonClick(ActionEvent event) throws IOException {
         if (newRecipe == null || newRecipe.isSaved()) {
-            switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
+            switchSceneWithInfo(event, "Mainscreen.fxml");
         } else {
             showAlert(event);
         }
@@ -472,7 +472,7 @@ public class AddRecipeController extends SuperController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             currentProfile.removeRecipe(newRecipe);
             try {
-                switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
+                switchSceneWithInfo(event, "Mainscreen.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
