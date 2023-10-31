@@ -67,7 +67,9 @@ public class RecipeControllerTest extends ApplicationTest {
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
-     * This method will set up the application for headless mode (tests will run without GUI)
+     * This method will set up the application for headless mode (tests will run
+     * without GUI)
+     * 
      * @see App#supportHeadless()
      */
     @BeforeAll
@@ -148,7 +150,7 @@ public class RecipeControllerTest extends ApplicationTest {
         numberOfRaters = lookup("#numberOfRaters").query();
         numberOfcomments = lookup("#numberOfComments").query();
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
-        controller.currentProfile = profiles.get(0);
+        controller.setProfile(profiles.get(0));
     }
 
     /**

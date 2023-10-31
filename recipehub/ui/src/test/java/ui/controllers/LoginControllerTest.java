@@ -62,7 +62,7 @@ public class LoginControllerTest extends ApplicationTest {
     public void setUp() {
         loginMessageLabel = lookup("#loginMessageLabel").query();
         loginButton = lookup("#loginButton").query();
-        controller.currentProfile = mockProfile;
+        controller.setProfile(mockProfile);
         controller.setUserFilehandler(mockUserFileHandler);
         registerLink = findHyperlink(root);
     }
@@ -71,7 +71,7 @@ public class LoginControllerTest extends ApplicationTest {
         if (parent instanceof Hyperlink) {
             return (Hyperlink) parent;
         }
-        
+
         for (Node child : parent.getChildrenUnmodifiable()) {
             if (child instanceof Parent) {
                 Hyperlink hyperlink = findHyperlink((Parent) child);
@@ -80,7 +80,7 @@ public class LoginControllerTest extends ApplicationTest {
                 }
             }
         }
-        
+
         return null;
     }
 
