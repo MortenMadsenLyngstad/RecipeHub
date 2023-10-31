@@ -105,6 +105,21 @@
                 </dependency>
             </dependencies>
         </profile>
+        <profile>
+            <id>remoteapp</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openjfx</groupId>
+                        <artifactId>javafx-maven-plugin</artifactId>
+                        <version>0.0.6</version>
+                        <configuration>                    
+                            <mainClass>ui/ui.RemoteApp</mainClass>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
