@@ -248,7 +248,7 @@ public class MainscreenController extends SuperController {
             if (heart.getFill().equals(Color.RED)) {
                 heart.setFill(Color.WHITE);
                 currentProfile.removeFavorite(recipe);
-                recipeHubModelAccess.writeProfile(currentProfile);
+                recipeHubModelAccess.saveProfile(currentProfile);
                 if (this.titleLabel != null) {
                     if (this.titleLabel.getText().equals("Favorites")) {
                         load();
@@ -258,7 +258,7 @@ public class MainscreenController extends SuperController {
             } else {
                 heart.setFill(Color.RED);
                 currentProfile.addFavorite(recipe);
-                recipeHubModelAccess.writeProfile(currentProfile);
+                recipeHubModelAccess.saveProfile(currentProfile);
             }
         });
     }

@@ -1,10 +1,7 @@
 package ui;
 
-import file.RecipeFilehandler;
-import file.UserFilehandler;
 import java.io.IOException;
 
-import core.RecipeHubModel;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -44,14 +41,7 @@ public class App extends Application {
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         SuperController controller = fxmlLoader.getController();
-        
-        RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
-        UserFilehandler userFilehandler = new UserFilehandler("userInfo.json");
-        controller.setRecipeHubModelAccess(
-                new DirectRecipeHubModelAccess(
-                        new RecipeHubModel(
-                                recipeFilehandler.readRecipeLibrary(),
-                                userFilehandler.readProfiles())));
+        controller.setRecipeHubModelAccess(new DirectRecipeHubModelAccess());
         stage.show();
     }
 

@@ -237,7 +237,7 @@ public class RecipeController extends SuperController {
                     profiles.add(p);
                 }
             }
-            recipeHubModelAccess.writeProfiles(profiles);
+            recipeHubModelAccess.saveProfiles(profiles);
             flag = true;
         } else {
             flag = false;

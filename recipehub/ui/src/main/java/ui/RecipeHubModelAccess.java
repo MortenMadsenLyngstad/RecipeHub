@@ -8,29 +8,18 @@ import core.Recipe;
 import core.RecipeLibrary;
 
 public interface RecipeHubModelAccess {
-    Recipe getRecipe(String name);
 
     RecipeLibrary getRecipeLibrary();
 
     void removeRecipe(Recipe recipe);
 
-    void addRecipe(Recipe recipe);
+    void saveRecipe(Recipe recipe);
 
-    boolean containsRecipe(Recipe recipe);
-
-    Profile getProfile(String username);
-
-    void addProfile(Profile profile);
-
-    boolean containsProfile(Profile profile);
+    void saveProfile(Profile profile);
 
     List<Profile> getProfiles();
 
     Hashtable<String, String> getUserInfo();
 
-    void writeProfiles(List<Profile> profiles);
-
-    void writeProfile(Profile profile);
-
-    void writeRecipe(Recipe recipe);
+    void saveProfiles(List<Profile> profiles);
 }

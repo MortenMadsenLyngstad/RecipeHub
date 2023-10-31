@@ -10,19 +10,24 @@ import core.RecipeLibrary;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 
-public class DirectRecipeHubModelAccess implements RecipeHubModelAccess{
+public class DirectRecipeHubModelAccess implements RecipeHubModelAccess {
 
     private RecipeHubModel recipeHubModel;
-    private UserFilehandler userFilehandler = new UserFilehandler("userInfo.json");
-    private RecipeFilehandler recipeFilehandler = new RecipeFilehandler("recipes.json");
+    private UserFilehandler userFilehandler;
+    private RecipeFilehandler recipeFilehandler;
 
-    public DirectRecipeHubModelAccess(RecipeHubModel recipeHubModel) {
-        this.recipeHubModel = recipeHubModel;
+    public DirectRecipeHubModelAccess() {
+        userFilehandler = new UserFilehandler("userInfo.json");
+        recipeFilehandler = new RecipeFilehandler("recipes.json");
+        recipeHubModel = new RecipeHubModel(
+                recipeFilehandler.readRecipeLibrary(), userFilehandler.readProfiles());
     }
 
-    @Override
-    public Recipe getRecipe(String name) {
-        return recipeHubModel.getRecipe(name);
+    public DirectRecipeHubModelAccess(UserFilehandler userFilehandler, RecipeFilehandler recipeFilehandler) {
+        this.userFilehandler = userFilehandler;
+        this.recipeFilehandler = recipeFilehandler;
+        recipeHubModel = new RecipeHubModel(
+                recipeFilehandler.readRecipeLibrary(), userFilehandler.readProfiles());
     }
 
     @Override
@@ -38,28 +43,13 @@ public class DirectRecipeHubModelAccess implements RecipeHubModelAccess{
     }
 
     @Override
-    public void addRecipe(Recipe recipe) {
+    public void saveRecipe(Recipe recipe) {
         recipeHubModel.addRecipe(recipe);
     }
 
     @Override
-    public boolean containsRecipe(Recipe recipe) {
-        return recipeHubModel.containsRecipe(recipe);
-    }
-
-    @Override
-    public Profile getProfile(String username) {
-        return recipeHubModel.getProfile(username);
-    }
-
-    @Override
-    public void addProfile(Profile profile) {
-        recipeHubModel.addProfile(profile);
-    }
-
-    @Override
-    public boolean containsProfile(Profile profile) {
-        return recipeHubModel.containsProfile(profile);
+    public void saveProfile(Profile profile) {
+        recipeHubModel.putProfile(profile);
     }
 
     @Override
@@ -67,25 +57,13 @@ public class DirectRecipeHubModelAccess implements RecipeHubModelAccess{
         return recipeHubModel.getProfiles();
     }
 
-
     @Override
     public Hashtable<String, String> getUserInfo() {
         return userFilehandler.readUsernamesAndPasswords();
     }
 
     @Override
-    public void writeProfiles(List<Profile> profiles) {
+    public void saveProfiles(List<Profile> profiles) {
         userFilehandler.writeAllProfiles(profiles);
-    }
-
-    @Override
-    public void writeProfile(Profile profile) {
-        userFilehandler.writeProfile(profile);
-    }
-
-    @Override
-    public void writeRecipe(Recipe recipe) {
-        recipeFilehandler.writeRecipe(recipe);
-        addRecipe(recipe);
     }
 }

@@ -3,13 +3,10 @@ package ui;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -40,7 +37,6 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
         this.endpointBaseUri = endpointBaseUri;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
         this.recipeHubModel = getRecipeHubModel();
-        
     }
 
     private RecipeHubModel getRecipeHubModel() {
@@ -58,32 +54,6 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
             }
         }
         return recipeHubModel;
-    }
-
-    @Override
-    public Recipe getRecipe(String name) {
-        System.out.println("getRecipe(String name) :" + recipeUri(name));
-
-        Recipe oldRecipe = this.recipeHubModel.getRecipe(name);
-        if (oldRecipe == null || (!(oldRecipe instanceof Recipe))) {
-            HttpRequest request = HttpRequest.newBuilder(recipeUri(name))
-                    .header(ACCEPT_HEADER, APPLICATION_JSON)
-                    .GET()
-                    .build();
-            try {
-                final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                        HttpResponse.BodyHandlers.ofString());
-                String responseBody = response.body();
-
-                System.out.println("getRecipe(" + name + ") response:" + responseBody);
-
-                Recipe recipe = gson.fromJson(responseBody, Recipe.class);
-                this.recipeHubModel.addRecipe(recipe);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return oldRecipe;
     }
 
     @Override
@@ -111,9 +81,11 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
     @Override
     public void removeRecipe(Recipe recipe) {
         try {
+            String json = gson.toJson(recipe);
             HttpRequest request = HttpRequest.newBuilder(recipeLibraryUri())
                     .header(ACCEPT_HEADER, APPLICATION_JSON)
-                    .DELETE()
+                    .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+                    .method("DELETE", BodyPublishers.ofString(json))
                     .build();
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -121,7 +93,7 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
             System.out.println("removeRecipe(Recipe recipe) response:" + responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
             if (success) {
-                recipeHubModel.removeRecipe(recipeHubModel.getRecipe(recipe.getName()));
+                recipeHubModel.removeRecipe(recipe);
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -129,7 +101,7 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
     }
 
     @Override
-    public void addRecipe(Recipe recipe) {
+    public void saveRecipe(Recipe recipe) {
         try {
             String json = gson.toJson(recipe);
             HttpRequest request = HttpRequest.newBuilder(recipeLibraryUri())
@@ -152,38 +124,7 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
     }
 
     @Override
-    public boolean containsRecipe(Recipe recipe) {
-        return getRecipeHubModel().containsRecipe(recipe);
-    }
-
-    @Override
-    public Profile getProfile(String username) {
-        System.out.println("getProfile(String username) :" + profileUri(username));
-
-        Profile oldProfile = this.recipeHubModel.getProfile(username);
-        if (oldProfile == null || (!(oldProfile instanceof Profile))) {
-            HttpRequest request = HttpRequest.newBuilder(profileUri(username))
-                    .header(ACCEPT_HEADER, APPLICATION_JSON)
-                    .GET()
-                    .build();
-            try {
-                final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                        HttpResponse.BodyHandlers.ofString());
-                String responseBody = response.body();
-
-                System.out.println("getProfile(" + username + ") response:" + responseBody);
-
-                Profile profile = gson.fromJson(responseBody, Profile.class);
-                this.recipeHubModel.addProfile(profile);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return oldProfile;
-    }
-
-    @Override
-    public void addProfile(Profile profile) {
+    public void saveProfile(Profile profile) {
         System.out.println("addProfile(Profile profile) :" + profilesUri());
         try {
             String json = gson.toJson(profile);
@@ -195,6 +136,7 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
+            System.out.println(responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
             if (success) {
                 recipeHubModel.putProfile(profile);
@@ -229,25 +171,8 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
         }
     }
 
-    @Override
-    public boolean containsProfile(Profile profile) {
-        return getRecipeHubModel().containsProfile(profile);
-    }
-
-    private String uriParam(String s) {
-        return URLEncoder.encode(s, StandardCharsets.UTF_8);
-    }
-
-    private URI recipeUri(String name) {
-        return endpointBaseUri.resolve("recipelibrary/").resolve(uriParam(name));
-    }
-
     private URI recipeLibraryUri() {
         return endpointBaseUri.resolve("recipelibrary");
-    }
-
-    private URI profileUri(String username) {
-        return endpointBaseUri.resolve("profiles/").resolve(uriParam(username));
     }
 
     private URI profilesUri() {
@@ -265,39 +190,9 @@ public class RemoteRecipeHubModelAccess implements RecipeHubModelAccess {
     }
 
     @Override
-    public void writeProfiles(List<Profile> profiles) {
+    public void saveProfiles(List<Profile> profiles) {
         for (Profile profile : profiles) {
-            recipeHubModel.putProfile(profile);
-        }
-    }
-
-    @Override
-    public void writeProfile(Profile profile) {
-        this.addProfile(profile);
-    }
-
-    @Override
-    public void writeRecipe(Recipe recipe) {
-        recipeHubModel.addRecipe(recipe);
-    }
-
-    public static void main(String[] args) {
-        RecipeHubModelAccess recipeHubModelAccess;
-        try {
-            recipeHubModelAccess = new RemoteRecipeHubModelAccess(new URI("http://localhost:8080/recipehub"));
-            System.out.println(recipeHubModelAccess.getRecipeLibrary());
-            System.out.println(recipeHubModelAccess.getProfiles());
-            Profile profile = new Profile("Username3", "Password3");
-
-            recipeHubModelAccess.addProfile(profile);
-            System.out.println(recipeHubModelAccess.getProfiles());
-
-            Recipe recipe = new Recipe("Recipe3", 2, profile);
-            recipeHubModelAccess.addRecipe(recipe);
-            System.out.println(recipeHubModelAccess.getRecipeLibrary());
-            recipeHubModelAccess.removeRecipe(recipeHubModelAccess.getRecipe("recipe2"));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+            saveProfile(profile);
         }
     }
 }

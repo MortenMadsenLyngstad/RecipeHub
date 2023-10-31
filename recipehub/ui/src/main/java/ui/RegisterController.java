@@ -100,7 +100,7 @@ public class RegisterController extends SuperController {
             String hashedInput = PasswordHasher.hashPassword(pword);
             currentProfile = new Profile(uname, pword);
             currentProfile.setHashedPassword(hashedInput);
-            recipeHubModelAccess.writeProfile(currentProfile);
+            recipeHubModelAccess.saveProfile(currentProfile);
             recipeHubModelAccess.getUserInfo().put(uname, hashedInput);
             return true;
         }
