@@ -13,6 +13,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.controlsfx.control.Rating;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -27,12 +28,19 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ui.App;
 
@@ -50,6 +58,9 @@ public class RecipeControllerTest extends ApplicationTest {
     private TextArea descriptionText, stepsText, ingredientsText;
     private FontAwesomeIconView deleteButton, heartButton, plusButton, minusButton;
     private TextField portionsField;
+    private Rating rating;
+    private Text averageRating;
+    private Hyperlink numberOfRaters, numberOfcomments;
 
     private Profile mockProfile = mock(Profile.class);
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
@@ -132,6 +143,10 @@ public class RecipeControllerTest extends ApplicationTest {
         plusButton = lookup("#plusButton").query();
         minusButton = lookup("#minusButton").query();
         portionsField = lookup("#portionsField").query();
+        rating = lookup("#recipeRating").query();
+        averageRating = lookup("#averageRating").query();
+        numberOfRaters = lookup("#numberOfRaters").query();
+        numberOfcomments = lookup("#numberOfComments").query();
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         controller.currentProfile = profiles.get(0);
     }
@@ -154,6 +169,10 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n", ingredientsText.getText());
         assertEquals("TRASH", deleteButton.getGlyphName());
         assertEquals("HEART", heartButton.getGlyphName());
+        assertEquals(0, rating.getRating());
+        assertEquals("0.0", averageRating.getText());
+        assertEquals("(0)", numberOfRaters.getText());
+        assertTrue(numberOfRaters.isDisable());
         assertTrue(deleteButton.isVisible());
     }
 
@@ -300,5 +319,75 @@ public class RecipeControllerTest extends ApplicationTest {
         clickOn(heartButton);
         assertEquals(Color.WHITE, heartButton.getFill(),
                 "The heart should be black when you click on it again");
+    }
+
+    /**
+     * This method will test if a review with a comment is added correctly
+     */
+    @Test
+    public void testReviewWithoutComment() {
+        controller.setProfile(new Profile("Username2", "Test1234"));
+        doNothing().when(mockRecipeFilehandler).writeRecipe(recipes.getRecipe(0));
+        numberOfRaters.setDisable(false);
+        clickOn(numberOfRaters);
+        Button cancelButton = (Button) controller.getRatingAlert().getDialogPane().lookupButton(ButtonType.CANCEL);
+        clickOn(cancelButton);
+        Platform.runLater(() -> {
+            assertNotEquals("Mainscreen.fxml", controller.getFileName());
+        });
+
+        clickOn(numberOfRaters);
+        Alert alert = controller.getRatingAlert();
+        SplitPane sp = (SplitPane) alert.getGraphic();
+        VBox vB = (VBox) sp.getItems().get(0);
+        Rating r = (Rating) vB.getChildren().get(0);
+        moveTo(r);
+
+        Button okButton = (Button) controller.getRatingAlert().getDialogPane().lookupButton(ButtonType.OK);
+        clickOn(okButton);
+        Platform.runLater(() -> {
+            assertEquals("(1)", numberOfRaters.getText());
+            assertEquals("3.0", averageRating.getText());
+            assertEquals("(0)", numberOfcomments.getText());
+        });
+    }
+
+    /**
+     * This method will test if a review with a comment is added correctly
+     * Also tests if the comment is displayed correctly
+     */
+    @Test
+    public void testComment() {
+        controller.setProfile(new Profile("Username2", "Test1234"));
+        doNothing().when(mockRecipeFilehandler).writeRecipe(recipes.getRecipe(0));
+        numberOfRaters.setDisable(false);
+        clickOn(numberOfRaters);
+
+        clickOn(numberOfRaters);
+        Alert alert = controller.getRatingAlert();
+        SplitPane sp = (SplitPane) alert.getGraphic();
+        VBox vB = (VBox) sp.getItems().get(0);
+        Rating r = (Rating) vB.getChildren().get(0);
+        moveTo(r);
+
+        VBox vB2 = (VBox) sp.getItems().get(1);
+        TextArea tA = (TextArea) vB2.getChildren().get(0);
+        clickOn(tA).write("This is a comment");
+        Button okButton = (Button) controller.getRatingAlert().getDialogPane().lookupButton(ButtonType.OK);
+        clickOn(okButton);
+
+        clickOn(numberOfcomments);
+        Alert alert2 = controller.getCommentsAlert();
+        ScrollPane scrollPane = (ScrollPane) alert2.getDialogPane().getContent();
+        VBox vB3 = (VBox) scrollPane.getContent();
+        HBox hB = (HBox) vB3.getChildren().get(0);
+        Label l = (Label) hB.getChildren().get(0);
+        TextArea t2 = (TextArea) hB.getChildren().get(1);
+
+        assertEquals("Username2: ", l.getText());
+        assertEquals("This is a comment", t2.getText());
+
+        clickOn(ButtonType.CLOSE.getText());
+        assertEquals(null, controller.getCommentsAlert());
     }
 }

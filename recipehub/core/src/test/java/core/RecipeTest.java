@@ -178,4 +178,21 @@ public class RecipeTest {
         Assertions.assertFalse(r.isSaved());
     }
 
+    /**
+     * Tests adder, remover and getter for reviews of a recipe.
+     */
+    @Test
+    public void testReview() {
+        Recipe r = makeRecipe();
+        Assertions.assertEquals(0, r.getReviews().size());
+        r.addReview(new Review(5, "This is a comment", p.getUsername()));
+        Assertions.assertTrue(r.hasRated(p.getUsername()));
+        Assertions.assertEquals(1, r.getReviews().size());
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> r.addReview(new Review(5, "This is a comment", p.getUsername())));
+        r.addReview(new Review(4, "", "User12345"));
+        Assertions.assertEquals(2, r.getNumberOfReviewers());
+        Assertions.assertEquals(1, r.getNumberOfcomments());
+        Assertions.assertEquals(4.5, r.getAverageRating());
+    }
 }
