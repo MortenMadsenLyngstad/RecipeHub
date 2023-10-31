@@ -77,9 +77,4 @@ public class RecipeHubModel {
     public List<Profile> getProfiles() {
         return new ArrayList<>(profiles);
     }
-
-    @Override
-    public String toString() {
-        return "RecipeHubModel [recipeLibrary=" + recipeLibrary + ", profiles=" + profiles + "]";
-    }
 }

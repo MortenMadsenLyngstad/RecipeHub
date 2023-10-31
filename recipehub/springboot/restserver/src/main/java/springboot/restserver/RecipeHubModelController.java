@@ -40,24 +40,24 @@ public class RecipeHubModelController {
 
     @GetMapping(path = "/recipelibrary")
     public RecipeLibrary getRecipeLibrary() {
-        return recipeHubModelService.getRecipeHubModel().getRecipeLibrary();
+        return getRecipeHubModel().getRecipeLibrary();
     }
 
     private boolean checkRecipe(Recipe recipe) {
-        return recipeHubModelService.getRecipeHubModel().containsRecipe(recipe);
+        return getRecipeHubModel().containsRecipe(recipe);
     }
 
     @GetMapping(path = "/recipelibrary/{name}")
     public Recipe getRecipe(@PathVariable("name") String name) {
-        return recipeHubModelService.getRecipeHubModel().getRecipe(name);
+        return getRecipeHubModel().getRecipe(name);
     }
 
     @PostMapping(path = "/recipelibrary")
     public boolean addRecipe(@RequestBody Recipe recipe) {
-        if (!checkRecipe(recipe)) {
+        if (checkRecipe(recipe)) {
             return false;
         }
-        recipeHubModelService.getRecipeHubModel().addRecipe(recipe);
+        getRecipeHubModel().addRecipe(recipe);
         return true;
     }
 
@@ -66,30 +66,27 @@ public class RecipeHubModelController {
         if (!checkRecipe(recipe)) {
             return false;
         }
-        recipeHubModelService.getRecipeHubModel().removeRecipe(recipe);
+        getRecipeHubModel().removeRecipe(recipe);
         return true;
     }
 
     public boolean checkProfile(Profile profile) {
-        return recipeHubModelService.getRecipeHubModel().containsProfile(profile);
+        return getRecipeHubModel().containsProfile(profile);
     }
 
     @GetMapping(path = "/profiles/{username}")
     public Profile getProfile(@PathVariable("username") String username) {
-        return recipeHubModelService.getRecipeHubModel().getProfile(username);
+        return getRecipeHubModel().getProfile(username);
     }
 
     @GetMapping(path = "/profiles")
     public List<Profile> getProfiles() {
-        return recipeHubModelService.getRecipeHubModel().getProfiles();
+        return getRecipeHubModel().getProfiles();
     }
 
     @PutMapping(path = "/profiles")
     public boolean putProfile(@RequestBody Profile profile) {
-        if (!checkProfile(profile)) {
-            return false;
-        }
-        recipeHubModelService.getRecipeHubModel().putProfile(profile);
+        getRecipeHubModel().putProfile(profile);
         return true;
     }
 }

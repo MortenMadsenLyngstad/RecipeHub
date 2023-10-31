@@ -41,7 +41,7 @@ public class RemoteApp extends Application {
         stage.setScene(scene);
         SuperController controller = fxmlLoader.getController();
         try {
-            controller.setRecipeHubModelAccess(new RemoteRecipeHubModelAccess(new URI("http://localhost:8080/recipehub")));
+            controller.setRecipeHubModelAccess(new RemoteRecipeHubModelAccess(new URI("http://localhost:8080/recipehub/")));
         } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
         }

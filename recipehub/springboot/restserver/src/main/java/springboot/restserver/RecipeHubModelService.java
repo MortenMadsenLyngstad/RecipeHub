@@ -6,10 +6,6 @@ import core.Profile;
 import core.Recipe;
 import core.RecipeHubModel;
 
-/**
- * Configures the todo service,
- * including autowired objects.
- */
 @Service
 public class RecipeHubModelService {
 
