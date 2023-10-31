@@ -43,7 +43,7 @@ public class RecipeHubModelController {
         return recipeHubModelService.getRecipeHubModel().getRecipeLibrary();
     }
 
-    public boolean checkRecipe(Recipe recipe) {
+    private boolean checkRecipe(Recipe recipe) {
         return recipeHubModelService.getRecipeHubModel().containsRecipe(recipe);
     }
 
@@ -54,8 +54,8 @@ public class RecipeHubModelController {
 
     @PostMapping(path = "/recipelibrary")
     public boolean addRecipe(@RequestBody Recipe recipe) {
-        if (checkRecipe(recipe) == true) {
-            throw new IllegalArgumentException("The recipe is already added");
+        if (!checkRecipe(recipe)) {
+            return false;
         }
         recipeHubModelService.getRecipeHubModel().addRecipe(recipe);
         return true;
@@ -63,8 +63,8 @@ public class RecipeHubModelController {
 
     @DeleteMapping(path = "/recipelibrary")
     public boolean removeRecipe(@RequestBody Recipe recipe) {
-        if (checkRecipe(recipe) == false) {
-            throw new IllegalArgumentException("The recipe does not exist");
+        if (!checkRecipe(recipe)) {
+            return false;
         }
         recipeHubModelService.getRecipeHubModel().removeRecipe(recipe);
         return true;
@@ -84,19 +84,10 @@ public class RecipeHubModelController {
         return recipeHubModelService.getRecipeHubModel().getProfiles();
     }
 
-    @PostMapping(path = "/profiles")
-    public boolean addProfile(@RequestBody Profile profile) {
-        if (checkProfile(profile) == true) {
-            throw new IllegalArgumentException("The profile is already added");
-        }
-        recipeHubModelService.getRecipeHubModel().addProfile(profile);
-        return true;
-    }
-
     @PutMapping(path = "/profiles")
     public boolean putProfile(@RequestBody Profile profile) {
-        if (checkProfile(profile) == false) {
-            throw new IllegalArgumentException("The profile does not exist");
+        if (!checkProfile(profile)) {
+            return false;
         }
         recipeHubModelService.getRecipeHubModel().putProfile(profile);
         return true;
