@@ -55,14 +55,16 @@ public class MainscreenControllerTest extends ApplicationTest {
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
-     * This method will set up the application for headless mode (tests will run without GUI)
+     * This method will set up the application for headless mode (tests will run
+     * without GUI)
+     * 
      * @see App#supportHeadless()
      */
     @BeforeAll
     public static void setupHeadless() {
         App.supportHeadless();
     }
-    
+
     /**
      * This method will start the application
      * 
@@ -108,6 +110,7 @@ public class MainscreenControllerTest extends ApplicationTest {
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
 
         controller.setProfile(profile1);
+        controller.loadLibrary();
     }
 
     /**
@@ -398,7 +401,8 @@ public class MainscreenControllerTest extends ApplicationTest {
             List<String> recipeNames = getRecipeNames();
             assertEquals(4, recipeNames.size(), "There should be 4 recipes showing");
             assertEquals("Hamburger", recipeNames.get(0), "The name of the first recipe should be 'Hamburger'");
-            assertEquals("Pasta Carbonara", recipeNames.get(1), "The name of the second recipe should be 'Pasta Carbonara'");
+            assertEquals("Pasta Carbonara", recipeNames.get(1),
+                    "The name of the second recipe should be 'Pasta Carbonara'");
             assertEquals("Taco", recipeNames.get(2), "The name of the third recipe should be 'Taco'");
             assertEquals("Pizza", recipeNames.get(3), "The name of the forth recipe should be 'Pizza'");
         });

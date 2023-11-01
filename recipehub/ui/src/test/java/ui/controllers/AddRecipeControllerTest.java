@@ -484,6 +484,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testBackButtonClick() {
+        
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
