@@ -116,8 +116,8 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
         fixMockMenuItems();
 
-        controller.currentProfile = mockProfile;
-        controller.currentProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
+        controller.setProfile(mockProfile);
+        mockProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
     }
 
     /**
@@ -484,6 +484,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testBackButtonClick() {
+        
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());

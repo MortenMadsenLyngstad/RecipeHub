@@ -179,7 +179,7 @@ public class MainscreenController extends SuperController {
         btn.getStyleClass().add("green_button");
         btn.setOnAction(event -> {
             try {
-                switchSceneRecipe(event, recipe, currentProfile);
+                switchSceneRecipe(event, recipe);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -191,18 +191,17 @@ public class MainscreenController extends SuperController {
         heart.setSize("2em");
         setHeart(heart, recipe, currentProfile);
 
-
         // Makes rating star
         Rating star = new Rating();
         star.setRating(1);
         star.setMax(1);
         star.setEffect(new Blend(BlendMode.COLOR_BURN));
         star.setDisable(true);
-        
+
         // Makes bottom part of SplitPane
         HBox hbox2 = new HBox();
         hbox2.setMinHeight(50);
-        
+
         VBox subBox1 = new VBox();
         VBox subBox2 = new VBox();
         VBox subBox3 = new VBox();
@@ -215,7 +214,7 @@ public class MainscreenController extends SuperController {
         subBox1.setMinWidth(25);
         subBox2.setFillWidth(true);
         subBox3.setMinWidth(25);
-        
+
         Text ratingText = new Text(String.valueOf(recipe.getAverageRating()));
         subBox1.getChildren().add(heart);
         subBox2.getChildren().add(btn);
@@ -288,7 +287,7 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void addRecipe(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "addRecipe.fxml", currentProfile);
+        switchSceneWithInfo(event, "addRecipe.fxml");
     }
 
     /**
@@ -300,7 +299,8 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void logout(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "UserLogin.fxml", null);
+        setProfile(null);
+        switchSceneWithInfo(event, "UserLogin.fxml");
     }
 
     /**
@@ -312,14 +312,13 @@ public class MainscreenController extends SuperController {
      * @param profile - the current profile
      * @throws IOException if there are problems with the filehandling
      */
-    protected void switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile)
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe)
             throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
         root = loader.load();
 
         RecipeController controller = loader.getController();
         controller.setRecipe(recipe);
-        controller.setProfile(profile);
         controller.populate();
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -360,17 +359,16 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * Custom setProfile-method.
+     * Custom loadLibrary-method.
      * This method will set currentProfile to the given profile, and then load all
      * recipes
-     * Custom method needed because of favorites functionality
+     * Custom method needed because of favorites functionality and testing
      * 
      * @param profile - The profile which is logged in
      */
-    @Override
-    protected void setProfile(Profile profile) {
-        currentProfile = profile;
+    protected void loadLibrary() {
         allRecipes = recipeFilehandler.readRecipeLibrary();
         loadAllRecipes();
+        System.out.println("hei");
     }
 }

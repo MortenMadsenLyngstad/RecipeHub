@@ -20,30 +20,29 @@ public class SuperController {
     protected Scene scene;
     protected Stage stage;
     protected Parent root;
-    protected Profile currentProfile;
+    static Profile currentProfile;
     private String fileName;
     static RecipeFilehandler recipeFilehandler;
     static UserFilehandler userFilehandler;
 
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {
-        Parent root = FXMLLoader.load(SuperController.class.getResource(file));
+        FXMLLoader loader = new FXMLLoader(SuperController.class.getResource(file));
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        MainscreenController controller = loader.getController();
+        controller.loadLibrary();
         setFileName(file);
     }
 
-    protected void switchSceneWithInfo(ActionEvent event, String file, Profile profile)
+    protected void switchSceneWithInfo(ActionEvent event, String file)
             throws IOException {
         FXMLLoader loader = new FXMLLoader(SuperController.class.getResource(file));
         root = loader.load();
-
-        SuperController controller = loader.getController();
-        controller.setProfile(profile);
-
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());

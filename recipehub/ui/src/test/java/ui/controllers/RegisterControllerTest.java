@@ -61,7 +61,7 @@ public class RegisterControllerTest extends ApplicationTest {
         loginLink = findHyperlink(root);
         registerButton = lookup("#registerButton").query();
         controller.setUserFilehandler(mockUserFileHandler);
-        controller.currentProfile = mockProfile;
+        controller.setProfile(mockProfile);
     }
 
     private Hyperlink findHyperlink(Parent parent) {
