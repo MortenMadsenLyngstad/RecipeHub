@@ -26,13 +26,16 @@ public class SuperController {
     static UserFilehandler userFilehandler;
 
     protected void switchSceneMain(ActionEvent event, String file) throws IOException {
-        Parent root = FXMLLoader.load(SuperController.class.getResource(file));
+        FXMLLoader loader = new FXMLLoader(SuperController.class.getResource(file));
+        root = loader.load();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        MainscreenController controller = loader.getController();
+        controller.loadLibrary();
         setFileName(file);
     }
 

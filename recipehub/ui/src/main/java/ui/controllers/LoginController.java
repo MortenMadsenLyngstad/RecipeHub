@@ -33,14 +33,14 @@ public class LoginController extends SuperController {
      * 
      * @param event The ActionEvent triggered by a login button click
      * @throws Exception   if the validateLogin method throws an exception
-     * @throws IOException if the SwitchController.switchToMainScreen method throws
+     * @throws IOException if the SwitchController.switchSceneMain method throws
      *                     an exception
-     * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
+     * @see SuperController#switchSceneMain(ActionEvent, String)
      */
     public void login(ActionEvent event) throws Exception {
         if (validateLogin(usernameField.getText(), passwordField.getText(), userFilehandler)) {
             setProfile(currentProfile);
-            switchSceneWithInfo(event, "Mainscreen.fxml");
+            switchSceneMain(event, "Mainscreen.fxml");
         }
     }
 
@@ -48,12 +48,13 @@ public class LoginController extends SuperController {
      * Switches to the register screen.
      * 
      * @param event The ActionEvent that triggers the screen switch
-     * @throws IOException if the SwitchController.switchSceneMain method throws an
+     * @throws IOException if the SwitchController.switchSceneWithInfo method throws
+     *                     an
      *                     exception
-     * @see SuperController#switchSceneMain(ActionEvent, String)
+     * @see SuperController#switchSceneWithInfo(ActionEvent, String)
      */
     public void switchToRegisterScreen(ActionEvent event) throws IOException {
-        switchSceneMain(event, "RegisterScreen.fxml");
+        switchSceneWithInfo(event, "RegisterScreen.fxml");
     }
 
     /**
