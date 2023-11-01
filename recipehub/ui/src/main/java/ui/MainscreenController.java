@@ -272,7 +272,7 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void addRecipe(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "addRecipe.fxml", currentProfile);
+        switchSceneWithInfo(event, "addRecipe.fxml");
     }
 
     /**
@@ -284,7 +284,7 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void logout(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "UserLogin.fxml", null);
+        switchSceneWithInfo(event, "UserLogin.fxml");
     }
 
     /**

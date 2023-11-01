@@ -438,13 +438,13 @@ public class AddRecipeController extends SuperController {
      * the recipe.
      * 
      * @param event event when the user clicks on the back button
-     * @throws IOException if the switchSceneWithInfo method throws an IOException
+     * @throws IOException if the switchSceneMain method throws an IOException
      * @see #showPopUp(ActionEvent)
-     * @see SuperController #switchSceneWithInfo(ActionEvent, String, Profile)
+     * @see SuperController #switchSceneMain(ActionEvent, String, Profile)
      */
     public void backButtonClick(ActionEvent event) throws IOException {
         if (newRecipe == null || newRecipe.isSaved()) {
-            switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
+            switchSceneMain(event, "Mainscreen.fxml");
         } else {
             showAlert(event);
         }
@@ -472,7 +472,7 @@ public class AddRecipeController extends SuperController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             currentProfile.removeRecipe(newRecipe);
             try {
-                switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
+                switchSceneMain(event, "Mainscreen.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }

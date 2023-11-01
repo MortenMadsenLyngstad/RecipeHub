@@ -19,6 +19,7 @@ public class Recipe {
     private Map<String, String> ingredientUnits;
     private String authorUsername;
     private boolean isSaved;
+    private List<Review> reviewList;
 
     /**
      * Contructor for creating a new Recipe object.
@@ -36,6 +37,7 @@ public class Recipe {
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();
         isSaved = false;
+        reviewList = new ArrayList<>();
     }
 
     /**
@@ -259,6 +261,70 @@ public class Recipe {
     }
 
     /**
+     * Adds a rarings to the recipe.
+     * 
+     * @param rating  The rating given by the user
+     */
+    public void addReview(Review rating) {
+        if (hasRated(rating.getReviewer())) {
+            throw new IllegalArgumentException("User has already rated this recipe");
+        }
+        reviewList.add(rating);
+    }
+
+    /**
+     * Checks if the recipe has been rated by the user.
+     * 
+     * @return true of the recipe has been rated by the user, false otherwise
+     */
+    public boolean hasRated(String username) {
+        return reviewList.stream().anyMatch(r -> r.getReviewer().equals(username));
+    }
+
+    /**
+     * Gets the average rating of the recipe as double with two decimals.
+     * 
+     * @return The average rating of the recipe
+     */
+    public double getAverageRating() {
+        String number = String.format("%.2f", reviewList.stream()
+                .mapToDouble(r -> r.getRating()).average().orElse(0.0));
+        StringBuilder sb = new StringBuilder();
+        sb.append(number.charAt(0));
+        sb.append('.');
+        sb.append(number.charAt(2));
+        number = sb.toString();
+        return Double.parseDouble(number);
+    }
+
+    /**
+     * Gets the number of reviews the recipe has.
+     * 
+     * @return The number of reviews the recipe has as integer
+     */
+    public int getNumberOfReviewers() {
+        return reviewList.size();
+    }
+
+    /**
+     * Gets the number of comments the recipe has.
+     * 
+     * @return The number of comments the recipe has as integer
+     */
+    public int getNumberOfcomments() {
+        return (int) reviewList.stream().filter(r -> !r.getComment().equals("")).count();
+    }
+
+    /**
+     * Gets the reviews of the recipe.
+     * 
+     * @return The reviews of the recipe as a list
+     */
+    public List<Review> getReviews() {
+        return new ArrayList<>(reviewList);
+    }
+
+    /**
      * Gets the author of the recipe.
      * 
      * @return The author attribute of the recipe
@@ -285,5 +351,4 @@ public class Recipe {
     public void setSaved(boolean saved) {
         this.isSaved = saved;
     }
-
 }

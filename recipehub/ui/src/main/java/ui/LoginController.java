@@ -39,7 +39,7 @@ public class LoginController extends SuperController {
      */
     public void login(ActionEvent event) throws Exception {
         if (validateLogin(usernameField.getText(), passwordField.getText())) {
-            switchSceneWithInfo(event, "Mainscreen.fxml", currentProfile);
+            switchSceneWithInfo(event, "Mainscreen.fxml");
         }
     }
 

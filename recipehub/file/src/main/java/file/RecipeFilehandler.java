@@ -28,6 +28,12 @@ public class RecipeFilehandler {
      */
     public void writeRecipe(Recipe recipe) {
         RecipeLibrary recipeLibrary = readRecipeLibrary();
+
+        if (recipeLibrary.getRecipes().stream()
+                .anyMatch(r -> r.getName().equals(recipe.getName()))) {
+            recipeLibrary.removeRecipe(recipe);
+        }
+            
         recipeLibrary.addRecipe(recipe);
         FileUtil.writeFile(filePath, recipeLibrary);
     }
