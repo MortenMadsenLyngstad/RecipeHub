@@ -1,15 +1,15 @@
 package ui;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
+import core.Profile;
+import core.RecipeLibrary;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
+import java.io.IOException;
+import java.util.Hashtable;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,15 +19,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-
-import core.PasswordHasher;
-import core.Profile;
-import core.RecipeLibrary;
 
 public class LoginControllerTest extends ApplicationTest {
 
@@ -62,11 +57,11 @@ public class LoginControllerTest extends ApplicationTest {
     public void setUp() {
         loginMessageLabel = lookup("#loginMessageLabel").query();
         loginButton = lookup("#loginButton").query();
-        controller.currentProfile = mockProfile;
+        controller.setProfile(mockProfile);
         RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(new RecipeLibrary());
-        controller.setRecipeHubModelAccess(
-                new DirectRecipeHubModelAccess(mockUserFileHandler, mockRecipeFilehandler));
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFileHandler, mockRecipeFilehandler));
         registerLink = findHyperlink(root);
     }
 
@@ -89,19 +84,14 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateLoginWithValidCredentials() throws Exception {
-        userInfo.put("testuser", PasswordHasher.hashPassword("Password123"));
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
-        when(mockProfile.getUsername()).thenReturn("testuser");
-        when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
-        List<Profile> profiles = new ArrayList<>();
-        profiles.add(mockProfile);
-        when(mockUserFileHandler.readProfiles()).thenReturn(profiles);
+        Profile profile = new Profile("Testuser", "Password123");
+        when(mockUserFileHandler.loadProfile(any())).thenReturn(profile);
 
-        write("testuser").push(javafx.scene.input.KeyCode.TAB);
+        write("Testuser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123");
 
-        assertTrue(controller.validateLogin("testuser", "Password123"));
         assertEquals("Enter username and password", loginMessageLabel.getText());
+        assertTrue(controller.validateLogin(profile.getUsername(), profile.getPassword()));
 
         clickOn(loginButton);
 
@@ -112,7 +102,9 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateLoginWithInvalidUsername() throws Exception {
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
+        Profile profile = new Profile("testuser", "Password123");
+        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
+                .thenReturn(profile);
 
         write("invaliduser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.ENTER);
@@ -120,13 +112,15 @@ public class LoginControllerTest extends ApplicationTest {
         Platform.runLater(() -> {
             assertEquals("Incorrect username or password", loginMessageLabel.getText());
         });
-        
+
     }
 
     @Test
     public void testValidateLoginWithIncorrectPassword() throws Exception {
         userInfo.put("testuser", "Password123");
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
+        Profile profile = new Profile("testuser", "Password123");
+        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
+                .thenReturn(profile);
 
         write("testuser").push(javafx.scene.input.KeyCode.TAB);
         write("wrongpassword");
@@ -141,7 +135,9 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateLoginWithBlankFields() throws Exception {
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
+        Profile profile = new Profile("testuser", "Password123");
+        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
+                .thenReturn(profile);
 
         write("").push(javafx.scene.input.KeyCode.TAB);
         write("");
@@ -150,7 +146,7 @@ public class LoginControllerTest extends ApplicationTest {
 
         Platform.runLater(() -> {
             assertFalse(controller.validateLogin("", ""));
-            assertEquals("Please enter a username and password", loginMessageLabel.getText());  
+            assertEquals("Please enter a username and password", loginMessageLabel.getText());
         });
     }
 

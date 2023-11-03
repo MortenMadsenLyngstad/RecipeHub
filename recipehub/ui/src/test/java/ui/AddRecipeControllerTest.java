@@ -7,19 +7,13 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-
 import core.PasswordHasher;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
+import java.io.IOException;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,6 +27,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 
 public class AddRecipeControllerTest extends ApplicationTest {
     private AddRecipeController controller;
@@ -119,8 +117,8 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
         controller.currentProfile = mockProfile;
         controller.currentProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
-        controller.setRecipeHubModelAccess(
-                new DirectRecipeHubModelAccess(mockUserFileHandler, mockRecipeFileHandler));
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFileHandler, mockRecipeFileHandler));
     }
 
     /**

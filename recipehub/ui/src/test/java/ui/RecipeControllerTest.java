@@ -7,22 +7,16 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,6 +28,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.testfx.framework.junit5.ApplicationTest;
 
 public class RecipeControllerTest extends ApplicationTest {
 
@@ -109,8 +107,8 @@ public class RecipeControllerTest extends ApplicationTest {
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
 
         // Makes it so that we use mocks instead of real filehandlers
-        controller.setRecipeHubModelAccess(
-                new DirectRecipeHubModelAccess(mockUserFilehandler, mockRecipeFilehandler));
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
 
         controller.setRecipe(recipe);
         controller.setProfile(profile1);
