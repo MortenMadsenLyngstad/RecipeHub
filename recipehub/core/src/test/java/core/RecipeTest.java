@@ -19,7 +19,7 @@ public class RecipeTest {
      * @return The finished recipe
      */
     private Recipe makeRecipe() {
-        Recipe returnRecipe = new Recipe("Pancakes", 4, p);
+        Recipe returnRecipe = new Recipe("Pancakes", 4, p, 1);
         returnRecipe.setDescription("We're making pancakes for breakfast!");
         returnRecipe.addIngredient("flour", 400.0, "g");
         returnRecipe.addIngredient("milk", 4.0, "dL");
@@ -37,9 +37,9 @@ public class RecipeTest {
      */
     @Test
     public void testConstructor() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Recipe("", 4, p));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Recipe("Pancakes", 0, p));
-        Recipe r = new Recipe("Pancakes", 4, p);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Recipe("", 4, p, 2));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Recipe("Pancakes", 0, p, 2));
+        Recipe r = new Recipe("Pancakes", 4, p, 2);
         Assertions.assertEquals("Pancakes", r.getName());
         Assertions.assertEquals(4, r.getPortions());
     }
@@ -194,5 +194,14 @@ public class RecipeTest {
         Assertions.assertEquals(2, r.getNumberOfReviewers());
         Assertions.assertEquals(1, r.getNumberOfcomments());
         Assertions.assertEquals(4.5, r.getAverageRating());
+    }
+
+    /**
+     * Tests the ID getter
+     */
+    @Test
+    public void testID() {
+        Recipe r = makeRecipe();
+        Assertions.assertEquals(1, r.getID());
     }
 }
