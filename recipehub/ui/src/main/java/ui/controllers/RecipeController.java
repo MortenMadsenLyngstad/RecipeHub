@@ -268,11 +268,11 @@ public class RecipeController extends SuperController {
             List<Profile> profiles = new ArrayList<>();
             for (Profile p : userFilehandler.readProfiles()) {
                 if (p.getUsername().equals(currentProfile.getUsername())) {
-                    currentProfile.removeFavorite(recipe);
+                    currentProfile.removeFavorite(recipe.getID());
                     currentProfile.removeRecipe(recipe);
                     profiles.add(currentProfile);
                 } else {
-                    p.removeFavorite(recipe);
+                    p.removeFavorite(recipe.getID());
                     profiles.add(p);
                 }
             }
@@ -284,7 +284,7 @@ public class RecipeController extends SuperController {
         this.alert = null;
         return flag;
     }
-    
+
     /**
      * Shows a popup for the user to review the recipe.
      * The user can give a rating from 1 to 5 and write a comment.
@@ -326,7 +326,7 @@ public class RecipeController extends SuperController {
     /**
      * Adds a rating to the recipe.
      * 
-     * @param rating The rating to be added
+     * @param rating  The rating to be added
      * @param comment The comment to be added
      * @throws IllegalArgumentException If the rating is not between 1 and 5,
      *                                  or if the user has already rated the recipe
@@ -336,7 +336,7 @@ public class RecipeController extends SuperController {
         recipeFilehandler.writeRecipe(this.recipe);
         showRating();
     }
-    
+
     /**
      * Shows a popup with the comments on the recipe.
      * The comments are shown in a scrollable list.
@@ -347,14 +347,14 @@ public class RecipeController extends SuperController {
         commentsAlert.setDialogPane(new DialogPane());
         commentsAlert.getDialogPane().setPrefHeight(300);
         commentsAlert.getDialogPane().setPrefWidth(450);
-        
+
         ButtonType closeButton = ButtonType.CLOSE;
         commentsAlert.getButtonTypes().add(closeButton);
-        
+
         List<Review> reviews = new ArrayList<>(recipe.getReviews().stream()
                 .filter(r -> !r.getComment().equals("")).toList());
         Collections.reverse(reviews);
-        
+
         VBox vbox = new VBox();
         for (Review r : reviews) {
             HBox hbox = new HBox();
@@ -368,21 +368,21 @@ public class RecipeController extends SuperController {
             hbox.setDisable(true);
             vbox.getChildren().add(hbox);
         }
-        
+
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(vbox);
         scrollPane.setFitToWidth(true);
-        
+
         commentsAlert.getDialogPane().setContent(scrollPane);
-        
+
         Optional<ButtonType> result = commentsAlert.showAndWait();
         if (result.isPresent() && result.get() == closeButton) {
             commentsAlert.close();
         }
-        
+
         this.commentsAlert = null;
     }
-    
+
     /**
      * Returns the current ratingAlert.
      * 
