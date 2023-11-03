@@ -70,7 +70,7 @@ public class MainscreenController extends SuperController {
             return;
         }
         titleLabel.setText(allBtn.getText());
-        currentLibrary = allRecipes;
+        currentLibrary.setRecipeLibrary(allRecipes.getRecipes());
         load();
     }
 
@@ -84,7 +84,7 @@ public class MainscreenController extends SuperController {
             return;
         }
         titleLabel.setText(myBtn.getText());
-        currentLibrary = currentProfile.getRecipes();
+        currentLibrary.setRecipeLibrary(allRecipes.getFilteredRecipes(currentProfile.getRecipes()));
         load();
     }
 
@@ -96,10 +96,14 @@ public class MainscreenController extends SuperController {
     @FXML
     public void loadFavoriteRecipes() {
         if (titleLabel.getText().equals(favoritesBtn.getText())) {
+            if (!(currentProfile.getFavorites().size() == currentLibrary.getSize())) {
+                currentLibrary.setRecipeLibrary(allRecipes.getFilteredRecipes(currentProfile.getFavorites()));
+                load();
+            }
             return;
         }
         titleLabel.setText(favoritesBtn.getText());
-        currentLibrary = currentProfile.getFavorites();
+        currentLibrary.setRecipeLibrary(allRecipes.getFilteredRecipes(currentProfile.getFavorites()));
         load();
     }
 
@@ -245,7 +249,7 @@ public class MainscreenController extends SuperController {
      * @param currentProfile - The profile to check if the recipe is a favorite
      */
     protected void setHeart(FontAwesomeIconView heart, Recipe recipe, Profile currentProfile) {
-        if (currentProfile.getFavorites().containsRecipe(recipe)) {
+        if (currentProfile.getFavorites().contains(recipe.getID())) {
             heart.setFill(Color.RED);
         } else {
             heart.setFill(Color.WHITE);
@@ -262,17 +266,17 @@ public class MainscreenController extends SuperController {
         heart.setOnMouseClicked(event -> {
             if (heart.getFill().equals(Color.RED)) {
                 heart.setFill(Color.WHITE);
-                currentProfile.removeFavorite(recipe);
+                currentProfile.removeFavorite(recipe.getID());
                 userFilehandler.writeProfile(currentProfile);
                 if (this.titleLabel != null) {
                     if (this.titleLabel.getText().equals("Favorites")) {
-                        load();
+                        loadFavoriteRecipes();
                     }
                 }
 
             } else {
                 heart.setFill(Color.RED);
-                currentProfile.addFavorite(recipe);
+                currentProfile.addFavorite(recipe.getID());
                 userFilehandler.writeProfile(currentProfile);
             }
         });
@@ -368,7 +372,7 @@ public class MainscreenController extends SuperController {
      */
     protected void loadLibrary() {
         allRecipes = recipeFilehandler.readRecipeLibrary();
+        currentLibrary = new RecipeLibrary();
         loadAllRecipes();
-        System.out.println("hei");
     }
 }
