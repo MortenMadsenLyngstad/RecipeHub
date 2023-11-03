@@ -399,8 +399,8 @@ public class AddRecipeController extends SuperController {
      * @see UserFilehandler #writeProfile(Profile)
      */
     private void saveRecipeToLibrary() {
-        recipeHubModelAccess.saveRecipe(newRecipe);
-        recipeHubModelAccess.saveProfile(currentProfile);
+        currentRecipeHubAccess.saveRecipe(newRecipe);
+        currentRecipeHubAccess.saveProfile(currentProfile);
     }
 
     /**

@@ -3,7 +3,6 @@ package ui;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,7 +40,7 @@ public class RemoteApp extends Application {
         stage.setScene(scene);
         SuperController controller = fxmlLoader.getController();
         try {
-            controller.setRecipeHubModelAccess(new RemoteRecipeHubModelAccess(new URI("http://localhost:8080/recipehub/")));
+            controller.setCurrentRecipeHubAccess(new RemoteRecipeHubAccess(new URI("http://localhost:8080/recipehub/")));
         } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
         }

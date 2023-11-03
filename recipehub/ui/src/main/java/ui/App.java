@@ -1,7 +1,6 @@
 package ui;
 
 import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,7 +40,7 @@ public class App extends Application {
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         SuperController controller = fxmlLoader.getController();
-        controller.setRecipeHubModelAccess(new DirectRecipeHubModelAccess());
+        controller.setCurrentRecipeHubAccess(new DirectRecipeHubAccess());
         stage.show();
     }
 

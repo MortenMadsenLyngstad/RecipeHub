@@ -23,7 +23,7 @@ public class SuperController {
     static Profile currentProfile;
     private String fileName;
     // exchange with remote or direct access
-    static RecipeHubModelAccess recipeHubModelAccess;
+    static RecipeHubAccess currentRecipeHubAccess;
     static RecipeFilehandler recipeFilehandler;
     static UserFilehandler userFilehandler;
 
@@ -66,7 +66,7 @@ public class SuperController {
         this.fileName = fileName;
     }
 
-    public void setRecipeHubModelAccess(RecipeHubModelAccess recipeHubModelAccess) {
-        SuperController.recipeHubModelAccess = recipeHubModelAccess;
+    public void setCurrentRecipeHubAccess(RecipeHubAccess recipeHubAccess) {
+        currentRecipeHubAccess = recipeHubAccess;
     }
 }

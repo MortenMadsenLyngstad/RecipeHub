@@ -1,6 +1,5 @@
 package ui;
 
-import core.PasswordHasher;
 import core.Profile;
 import file.UserFilehandler;
 import java.io.IOException;
@@ -48,7 +47,7 @@ public class RegisterController extends SuperController {
      * @see SuperController#switchSceneMain(ActionEvent, String)
      */
     public void switchToLoginScreen(ActionEvent event) throws IOException {
-        switchSceneMain(event, "UserLogin.fxml");
+        switchSceneWithInfo(event, "UserLogin.fxml");
     }
 
     /**
@@ -61,6 +60,7 @@ public class RegisterController extends SuperController {
      */
     public void register(ActionEvent event) throws IOException {
         if (validateRegister(usernameField.getText(), passwordField.getText())) {
+            setProfile(currentProfile);
             switchSceneWithInfo(event, "Mainscreen.fxml");
         }
     }
@@ -68,8 +68,8 @@ public class RegisterController extends SuperController {
     /**
      * Validates the register information.
      * 
-     * @param uname The username to validate
-     * @param pword The password to validate
+     * @param username The username to validate
+     * @param password The password to validate
      * @return true if the register information is correct, false otherwise
      * 
      * @see Profile#isValidUsername(String)
@@ -77,31 +77,28 @@ public class RegisterController extends SuperController {
      * @see UserFilehandler#writeProfile(String, String)
      * @see UserFilehandler#readUsernamesAndPasswords()
      */
-    public boolean validateRegister(String uname, String pword) {
+    public boolean validateRegister(String username, String password) {
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
                 || confirmPasswordField.getText().isBlank()) {
             registerMessageLabel.setText("Please enter a username and password");
             return false;
         }
         try {
-            Profile.isValidUsername(uname);
-            Profile.isValidPassword(pword);
+            Profile.isValidUsername(username);
+            Profile.isValidPassword(password);
         } catch (IllegalArgumentException e) {
             registerMessageLabel.setText(e.getMessage());
             return false;
         }
-        if (recipeHubModelAccess.getUserInfo().get(uname) != null) {
+        if (currentRecipeHubAccess.loadProfile(p -> p.getUsername().equals(username)) != null) {
             registerMessageLabel.setText("Username already exists");
             return false;
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             registerMessageLabel.setText("Passwords do not match");
             return false;
         } else {
-            String hashedInput = PasswordHasher.hashPassword(pword);
-            currentProfile = new Profile(uname, pword);
-            currentProfile.setHashedPassword(hashedInput);
-            recipeHubModelAccess.saveProfile(currentProfile);
-            recipeHubModelAccess.getUserInfo().put(uname, hashedInput);
+            currentProfile = new Profile(username, password);
+            currentRecipeHubAccess.saveProfile(currentProfile);
             return true;
         }
     }

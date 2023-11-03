@@ -39,7 +39,8 @@ public class LoginController extends SuperController {
      */
     public void login(ActionEvent event) throws Exception {
         if (validateLogin(usernameField.getText(), passwordField.getText())) {
-            switchSceneWithInfo(event, "Mainscreen.fxml");
+            setProfile(currentProfile);
+            switchSceneMain(event, "Mainscreen.fxml");
         }
     }
 
@@ -52,48 +53,32 @@ public class LoginController extends SuperController {
      * @see SuperController#switchSceneMain(ActionEvent, String)
      */
     public void switchToRegisterScreen(ActionEvent event) throws IOException {
-        switchSceneMain(event, "RegisterScreen.fxml");
+        switchSceneWithInfo(event, "RegisterScreen.fxml");
     }
 
     /**
      * Validates the login information.
      * 
-     * @param uname The username to validate
-     * @param pword The password to validate
+     * @param username The username to validate
+     * @param password The password to validate
      * @return true if the login information is correct, false otherwise
      * @throws Exception if the userFilehandler.getUserinfo() method throws an
      *                   exception
      * @see UserFilehandler#getUserinfo()
      */
-    public boolean validateLogin(String uname, String pword) {
-        String storedPassword = recipeHubModelAccess.getUserInfo().get(uname);
+    public boolean validateLogin(String username, String password) {
+        Profile profile = currentRecipeHubAccess.loadProfile(p -> p.getUsername().equals(username)
+                && PasswordHasher.verifyPassword(password, p.getHashedPassword()));
+                
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
             return false;
-        } else if (recipeHubModelAccess.getUserInfo().get(uname) == null) {
+        } else if (profile == null) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (PasswordHasher.verifyPassword(pword, storedPassword)) {
-            loadProfile(uname, PasswordHasher.hashPassword(pword));
-            return true;
         } else {
-            loginMessageLabel.setText("Incorrect username or password");
-            return false;
-        }
-    }
-
-    /**
-     * This method will load currentProfile with it's username, password and all.
-     * it's recipes
-     * 
-     * @param uname - String with the username for the profile
-     * @param pword - String with the password for the profile
-     */
-    public void loadProfile(String uname, String pword) {
-        for (Profile profile : recipeHubModelAccess.getProfiles()) {
-            if (profile.getUsername().equals(uname)) {
-                currentProfile = profile;
-            }
+            currentProfile = profile;
+            return true;
         }
     }
 
@@ -108,5 +93,5 @@ public class LoginController extends SuperController {
         if (e.getCode().equals(KeyCode.ENTER)) {
             loginButton.fire();
         }
-    } 
+    }
 }

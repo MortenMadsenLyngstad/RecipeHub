@@ -32,7 +32,4 @@ public class ReviewTest {
             review.validateRating(6);
         });
     }
-
-
-
 }

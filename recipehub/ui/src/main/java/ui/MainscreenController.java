@@ -10,6 +10,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.controlsfx.control.Rating;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +26,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -30,6 +35,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -175,7 +181,7 @@ public class MainscreenController extends SuperController {
         btn.getStyleClass().add("green_button");
         btn.setOnAction(event -> {
             try {
-                switchSceneRecipe(event, recipe, currentProfile);
+                switchSceneRecipe(event, recipe);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -184,7 +190,15 @@ public class MainscreenController extends SuperController {
         // Maked favorites/heart-button
         FontAwesomeIconView heart = new FontAwesomeIconView(FontAwesomeIcon.HEART);
         heart.setStroke(Color.RED);
+        heart.setSize("2em");
         setHeart(heart, recipe, currentProfile);
+
+        // Makes rating star
+        Rating star = new Rating();
+        star.setRating(1);
+        star.setMax(1);
+        star.setEffect(new Blend(BlendMode.COLOR_BURN));
+        star.setDisable(true);
 
         // Makes bottom part of SplitPane
         HBox hbox2 = new HBox();
@@ -203,8 +217,11 @@ public class MainscreenController extends SuperController {
         subBox2.setFillWidth(true);
         subBox3.setMinWidth(25);
 
+        Text ratingText = new Text(String.valueOf(recipe.getAverageRating()));
         subBox1.getChildren().add(heart);
         subBox2.getChildren().add(btn);
+        subBox3.getChildren().add(star);
+        subBox3.getChildren().add(ratingText);
 
         hbox2.getChildren().addAll(subBox1, subBox2, subBox3);
 
@@ -248,7 +265,7 @@ public class MainscreenController extends SuperController {
             if (heart.getFill().equals(Color.RED)) {
                 heart.setFill(Color.WHITE);
                 currentProfile.removeFavorite(recipe);
-                recipeHubModelAccess.saveProfile(currentProfile);
+                currentRecipeHubAccess.saveProfile(currentProfile);
                 if (this.titleLabel != null) {
                     if (this.titleLabel.getText().equals("Favorites")) {
                         load();
@@ -258,7 +275,7 @@ public class MainscreenController extends SuperController {
             } else {
                 heart.setFill(Color.RED);
                 currentProfile.addFavorite(recipe);
-                recipeHubModelAccess.saveProfile(currentProfile);
+                currentRecipeHubAccess.saveProfile(currentProfile);
             }
         });
     }
@@ -296,14 +313,13 @@ public class MainscreenController extends SuperController {
      * @param profile - the current profile
      * @throws IOException if there are problems with the filehandling
      */
-    protected void switchSceneRecipe(ActionEvent event, Recipe recipe, Profile profile)
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe)
             throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
         root = loader.load();
 
         RecipeController controller = loader.getController();
         controller.setRecipe(recipe);
-        controller.setProfile(profile);
         controller.populate();
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -344,17 +360,15 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * Custom setProfile-method.
+     * Custom loadLibrary-method.
      * This method will set currentProfile to the given profile, and then load all
      * recipes
-     * Custom method needed because of favorites functionality
+     * Custom method needed because of favorites functionality and testing
      * 
      * @param profile - The profile which is logged in
      */
-    @Override
-    protected void setProfile(Profile profile) {
-        currentProfile = profile;
-        allRecipes = recipeHubModelAccess.getRecipeLibrary();
+    protected void loadLibrary() {
+        allRecipes = currentRecipeHubAccess.getRecipeLibrary();
         loadAllRecipes();
     }
 }

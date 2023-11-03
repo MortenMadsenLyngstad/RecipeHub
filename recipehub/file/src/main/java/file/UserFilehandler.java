@@ -1,12 +1,13 @@
 package file;
 
 import com.google.gson.reflect.TypeToken;
+
 import core.Profile;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * This class handles file operations for users.
@@ -68,23 +69,15 @@ public class UserFilehandler {
     }
 
     /**
-     * This method reads usernames and passwords from the file.
-     * 
-     * @return - Returns a hashtable with usernames as keys and passwords as values
+     * This method returns the profile with the given username.
+     * @param username - Username of the profile to return
+     * @return - Returns the profile with the given username
      */
-    public Hashtable<String, String> readUsernamesAndPasswords() {
-        Hashtable<String, String> userinfo = new Hashtable<>();
-
+    public Profile loadProfile(Predicate<Profile> predicate) {
         List<Profile> profiles = readProfiles();
-
-        for (Profile profile : profiles) {
-            String username = profile.getUsername();
-            String hashedPassword = profile.getHashedPassword();
-
-            // Check if the username is not already in the map (to handle duplicates if
-            // necessary)
-            userinfo.put(username, hashedPassword);
-        }
-        return userinfo;
+        return profiles.stream()
+                .filter(predicate)
+                .findFirst()
+                .orElse(null);
     }
 }
