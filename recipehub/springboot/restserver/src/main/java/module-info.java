@@ -1,6 +1,7 @@
 module springboot.restserver {
     requires core;
     requires file;
+    requires ui;
 
     requires com.google.gson;
     
