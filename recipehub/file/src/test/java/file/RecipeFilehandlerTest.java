@@ -28,7 +28,7 @@ public class RecipeFilehandlerTest {
     public void setup() {
         Profile profile = new Profile("testUser", "Password123");
         profile.setHashedPassword(PasswordHasher.hashPassword(profile.getPassword()));
-        this.recipe = new Recipe("testRecipe", 1, profile);
+        this.recipe = new Recipe("testRecipe", 1, profile, 1);
         this.recipeFilehandler = new RecipeFilehandler("test.json");
     }
 

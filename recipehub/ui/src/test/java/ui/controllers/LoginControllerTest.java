@@ -27,7 +27,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import core.PasswordHasher;
 import core.Profile;
-import core.RecipeLibrary;
 
 public class LoginControllerTest extends ApplicationTest {
 
@@ -89,7 +88,7 @@ public class LoginControllerTest extends ApplicationTest {
         userInfo.put("testuser", PasswordHasher.hashPassword("Password123"));
         when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(userInfo);
         when(mockProfile.getUsername()).thenReturn("testuser");
-        when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
+        when(mockProfile.getFavorites()).thenReturn(new ArrayList<>());
         List<Profile> profiles = new ArrayList<>();
         profiles.add(mockProfile);
         when(mockUserFileHandler.readProfiles()).thenReturn(profiles);

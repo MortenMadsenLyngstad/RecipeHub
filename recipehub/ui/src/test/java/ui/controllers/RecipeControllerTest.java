@@ -103,7 +103,7 @@ public class RecipeControllerTest extends ApplicationTest {
 
         userInfo.put("Username", "Password1");
 
-        Recipe recipe = new Recipe("Pizza", 2, profile1);
+        Recipe recipe = new Recipe("Pizza", 2, profile1, 1);
         recipe.setName("Pizza");
         recipe.setDescription("Best way to start the weekend");
         recipe.addStep("Make the dough");

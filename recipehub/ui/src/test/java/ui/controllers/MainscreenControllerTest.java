@@ -91,14 +91,14 @@ public class MainscreenControllerTest extends ApplicationTest {
         Profile profile1 = new Profile("Username1", "Password1");
         Profile profile2 = new Profile("Username2", "Password2");
 
-        Recipe recipe = new Recipe("Pizza", 2, profile1);
+        Recipe recipe = new Recipe("Pizza", 2, profile1, 1);
         recipe.addReview(new Review(4, null, profile2.getUsername()));
-        profile1.addFavorite(recipe);
+        profile1.addFavorite(recipe.getID());
 
         recipes.addRecipe(recipe);
-        recipes.addRecipe(new Recipe("Taco", 4, profile1));
-        recipes.addRecipe(new Recipe("Pasta Carbonara", 1, profile2));
-        recipes.addRecipe(new Recipe("Hamburger", 2, profile2));
+        recipes.addRecipe(new Recipe("Taco", 4, profile1, 2));
+        recipes.addRecipe(new Recipe("Pasta Carbonara", 1, profile2, 3));
+        recipes.addRecipe(new Recipe("Hamburger", 2, profile2, 4));
 
         profiles.add(profile1);
         profiles.add(profile2);
@@ -302,21 +302,23 @@ public class MainscreenControllerTest extends ApplicationTest {
                 "The StrokeWidth of the heart should return to 1 when moving you mouse away from it");
         clickOn(heartBtn);
         assertEquals(Color.RED, heartBtn.getFill(), "The heart should be red after being clicked");
-        assertEquals(2, profiles.get(0).getFavorites().getSize(), "The profile should now have two favorites");
-        assertEquals("Hamburger", profiles.get(0).getFavorites().getRecipe(1).getName(),
+        assertEquals(2, profiles.get(0).getFavorites().size(), "The profile should now have two favorites");
+        assertEquals("Hamburger",
+                recipes.getFilteredRecipes(List.of(profiles.get(0).getFavorites().get(1))).get(0).getName(),
                 "The last added favorite should be 'Hamburger'");
 
         // Checking if removing favorite works
         clickOn(heartBtn);
         assertEquals(Color.WHITE, heartBtn.getFill(),
                 "The heart should be white after being clicked for the second time");
-        assertEquals(1, profiles.get(0).getFavorites().getSize(), "The profile should now have one favorite");
+        assertEquals(1, profiles.get(0).getFavorites().size(), "The profile should now have one favorite");
 
         // Checking that you can re-add favorite
         clickOn(heartBtn);
         assertEquals(Color.RED, heartBtn.getFill(), "The heart should be red after being clicked");
-        assertEquals(2, profiles.get(0).getFavorites().getSize(), "The profile should have two favorites");
-        assertEquals("Hamburger", profiles.get(0).getFavorites().getRecipe(1).getName(),
+        assertEquals(2, profiles.get(0).getFavorites().size(), "The profile should have two favorites");
+        assertEquals("Hamburger",
+                recipes.getFilteredRecipes(List.of(profiles.get(0).getFavorites().get(1))).get(0).getName(),
                 "The last added favorite should be 'Hamburger'");
 
         // Checks if it shows up correctly when sorting for favorites
@@ -337,7 +339,7 @@ public class MainscreenControllerTest extends ApplicationTest {
         // GridPane
         clickOn(heartBtn2);
         recipeNames = getRecipeNames();
-        assertEquals(1, recipeNames.size(), "There should be two recipe shown");
+        assertEquals(1, recipeNames.size(), "There should be one recipe shown");
     }
 
     /**

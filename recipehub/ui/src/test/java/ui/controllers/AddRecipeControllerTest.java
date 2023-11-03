@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 import core.PasswordHasher;
 import core.Profile;
 import core.Recipe;
-import core.RecipeLibrary;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import javafx.application.Platform;
@@ -115,7 +115,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         backButton = lookup("#backButton").query();
 
         fixMockMenuItems();
-
+        when(mockRecipeFileHandler.getNextRecipeID()).thenReturn(1);
         controller.setProfile(mockProfile);
         mockProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
     }
@@ -485,7 +485,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
     @Test
     public void testBackButtonClick() {
         
-        when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
+        when(mockProfile.getFavorites()).thenReturn(new ArrayList<>());
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
@@ -496,7 +496,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
     @Test
     public void testAlert() {
         controller.setFileName("addRecipe.fxml");
-        when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
+        when(mockProfile.getFavorites()).thenReturn(new ArrayList<>());
         setUpRecipeName();
         clickOn(backButton);
         Button cancelButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.CANCEL);
