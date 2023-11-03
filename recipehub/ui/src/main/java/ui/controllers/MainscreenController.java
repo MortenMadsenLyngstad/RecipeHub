@@ -97,13 +97,15 @@ public class MainscreenController extends SuperController {
     public void loadFavoriteRecipes() {
         if (titleLabel.getText().equals(favoritesBtn.getText())) {
             if (!(currentProfile.getFavorites().size() == currentLibrary.getSize())) {
-                currentLibrary.setRecipeLibrary(allRecipes.getFilteredRecipes(currentProfile.getFavorites()));
+                currentLibrary.setRecipeLibrary(
+                        allRecipes.getFilteredRecipes(currentProfile.getFavorites()));
                 load();
             }
             return;
         }
         titleLabel.setText(favoritesBtn.getText());
-        currentLibrary.setRecipeLibrary(allRecipes.getFilteredRecipes(currentProfile.getFavorites()));
+        currentLibrary.setRecipeLibrary(
+                allRecipes.getFilteredRecipes(currentProfile.getFavorites()));
         load();
     }
 
@@ -249,7 +251,7 @@ public class MainscreenController extends SuperController {
      * @param currentProfile - The profile to check if the recipe is a favorite
      */
     protected void setHeart(FontAwesomeIconView heart, Recipe recipe, Profile currentProfile) {
-        if (currentProfile.getFavorites().contains(recipe.getID())) {
+        if (currentProfile.getFavorites().contains(recipe.getId())) {
             heart.setFill(Color.RED);
         } else {
             heart.setFill(Color.WHITE);
@@ -266,7 +268,7 @@ public class MainscreenController extends SuperController {
         heart.setOnMouseClicked(event -> {
             if (heart.getFill().equals(Color.RED)) {
                 heart.setFill(Color.WHITE);
-                currentProfile.removeFavorite(recipe.getID());
+                currentProfile.removeFavorite(recipe.getId());
                 userFilehandler.writeProfile(currentProfile);
                 if (this.titleLabel != null) {
                     if (this.titleLabel.getText().equals("Favorites")) {
@@ -276,7 +278,7 @@ public class MainscreenController extends SuperController {
 
             } else {
                 heart.setFill(Color.RED);
-                currentProfile.addFavorite(recipe.getID());
+                currentProfile.addFavorite(recipe.getId());
                 userFilehandler.writeProfile(currentProfile);
             }
         });

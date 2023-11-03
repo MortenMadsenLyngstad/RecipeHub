@@ -155,7 +155,7 @@ public class Profile {
      * This method will remove the recipe from the profile's recipes.
      */
     public void removeRecipe(Recipe recipe) {
-        this.recipeLibrary.remove(recipeLibrary.indexOf(recipe.getID()));
+        this.recipeLibrary.remove(recipeLibrary.indexOf(recipe.getId()));
     }
 
     /**

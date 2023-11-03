@@ -20,7 +20,7 @@ public class Recipe {
     private String authorUsername;
     private boolean isSaved;
     private List<Review> reviewList;
-    private final int ID;
+    private final int id;
 
     /**
      * Contructor for creating a new Recipe object.
@@ -29,12 +29,12 @@ public class Recipe {
      * @param portions The amount of portions this recipe makes.
      * @param author   The author of this recipe, a Profile object
      */
-    public Recipe(String name, int portions, Profile author, int ID) {
+    public Recipe(String name, int portions, Profile author, int id) {
         setName(name);
         setPortions(portions);
-        this.ID = ID;
+        this.id = id;
         this.authorUsername = author.getUsername();
-        author.addRecipe(ID);
+        author.addRecipe(id);
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();
@@ -359,7 +359,7 @@ public class Recipe {
      * 
      * @return The ID of the recipe
      */
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 }

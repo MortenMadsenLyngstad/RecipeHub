@@ -93,7 +93,7 @@ public class MainscreenControllerTest extends ApplicationTest {
 
         Recipe recipe = new Recipe("Pizza", 2, profile1, 1);
         recipe.addReview(new Review(4, null, profile2.getUsername()));
-        profile1.addFavorite(recipe.getID());
+        profile1.addFavorite(recipe.getId());
 
         recipes.addRecipe(recipe);
         recipes.addRecipe(new Recipe("Taco", 4, profile1, 2));

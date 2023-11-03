@@ -2,7 +2,6 @@ package file;
 
 import core.Recipe;
 import core.RecipeLibrary;
-
 import java.nio.file.Path;
 
 /**
@@ -27,7 +26,7 @@ public class RecipeFilehandler {
      * 
      * @return - Returns an ID for a recipe
      */
-    public int getNextRecipeID() {
+    public int getNextRecipeId() {
         Path filePath = Path.of(System.getProperty("user.home")
                 + System.getProperty("file.separator") + "recipeID.json");
         FileUtil.createFile(filePath);

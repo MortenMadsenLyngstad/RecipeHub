@@ -124,8 +124,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method returns a new RecipeLibrary with all the recipes that have an ID
-     * from the input List
+     * Makes a List with all the recipes that have an ID from the input List.
      *
      * @param ids - List with all the IDs of the recipes you want to get
      * 
@@ -133,6 +132,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
      *         List
      */
     public List<Recipe> getFilteredRecipes(List<Integer> ids) {
-        return getRecipes().stream().filter(r -> ids.contains(r.getID())).collect(Collectors.toList());
+        return getRecipes().stream().filter(r -> ids.contains(r.getId()))
+                .collect(Collectors.toList());
     }
 }

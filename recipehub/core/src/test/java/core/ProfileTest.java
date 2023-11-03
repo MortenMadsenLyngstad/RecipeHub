@@ -163,15 +163,15 @@ public class ProfileTest {
                 Recipe r2 = new Recipe("Hamburger", 1, profile, 2);
 
                 Assertions.assertTrue(profile.getRecipes().size() == 2, "The Arraylist should have size 2");
-                Assertions.assertEquals(r1.getID(), profile.getRecipes().get(0),
+                Assertions.assertEquals(r1.getId(), profile.getRecipes().get(0),
                                 "r1 should be the first recipe in the RecipeLibrary");
-                Assertions.assertEquals(r2.getID(), profile.getRecipes().get(profile.getRecipes().size() - 1),
+                Assertions.assertEquals(r2.getId(), profile.getRecipes().get(profile.getRecipes().size() - 1),
                                 "r2 should be the last recipe in the recipeLibrary");
                 // Checks if removeRecipe() works and that removing all recipes returns an empty
                 // RecipeLibrary
                 profile.removeRecipe(r2);
                 Assertions.assertEquals(1, profile.getRecipes().size());
-                Assertions.assertEquals(r1.getID(), profile.getRecipes().get(0));
+                Assertions.assertEquals(r1.getId(), profile.getRecipes().get(0));
                 profile.removeRecipe(r1);
                 Assertions.assertNotNull(profile.getRecipes(), "getRecipes() should return an empty ArrayList");
                 Assertions.assertTrue(profile.getRecipes().size() == 0, "The RecipeLibrary should be empty");
@@ -190,26 +190,26 @@ public class ProfileTest {
                 // Checks that the favorites is added the the Profile
                 Recipe r1 = new Recipe("Pasta Carbonara", 2, p2, 1);
                 Recipe r2 = new Recipe("Hamburger", 1, profile, 2);
-                profile.addFavorite(r1.getID());
-                profile.addFavorite(r2.getID());
+                profile.addFavorite(r1.getId());
+                profile.addFavorite(r2.getId());
 
                 Assertions.assertEquals(2, profile.getFavorites().size());
-                Assertions.assertEquals(r1.getID(), profile.getFavorites().get(0));
-                Assertions.assertEquals(r2.getID(), profile.getFavorites().get(1));
+                Assertions.assertEquals(r1.getId(), profile.getFavorites().get(0));
+                Assertions.assertEquals(r2.getId(), profile.getFavorites().get(1));
 
                 // Checks that removeFavorite() works
-                profile.removeFavorite(r1.getID());
+                profile.removeFavorite(r1.getId());
 
                 Assertions.assertEquals(1, profile.getFavorites().size());
-                Assertions.assertEquals(r2.getID(), profile.getFavorites().get(0));
+                Assertions.assertEquals(r2.getId(), profile.getFavorites().get(0));
 
                 // Removing r1 again should do nothing
-                profile.removeFavorite(r1.getID());
+                profile.removeFavorite(r1.getId());
 
                 Assertions.assertEquals(1, profile.getFavorites().size());
-                Assertions.assertEquals(r2.getID(), profile.getFavorites().get(0));
+                Assertions.assertEquals(r2.getId(), profile.getFavorites().get(0));
 
-                profile.removeFavorite(r2.getID());
+                profile.removeFavorite(r2.getId());
                 Assertions.assertNotNull(profile.getFavorites());
                 Assertions.assertEquals(0, profile.getFavorites().size());
         }

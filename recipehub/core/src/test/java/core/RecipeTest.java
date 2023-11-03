@@ -202,6 +202,6 @@ public class RecipeTest {
     @Test
     public void testID() {
         Recipe r = makeRecipe();
-        Assertions.assertEquals(1, r.getID());
+        Assertions.assertEquals(1, r.getId());
     }
 }

@@ -115,7 +115,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         backButton = lookup("#backButton").query();
 
         fixMockMenuItems();
-        when(mockRecipeFileHandler.getNextRecipeID()).thenReturn(1);
+        when(mockRecipeFileHandler.getNextRecipeId()).thenReturn(1);
         controller.setProfile(mockProfile);
         mockProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
     }
