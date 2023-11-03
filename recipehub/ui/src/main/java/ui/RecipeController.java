@@ -232,7 +232,7 @@ public class RecipeController extends SuperController {
         if (showAlert()) {
             ActionEvent actionEvent = new ActionEvent(event.getSource(), event.getTarget());
             try {
-                switchSceneWithInfo(actionEvent, "Mainscreen.fxml");
+                switchSceneMain(actionEvent, "Mainscreen.fxml");
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
