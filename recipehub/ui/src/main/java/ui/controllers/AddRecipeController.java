@@ -68,7 +68,7 @@ public class AddRecipeController extends SuperController {
      */
     public void createRecipe() throws IllegalArgumentException {
         if (validateRecipeName()) {
-            this.newRecipe = new Recipe(recipeName.getText(), 1, currentProfile);
+            this.newRecipe = new Recipe(recipeName.getText(), 1, currentProfile, recipeFilehandler.getNextRecipeID());
             recipeNamePane.setVisible(false);
             name.setText(newRecipe.getName());
             descriptionPane.setVisible(true);
