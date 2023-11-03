@@ -3,6 +3,7 @@ package core;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is used to contain several recipes.
@@ -120,5 +121,18 @@ public class RecipeLibrary implements Iterable<Recipe> {
      */
     public List<Recipe> getRecipes() {
         return new ArrayList<>(recipes);
+    }
+
+    /**
+     * This method returns a new RecipeLibrary with all the recipes that have an ID
+     * from the input List
+     *
+     * @param ids - List with all the IDs of the recipes you want to get
+     * 
+     * @return RecipeLibrary with all the recipes that have an ID from the input
+     *         List
+     */
+    public List<Recipe> getFilteredRecipes(List<Integer> ids) {
+        return getRecipes().stream().filter(r -> ids.contains(r.getID())).collect(Collectors.toList());
     }
 }

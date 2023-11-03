@@ -1,7 +1,8 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
-
 
 /**
  * This class is used to contain Profile information.
@@ -13,8 +14,8 @@ public class Profile {
     private String username;
     private transient String password;
     private String hashedPassword;
-    private RecipeLibrary recipeLibrary;
-    private RecipeLibrary favorites;
+    private List<Integer> recipeLibrary;
+    private List<Integer> favorites;
 
     /**
      * This constructor initializes the username, password and recipes.
@@ -27,8 +28,8 @@ public class Profile {
         this.username = username;
         isValidPassword(password);
         this.password = password;
-        recipeLibrary = new RecipeLibrary();
-        favorites = new RecipeLibrary();
+        recipeLibrary = new ArrayList<>();
+        favorites = new ArrayList<>();
     }
 
     /**
@@ -94,6 +95,7 @@ public class Profile {
 
     /**
      * This method will return the hashed password of the given profile.
+     * 
      * @return String value for hashed password
      */
     public String getHashedPassword() {
@@ -124,6 +126,7 @@ public class Profile {
 
     /**
      * This method will set the hashed password of the profile.
+     * 
      * @param hashedPassword - String value to set as hashed password
      */
     public void setHashedPassword(String hashedPassword) {
@@ -133,55 +136,53 @@ public class Profile {
     /**
      * This method will return the recipes made by the profile.
      * 
-     * @return RecipeLibrary with the profile's recipes
+     * @return List with the profile's recipe IDs
      */
-    public RecipeLibrary getRecipes() {
+    public List<Integer> getRecipes() {
         return recipeLibrary;
     }
 
     /**
      * This method adds the given recipe to the profile's recipes.
      * 
-     * @param recipe - Recipe to add to the profile's recipes
+     * @param recipe - ID for Recipe to add to the profile's recipes
      */
-    public void addRecipe(Recipe recipe) {
-        recipeLibrary.addRecipe(recipe);
+    public void addRecipe(Integer recipe) {
+        recipeLibrary.add(recipe);
     }
 
     /**
      * This method will remove the recipe from the profile's recipes.
      */
     public void removeRecipe(Recipe recipe) {
-        this.recipeLibrary.removeRecipe(recipe);
+        this.recipeLibrary.remove(recipeLibrary.indexOf(recipe.getID()));
     }
 
     /**
      * This method will return this profile's favorite recipes.
      * 
-     * @return RecipeLibrary with the profile's favorite recipes
+     * @return List with the profile's favorite recipe IDs
      */
-    public RecipeLibrary getFavorites() {
+    public List<Integer> getFavorites() {
         return favorites;
     }
 
     /**
      * This method adds the given recipe to the profile's favorites.
      * 
-     * @param recipe - Recipe to add to the profile's favorites
+     * @param recipe - ID of the Recipe to add to the profile's favorites
      */
-    public void addFavorite(Recipe recipe) {
-        favorites.addRecipe(recipe);
+    public void addFavorite(Integer recipe) {
+        favorites.add(recipe);
     }
 
     /**
-     * This method will remove the given recipee from the profile's favorites.
+     * This method will remove the given recipe from the profile's favorites.
      * 
-     * @param recipe - Recipe to remove from the profile's favorite
+     * @param recipe - ID of the Recipe to remove from the profile's favorite
      */
-    public void removeFavorite(Recipe recipe) {
-        if (favorites.containsRecipe(recipe)) {
-            favorites.removeRecipe(recipe);
-        }
+    public void removeFavorite(Integer recipe) {
+        favorites.remove(recipe);
     }
 
 }
