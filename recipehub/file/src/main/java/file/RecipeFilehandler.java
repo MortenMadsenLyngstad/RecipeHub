@@ -2,6 +2,7 @@ package file;
 
 import core.Recipe;
 import core.RecipeLibrary;
+
 import java.nio.file.Path;
 
 /**
@@ -22,6 +23,20 @@ public class RecipeFilehandler {
     }
 
     /**
+     * This method gets an ID for a recipe to be made.
+     * 
+     * @return - Returns an ID for a recipe
+     */
+    public int getNextRecipeID() {
+        Path filePath = Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + "recipeID.json");
+        FileUtil.createFile(filePath);
+        Integer returnValue = FileUtil.readFile(filePath, 0, Integer.class);
+        FileUtil.writeFile(filePath, returnValue + 1);
+        return returnValue;
+    }
+
+    /**
      * This method writes a recipe to the file.
      * 
      * @param recipe - Recipe object to write
@@ -33,7 +48,7 @@ public class RecipeFilehandler {
                 .anyMatch(r -> r.getName().equals(recipe.getName()))) {
             recipeLibrary.removeRecipe(recipe);
         }
-            
+
         recipeLibrary.addRecipe(recipe);
         FileUtil.writeFile(filePath, recipeLibrary);
     }
