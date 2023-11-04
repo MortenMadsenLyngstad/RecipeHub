@@ -197,10 +197,10 @@ public class RecipeTest {
     }
 
     /**
-     * Tests the ID getter
+     * Tests the id getter
      */
     @Test
-    public void testID() {
+    public void testId() {
         Recipe r = makeRecipe();
         Assertions.assertEquals(1, r.getId());
     }

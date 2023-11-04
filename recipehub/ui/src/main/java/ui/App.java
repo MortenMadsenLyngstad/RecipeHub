@@ -43,7 +43,7 @@ public class App extends Application {
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         SuperController controller = fxmlLoader.getController();
-        controller.setFilehandlers(new RecipeFilehandler("recipes.json"),
+        controller.setFilehandlers(new RecipeFilehandler("recipes.json", "recipeId.json"),
                 new UserFilehandler("userInfo.json"));
         stage.show();
     }

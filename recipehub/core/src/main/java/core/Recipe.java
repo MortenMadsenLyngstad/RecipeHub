@@ -28,6 +28,7 @@ public class Recipe {
      * @param name     The name of the recipe.
      * @param portions The amount of portions this recipe makes.
      * @param author   The author of this recipe, a Profile object
+     * @param id       The id of the recipe
      */
     public Recipe(String name, int portions, Profile author, int id) {
         setName(name);
@@ -355,9 +356,9 @@ public class Recipe {
     }
 
     /**
-     * Gets the ID of the recipe.
+     * Gets the id of the recipe.
      * 
-     * @return The ID of the recipe
+     * @return The id of the recipe
      */
     public int getId() {
         return id;

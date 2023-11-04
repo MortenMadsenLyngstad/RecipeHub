@@ -33,7 +33,7 @@ public class Profile {
     }
 
     /**
-     * This metod checks if a username is valid.
+     * This method checks if a username is valid.
      * These are the criterias:
      * - Must have length of at least 5
      * - Must only contain letters and numbers
@@ -51,7 +51,7 @@ public class Profile {
     }
 
     /**
-     * This metod checks if a password is valid.
+     * This method checks if a password is valid.
      * These are the criterias:
      * - Must have length of at least 8
      * - Must contain a lower case letter
@@ -145,7 +145,7 @@ public class Profile {
     /**
      * This method adds the given recipe to the profile's recipes.
      * 
-     * @param recipe - ID for Recipe to add to the profile's recipes
+     * @param recipe - id for the Recipe to add to the profile's recipes
      */
     public void addRecipe(Integer recipe) {
         recipeLibrary.add(recipe);
@@ -155,13 +155,13 @@ public class Profile {
      * This method will remove the recipe from the profile's recipes.
      */
     public void removeRecipe(Recipe recipe) {
-        this.recipeLibrary.remove(recipeLibrary.indexOf(recipe.getId()));
+        recipeLibrary.remove(recipeLibrary.indexOf(recipe.getId()));
     }
 
     /**
      * This method will return this profile's favorite recipes.
      * 
-     * @return List with the profile's favorite recipe IDs
+     * @return List with the profile's favorite recipe ids
      */
     public List<Integer> getFavorites() {
         return favorites;
@@ -170,7 +170,7 @@ public class Profile {
     /**
      * This method adds the given recipe to the profile's favorites.
      * 
-     * @param recipe - ID of the Recipe to add to the profile's favorites
+     * @param recipe - id of the Recipe to add to the profile's favorites
      */
     public void addFavorite(Integer recipe) {
         favorites.add(recipe);
