@@ -3,8 +3,6 @@ package springboot.restserver;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
-
-import java.io.Console;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,11 +29,19 @@ public class RecipeHubController {
 
     private RecipeHubAccess access = new DirectRecipeHubAccess();
 
+    /**
+     * Constructor.
+     * @param recipeHubService - the recipe hub service
+     */
     @Autowired
     public RecipeHubController(RecipeHubService recipeHubService) {
         this.recipeHubService = recipeHubService;
     }
 
+    /**
+     * Get the recipe library.
+     * @return the recipe library
+     */
     @GetMapping(path = "/recipelibrary")
     public RecipeLibrary getRecipeLibrary() {
         return recipeHubService.getRecipeLibrary();
@@ -45,6 +51,11 @@ public class RecipeHubController {
         return recipeHubService.containsRecipe(recipe);
     }
 
+    /**
+     * Adds a recipe.
+     * @param recipe - the recipe to add
+     * @return true if the recipe was added, false otherwise
+     */
     @PostMapping(path = "/recipelibrary")
     public boolean addRecipe(@RequestBody Recipe recipe) {
         if (checkRecipe(recipe)) {
@@ -55,6 +66,11 @@ public class RecipeHubController {
         return true;
     }
 
+    /**
+     * Removes a recipe.
+     * @param recipe - the recipe to remove
+     * @return true if the recipe was removed, false otherwise
+     */
     @DeleteMapping(path = "/recipelibrary")
     public boolean removeRecipe(@RequestBody Recipe recipe) {
         if (!checkRecipe(recipe)) {
@@ -65,23 +81,40 @@ public class RecipeHubController {
         return true;
     }
 
-    public boolean checkProfile(Profile profile) {
+    private boolean checkProfile(Profile profile) {
         return recipeHubService.containsProfile(profile);
     }
 
+    /**
+     * Get a profile.
+     * @param username - the username of the profile to get
+     * @return the profile
+     */
     @GetMapping(path = "/profiles/{username}")
     public Profile getProfile(@PathVariable("username") String username) {
         return recipeHubService.getProfile(username);
     }
 
+    /**
+     * Get all profiles.
+     * @return the profiles
+     */
     @GetMapping(path = "/profiles")
     public List<Profile> getProfiles() {
         System.out.println("getProfiles() :" + recipeHubService.getProfiles().get(0).getUsername());
         return recipeHubService.getProfiles();
     }
 
+    /**
+     * Adds a profile.
+     * @param profile - the profile to add
+     * @return true if the profile was added, false otherwise
+     */
     @PutMapping(path = "/profiles")
     public boolean putProfile(@RequestBody Profile profile) {
+        if (checkProfile(profile)) {
+            return false;
+        }
         System.out.println("putProfile(Profile profile) :" + profile.getUsername());
         recipeHubService.putProfile(profile);
         access.saveProfile(profile);
