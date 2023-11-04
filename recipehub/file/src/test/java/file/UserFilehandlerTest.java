@@ -12,6 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+/**
+ * This class is used to test the UserFilehandler class.
+ */
 public class UserFilehandlerTest {
     private UserFilehandler userFilehandler;
 
@@ -74,7 +77,6 @@ public class UserFilehandlerTest {
     /**
      * Tests if loadProfile returns the correct information after a profile is
      * written to file.
-     * Tests if an empty hashtable is returned when the file does not exist
      */
     @Test
     @DisplayName("Test empty hashtable is returned when file does not exist")

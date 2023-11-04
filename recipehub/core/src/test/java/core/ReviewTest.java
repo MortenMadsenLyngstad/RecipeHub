@@ -1,35 +1,46 @@
 package core;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * This class is used to test the Review class.
+ */
 public class ReviewTest {
     
-    private Profile p = new Profile("User1234", "User12345");
+    private Review review;
+    private Profile profile;
 
-    /**
-     * Tests the constructor
-     */
-    @Test
-    public void testConstructor() {
-        Review review = new Review(5, "This is a comment", p.getUsername());
-        Assertions.assertEquals(5, review.getRating());
-        Assertions.assertEquals("This is a comment", review.getComment());
-        Assertions.assertEquals(p.getUsername(), review.getReviewer());
+    @BeforeEach
+    public void setUp() {
+        profile = new Profile("Profile1", "Password1");
+        review = new Review(5, "This is a comment", profile.getUsername());
     }
 
     /**
-     * Tests the validateRating method
+     * Tests the constructor.
+     */
+    @Test
+    public void testConstructor() {
+        Assertions.assertEquals(5, review.getRating());
+        Assertions.assertEquals("This is a comment", review.getComment());
+        Assertions.assertEquals(profile.getUsername(), review.getReviewer());
+    }
+
+    /**
+     * Tests the validateRating method.
      */
     @Test
     public void testValidateRating() {
-        Review review = new Review(5, "This is a comment", p.getUsername());
-        Assertions.assertTrue(review.validateRating(5));
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             review.validateRating(0);
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             review.validateRating(6);
+        });
+        Assertions.assertDoesNotThrow(() -> {
+            review.validateRating(5);
         });
     }
 }

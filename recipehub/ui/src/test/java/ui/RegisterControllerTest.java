@@ -4,14 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import core.PasswordHasher;
 import core.Profile;
 import core.RecipeLibrary;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import java.io.IOException;
-
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
