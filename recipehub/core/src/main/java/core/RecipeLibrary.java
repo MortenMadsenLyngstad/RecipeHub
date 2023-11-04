@@ -128,7 +128,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
      *
      * @param ids - List with all the IDs of the recipes you want to get
      * 
-     * @return RecipeLibrary with all the recipes that have an ID from the input
+     * @return List with all the recipes that have an ID from the input
      *         List
      */
     public List<Recipe> getFilteredRecipes(List<Integer> ids) {

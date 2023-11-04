@@ -256,7 +256,7 @@ public class RecipeControllerTest extends ApplicationTest {
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockProfile.getUsername()).thenReturn("Username");
-        doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
+        doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0).getId());
         clickOn(deleteButton);
         Button okButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.OK);
         clickOn(okButton);
@@ -272,7 +272,7 @@ public class RecipeControllerTest extends ApplicationTest {
     public void testDeleteRecipe2() {
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
-        doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
+        doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0).getId());
         clickOn(deleteButton);
         Button okButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.OK);
         clickOn(okButton);
@@ -286,7 +286,7 @@ public class RecipeControllerTest extends ApplicationTest {
     @Test
     public void testDeleteRecipeCancel() {
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
-        doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
+        doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0).getId());
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockProfile.getUsername()).thenReturn("Username");
         clickOn(deleteButton);

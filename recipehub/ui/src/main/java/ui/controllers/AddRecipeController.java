@@ -471,7 +471,7 @@ public class AddRecipeController extends SuperController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            currentProfile.removeRecipe(newRecipe);
+            currentProfile.removeRecipe(newRecipe.getId());
             try {
                 switchSceneMain(event, "Mainscreen.fxml");
             } catch (IOException e) {

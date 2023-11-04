@@ -154,8 +154,8 @@ public class Profile {
     /**
      * This method will remove the recipe from the profile's recipes.
      */
-    public void removeRecipe(Recipe recipe) {
-        recipeLibrary.remove(recipeLibrary.indexOf(recipe.getId()));
+    public void removeRecipe(Integer recipe) {
+        recipeLibrary.remove(recipeLibrary.indexOf(recipe));
     }
 
     /**

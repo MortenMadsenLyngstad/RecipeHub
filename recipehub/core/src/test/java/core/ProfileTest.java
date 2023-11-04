@@ -169,10 +169,10 @@ public class ProfileTest {
                                 "r2 should be the last recipe in the recipeLibrary");
                 // Checks if removeRecipe() works and that removing all recipes returns an empty
                 // RecipeLibrary
-                profile.removeRecipe(r2);
+                profile.removeRecipe(r2.getId());
                 Assertions.assertEquals(1, profile.getRecipes().size());
                 Assertions.assertEquals(r1.getId(), profile.getRecipes().get(0));
-                profile.removeRecipe(r1);
+                profile.removeRecipe(r1.getId());
                 Assertions.assertNotNull(profile.getRecipes(), "getRecipes() should return an empty ArrayList");
                 Assertions.assertTrue(profile.getRecipes().size() == 0, "The RecipeLibrary should be empty");
         }

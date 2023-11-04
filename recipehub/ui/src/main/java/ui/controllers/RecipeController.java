@@ -269,7 +269,7 @@ public class RecipeController extends SuperController {
             for (Profile p : userFilehandler.readProfiles()) {
                 if (p.getUsername().equals(currentProfile.getUsername())) {
                     currentProfile.removeFavorite(recipe.getId());
-                    currentProfile.removeRecipe(recipe);
+                    currentProfile.removeRecipe(recipe.getId());
                     profiles.add(currentProfile);
                 } else {
                     p.removeFavorite(recipe.getId());
