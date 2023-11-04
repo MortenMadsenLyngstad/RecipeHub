@@ -29,7 +29,7 @@ public class RecipeFilehandlerTest {
         Profile profile = new Profile("testUser", "Password123");
         profile.setHashedPassword(PasswordHasher.hashPassword(profile.getPassword()));
         this.recipe = new Recipe("testRecipe", 1, profile, 1);
-        this.recipeFilehandler = new RecipeFilehandler("test.json");
+        this.recipeFilehandler = new RecipeFilehandler("test.json", "testId.json");
     }
 
     /**
@@ -59,6 +59,23 @@ public class RecipeFilehandlerTest {
                 "The recipe should have 1 portion.");
         Assertions.assertEquals(this.recipe.getAuthor(), loadedRecipe.getAuthor(),
                 "The recipe should have the author \"testUser\".");
+        deleteFile();
+    }
+
+    @Test
+    // @Displayname("Tests if the next id is correct")
+    public void testGetNextRecipeId() {
+        // Initializing testId.json with 1 as the next id
+        FileUtil.writeFile(
+                Path.of(System.getProperty("user.home")
+                        + System.getProperty("file.separator") + "testId.json"),
+                1);
+        int id = recipeFilehandler.getNextRecipeId();
+        Assertions.assertEquals(1, id, "The id should be 1");
+        id = recipeFilehandler.getNextRecipeId();
+        Assertions.assertEquals(2, id, "The id should be 2");
+        id = recipeFilehandler.getNextRecipeId();
+        Assertions.assertEquals(3, id, "The id should be 3");
         deleteFile();
     }
 
