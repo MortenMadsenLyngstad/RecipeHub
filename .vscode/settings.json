@@ -1,7 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.project.sourcePaths": [],
-    "java.checkstyle.configuration": "${workspaceFolder}\\recipehub\\config\\checkstyle\\checkstyle-checker.xml",
+    "java.checkstyle.configuration": "${workspaceFolder}/recipehub/config/checkstyle/checkstyle-checker.xml",
     "editor.rulers": [
         100
     ],
