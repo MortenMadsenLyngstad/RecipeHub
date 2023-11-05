@@ -11,8 +11,8 @@ These were our goals for expansion:
 - Functionality for favoriting recipes
 - Functionality for deleting recipes
 - Search bar in mainscreen
-- Functionality for undoing steps and ingredients in addRecipe-screen
-- Pop-up when trying to return to mainscreen from addRecipe-screen if the recipe is not completed
+- Functionality for undoing steps and ingredients in putRecipe-screen
+- Pop-up when trying to return to mainscreen from putRecipe-screen if the recipe is not completed
 - Tests for all parts of the code-base, with high coverage-percentage
 - Plugins for evaluating code quality
 - Hashing of passwords for security

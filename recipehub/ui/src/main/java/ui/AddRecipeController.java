@@ -21,7 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
- * This class is the controller for the AddRecipe.fxml file
+ * This class is the controller for the PutRecipe.fxml file
  */
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;

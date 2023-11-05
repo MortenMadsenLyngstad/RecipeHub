@@ -60,14 +60,23 @@ public class RecipeLibrary implements Iterable<Recipe> {
      * 
      * @param recipe - Recipe object you wish to add
      */
-    public void addRecipe(Recipe recipe) {
-        if (containsRecipe(recipe)) {
-            throw new IllegalArgumentException("The recipe is already added");
-        }
+    private void addRecipe(Recipe recipe) {
         if (recipe == null) {
             throw new IllegalArgumentException("Can't add null");
         }
         recipes.add(recipe);
+    }
+
+    /**
+     * This mehtod will update a recipe if it exists, or add it if it doesn't.
+     * 
+     * @param recipe - The recipe to be updated or added
+     */
+    public void putRecipe(Recipe recipe) {
+        if (containsRecipe(recipe)) {
+            removeRecipe(recipe);
+        }
+        addRecipe(recipe);
     }
 
     /**

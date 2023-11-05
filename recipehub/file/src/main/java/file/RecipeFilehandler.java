@@ -27,14 +27,8 @@ public class RecipeFilehandler {
      * @param recipe - Recipe object to write
      */
     public void writeRecipe(Recipe recipe) {
-        RecipeLibrary recipeLibrary = readRecipeLibrary();
-
-        if (recipeLibrary.getRecipes().stream()
-                .anyMatch(r -> r.getName().equals(recipe.getName()))) {
-            recipeLibrary.removeRecipe(recipe);
-        }
-            
-        recipeLibrary.addRecipe(recipe);
+        RecipeLibrary recipeLibrary = readRecipeLibrary();            
+        recipeLibrary.putRecipe(recipe);
         FileUtil.writeFile(filePath, recipeLibrary);
     }
 

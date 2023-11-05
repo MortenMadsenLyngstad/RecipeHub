@@ -165,7 +165,7 @@ public class RemoteRecipeHubAccessTest {
      */
     @Test
     public void testSaveRecipe() {
-        stubFor(post(urlEqualTo("/recipelibrary"))
+        stubFor(put(urlEqualTo("/recipelibrary"))
                 .withHeader("Accept", equalTo("application/json"))
                 .willReturn(aResponse()
                         .withStatus(200)
@@ -173,12 +173,12 @@ public class RemoteRecipeHubAccessTest {
                         .withBody("true")));
         Profile profile = new Profile("Username1", "Password1");
         remoteRecipeHubAccess.saveRecipe(new Recipe("Pasta Carbonara", 1, profile));
-        verify(postRequestedFor(urlEqualTo("/recipelibrary"))
+        verify(putRequestedFor(urlEqualTo("/recipelibrary"))
                 .withHeader("Accept", equalTo("application/json"))
                 .withHeader("Content-Type", equalTo("application/json")));
 
         // Checks if exception handling works properly
-        stubFor(post(urlEqualTo("/recipelibrary"))
+        stubFor(put(urlEqualTo("/recipelibrary"))
                 .withHeader("Accept", equalTo("application/json"))
                 .willReturn(aResponse()
                         .withFault(Fault.CONNECTION_RESET_BY_PEER)));

@@ -279,19 +279,19 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch screen to addRecipe.fxml when the addRecipe button is
+     * This method will switch screen to addRecipe.fxml when the putRecipe button is
      * clicked on.
      * 
      * @param event - The event of the Add Recipe-button beign clicked on
      * @throws IOException - if the switchSceneWithInfo method throws an exception
      */
     @FXML
-    public void addRecipe(ActionEvent event) throws IOException {
+    public void putRecipe(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "addRecipe.fxml");
     }
 
     /**
-     * This method will switch screen to UserLogin.fxml when the addRecipe button is
+     * This method will switch screen to UserLogin.fxml when the putRecipe button is
      * clicked on.
      * 
      * @param event - The event of the Log Out-button beign clicked on

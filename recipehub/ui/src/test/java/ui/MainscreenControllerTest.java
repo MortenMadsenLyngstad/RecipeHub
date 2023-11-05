@@ -92,10 +92,10 @@ public class MainscreenControllerTest extends ApplicationTest {
         recipe.addReview(new Review(4, null, profile2.getUsername()));
         profile1.addFavorite(recipe);
 
-        recipes.addRecipe(recipe);
-        recipes.addRecipe(new Recipe("Taco", 4, profile1));
-        recipes.addRecipe(new Recipe("Pasta Carbonara", 1, profile2));
-        recipes.addRecipe(new Recipe("Hamburger", 2, profile2));
+        recipes.putRecipe(recipe);
+        recipes.putRecipe(new Recipe("Taco", 4, profile1));
+        recipes.putRecipe(new Recipe("Pasta Carbonara", 1, profile2));
+        recipes.putRecipe(new Recipe("Hamburger", 2, profile2));
 
         profiles.add(profile1);
         profiles.add(profile2);
@@ -186,7 +186,7 @@ public class MainscreenControllerTest extends ApplicationTest {
      */
     @Test
     @DisplayName("Add recipe test")
-    public void testAddRecipeButton() {
+    public void testPutRecipeButton() {
         clickOn("#addBtn");
         assertEquals("addRecipe.fxml", controller.getFileName(), "Should have switched to addRecipe.fxml");
 

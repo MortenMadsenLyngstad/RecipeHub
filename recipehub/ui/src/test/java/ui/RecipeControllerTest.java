@@ -101,7 +101,7 @@ public class RecipeControllerTest extends ApplicationTest {
         recipe.addIngredient("Cheese", 100.0, "g");
         recipe.addIngredient("Pepperoni", 100.0, "g");
         recipe.setPortions(4);
-        recipes.addRecipe(recipe);
+        recipes.putRecipe(recipe);
 
         doNothing().when(mockUserFilehandler).writeProfile(profile1);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);

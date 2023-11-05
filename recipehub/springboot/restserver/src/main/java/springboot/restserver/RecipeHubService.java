@@ -58,8 +58,8 @@ public class RecipeHubService {
      * Add a recipe.
      * @param recipe - the recipe to add
      */
-    public void addRecipe(Recipe recipe) {
-        recipeLibrary.addRecipe(recipe);
+    public void putRecipe(Recipe recipe) {
+        recipeLibrary.putRecipe(recipe);
     }
 
     /**

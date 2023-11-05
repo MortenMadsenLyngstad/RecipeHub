@@ -145,8 +145,8 @@ public class Profile {
      * 
      * @param recipe - Recipe to add to the profile's recipes
      */
-    public void addRecipe(Recipe recipe) {
-        recipeLibrary.addRecipe(recipe);
+    public void putRecipe(Recipe recipe) {
+        recipeLibrary.putRecipe(recipe);
     }
 
     /**
@@ -171,7 +171,7 @@ public class Profile {
      * @param recipe - Recipe to add to the profile's favorites
      */
     public void addFavorite(Recipe recipe) {
-        favorites.addRecipe(recipe);
+        favorites.putRecipe(recipe);
     }
 
     /**

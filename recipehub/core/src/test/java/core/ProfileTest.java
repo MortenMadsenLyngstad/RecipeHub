@@ -158,7 +158,7 @@ public class ProfileTest {
         Assertions.assertNotNull(profile.getRecipes(), "getRecipes() should return an empty RecipeLibrary");
         Assertions.assertTrue(profile.getRecipes().getSize() == 0, "The RecipeLibrary should be empty");
 
-        // Checks if addRecipe() works and if getRecipes() works after adding recipes
+        // Checks if putRecipe() works and if getRecipes() works after adding recipes
         Recipe r1 = new Recipe("Pasta Carbonara", 2, profile);
         Recipe r2 = new Recipe("Hamburger", 1, profile);
 

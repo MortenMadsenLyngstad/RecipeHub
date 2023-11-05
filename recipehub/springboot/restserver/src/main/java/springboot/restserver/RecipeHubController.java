@@ -52,16 +52,13 @@ public class RecipeHubController {
     }
 
     /**
-     * Adds a recipe.
+     * Saves a recipe.
      * @param recipe - the recipe to add
      * @return true if the recipe was added, false otherwise
      */
-    @PostMapping(path = "/recipelibrary")
-    public boolean addRecipe(@RequestBody Recipe recipe) {
-        if (checkRecipe(recipe)) {
-            return false;
-        }
-        recipeHubService.addRecipe(recipe);
+    @PutMapping(path = "/recipelibrary")
+    public boolean putRecipe(@RequestBody Recipe recipe) {
+        recipeHubService.putRecipe(recipe);
         access.saveRecipe(recipe);
         return true;
     }
@@ -112,9 +109,6 @@ public class RecipeHubController {
      */
     @PutMapping(path = "/profiles")
     public boolean putProfile(@RequestBody Profile profile) {
-        if (checkProfile(profile)) {
-            return false;
-        }
         System.out.println("putProfile(Profile profile) :" + profile.getUsername());
         recipeHubService.putProfile(profile);
         access.saveProfile(profile);

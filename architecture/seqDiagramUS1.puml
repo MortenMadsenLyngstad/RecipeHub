@@ -10,7 +10,7 @@ Actor User
 participant App
 participant LoginController
 participant MainscreenController
-participant AddRecipeController
+participant PutRecipeController
 participant RecipeFilehandler
 participant UserFilehandler
 participant FileUtil
@@ -26,29 +26,29 @@ LoginController -> MainscreenController: login(ActionEvent event)
 deactivate LoginController
 activate MainscreenController
 User -> MainscreenController: Clicks on: "+ Add Recipe"
-MainscreenController -> AddRecipeController: addRecipe(ActionEvent event)
+MainscreenController -> PutRecipeController: putRecipe(ActionEvent event)
 deactivate MainscreenController
-activate AddRecipeController
-User -> AddRecipeController: Fills in recipe details
-User -> AddRecipeController: Clicks on: "Save Recipe"
-AddRecipeController -> AddRecipeController: saveRecipe()
-AddRecipeController -> RecipeFilehandler: saveRecipeToLibrary()
+activate PutRecipeController
+User -> PutRecipeController: Fills in recipe details
+User -> PutRecipeController: Clicks on: "Save Recipe"
+PutRecipeController -> PutRecipeController: saveRecipe()
+PutRecipeController -> RecipeFilehandler: saveRecipeToLibrary()
 activate RecipeFilehandler
 RecipeFilehandler -> FileUtil: writeRecipe(Recipe recipe)
 deactivate RecipeFilehandler
 activate FileUtil
 FileUtil -> recipes.json: writeFile(Path filePath, T data)
 deactivate FileUtil
-AddRecipeController -> UserFilehandler: saveRecipeToLibrary()
+PutRecipeController -> UserFilehandler: saveRecipeToLibrary()
 activate UserFilehandler
 UserFilehandler -> FileUtil: writeProfile(Profile profile)
 deactivate UserFilehandler
 activate FileUtil
 FileUtil -> userinfo.json: writeFile(Path filePath, T data)
 deactivate FileUtil
-User -> AddRecipeController: Clicks on: "Back"
-AddRecipeController -> MainscreenController: back(ActionEvent event)
-deactivate AddRecipeController
+User -> PutRecipeController: Clicks on: "Back"
+PutRecipeController -> MainscreenController: back(ActionEvent event)
+deactivate PutRecipeController
 activate MainscreenController
 User <-- MainscreenController: Recipe shows in feed
 User -> MainscreenController: Clicks on: "Logout"
