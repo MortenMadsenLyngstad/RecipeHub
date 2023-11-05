@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import core.Profile;
 import core.Recipe;
-import core.RecipeHubModel;
 import core.RecipeLibrary;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -17,6 +16,10 @@ import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * This class centralizes access to the REST API.
+ * Makes it easier to support transparent use of a REST API.
+ */
 public class RemoteRecipeHubAccess implements RecipeHubAccess {
 
     private final URI endpointBaseUri;
@@ -29,31 +32,22 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
 
     private Gson gson;
 
-    private RecipeHubModel recipeHubModel;
-
+    /**
+     * This constructor will set the base URI and initialize Gson object.
+     *
+     * @param endpointBaseUri - The base URI of the remote recipehub endpoint
+     */
     public RemoteRecipeHubAccess(URI endpointBaseUri) {
         this.endpointBaseUri = endpointBaseUri;
         this.gson = new GsonBuilder().setPrettyPrinting().create();
-        this.recipeHubModel = getRecipeHubModel();
     }
 
-    private RecipeHubModel getRecipeHubModel() {
-        if (recipeHubModel == null) {
-            HttpRequest request = HttpRequest.newBuilder(endpointBaseUri)
-                    .header(ACCEPT_HEADER, APPLICATION_JSON)
-                    .GET()
-                    .build();
-            try {
-                final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-                        HttpResponse.BodyHandlers.ofString());
-                this.recipeHubModel = gson.fromJson(response.body(), RecipeHubModel.class);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return recipeHubModel;
-    }
-
+    /**
+     * Retrieves the RecipeLibrary from the remote server.
+     *
+     * @return RecipeLibrary containing the recipes for the app
+     * @throws RuntimeException if an error occurs during the HTTP request.
+     */
     @Override
     public RecipeLibrary getRecipeLibrary() {
         System.out.println("getRecipeLirary() :" + recipeLibraryUri());
@@ -76,6 +70,12 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
         }
     }
 
+    /**
+     * Removes the given recipe from the remote server.
+     *
+     * @param recipe - Recipe to be removed.
+     * @throws RuntimeException if an error occurs during the HTTP request.
+     */
     @Override
     public void removeRecipe(Recipe recipe) {
         try {
@@ -90,14 +90,18 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             String responseString = response.body();
             System.out.println("removeRecipe(Recipe recipe) response:" + responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
-            if (success) {
-                recipeHubModel.removeRecipe(recipe);
-            }
+            System.out.println("Removed recipe: " + success);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Saves the given recipe to the remote server.
+     *
+     * @param recipe - Recipe to be saved.
+     * @throws RuntimeException if an error occurs during the HTTP request.
+     */
     @Override
     public void saveRecipe(Recipe recipe) {
         try {
@@ -113,14 +117,18 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             System.out.println("addRecipe(Recipe recipe) response:" + responseString);
             System.out.println(recipeLibraryUri());
             Boolean success = gson.fromJson(responseString, Boolean.class);
-            if (success) {
-                recipeHubModel.addRecipe(recipe);
-            }
+            System.out.println("Saved recipe: " + success);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Saves the given profile to the remote server.
+     *
+     * @param profile - Profile to be saved.
+     * @throws RuntimeException if an error occurs during the HTTP request.
+     */
     @Override
     public void saveProfile(Profile profile) {
         System.out.println("addProfile(Profile profile) :" + profilesUri());
@@ -136,14 +144,18 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             String responseString = response.body();
             System.out.println(responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
-            if (success) {
-                recipeHubModel.putProfile(profile);
-            }
+            System.out.println("Saved profile: " + success);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Retrieves a list of all profiles from the remote server.
+     *
+     * @return - List of all profiles.
+     * @throws RuntimeException if an error occurs during the HTTP request.
+     */
     @Override
     public List<Profile> getProfiles() {
         System.out.println("getProfiles() :" + profilesUri());
@@ -157,7 +169,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
                     HttpResponse.BodyHandlers.ofString());
 
             String responseBody = response.body();
-
             Type listType = new TypeToken<List<Profile>>() {
             }.getType();
             List<Profile> profiles = gson.fromJson(responseBody, listType);
@@ -169,14 +180,30 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
         }
     }
 
+    /**
+     * Generates the URI for accessing the RecipeLibrary on the remote server.
+     *
+     * @return URI for the recipe library.
+     */
     private URI recipeLibraryUri() {
         return endpointBaseUri.resolve("recipelibrary");
     }
 
+    /**
+     * Generates the URI for accessing profiles on the remote server.
+     *
+     * @return URI for profiles.
+     */
     private URI profilesUri() {
         return endpointBaseUri.resolve("profiles");
     }
 
+    /**
+     * Saves a list of profiles to the remote server.
+     *
+     * @param profiles - List of profiles to be saved.
+     * @throws RuntimeException if an error occurs during the HTTP request.
+     */
     @Override
     public void saveProfiles(List<Profile> profiles) {
         for (Profile profile : profiles) {
@@ -184,6 +211,12 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
         }
     }
 
+    /**
+     * Loads a profile from the remote server based on the provided predicate.
+     *
+     * @param predicate - Predicate that determines which profile to load.
+     * @return First Profile that matches the predicate, or null if not found.
+     */
     @Override
     public Profile loadProfile(Predicate<Profile> predicate) {
         List<Profile> profiles = getProfiles();
