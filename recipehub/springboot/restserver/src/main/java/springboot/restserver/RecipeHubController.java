@@ -3,8 +3,6 @@ package springboot.restserver;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
-
-import java.io.Console;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
