@@ -6,6 +6,10 @@ import core.RecipeLibrary;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Interface for centralizing access to data.
+ * Makes it easier to support transparent use of a REST API
+ */
 public interface RecipeHubAccess {
 
     RecipeLibrary getRecipeLibrary();
