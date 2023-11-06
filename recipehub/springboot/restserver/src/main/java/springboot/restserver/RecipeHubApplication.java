@@ -28,5 +28,4 @@ public class RecipeHubApplication {
     public static void main(String[] args) {
         SpringApplication.run(RecipeHubApplication.class, args);
     }    
-    
 }

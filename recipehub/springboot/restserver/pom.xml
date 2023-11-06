@@ -103,7 +103,7 @@
                 <configuration>
                     <skipTests>${skipFileTests}</skipTests>
                     <argLine>
-                        @{jaCoCoArgLine} --add-opens recipehub.springboot.rest/recipehub.springboot.restserver=ALL-UNNAMED
+                        @{jaCoCoArgLine} --add-opens springboot.restserver/springboot.restserver=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
