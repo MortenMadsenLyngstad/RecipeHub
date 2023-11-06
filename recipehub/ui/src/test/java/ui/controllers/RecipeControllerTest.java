@@ -33,7 +33,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -61,6 +60,7 @@ public class RecipeControllerTest extends ApplicationTest {
     private Rating rating;
     private Text averageRating;
     private Hyperlink numberOfRaters, numberOfcomments;
+    private VBox scrollPaneBox;
 
     private Profile mockProfile = mock(Profile.class);
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
@@ -149,6 +149,7 @@ public class RecipeControllerTest extends ApplicationTest {
         averageRating = lookup("#averageRating").query();
         numberOfRaters = lookup("#numberOfRaters").query();
         numberOfcomments = lookup("#numberOfComments").query();
+        scrollPaneBox = lookup("#scrollPaneBox").query();
         controller.setFilehandlers(mockRecipeFilehandler, mockUserFilehandler);
         controller.setProfile(profiles.get(0));
     }
@@ -209,6 +210,7 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("3", portionsField.getText());
         assertEquals("75,0 g : Tomato sauce\n75,0 g : Cheese\n75,0 g : Flour\n75,0 g : Pepperoni\n",
                 ingredientsText.getText());
+        portionsField.setText("");
         clickOn(portionsField).eraseText(1).write("1").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("1", portionsField.getText());
         assertEquals("25,0 g : Tomato sauce\n25,0 g : Cheese\n25,0 g : Flour\n25,0 g : Pepperoni\n",
@@ -363,7 +365,6 @@ public class RecipeControllerTest extends ApplicationTest {
         controller.setProfile(new Profile("Username2", "Test1234"));
         doNothing().when(mockRecipeFilehandler).writeRecipe(recipes.getRecipe(0));
         numberOfRaters.setDisable(false);
-        clickOn(numberOfRaters);
 
         clickOn(numberOfRaters);
         Alert alert = controller.getRatingAlert();
@@ -378,18 +379,13 @@ public class RecipeControllerTest extends ApplicationTest {
         Button okButton = (Button) controller.getRatingAlert().getDialogPane().lookupButton(ButtonType.OK);
         clickOn(okButton);
 
-        clickOn(numberOfcomments);
-        Alert alert2 = controller.getCommentsAlert();
-        ScrollPane scrollPane = (ScrollPane) alert2.getDialogPane().getContent();
-        VBox vB3 = (VBox) scrollPane.getContent();
-        HBox hB = (HBox) vB3.getChildren().get(0);
-        Label l = (Label) hB.getChildren().get(0);
-        TextArea t2 = (TextArea) hB.getChildren().get(1);
-
+        SplitPane sP = (SplitPane) scrollPaneBox.getChildren().get(2);
+        HBox hB = (HBox) sP.getItems().get(0);
+        VBox vB3 = (VBox) hB.getChildren().get(0);
+        Label l = (Label) vB3.getChildren().get(0);
+        TextArea comment = (TextArea) hB.getChildren().get(1);
         assertEquals("Username2: ", l.getText());
-        assertEquals("This is a comment", t2.getText());
-
-        clickOn(ButtonType.CLOSE.getText());
-        assertEquals(null, controller.getCommentsAlert());
+        assertEquals("This is a comment", comment.getText());
+        clickOn(numberOfcomments);
     }
 }
