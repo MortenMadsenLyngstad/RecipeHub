@@ -50,8 +50,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
      */
     @Override
     public RecipeLibrary getRecipeLibrary() {
-        System.out.println("getRecipeLirary() :" + recipeLibraryUri());
-
         try {
             HttpRequest request = HttpRequest.newBuilder(recipeLibraryUri())
                     .header(ACCEPT_HEADER, APPLICATION_JSON)
@@ -88,7 +86,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            System.out.println("removeRecipe(Recipe recipe) response:" + responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
             System.out.println("Removed recipe: " + success);
             return success;
@@ -115,7 +112,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            System.out.println("putRecipe(Recipe recipe) response:" + responseString);
             System.out.println(recipeLibraryUri());
             Boolean success = gson.fromJson(responseString, Boolean.class);
             System.out.println("Saved recipe: " + success);
@@ -133,7 +129,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
      */
     @Override
     public boolean saveProfile(Profile profile) {
-        System.out.println("saveProfile(Profile profile) :" + profilesUri());
         try {
             String json = gson.toJson(profile);
             HttpRequest request = HttpRequest.newBuilder(profilesUri())
@@ -144,7 +139,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            System.out.println(responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
             System.out.println("Saved profile: " + success);
             return success;
@@ -161,8 +155,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
      */
     @Override
     public List<Profile> getProfiles() {
-        System.out.println("getProfiles() :" + profilesUri());
-
         try {
             HttpRequest request = HttpRequest.newBuilder(profilesUri())
                     .header(ACCEPT_HEADER, APPLICATION_JSON)
