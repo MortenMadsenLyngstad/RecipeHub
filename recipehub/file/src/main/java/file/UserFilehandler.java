@@ -1,7 +1,6 @@
 package file;
 
 import com.google.gson.reflect.TypeToken;
-
 import core.Profile;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
@@ -13,17 +12,13 @@ import java.util.function.Predicate;
  * This class handles file operations for users.
  */
 public class UserFilehandler {
-    private Path filePath;
+    private static String fileName = "userInfo.json";
 
     /**
      * This constructor initializes the filePath.
-     * 
-     * @param file - File to write to
      */
-    public UserFilehandler(String file) {
-        this.filePath = Path.of(System.getProperty("user.home")
-                + System.getProperty("file.separator") + file);
-        FileUtil.createFile(this.filePath);
+    public UserFilehandler() {
+        FileUtil.createFile(getFilePath());
     }
 
     /**
@@ -31,7 +26,7 @@ public class UserFilehandler {
      * 
      * @param profile - Profile object to write
      */
-    public void writeProfile(Profile profile) {
+    public boolean writeProfile(Profile profile) {
         List<Profile> profiles = readProfiles();
 
         profiles.remove(profiles.stream()
@@ -40,7 +35,7 @@ public class UserFilehandler {
                 .orElse(null));
 
         profiles.add(profile);
-        FileUtil.writeFile(filePath, profiles);
+        return FileUtil.writeFile(getFilePath(), profiles);
     }
 
     /**
@@ -52,7 +47,7 @@ public class UserFilehandler {
         List<Profile> profiles = new ArrayList<>();
         Type profileListType = new TypeToken<List<Profile>>() {
         }.getType();
-        profiles = FileUtil.readFile(filePath, profiles, profileListType);
+        profiles = FileUtil.readFile(getFilePath(), profiles, profileListType);
         if (profiles == null) {
             return new ArrayList<>();
         }
@@ -64,14 +59,15 @@ public class UserFilehandler {
      * 
      * @param profiles - List of profiles to write
      */
-    public void writeAllProfiles(List<Profile> profiles) {
-        FileUtil.writeFile(filePath, profiles);
+    public boolean writeAllProfiles(List<Profile> profiles) {
+        return FileUtil.writeFile(getFilePath(), profiles);
     }
 
     /**
-     * This method returns the profile with the given username.
-     * @param username - Username of the profile to return
-     * @return - Returns the profile with the given username
+     * This method returns a profile which matches the given predicate.
+     * 
+     * @param predicate - Predicate to match
+     * @return - Returns a profile
      */
     public Profile loadProfile(Predicate<Profile> predicate) {
         List<Profile> profiles = readProfiles();
@@ -79,5 +75,24 @@ public class UserFilehandler {
                 .filter(predicate)
                 .findFirst()
                 .orElse(null);
+    }
+
+    /**
+     * This method sets the getFilePath.
+     * 
+     * @param file - File to write to
+     */
+    public static void setFileName(String file) {
+        fileName = file;
+        FileUtil.createFile(getFilePath());
+    }
+
+    public static String getFileName() {
+        return fileName;
+    }
+
+    public static Path getFilePath() {
+        return Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + fileName);
     }
 }

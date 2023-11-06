@@ -464,8 +464,8 @@ public class AddRecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testValidPortions() {
-        doNothing().when(mockRecipeFileHandler).writeRecipe(mockRecipe);
-        doNothing().when(mockUserFileHandler).writeProfile(mockProfile);
+        when(mockRecipeFileHandler.writeRecipe(mockRecipe)).thenReturn(true);
+        when(mockUserFileHandler.writeProfile(mockProfile)).thenReturn(true);
         addRecipePane.setVisible(false);
         portionAndConfirmPane.setVisible(true);
         setUpStep();

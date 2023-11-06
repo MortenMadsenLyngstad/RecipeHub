@@ -26,7 +26,8 @@ public class UserFilehandlerTest {
      */
     @BeforeEach
     public void setup() {
-        this.userFilehandler = new UserFilehandler("test.json");
+        this.userFilehandler = new UserFilehandler();
+        UserFilehandler.setFileName("test.json");
     }
 
     /**

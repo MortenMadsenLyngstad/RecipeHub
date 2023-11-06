@@ -8,17 +8,13 @@ import java.nio.file.Path;
  * This class handles file operations for recipes.
  */
 public class RecipeFilehandler {
-    private Path filePath;
+    private static String fileName = "recipes.json";
 
     /**
      * This constructor initializes the filePath.
-     * 
-     * @param file - File to write to
      */
-    public RecipeFilehandler(String file) {
-        this.filePath = Path.of(System.getProperty("user.home")
-                + System.getProperty("file.separator") + file);
-        FileUtil.createFile(this.filePath);
+    public RecipeFilehandler() {
+        FileUtil.createFile(getFilePath());
     }
 
     /**
@@ -26,10 +22,10 @@ public class RecipeFilehandler {
      * 
      * @param recipe - Recipe object to write
      */
-    public void writeRecipe(Recipe recipe) {
-        RecipeLibrary recipeLibrary = readRecipeLibrary();            
+    public boolean writeRecipe(Recipe recipe) {
+        RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.putRecipe(recipe);
-        FileUtil.writeFile(filePath, recipeLibrary);
+        return FileUtil.writeFile(getFilePath(), recipeLibrary);
     }
 
     /**
@@ -39,7 +35,7 @@ public class RecipeFilehandler {
      */
     public RecipeLibrary readRecipeLibrary() {
         RecipeLibrary recipeLibrary = null;
-        recipeLibrary = FileUtil.readFile(filePath, recipeLibrary, RecipeLibrary.class);
+        recipeLibrary = FileUtil.readFile(getFilePath(), recipeLibrary, RecipeLibrary.class);
         if (recipeLibrary == null) {
             return new RecipeLibrary();
         }
@@ -51,9 +47,28 @@ public class RecipeFilehandler {
      * 
      * @param recipe - Recipe object to remove
      */
-    public void removeRecipe(Recipe recipe) {
+    public boolean removeRecipe(Recipe recipe) {
         RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.removeRecipe(recipe);
-        FileUtil.writeFile(filePath, recipeLibrary);
+        return FileUtil.writeFile(getFilePath(), recipeLibrary);
+    }
+
+    /**
+     * This method sets the filePath.
+     * 
+     * @param file - File to write to
+     */
+    public static void setFileName(String file) {
+        fileName = file;
+        FileUtil.createFile(getFilePath());
+    }
+
+    public static String getFileName() {
+        return fileName;
+    }
+
+    public static Path getFilePath() {
+        return Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + fileName);
     }
 }

@@ -42,12 +42,14 @@ public class FileUtil {
      * @param filePath - Path object to the file
      * @param data     - Data to write to the file
      */
-    public static <T> void writeFile(Path filePath, T data) {
+    public static <T> boolean writeFile(Path filePath, T data) {
         try (Writer writer = new FileWriter(filePath.toFile(), Charset.forName("UTF-8"))) {
             gson.toJson(data, writer);
+            return true;
         } catch (IOException e) {
             System.out.println("Error writing to file");
             System.out.println(e.getMessage());
+            return false;
         }
     }
 

@@ -100,7 +100,7 @@ public class MainscreenControllerTest extends ApplicationTest {
         profiles.add(profile1);
         profiles.add(profile2);
 
-        doNothing().when(mockUserFilehandler).writeProfile(profile1);
+        when(mockUserFilehandler.writeProfile(profile1)).thenReturn(true);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
 
         // Makes it so that we uses mocks instead of real filehandlers
@@ -112,7 +112,7 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the GridPane loads properly when first loading the
+     * This method will test if the GridPane loads properly when first loading the.
      * Mainscreen
      * This includes checking if everything is built correct, but also that all
      * recipes are shown when

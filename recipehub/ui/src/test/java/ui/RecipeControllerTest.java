@@ -33,6 +33,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+/**
+ * This class is used to test the RecipeController class.
+ */
 public class RecipeControllerTest extends ApplicationTest {
 
     private RecipeController controller;
@@ -53,8 +56,7 @@ public class RecipeControllerTest extends ApplicationTest {
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
-     * This method will set up the application for headless mode (tests will run
-     * without GUI)
+     * This method will set up the application for headless mode (tests will run without GUI).
      * 
      * @see App#supportHeadless()
      */
@@ -64,9 +66,9 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will start the application
+     * This method will start the application.
      * 
-     * @param stage
+     * @param stage - the stage to start
      * @throws IOException if the FXMLLoader.load() method throws an exception
      * @see MainscreenControllerTest#setUp()
      */
@@ -83,7 +85,7 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will set up the necessary variables for the test
+     * This method will set up the necessary variables for the test.
      */
     private void setUp() {
         Profile profile1 = new Profile("Username", "Password1");
@@ -103,7 +105,7 @@ public class RecipeControllerTest extends ApplicationTest {
         recipe.setPortions(4);
         recipes.putRecipe(recipe);
 
-        doNothing().when(mockUserFilehandler).writeProfile(profile1);
+        when(mockUserFilehandler.writeProfile(profile1)).thenReturn(true);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
 
         // Makes it so that we use mocks instead of real filehandlers
@@ -116,7 +118,7 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will set up the buttons for the test
+     * This method will set up the buttons for the test.
      */
     @BeforeEach
     public void setUpButtons() {
@@ -134,11 +136,11 @@ public class RecipeControllerTest extends ApplicationTest {
         plusButton = lookup("#plusButton").query();
         minusButton = lookup("#minusButton").query();
         portionsField = lookup("#portionsField").query();
-        controller.currentProfile = profiles.get(0);
+        controller.setProfile(profiles.get(0));
     }
 
     /**
-     * This method will test if the set up is correct
+     * This method will test if the set up is correct.
      */
     @Test
     public void testPopulate() {
@@ -152,37 +154,45 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("Back", backButton.getText());
         assertEquals("Best way to start the weekend", descriptionText.getText());
         assertEquals("Step 1:  Make the dough\nStep 2:  Add toppings\n", stepsText.getText());
-        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n", ingredientsText.getText());
+        assertEquals(
+            "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+            ingredientsText.getText());
         assertEquals("TRASH", deleteButton.getGlyphName());
         assertEquals("HEART", heartButton.getGlyphName());
         assertTrue(deleteButton.isVisible());
     }
 
     /**
-     * Tests scaling functionality
+     * Tests scaling functionality.
      */
     @Test
     public void testScale() {
         // Checks setUp
         assertEquals("4", portionsField.getText());
-        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+        assertEquals(
+                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
                 ingredientsText.getText());
         // Checks that illegal input does not change the scaling
-        clickOn(portionsField).eraseText(1).write("notAnInt").type(javafx.scene.input.KeyCode.ENTER);
+        clickOn(portionsField).eraseText(1).write("notAnInt")
+                .type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
-        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+        assertEquals(
+                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(portionsField).eraseText(1).write("12.4").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
-        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+        assertEquals(
+                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(portionsField).eraseText(1).write("51").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
-        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+        assertEquals(
+                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(portionsField).eraseText(1).write("-3").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
-        assertEquals("100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+        assertEquals(
+                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
                 ingredientsText.getText());
         // Checks minusButton, legal text input and plusButton
         clickOn(minusButton);
@@ -204,7 +214,7 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the back button works
+     * This method will test if the back button works.
      */
     @Test
     public void backButtonTest() {
@@ -216,7 +226,7 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the delete button changes strokewidth when hovered
+     * This method will test if the delete button changes strokewidth when hovered.
      * over
      */
     @Test
@@ -227,7 +237,7 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if a recipe can be deleted, and switched back to the
+     * This method will test if a recipe can be deleted, and switched back to the.
      * mainscreen
      * if the user confirms the deletion
      */
@@ -237,13 +247,14 @@ public class RecipeControllerTest extends ApplicationTest {
         when(mockProfile.getUsername()).thenReturn("Username");
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
         clickOn(deleteButton);
-        Button okButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.OK);
+        Button okButton = (Button) controller.getAlert().getDialogPane()
+            .lookupButton(ButtonType.OK);
         clickOn(okButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
 
     /**
-     * This method will test if a recipe can be deleted, and switched back to the
+     * This method will test if a recipe can be deleted, and switched back to the.
      * mainscreen
      * if the user confirms the deletion
      */
@@ -252,7 +263,8 @@ public class RecipeControllerTest extends ApplicationTest {
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
         clickOn(deleteButton);
-        Button okButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.OK);
+        Button okButton = (Button) controller.getAlert().getDialogPane()
+            .lookupButton(ButtonType.OK);
         clickOn(okButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
@@ -267,7 +279,8 @@ public class RecipeControllerTest extends ApplicationTest {
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockProfile.getUsername()).thenReturn("Username");
         clickOn(deleteButton);
-        Button cancelButton = (Button) controller.getAlert().getDialogPane().lookupButton(ButtonType.CANCEL);
+        Button cancelButton = (Button) controller.getAlert().getDialogPane()
+            .lookupButton(ButtonType.CANCEL);
         clickOn(cancelButton);
         Platform.runLater(() -> {
             assertNotEquals("Mainscreen.fxml", controller.getFileName());
@@ -275,7 +288,7 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the heart button changes strokewidth when hovered
+     * This method will test if the heart button changes strokewidth when hovered.
      * over
      */
     @Test
@@ -286,11 +299,11 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the heart button changes color when clicked
+     * This method will test if the heart button changes color when clicked.
      */
     @Test
     public void testClickOnFavoriteButton() {
-        doNothing().when(mockUserFilehandler).writeProfile(profiles.get(0));
+        when(mockUserFilehandler.writeProfile(profiles.get(0))).thenReturn(true);
         clickOn(heartButton);
         assertEquals(Color.RED, heartButton.getFill(),
                 "The heart should be red when you click on it");

@@ -85,7 +85,7 @@ public class RegisterControllerTest extends ApplicationTest {
         Profile profile = new Profile("testuser", "Password123");
         when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
                 .thenReturn(profile);
-        doNothing().when(mockUserFileHandler).writeProfile(any(Profile.class));
+        when(mockUserFileHandler.writeProfile(any(Profile.class))).thenReturn(true);
 
         write("newuser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.TAB);

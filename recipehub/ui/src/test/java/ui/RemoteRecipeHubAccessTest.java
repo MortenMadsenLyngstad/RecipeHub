@@ -5,8 +5,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.delete;
 import static com.github.tomakehurst.wiremock.client.WireMock.deleteRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.post;
-import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static com.github.tomakehurst.wiremock.client.WireMock.putRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -153,10 +151,9 @@ public class RemoteRecipeHubAccessTest {
                 .willReturn(aResponse()
                         .withFault(Fault.CONNECTION_RESET_BY_PEER)));
     
-        Assertions.assertThrows(RuntimeException.class, 
-            () -> remoteRecipeHubAccess.removeRecipe(
+        Assertions.assertFalse(remoteRecipeHubAccess.removeRecipe(
                 new Recipe("Pizza", 1, profile)), 
-                    "Runtime exception should be thrown if the remove fails.");
+                    "Should return false if the remove fails.");
 
     }
 
@@ -183,9 +180,8 @@ public class RemoteRecipeHubAccessTest {
                 .willReturn(aResponse()
                         .withFault(Fault.CONNECTION_RESET_BY_PEER)));
         
-        Assertions.assertThrows(RuntimeException.class, 
-            () -> remoteRecipeHubAccess.saveRecipe(new Recipe("Pizza", 1, profile)), 
-                "Runtime exception should be thrown if the remove fails.");
+        Assertions.assertFalse(remoteRecipeHubAccess.saveRecipe(new Recipe("Pizza", 1, profile)), 
+                "Should return false if the save fails.");
     }
 
     /**
@@ -213,9 +209,8 @@ public class RemoteRecipeHubAccessTest {
                 .willReturn(aResponse()
                         .withFault(Fault.CONNECTION_RESET_BY_PEER)));
         
-        Assertions.assertThrows(RuntimeException.class, 
-            () -> remoteRecipeHubAccess.saveProfile(profile), 
-                "Runtime exception should be thrown if the remove fails.");
+        Assertions.assertFalse(remoteRecipeHubAccess.saveProfile(profile), 
+                "Should return false if the remove fails.");
     }
 
     /**
@@ -268,9 +263,8 @@ public class RemoteRecipeHubAccessTest {
                 .willReturn(aResponse()
                         .withFault(Fault.CONNECTION_RESET_BY_PEER)));
         
-        Assertions.assertThrows(RuntimeException.class, 
-            () -> remoteRecipeHubAccess.getProfiles(), 
-                "Runtime exception should be thrown if the remove fails.");
+        Assertions.assertNull(remoteRecipeHubAccess.getProfiles(), 
+                "Should return null if getProfiles fails.");
     }
 
     /**
@@ -293,6 +287,14 @@ public class RemoteRecipeHubAccessTest {
         verify(profiles.size(), putRequestedFor(urlEqualTo("/profiles"))
                 .withHeader("Accept", equalTo("application/json"))
                 .withHeader("Content-Type", equalTo("application/json")));
+
+        stubFor(put(urlEqualTo("/profiles"))
+                .withHeader("Accept", equalTo("application/json"))
+                .withHeader("Content-Type", equalTo("application/json"))
+                .willReturn(aResponse()
+                        .withFault(Fault.CONNECTION_RESET_BY_PEER)));
+        Assertions.assertFalse(remoteRecipeHubAccess.saveProfiles(profiles));
+        
     }
 
     /**

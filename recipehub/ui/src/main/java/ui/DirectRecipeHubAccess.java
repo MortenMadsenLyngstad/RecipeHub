@@ -21,7 +21,7 @@ public class DirectRecipeHubAccess implements RecipeHubAccess {
      * This empty constructor will make default filehandlers for the class to use.
      */
     public DirectRecipeHubAccess() {
-        this(new UserFilehandler("userInfo.json"), new RecipeFilehandler("recipes.json"));
+        this(new UserFilehandler(), new RecipeFilehandler());
     }
 
     /**
@@ -58,8 +58,8 @@ public class DirectRecipeHubAccess implements RecipeHubAccess {
      * @see RecipeFilehandler#removeRecipe()
      */
     @Override
-    public void removeRecipe(Recipe recipe) {
-        recipeFilehandler.removeRecipe(recipe);
+    public boolean removeRecipe(Recipe recipe) {
+        return recipeFilehandler.removeRecipe(recipe);
     }
 
     /**
@@ -69,8 +69,8 @@ public class DirectRecipeHubAccess implements RecipeHubAccess {
      * @see RecipeFilehandler#writeRecipe(Recipe)
      */
     @Override
-    public void saveRecipe(Recipe recipe) {
-        recipeFilehandler.writeRecipe(recipe);
+    public boolean saveRecipe(Recipe recipe) {
+        return recipeFilehandler.writeRecipe(recipe);
     }
 
     /**
@@ -80,8 +80,8 @@ public class DirectRecipeHubAccess implements RecipeHubAccess {
      * @see UserFilehandler#writeProfile(Profile)
      */
     @Override
-    public void saveProfile(Profile profile) {
-        userFilehandler.writeProfile(profile);
+    public boolean saveProfile(Profile profile) {
+        return userFilehandler.writeProfile(profile);
     }
 
     /**
@@ -114,7 +114,7 @@ public class DirectRecipeHubAccess implements RecipeHubAccess {
      * @see UserFilehandler#writeAllProfiles(List)
      */
     @Override
-    public void saveProfiles(List<Profile> profiles) {
-        userFilehandler.writeAllProfiles(profiles);
+    public boolean saveProfiles(List<Profile> profiles) {
+        return userFilehandler.writeAllProfiles(profiles);
     }
 }

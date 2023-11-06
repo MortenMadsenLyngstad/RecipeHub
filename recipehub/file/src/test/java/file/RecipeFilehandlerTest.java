@@ -29,11 +29,12 @@ public class RecipeFilehandlerTest {
         Profile profile = new Profile("testUser", "Password123");
         profile.setHashedPassword(PasswordHasher.hashPassword(profile.getPassword()));
         this.recipe = new Recipe("testRecipe", 1, profile);
-        this.recipeFilehandler = new RecipeFilehandler("test.json");
+        this.recipeFilehandler = new RecipeFilehandler();
+        RecipeFilehandler.setFileName("test.json");
     }
 
     /**
-     * Helper method to delete testfiles
+     * Helper method to delete testfiles.
      */
     private void deleteFile() {
         try {
@@ -45,7 +46,7 @@ public class RecipeFilehandlerTest {
     }
 
     /**
-     * Tests if the recipe is written to and read from file correctly
+     * Tests if the recipe is written to and read from file correctly.
      */
     @Test
     @DisplayName("Test if correct info is written to and read from file")

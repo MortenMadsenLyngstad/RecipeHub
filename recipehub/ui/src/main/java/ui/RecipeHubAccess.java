@@ -14,15 +14,15 @@ public interface RecipeHubAccess {
 
     RecipeLibrary getRecipeLibrary();
 
-    void removeRecipe(Recipe recipe);
+    boolean removeRecipe(Recipe recipe);
 
-    void saveRecipe(Recipe recipe);
+    boolean saveRecipe(Recipe recipe);
 
-    void saveProfile(Profile profile);
+    boolean saveProfile(Profile profile);
 
     List<Profile> getProfiles();
 
     Profile loadProfile(Predicate<Profile> predicate);
 
-    void saveProfiles(List<Profile> profiles);
+    boolean saveProfiles(List<Profile> profiles);
 }

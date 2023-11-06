@@ -18,8 +18,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.google.common.reflect.TypeToken;
-
 /**
  * This is a test class for DirectRecipeHubAccess.
  * This class mainly uses the filehandlers, which are tested seperatly
@@ -80,7 +78,7 @@ public class DirectRecipeHubAccessTest {
     @DisplayName("removeRecipe() test")
     public void testRemoveRecipe() {
         Recipe recipe = new Recipe("Pasta Carbonara", 2, new Profile("Username1", "Password1"));
-        doNothing().when(mockRecipeFilehandler).removeRecipe(recipe);
+        when(mockRecipeFilehandler.removeRecipe(recipe)).thenReturn(true);
         directRecipeHubAccess.removeRecipe(recipe);
         verify(mockRecipeFilehandler).removeRecipe(recipe);
     }
@@ -92,7 +90,7 @@ public class DirectRecipeHubAccessTest {
     @DisplayName("saveRecipe() test")
     public void testSaveRecipe() {
         Profile profile = new Profile("Username1", "Password1");
-        doNothing().when(mockUserFilehandler).writeProfile(profile);
+        when(mockUserFilehandler.writeProfile(profile)).thenReturn(true);
         directRecipeHubAccess.saveProfile(profile);
         verify(mockUserFilehandler).writeProfile(profile);
     }
@@ -156,7 +154,7 @@ public class DirectRecipeHubAccessTest {
     @DisplayName("saveProfiles() test")
     public void testSaveProfiles() {
         List<Profile> profiles = new ArrayList<>(List.of(new Profile("Username1", "Password1")));
-        doNothing().when(mockUserFilehandler).writeAllProfiles(profiles);
+        when(mockUserFilehandler.writeAllProfiles(profiles)).thenReturn(true);
         directRecipeHubAccess.saveProfiles(profiles);
         verify(mockUserFilehandler).writeAllProfiles(profiles);
     }

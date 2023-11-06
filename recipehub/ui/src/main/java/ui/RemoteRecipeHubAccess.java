@@ -77,7 +77,7 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
      * @throws RuntimeException if an error occurs during the HTTP request.
      */
     @Override
-    public void removeRecipe(Recipe recipe) {
+    public boolean removeRecipe(Recipe recipe) {
         try {
             String json = gson.toJson(recipe);
             HttpRequest request = HttpRequest.newBuilder(recipeLibraryUri())
@@ -91,8 +91,9 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             System.out.println("removeRecipe(Recipe recipe) response:" + responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
             System.out.println("Removed recipe: " + success);
+            return success;
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
@@ -103,7 +104,7 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
      * @throws RuntimeException if an error occurs during the HTTP request.
      */
     @Override
-    public void saveRecipe(Recipe recipe) {
+    public boolean saveRecipe(Recipe recipe) {
         try {
             String json = gson.toJson(recipe);
             HttpRequest request = HttpRequest.newBuilder(recipeLibraryUri())
@@ -118,8 +119,9 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             System.out.println(recipeLibraryUri());
             Boolean success = gson.fromJson(responseString, Boolean.class);
             System.out.println("Saved recipe: " + success);
+            return success;
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
@@ -130,7 +132,7 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
      * @throws RuntimeException if an error occurs during the HTTP request.
      */
     @Override
-    public void saveProfile(Profile profile) {
+    public boolean saveProfile(Profile profile) {
         System.out.println("saveProfile(Profile profile) :" + profilesUri());
         try {
             String json = gson.toJson(profile);
@@ -145,8 +147,9 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             System.out.println(responseString);
             Boolean success = gson.fromJson(responseString, Boolean.class);
             System.out.println("Saved profile: " + success);
+            return success;
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            return false;
         }
     }
 
@@ -175,8 +178,8 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
 
             return profiles;
 
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InterruptedException | IllegalStateException e) {
+            return null;
         }
     }
 
@@ -205,10 +208,13 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
      * @throws RuntimeException if an error occurs during the HTTP request.
      */
     @Override
-    public void saveProfiles(List<Profile> profiles) {
+    public boolean saveProfiles(List<Profile> profiles) {
         for (Profile profile : profiles) {
-            saveProfile(profile);
+            if (saveProfile(profile) == false) {
+                return false;
+            }
         }
+        return true;
     }
 
     /**
