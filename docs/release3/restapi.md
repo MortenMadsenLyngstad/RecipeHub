@@ -138,10 +138,10 @@ false
 }
 ```
 
-  - Available: Springboot
-  - Returns:
-    - Content-Type: application/json
-    - Json with boolean true on success, false otherwise
+- Available: Springboot
+- Returns:
+  - Content-Type: application/json
+  - Json with boolean true on success, false otherwise
 
 ```json
 true
@@ -207,10 +207,10 @@ http://localhost:8080/recipehub/profiles
 }
 ```
 
-  - Available: Springboot
-  - Returns:
-    - Content-Type: application/json
-    - Json with boolean true on succes, false otherwise
+- Available: Springboot
+- Returns:
+  - Content-Type: application/json
+  - Json with boolean true on succes, false otherwise
 
 ```json
 true
