@@ -22,20 +22,27 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.controlsfx.control.Rating;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
 /**
- * This class is used to test the RecipeController class.
+ * Controller for displaying the information of a recipe on a RecipeSreen.
  */
 public class RecipeControllerTest extends ApplicationTest {
 
@@ -51,14 +58,18 @@ public class RecipeControllerTest extends ApplicationTest {
     private TextArea descriptionText, stepsText, ingredientsText;
     private FontAwesomeIconView deleteButton, heartButton, plusButton, minusButton;
     private TextField portionsField;
+    private Rating rating;
+    private Text averageRating;
+    private Hyperlink numberOfRaters, numberOfcomments;
+    private VBox scrollPaneBox;
 
     private Profile mockProfile = mock(Profile.class);
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
-     * This method will set up the application for headless mode (tests will run
-     * without GUI).
+     * This method will set up the application for headless mode (tests will
+     * runwithout GUI).
      * 
      * @see App#supportHeadless()
      */
@@ -70,7 +81,7 @@ public class RecipeControllerTest extends ApplicationTest {
     /**
      * This method will start the application.
      * 
-     * @param stage - the stage to start
+     * @param stage the stage to start
      * @throws IOException if the FXMLLoader.load() method throws an exception
      * @see MainscreenControllerTest#setUp()
      */
@@ -80,9 +91,7 @@ public class RecipeControllerTest extends ApplicationTest {
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
         setUp();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
@@ -110,7 +119,7 @@ public class RecipeControllerTest extends ApplicationTest {
         when(mockUserFilehandler.writeProfile(profile1)).thenReturn(true);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
 
-        // Makes it so that we use mocks instead of real filehandlers
+        // Makes it so that the controller uses testfiles instead of the main ones
         controller.setCurrentRecipeHubAccess(
                 new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
 
@@ -138,6 +147,13 @@ public class RecipeControllerTest extends ApplicationTest {
         plusButton = lookup("#plusButton").query();
         minusButton = lookup("#minusButton").query();
         portionsField = lookup("#portionsField").query();
+        rating = lookup("#recipeRating").query();
+        averageRating = lookup("#averageRating").query();
+        numberOfRaters = lookup("#numberOfRaters").query();
+        numberOfcomments = lookup("#numberOfComments").query();
+        scrollPaneBox = lookup("#scrollPaneBox").query();
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
         controller.setProfile(profiles.get(0));
     }
 
@@ -158,9 +174,13 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("Step 1:  Make the dough\nStep 2:  Add toppings\n", stepsText.getText());
         assertEquals(
             "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
-            ingredientsText.getText());
+             ingredientsText.getText());
         assertEquals("TRASH", deleteButton.getGlyphName());
         assertEquals("HEART", heartButton.getGlyphName());
+        assertEquals(0, rating.getRating());
+        assertEquals("0.0", averageRating.getText());
+        assertEquals("(0)", numberOfRaters.getText());
+        assertTrue(numberOfRaters.isDisable());
         assertTrue(deleteButton.isVisible());
     }
 
@@ -201,6 +221,7 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("3", portionsField.getText());
         assertEquals("75,0 g : Tomato sauce\n75,0 g : Cheese\n75,0 g : Flour\n75,0 g : Pepperoni\n",
                 ingredientsText.getText());
+        portionsField.setText("");
         clickOn(portionsField).eraseText(1).write("1").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("1", portionsField.getText());
         assertEquals("25,0 g : Tomato sauce\n25,0 g : Cheese\n25,0 g : Flour\n25,0 g : Pepperoni\n",
@@ -228,46 +249,50 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the delete button changes strokewidth when hovered.
-     * over
+     * This method will test if the delete button changes strokewidth when hovered
+     * over.
      */
     @Test
     public void testHoverOverDelete() {
         moveTo(deleteButton);
         assertEquals(0.7, deleteButton.getStrokeWidth(),
-                "The StrokeWidth of the delete button should increase "
-                        + "to 0.7 when moving you mouse over it");
+                "The StrokeWidth of the delete button should "
+                        + "increase to 0.7 when moving you mouse over it");
     }
 
     /**
-     * This method will test if a recipe can be deleted, and switched back to the.
-     * mainscreen
+     * This method will test if a recipe can be deleted, and switched back to the
+     * mainscreen.
      * if the user confirms the deletion
      */
     @Test
     public void testDeleteRecipe() {
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockProfile.getUsername()).thenReturn("Username");
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
         clickOn(deleteButton);
         Button okButton = (Button) controller.getAlert().getDialogPane()
-            .lookupButton(ButtonType.OK);
+                .lookupButton(ButtonType.OK);
         clickOn(okButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
 
     /**
-     * This method will test if a recipe can be deleted, and switched back to the.
-     * mainscreen
+     * This method will test if a recipe can be deleted, and switched back to the
+     * mainscreen.
      * if the user confirms the deletion
      */
     @Test
     public void testDeleteRecipe2() {
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
         clickOn(deleteButton);
         Button okButton = (Button) controller.getAlert().getDialogPane()
-            .lookupButton(ButtonType.OK);
+                .lookupButton(ButtonType.OK);
         clickOn(okButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
@@ -278,6 +303,8 @@ public class RecipeControllerTest extends ApplicationTest {
      */
     @Test
     public void testDeleteRecipeCancel() {
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockProfile.getUsername()).thenReturn("Username");
@@ -291,8 +318,8 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the heart button changes strokewidth when hovered.
-     * over
+     * This method will test if the heart button changes strokewidth when hovered
+     * over.
      */
     @Test
     public void testHoverOverFavorite() {
@@ -314,5 +341,72 @@ public class RecipeControllerTest extends ApplicationTest {
         clickOn(heartButton);
         assertEquals(Color.WHITE, heartButton.getFill(),
                 "The heart should be black when you click on it again");
+    }
+
+    /**
+     * This method will test if a review with a comment is added correctly.
+     */
+    @Test
+    public void testReviewWithoutComment() {
+        controller.setProfile(new Profile("Username2", "Test1234"));
+        when(mockRecipeFilehandler.writeRecipe(recipes.getRecipe(0))).thenReturn(true);
+        numberOfRaters.setDisable(false);
+        clickOn(numberOfRaters);
+        Button cancelButton = (Button) controller.getRatingAlert().getDialogPane()
+                .lookupButton(ButtonType.CANCEL);
+        clickOn(cancelButton);
+        Platform.runLater(() -> {
+            assertNotEquals("Mainscreen.fxml", controller.getFileName());
+        });
+
+        clickOn(numberOfRaters);
+        Alert alert = controller.getRatingAlert();
+        SplitPane sp = (SplitPane) alert.getGraphic();
+        VBox vbox = (VBox) sp.getItems().get(0);
+        Rating r = (Rating) vbox.getChildren().get(0);
+        moveTo(r);
+
+        Button okButton = (Button) controller.getRatingAlert().getDialogPane()
+                .lookupButton(ButtonType.OK);
+        clickOn(okButton);
+        Platform.runLater(() -> {
+            assertEquals("(1)", numberOfRaters.getText());
+            assertEquals("3.0", averageRating.getText());
+            assertEquals("(0)", numberOfcomments.getText());
+        });
+    }
+
+    /**
+     * This method will test if a review with a comment is added correctly.
+     * Also tests if the comment is displayed correctly
+     */
+    @Test
+    public void testComment() {
+        controller.setProfile(new Profile("Username2", "Test1234"));
+        when(mockRecipeFilehandler.writeRecipe(recipes.getRecipe(0))).thenReturn(true);
+        numberOfRaters.setDisable(false);
+
+        clickOn(numberOfRaters);
+        Alert alert = controller.getRatingAlert();
+        SplitPane sp = (SplitPane) alert.getGraphic();
+        VBox vbox = (VBox) sp.getItems().get(0);
+        Rating r = (Rating) vbox.getChildren().get(0);
+        moveTo(r);
+
+        VBox vbox2 = (VBox) sp.getItems().get(1);
+        TextArea textArea = (TextArea) vbox2.getChildren().get(0);
+        clickOn(textArea).write("This is a comment");
+        Button okButton = (Button) controller.getRatingAlert().getDialogPane()
+                .lookupButton(ButtonType.OK);
+        clickOn(okButton);
+
+        SplitPane splitPane = (SplitPane) scrollPaneBox.getChildren().get(2);
+        HBox hbox = (HBox) splitPane.getItems().get(0);
+        VBox vbox3 = (VBox) hbox.getChildren().get(0);
+        Label l = (Label) vbox3.getChildren().get(0);
+        TextArea comment = (TextArea) hbox.getChildren().get(1);
+        assertEquals("Username2: ", l.getText());
+        assertEquals("This is a comment", comment.getText());
+        clickOn(numberOfcomments);
     }
 }
