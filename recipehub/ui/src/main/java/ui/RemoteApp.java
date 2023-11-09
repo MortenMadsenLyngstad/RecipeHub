@@ -9,6 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class starts the application with remote access.
+ */
 public class RemoteApp extends Application {
     /**
      * Helper method used by tests needing to run headless.
@@ -29,7 +32,7 @@ public class RemoteApp extends Application {
      * 
      * @param stage - Stage object
      * @throws IOException if the FXMLLoader.load method throws an exception
-     * @throws URISyntaxException
+     * @throws URISyntaxException if the URI is invalid
      */
     @Override
     public void start(Stage stage) throws IOException {

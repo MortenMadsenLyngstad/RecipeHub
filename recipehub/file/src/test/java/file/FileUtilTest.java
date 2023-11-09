@@ -2,16 +2,18 @@ package file;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+/**
+ * This is a test class for FileUtil.
+ */
 public class FileUtilTest {
     private Path filePath = Path.of("test.txt");
 
     /**
-     * Helper method to delete testfiles
+     * Helper method to delete testfiles.
      */
     private void deleteFile(Path filePath) {
         try {
@@ -22,7 +24,7 @@ public class FileUtilTest {
     }
 
     /**
-     * Tests if the file is created correctly
+     * Tests if the file is created correctly.
      */
     @Test
     @DisplayName("Test createFile")
@@ -35,7 +37,7 @@ public class FileUtilTest {
     }
 
     /**
-     * Tests if the file is written to and read from correctly
+     * Tests if the file is written to and read from correctly.
      */
     @Test
     @DisplayName("Test writeFile and readFile")

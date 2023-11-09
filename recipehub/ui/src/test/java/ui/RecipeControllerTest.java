@@ -56,7 +56,8 @@ public class RecipeControllerTest extends ApplicationTest {
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
-     * This method will set up the application for headless mode (tests will run without GUI).
+     * This method will set up the application for headless mode (tests will run
+     * without GUI).
      * 
      * @see App#supportHeadless()
      */
@@ -233,7 +234,8 @@ public class RecipeControllerTest extends ApplicationTest {
     public void testHoverOverDelete() {
         moveTo(deleteButton);
         assertEquals(0.7, deleteButton.getStrokeWidth(),
-                "The StrokeWidth of the delete button should increase to 0.7 when moving you mouse over it");
+                "The StrokeWidth of the delete button should increase "
+                        + "to 0.7 when moving you mouse over it");
     }
 
     /**
@@ -280,7 +282,7 @@ public class RecipeControllerTest extends ApplicationTest {
         when(mockProfile.getUsername()).thenReturn("Username");
         clickOn(deleteButton);
         Button cancelButton = (Button) controller.getAlert().getDialogPane()
-            .lookupButton(ButtonType.CANCEL);
+                .lookupButton(ButtonType.CANCEL);
         clickOn(cancelButton);
         Platform.runLater(() -> {
             assertNotEquals("Mainscreen.fxml", controller.getFileName());

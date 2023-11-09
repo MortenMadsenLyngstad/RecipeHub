@@ -1,25 +1,26 @@
 package file;
 
+import core.PasswordHasher;
+import core.Profile;
+import core.Recipe;
+import core.RecipeLibrary;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import core.PasswordHasher;
-import core.Profile;
-import core.Recipe;
-import core.RecipeLibrary;
-
+/**
+ * This is a test class for RecipeFilehandler.
+ */
 public class RecipeFilehandlerTest {
     private RecipeFilehandler recipeFilehandler;
     private Recipe recipe;
 
     /**
-     * This method is run before each test
+     * This method is run before each test.
      * This method uses the RecipeFilehandler constructor which uses createFile from
      * FileUtil
      * createFile is tested in FileUtilTest
@@ -64,7 +65,7 @@ public class RecipeFilehandlerTest {
     }
 
     /**
-     * Tests if the recipe is removed from file correctly
+     * Tests if the recipe is removed from file correctly.
      */
     @Test
     @DisplayName("Test if remove recipe works")

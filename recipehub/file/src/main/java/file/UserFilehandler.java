@@ -64,10 +64,10 @@ public class UserFilehandler {
     }
 
     /**
-     * This method returns a profile which matches the given predicate.
+     * Returns the first profile that matches the given predicate.
      * 
-     * @param predicate - Predicate to match
-     * @return - Returns a profile
+     * @param predicate - the predicate to match
+     * @return the first profile that matches the given predicate, or null if no profile matches
      */
     public Profile loadProfile(Predicate<Profile> predicate) {
         List<Profile> profiles = readProfiles();

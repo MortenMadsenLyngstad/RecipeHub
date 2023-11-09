@@ -1,8 +1,11 @@
 package ui;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import core.Profile;
 import core.RecipeLibrary;
@@ -24,6 +27,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+/**
+ * This is a test class for LoginController.
+ */
 public class LoginControllerTest extends ApplicationTest {
 
     private LoginController controller;
@@ -53,6 +59,9 @@ public class LoginControllerTest extends ApplicationTest {
         stage.show();
     }
 
+    /**
+     * This method sets up the test environment.
+     */
     @BeforeEach
     public void setUp() {
         loginMessageLabel = lookup("#loginMessageLabel").query();
