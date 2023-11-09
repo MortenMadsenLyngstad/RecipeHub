@@ -6,7 +6,6 @@ import core.RecipeLibrary;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * This class centralizes access to the profiles and recipelibrary saved on file.
@@ -96,15 +95,15 @@ public class DirectRecipeHubAccess implements RecipeHubAccess {
     }
 
     /**
-     * This method will load the first profile which matches the predicate, or null if not found.
+     * This method will load the first profile which matches the username, or null if not found.
      * 
-     * @param predicate - Predicate for which profile we want to load
+     * @param username - Username of the profile to load
      * @return First profile to match the predicate
      * @see UserFilehandler#loadProfile()
      */
     @Override
-    public Profile loadProfile(Predicate<Profile> predicate) {
-        return userFilehandler.loadProfile(predicate);
+    public Profile loadProfile(String username) {
+        return userFilehandler.loadProfile(username);
     }
 
     /**

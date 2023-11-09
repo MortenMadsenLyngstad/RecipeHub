@@ -14,7 +14,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * This class centralizes access to the REST API.
@@ -185,6 +184,16 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
     }
 
     /**
+     * Generates the URI for accessing the profile with the given username on the remote server
+     * 
+     * @param username - String with the username
+     * @return URI for the profile.
+     */
+    private URI profileUri(String username) {
+        return endpointBaseUri.resolve("profiles/" + username);
+    }
+
+    /**
      * Generates the URI for accessing profiles on the remote server.
      *
      * @return URI for profiles.
@@ -192,6 +201,7 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
     private URI profilesUri() {
         return endpointBaseUri.resolve("profiles");
     }
+
 
     /**
      * Saves a list of profiles to the remote server.
@@ -212,12 +222,28 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
     /**
      * Loads a profile from the remote server based on the provided predicate.
      *
-     * @param predicate - Predicate that determines which profile to load.
-     * @return First Profile that matches the predicate, or null if not found.
+     * @param username - String with the username of the profile to load
+     * @return Profile with the given username
+     * @throws RuntimeException if an error occurs during the HTTP request.
      */
     @Override
-    public Profile loadProfile(Predicate<Profile> predicate) {
-        List<Profile> profiles = getProfiles();
-        return profiles.stream().filter(predicate).findFirst().orElse(null);
+    public Profile loadProfile(String username) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder(profileUri(username))
+                    .header(ACCEPT_HEADER, APPLICATION_JSON)
+                    .GET()
+                    .build();
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+
+            String responseBody = response.body();
+
+            Profile profile = gson.fromJson(responseBody, Profile.class);
+
+            return profile;
+
+        } catch (IOException | InterruptedException | IllegalStateException e) {
+            return null;
+        }
     }
 }

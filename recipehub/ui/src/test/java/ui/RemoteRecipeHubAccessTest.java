@@ -229,22 +229,22 @@ public class RemoteRecipeHubAccessTest {
                                     "username": "Username1",
                                     "hashedPassword": "B3572EE8E5AA2A347BFCE79286EA396D:4239A64E84894C5AF748F24CFD4CECF94039B3C1D445D03ADE662DF93A946D49",
                                     "recipeLibrary": {
-                                        "recipes": []
+                                      "recipes": []
                                     },
                                     "favorites": {
-                                        "recipes": []
+                                      "recipes": []
                                     }
                                     },
                                     {
                                     "username": "Username2",
                                     "hashedPassword": "7259641929E2A4152F9660C3A16DF7D2:D6095565B8DA44E391D611247FE06100B2032EFF78B5F78B9A17221636AD3133",
                                     "recipeLibrary": {
-                                        "recipes": []
+                                      "recipes": []
                                     },
                                     "favorites": {
-                                        "recipes": []
+                                      "recipes": []
                                     }
-                                    }
+                                  }
                                 ]
                                 """
                         )
@@ -302,51 +302,33 @@ public class RemoteRecipeHubAccessTest {
      */
     @Test
     public void testLoadProfile() {
-        stubFor(get(urlEqualTo("/profiles"))
+        stubFor(get(urlEqualTo("/profiles/Username1"))
                 .withHeader("Accept", equalTo("application/json"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody("""
-                                [
-                                  {
-                                    "username": "Username1",
-                                    "hashedPassword": "B3572EE8E5AA2A347BFCE79286EA396D:4239A64E84894C5AF748F24CFD4CECF94039B3C1D445D03ADE662DF93A946D49",
-                                    "recipeLibrary": {
-                                        "recipes": []
-                                    },
-                                    "favorites": {
-                                        "recipes": []
-                                    }
-                                    },
-                                    {
-                                    "username": "Username2",
-                                    "hashedPassword": "7259641929E2A4152F9660C3A16DF7D2:D6095565B8DA44E391D611247FE06100B2032EFF78B5F78B9A17221636AD3133",
-                                    "recipeLibrary": {
-                                        "recipes": []
-                                    },
-                                    "favorites": {
-                                        "recipes": []
-                                    }
-                                    }
-                                ]
+                                {
+                                  "username": "Username1",
+                                  "hashedPassword": "B3572EE8E5AA2A347BFCE79286EA396D:4239A64E84894C5AF748F24CFD4CECF94039B3C1D445D03ADE662DF93A946D49",
+                                  "recipeLibrary": {
+                                    "recipes": []
+                                  },
+                                  "favorites": {
+                                    "recipes": []
+                                  }
+                                }
                                 """
                         )
                 )
         );
         
-        Profile readProfile = remoteRecipeHubAccess.loadProfile(
-            p -> p.getUsername().equals("Username1")
-                && PasswordHasher.verifyPassword("Password1", p.getHashedPassword()));
+        Profile readProfile = remoteRecipeHubAccess.loadProfile("Username1");
         Assertions.assertEquals("Username1", readProfile.getUsername(),
                 "The username should be 'Username1");
         Assertions.assertTrue(PasswordHasher.verifyPassword("Password1",
                 readProfile.getHashedPassword()),
                 "The password should be 'Password1");
-
-        readProfile = remoteRecipeHubAccess.loadProfile(p -> p.getUsername().equals("Username2"));
-        Assertions.assertEquals("Username2", readProfile.getUsername(),
-                "The username should be 'Username2");
     }
 
     /**

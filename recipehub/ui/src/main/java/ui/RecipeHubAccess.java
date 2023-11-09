@@ -4,7 +4,6 @@ import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Interface for centralizing access to data.
@@ -22,7 +21,7 @@ public interface RecipeHubAccess {
 
     List<Profile> getProfiles();
 
-    Profile loadProfile(Predicate<Profile> predicate);
+    Profile loadProfile(String username);
 
     boolean saveProfiles(List<Profile> profiles);
 }

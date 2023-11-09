@@ -119,6 +119,16 @@ public class RecipeHubApplicationTest {
         Assertions.assertEquals(profiles.get(0).getUsername(), profile.getUsername());
     }
 
+    @Test
+    public void getProfileTest() {
+        Profile profile = new Profile("Username1", "Password1");
+        access.saveProfile(profile);
+        Profile readProfile = testRestTemplate.getForObject(getUrl() + "profiles/Username1",
+                Profile.class);
+        Assertions.assertEquals("Username1", readProfile.getUsername(), 
+            "The username of the profile should be 'Username1'");
+    }
+
     @AfterEach
     private void deleteTestFiles() {
         try {
