@@ -6,6 +6,7 @@ import core.RecipeLibrary;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class RecipeHubController {
 
     /**
      * Get the recipe library.
+     * 
      * @return the recipe library
      */
     @GetMapping(path = "/recipelibrary")
@@ -35,6 +37,7 @@ public class RecipeHubController {
 
     /**
      * Saves a recipe.
+     * 
      * @param recipe - the recipe to add
      * @return true if the recipe was added, false otherwise
      */
@@ -45,6 +48,7 @@ public class RecipeHubController {
 
     /**
      * Removes a recipe.
+     * 
      * @param recipe - the recipe to remove
      * @return true if the recipe was removed, false otherwise
      */
@@ -56,22 +60,32 @@ public class RecipeHubController {
 
     /**
      * Get all profiles.
+     * 
      * @return the profiles
      */
     @GetMapping(path = "/profiles")
     public List<Profile> getProfiles() {
-        System.out.println("getProfiles()");
         return access.getProfiles();
     }
 
     /**
+     * Get all profiles.
+     * 
+     * @return the profiles
+     */
+    @GetMapping(path = "/profiles/{username}")
+    public Profile getProfile(@PathVariable("username") String username) {
+        return access.loadProfile(username);
+    }
+
+    /**
      * Adds a profile.
+     * 
      * @param profile - the profile to add
      * @return true if the profile was added, false otherwise
      */
     @PutMapping(path = "/profiles")
     public boolean putProfile(@RequestBody Profile profile) {
-        System.out.println("putProfile(Profile profile) :" + profile.getUsername());
         return access.saveProfile(profile);
     }
 }

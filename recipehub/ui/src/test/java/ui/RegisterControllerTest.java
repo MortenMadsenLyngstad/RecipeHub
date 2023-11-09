@@ -91,8 +91,7 @@ public class RegisterControllerTest extends ApplicationTest {
     @Test
     public void testValidateRegisterWithValidData() {
         Profile profile = new Profile("testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
-                .thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
         when(mockUserFileHandler.writeProfile(any(Profile.class))).thenReturn(true);
 
         write("newuser").push(javafx.scene.input.KeyCode.TAB);
@@ -107,8 +106,7 @@ public class RegisterControllerTest extends ApplicationTest {
     @Test
     public void testValidateRegisterWithInvalidPassword() {
         Profile profile = new Profile("testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
-                .thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
         write("testuser").push(javafx.scene.input.KeyCode.TAB);
         write("weak").push(javafx.scene.input.KeyCode.TAB);
@@ -136,8 +134,7 @@ public class RegisterControllerTest extends ApplicationTest {
     @Test
     public void testValidateLoginWithBlankFields() {
         Profile profile = new Profile("testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
-                .thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
         write("").push(javafx.scene.input.KeyCode.TAB);
         write("").push(javafx.scene.input.KeyCode.TAB);
@@ -151,9 +148,7 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateRegisterWithPasswordsNotMatching() {
-        Profile profile = new Profile("testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
-                .thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(null);
 
         write("testuser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.TAB);

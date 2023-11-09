@@ -3,7 +3,6 @@ package ui;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -94,7 +93,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     public void testValidateLoginWithValidCredentials() throws Exception {
         Profile profile = new Profile("Testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(any())).thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("Testuser")).thenReturn(profile);
 
         write("Testuser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123");
@@ -112,8 +111,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     public void testValidateLoginWithInvalidUsername() throws Exception {
         Profile profile = new Profile("testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
-                .thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
         write("invaliduser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.ENTER);
@@ -128,8 +126,7 @@ public class LoginControllerTest extends ApplicationTest {
     public void testValidateLoginWithIncorrectPassword() throws Exception {
         userInfo.put("testuser", "Password123");
         Profile profile = new Profile("testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
-                .thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
         write("testuser").push(javafx.scene.input.KeyCode.TAB);
         write("wrongpassword");
@@ -145,8 +142,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     public void testValidateLoginWithBlankFields() throws Exception {
         Profile profile = new Profile("testuser", "Password123");
-        when(mockUserFileHandler.loadProfile(p -> p.getUsername().equals("testuser")))
-                .thenReturn(profile);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
         write("").push(javafx.scene.input.KeyCode.TAB);
         write("");

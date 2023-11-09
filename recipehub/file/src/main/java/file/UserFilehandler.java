@@ -6,7 +6,6 @@ import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * This class handles file operations for users.
@@ -64,15 +63,15 @@ public class UserFilehandler {
     }
 
     /**
-     * Returns the first profile that matches the given predicate.
+     * This method loads a profile from the file.
      * 
-     * @param predicate - the predicate to match
-     * @return the first profile that matches the given predicate, or null if no profile matches
+     * @param username - Username of the profile to load
+     * @return Returns the profile
      */
-    public Profile loadProfile(Predicate<Profile> predicate) {
+    public Profile loadProfile(String username) {
         List<Profile> profiles = readProfiles();
         return profiles.stream()
-                .filter(predicate)
+                .filter(p -> p.getUsername().equals(username))
                 .findFirst()
                 .orElse(null);
     }

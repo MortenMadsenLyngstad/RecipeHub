@@ -67,13 +67,13 @@ public class LoginController extends SuperController {
      * @see UserFilehandler#getUserinfo()
      */
     public boolean validateLogin(String username, String password) {
-        Profile profile = currentRecipeHubAccess.loadProfile(p -> p.getUsername().equals(username)
-                && PasswordHasher.verifyPassword(password, p.getHashedPassword()));
+        Profile profile = currentRecipeHubAccess.loadProfile(username);
                 
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
             return false;
-        } else if (profile == null) {
+        } else if (profile == null || !PasswordHasher.verifyPassword(
+                password, profile.getHashedPassword())) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
         } else {

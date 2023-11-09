@@ -58,41 +58,18 @@ public class UserFilehandlerTest {
      * Tests if the Profile is written and read from file correctly.
      */
     @Test
-    @DisplayName("Test if correct info is written to file")
+    @DisplayName("Test if correct info is written to and read from file")
     public void testWriteToFileAndReadFromFile() {
         String username = "testuser";
         String password = "Password123";
-        String hashedPassword = PasswordHasher.hashPassword(password);
         Profile profile = new Profile(username, password);
         userFilehandler.writeProfile(profile);
-        Profile readProfile = userFilehandler.loadProfile(p -> p.getUsername().equals(username)
-                && PasswordHasher.verifyPassword(password, hashedPassword));
+        Profile readProfile = userFilehandler.loadProfile(username);
         Assertions.assertTrue(username.equals(readProfile.getUsername()),
                 "The files should contain \"testuser\".");
         Assertions.assertTrue(PasswordHasher.verifyPassword(password,
                 readProfile.getHashedPassword()),
                 "The file should contain the hashed password for the profile.");
-        deleteFile();
-    }
-
-    /**
-     * Tests if loadProfile returns the correct information after a profile is
-     * written to file.
-     */
-    @Test
-    @DisplayName("Test empty hashtable is returned when file does not exist")
-    public void testLoadProfile() {
-        String username = "testuser";
-        String password = "Password123";
-        Profile profile = new Profile(username, password);
-        userFilehandler.writeProfile(profile);
-        Profile readProfile = userFilehandler.loadProfile(p -> p.getUsername().equals(username)
-                && PasswordHasher.verifyPassword(password, p.getHashedPassword()));
-        Assertions.assertEquals(username, readProfile.getUsername(),
-                "The username should be \"testuser\".");
-        Assertions.assertTrue(PasswordHasher.verifyPassword(password,
-                readProfile.getHashedPassword()),
-                "The password \"Password123\" should be correct.");
         deleteFile();
     }
 

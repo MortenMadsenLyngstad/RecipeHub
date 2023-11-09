@@ -1,11 +1,9 @@
 package ui;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import core.PasswordHasher;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
@@ -119,30 +117,18 @@ public class DirectRecipeHubAccessTest {
     @Test
     @DisplayName("loadProfile() test")
     public void testLoadProfile() {
-        // Checks if it works when checking both username and password
-        String username = "Username1";
-        String password = "Password1";
-        Profile profile = new Profile(username, password);
-        when(mockUserFilehandler.loadProfile(any())).thenReturn(profile);
+        when(mockUserFilehandler.loadProfile("Username1"))
+            .thenReturn(new Profile("Username1", "Password1"));
 
-        Profile readProfile = directRecipeHubAccess.loadProfile(
-            p -> p.getUsername().equals("Username1") 
-            && PasswordHasher.verifyPassword("Password1", p.getHashedPassword()));
-
-        Assertions.assertEquals("Username1", readProfile.getUsername(), 
-            "The username of the loaded profile should be 'Username1.");
-        
-        // Checks if it works when checking only username
-        readProfile = directRecipeHubAccess.loadProfile(p -> p.getUsername().equals("Username2"));
+        Profile readProfile = directRecipeHubAccess.loadProfile("Username1");
 
         Assertions.assertEquals("Username1", readProfile.getUsername(), 
             "The username of the loaded profile should be 'Username1.");
         
         // Checks if it works when no match is found
-        when(mockUserFilehandler.loadProfile(any())).thenReturn(null);
+        when(mockUserFilehandler.loadProfile("Username2")).thenReturn(null);
 
-        Assertions.assertNull(directRecipeHubAccess.loadProfile(
-            p -> p.getUsername().equals("Username1")), 
+        Assertions.assertNull(directRecipeHubAccess.loadProfile("Username2"), 
             "The method should return null if the profile is not found.");
     }
 

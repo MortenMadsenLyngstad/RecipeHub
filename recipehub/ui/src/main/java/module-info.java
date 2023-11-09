@@ -2,7 +2,7 @@ module ui {
     requires transitive core;
     requires transitive file;
     requires java.net.http;
-    requires javafx.controls;
+    requires transitive javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.base;
     requires de.jensd.fx.glyphs.fontawesome;

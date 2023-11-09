@@ -90,7 +90,7 @@ public class RegisterController extends SuperController {
             registerMessageLabel.setText(e.getMessage());
             return false;
         }
-        if (currentRecipeHubAccess.loadProfile(p -> p.getUsername().equals(username)) != null) {
+        if (currentRecipeHubAccess.loadProfile(username) != null) {
             registerMessageLabel.setText("Username already exists");
             return false;
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
