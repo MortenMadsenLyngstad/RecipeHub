@@ -1,7 +1,6 @@
 module ui {
     requires transitive core;
     requires transitive file;
-    requires java.net.http;
     requires transitive javafx.controls;
     requires javafx.fxml;
     requires transitive javafx.base;

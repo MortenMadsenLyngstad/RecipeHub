@@ -3,6 +3,7 @@ package springboot.restserver;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
+import file.DirectRecipeHubAccess;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import java.io.IOException;
@@ -20,7 +21,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import ui.DirectRecipeHubAccess;
 
 /**
  * Tests for the RecipeHubApplication class.

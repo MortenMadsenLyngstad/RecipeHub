@@ -2,6 +2,7 @@ package ui;
 
 import core.Profile;
 import file.RecipeFilehandler;
+import file.RecipeHubAccess;
 import file.UserFilehandler;
 import java.io.IOException;
 import javafx.event.ActionEvent;

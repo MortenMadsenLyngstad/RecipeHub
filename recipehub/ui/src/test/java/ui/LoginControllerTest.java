@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import core.Profile;
 import core.RecipeLibrary;
+import file.DirectRecipeHubAccess;
 import file.RecipeFilehandler;
 import file.UserFilehandler;
 import java.io.IOException;
