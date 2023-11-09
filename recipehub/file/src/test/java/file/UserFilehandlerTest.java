@@ -96,4 +96,25 @@ public class UserFilehandlerTest {
                 "The third profile should have the username \"Testuser3\".");
         deleteFile();
     }
+
+    /**
+     * This method tests if the getters and setters work properly.
+     */
+    @Test
+    @DisplayName("Test getFileName")
+    public void testGettersAndSetters() {
+        Assertions.assertEquals("test.json", UserFilehandler.getFileName(),
+                "The file should be named \"test.json\".");
+        Assertions.assertEquals(Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + "test.json"),
+                UserFilehandler.getFilePath(),
+                "The file should be in the home directory.");
+        UserFilehandler.setFileName("newtest.json");
+        Assertions.assertEquals("newtest.json", UserFilehandler.getFileName(),
+                "The file should be named \"newtest.json\".");
+        Assertions.assertEquals(Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + "newtest.json"),
+                UserFilehandler.getFilePath(),
+                "The file should be in the home directory.");
+    }
 }

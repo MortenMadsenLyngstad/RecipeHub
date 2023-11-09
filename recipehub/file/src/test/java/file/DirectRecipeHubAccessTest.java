@@ -141,4 +141,16 @@ public class DirectRecipeHubAccessTest {
         directRecipeHubAccess.saveProfiles(profiles);
         verify(mockUserFilehandler).writeAllProfiles(profiles);
     }
+
+    /**
+     * This method tests if you can save a recipe properly, using saveRecipe().
+     */
+    @Test
+    @DisplayName("saveRecipe() test")
+    public void testRecipe() {
+        Recipe recipe = new Recipe("Pasta Carbonara", 2, new Profile("Username1", "Password1"));
+        when(mockRecipeFilehandler.writeRecipe(recipe)).thenReturn(true);
+        directRecipeHubAccess.saveRecipe(recipe);
+        verify(mockRecipeFilehandler).writeRecipe(recipe);
+    }
 }

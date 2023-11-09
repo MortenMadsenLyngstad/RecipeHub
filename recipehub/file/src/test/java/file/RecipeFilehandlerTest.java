@@ -78,4 +78,25 @@ public class RecipeFilehandlerTest {
         Assertions.assertEquals(0, recipeLibrary.getSize(), "The recipe should be removed.");
         deleteFile();
     }
+
+    /**
+     * This method tests if the getters and setters work properly.
+     */
+    @Test
+    @DisplayName("Test getFileName")
+    public void testGettersAndSetters() {
+        Assertions.assertEquals("test.json", RecipeFilehandler.getFileName(),
+                "The file should be named \"test.json\".");
+        Assertions.assertEquals(Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + "test.json"),
+                RecipeFilehandler.getFilePath(),
+                "The file should be in the home directory.");
+        RecipeFilehandler.setFileName("newtest.json");
+        Assertions.assertEquals("newtest.json", RecipeFilehandler.getFileName(),
+                "The file should be named \"newtest.json\".");
+        Assertions.assertEquals(Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + "newtest.json"),
+                RecipeFilehandler.getFilePath(),
+                "The file should be in the home directory.");
+    }
 }
