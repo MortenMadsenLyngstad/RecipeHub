@@ -52,6 +52,7 @@ public class RecipeFilehandlerTest {
     @Test
     @DisplayName("Test if correct info is written to and read from file")
     public void testWriteAndReadRecipe() {
+        Assertions.assertFalse(recipeFilehandler.writeRecipe(null));
         recipeFilehandler.writeRecipe(this.recipe);
         RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
         Recipe loadedRecipe = recipeLibrary.getRecipe(0);
@@ -70,6 +71,7 @@ public class RecipeFilehandlerTest {
     @Test
     @DisplayName("Test if remove recipe works")
     public void testRemoveRecipe() {
+        Assertions.assertFalse(recipeFilehandler.removeRecipe(null));
         recipeFilehandler.writeRecipe(this.recipe);
         RecipeLibrary recipeLibrary = recipeFilehandler.readRecipeLibrary();
         Assertions.assertEquals(1, recipeLibrary.getSize(), "The recipe should be added.");

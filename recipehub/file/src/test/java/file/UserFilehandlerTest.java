@@ -47,6 +47,7 @@ public class UserFilehandlerTest {
      */
     @Test
     public void testWriteProfile() {
+        Assertions.assertFalse(userFilehandler.writeProfile(null));
         Assertions.assertDoesNotThrow(() -> userFilehandler.writeProfile(
                 new Profile("testuser", "Password123")));
         userFilehandler.writeProfile(new Profile("testuser", "Password123"));
@@ -76,6 +77,7 @@ public class UserFilehandlerTest {
     @Test
     @DisplayName("Test if writeAllProfiles writes all profiles to file")
     public void testWriteAllProfiles() {
+        Assertions.assertFalse(userFilehandler.writeAllProfiles(null));
         List<Profile> profiles = new ArrayList<>();
         profiles.add(new Profile("Testuser1", "Easypass1"));
         profiles.add(new Profile("Testuser2", "Easypass2"));
