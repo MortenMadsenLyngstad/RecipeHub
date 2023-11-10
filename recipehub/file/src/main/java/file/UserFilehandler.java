@@ -24,8 +24,12 @@ public class UserFilehandler {
      * This method writes a profile to the file.
      * 
      * @param profile - Profile object to write
+     * @return - Returns true if the profile was written, false if null or not written
      */
     public boolean writeProfile(Profile profile) {
+        if (profile == null) {
+            return false;
+        }
         List<Profile> profiles = readProfiles();
 
         profiles.remove(profiles.stream()
@@ -57,8 +61,12 @@ public class UserFilehandler {
      * This method writes all profiles to the file.
      * 
      * @param profiles - List of profiles to write
+     * @return - Returns true if the profiles were written, false if null or not written
      */
     public boolean writeAllProfiles(List<Profile> profiles) {
+        if (profiles == null) {
+            return false;
+        }
         return FileUtil.writeFile(getFilePath(), profiles);
     }
 

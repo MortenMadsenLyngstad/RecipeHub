@@ -21,8 +21,12 @@ public class RecipeFilehandler {
      * This method writes a recipe to the file.
      * 
      * @param recipe - Recipe object to write
+     * @return - Returns true if the recipe was written, false if null or not written
      */
     public boolean writeRecipe(Recipe recipe) {
+        if (recipe == null) {
+            return false;
+        }
         RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.putRecipe(recipe);
         return FileUtil.writeFile(getFilePath(), recipeLibrary);
@@ -46,8 +50,12 @@ public class RecipeFilehandler {
      * This method removes a recipe from the file.
      * 
      * @param recipe - Recipe object to remove
+     * @return - Returns true if the recipe was removed, false if null or not removed
      */
     public boolean removeRecipe(Recipe recipe) {
+        if (recipe == null) {
+            return false;
+        }
         RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.removeRecipe(recipe);
         return FileUtil.writeFile(getFilePath(), recipeLibrary);

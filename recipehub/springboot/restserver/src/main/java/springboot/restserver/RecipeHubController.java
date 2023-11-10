@@ -36,7 +36,7 @@ public class RecipeHubController {
     }
 
     /**
-     * Saves a recipe.
+     * Saves a recipe to the recipe library.
      * 
      * @param recipe - the recipe to add
      * @return true if the recipe was added, false otherwise
@@ -47,7 +47,7 @@ public class RecipeHubController {
     }
 
     /**
-     * Removes a recipe.
+     * Removes a recipe from te recipe library.
      * 
      * @param recipe - the recipe to remove
      * @return true if the recipe was removed, false otherwise

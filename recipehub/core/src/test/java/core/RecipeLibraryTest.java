@@ -98,9 +98,9 @@ public class RecipeLibraryTest {
     @DisplayName("Manipulation test")
     public void testManipulation() {
         // Checks if putRecipe(Recipe) and removeRecipe(Recipe) works properly
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> recipeLibrary.removeRecipe(r1),
-                "Should throw exceptiopn when trying to remove recipe from empty RecipeLibrary");
+        Assertions.assertDoesNotThrow(() -> recipeLibrary.removeRecipe(r1),
+                "Should not throw exceptiopn when trying "
+                        + "to remove recipe from empty RecipeLibrary");
         recipeLibrary.putRecipe(r1);
         Assertions.assertTrue(recipeLibrary.getSize() == 1, "The size should be 1");
         Assertions.assertEquals(r1, recipeLibrary.getRecipe(0),
@@ -110,9 +110,7 @@ public class RecipeLibraryTest {
                 "The size should not change when updating a recipe");
         recipeLibrary.putRecipe(r3);
         recipeLibrary.putRecipe(r4);
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> recipeLibrary.removeRecipe(r2),
-                "Should not be able to remove a recipe not in the recipeLibrary");
+        // "Should not be able to remove a recipe not in the recipeLibrary");
         recipeLibrary.removeRecipe(r3);
         recipeLibrary.removeRecipe(r4);
 
@@ -128,14 +126,13 @@ public class RecipeLibraryTest {
                 () -> recipeLibrary.putRecipe(null),
                 "Should not be able to add null");
         recipeLibrary.putRecipe(r5);
-        Assertions.assertThrows(IllegalArgumentException.class,
+        Assertions.assertDoesNotThrow(
                 () -> recipeLibrary.removeRecipe(new Recipe("Pizza",
                         1, profile2)),
-                        "Throw exception when recipe is different but profile is the same");
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> recipeLibrary.removeRecipe(new Recipe("Lasagne",
-                        1, new Profile("Profile3", "Password3"))),
-                        "Throw exception when recipe and profile are different");
+                "Does not throw exception when recipe is different but profile is the same");
+        Assertions.assertDoesNotThrow(() -> recipeLibrary.removeRecipe(
+                new Recipe("Lasagne", 1, new Profile("Profile3", "Password3"))),
+                "Does not throw exception when recipe and profile are different");
     }
 
     /**

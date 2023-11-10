@@ -80,11 +80,9 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will remove thee given recipe from the ArrayList recipes.
+     * This method will remove the given recipe from the ArrayList recipes.
      * 
      * @param recipe - Recipe object you wish to remove
-     * @throws IllegalArgumentException if the recipe given does not exist in
-     *                                  recipes
      */
     public void removeRecipe(Recipe recipe) {
         for (Recipe r : recipes) {
@@ -93,7 +91,6 @@ public class RecipeLibrary implements Iterable<Recipe> {
                 return;
             }
         }
-        throw new IllegalArgumentException("The recipe does not exist");
     }
 
     /**

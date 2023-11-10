@@ -46,7 +46,7 @@ public class FileUtil {
         try (Writer writer = new FileWriter(filePath.toFile(), Charset.forName("UTF-8"))) {
             gson.toJson(data, writer);
             return true;
-        } catch (IOException e) {
+        } catch (IOException | IllegalStateException e) {
             System.out.println("Error writing to file");
             System.out.println(e.getMessage());
             return false;
