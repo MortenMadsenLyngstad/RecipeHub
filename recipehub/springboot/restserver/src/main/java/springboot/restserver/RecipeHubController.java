@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * The service implementation.
+ * Controller class for handling HTTP requests to the server.
+ * This class defines methods to handle various operations such as creating, updating,
+ * deleting, and retrieving data.
  */
 @RestController
 @RequestMapping(RecipeHubController.RECIPEHUB_MODEL_SERVICE_PATH)
