@@ -90,6 +90,9 @@ public class UserFilehandler {
      * @param file - File to write to
      */
     public static void setFileName(String file) {
+        if (file.isEmpty() || file == null) {
+            throw new IllegalArgumentException("Filename cannot be an empty string or null");
+        }
         fileName = file;
         FileUtil.createFile(getFilePath());
     }

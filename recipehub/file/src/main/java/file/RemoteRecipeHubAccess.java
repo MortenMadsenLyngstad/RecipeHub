@@ -86,7 +86,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
             Boolean success = gson.fromJson(responseString, Boolean.class);
-            System.out.println("Removed recipe: " + success);
             return success;
         } catch (IOException | InterruptedException e) {
             return false;
@@ -113,7 +112,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             String responseString = response.body();
             System.out.println(recipeLibraryUri());
             Boolean success = gson.fromJson(responseString, Boolean.class);
-            System.out.println("Saved recipe: " + success);
             return success;
         } catch (IOException | InterruptedException e) {
             return false;
@@ -139,7 +137,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
             Boolean success = gson.fromJson(responseString, Boolean.class);
-            System.out.println("Saved profile: " + success);
             return success;
         } catch (IOException | InterruptedException e) {
             return false;

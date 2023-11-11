@@ -95,6 +95,7 @@ public class Profile {
 
     /**
      * This method will return the hashed password of the given profile.
+     * 
      * @return String value for hashed password
      */
     public String getHashedPassword() {
@@ -125,6 +126,8 @@ public class Profile {
 
     /**
      * This method will set the hashed password of the profile.
+     * This method will set the hashed password of the profile.
+     * 
      * @param hashedPassword - String value to set as hashed password
      */
     public void setHashedPassword(String hashedPassword) {

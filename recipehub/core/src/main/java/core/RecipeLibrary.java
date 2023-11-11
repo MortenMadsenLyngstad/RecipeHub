@@ -107,6 +107,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
 
     /**
      * This method sets the recipe library to the given list of recipes.
+     * 
      * @param newRecipes - List of recipes you wish to set the recipe library to
      */
     public void setRecipeLibrary(List<Recipe> newRecipes) {
