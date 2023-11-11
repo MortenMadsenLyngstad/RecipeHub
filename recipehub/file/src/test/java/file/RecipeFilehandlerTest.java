@@ -7,6 +7,7 @@ import core.RecipeLibrary;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,9 +38,9 @@ public class RecipeFilehandlerTest {
     /**
      * Helper method to delete testfiles.
      */
-    private void deleteFile() {
+    private void deleteFile(String filename) {
         try {
-            Files.delete(Path.of(System.getProperty("user.home")).resolve("test.json"));
+            Files.delete(Path.of(System.getProperty("user.home")).resolve(filename));
         } catch (IOException e) {
             System.out.println("Error deleting file");
             System.out.println(e.getMessage());
@@ -62,7 +63,6 @@ public class RecipeFilehandlerTest {
                 "The recipe should have 1 portion.");
         Assertions.assertEquals(this.recipe.getAuthor(), loadedRecipe.getAuthor(),
                 "The recipe should have the author \"testUser\".");
-        deleteFile();
     }
 
     /**
@@ -78,7 +78,6 @@ public class RecipeFilehandlerTest {
         recipeFilehandler.removeRecipe(this.recipe);
         recipeLibrary = recipeFilehandler.readRecipeLibrary();
         Assertions.assertEquals(0, recipeLibrary.getSize(), "The recipe should be removed.");
-        deleteFile();
     }
 
     /**
@@ -100,5 +99,18 @@ public class RecipeFilehandlerTest {
                 + System.getProperty("file.separator") + "newtest.json"),
                 RecipeFilehandler.getFilePath(),
                 "The file should be in the home directory.");
+    }
+
+    /**
+     * This method is run after each test.
+     * It deletes test.json and newtest.json if it exists.
+     */
+    @AfterEach
+    public void cleanUp() {
+        deleteFile("test.json");
+        if (Files.exists(Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + "newtest.json"))) {
+            deleteFile("newtest.json");
+        }
     }
 }

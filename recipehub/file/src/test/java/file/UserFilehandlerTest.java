@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,9 +34,9 @@ public class UserFilehandlerTest {
     /**
      * Helper method to delete testfiles.
      */
-    private void deleteFile() {
+    private void deleteFile(String filename) {
         try {
-            Files.delete(Path.of(System.getProperty("user.home")).resolve("test.json"));
+            Files.delete(Path.of(System.getProperty("user.home")).resolve(filename));
         } catch (IOException e) {
             System.out.println("Error deleting file");
             System.out.println(e.getMessage());
@@ -52,7 +53,6 @@ public class UserFilehandlerTest {
                 new Profile("testuser", "Password123")));
         userFilehandler.writeProfile(new Profile("testuser", "Password123"));
         Assertions.assertEquals(userFilehandler.readProfiles().size(), 1);
-        deleteFile();
     }
 
     /**
@@ -71,7 +71,6 @@ public class UserFilehandlerTest {
         Assertions.assertTrue(PasswordHasher.verifyPassword(password,
                 readProfile.getHashedPassword()),
                 "The file should contain the hashed password for the profile.");
-        deleteFile();
     }
 
     @Test
@@ -96,7 +95,6 @@ public class UserFilehandlerTest {
         Assertions.assertEquals(readProfiles.get(2).getUsername(),
                 readProfiles.get(2).getUsername(),
                 "The third profile should have the username \"Testuser3\".");
-        deleteFile();
     }
 
     /**
@@ -118,5 +116,18 @@ public class UserFilehandlerTest {
                 + System.getProperty("file.separator") + "newtest.json"),
                 UserFilehandler.getFilePath(),
                 "The file should be in the home directory.");
+    }
+
+    /**
+     * This method is run after each test.
+     * It deletes test.json and newtest.json if it exists.
+     */
+    @AfterEach
+    public void cleanUp() {
+        deleteFile("test.json");
+        if (Files.exists(Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + "newtest.json"))) {
+            deleteFile("newtest.json");
+        }
     }
 }
