@@ -25,7 +25,7 @@ public class Review {
     /**
      * This method validates the rating.
      */
-    public void validateRating(double r) {
+    private void validateRating(double r) {
         if (r < 1.0 || r > 5.0) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
         }

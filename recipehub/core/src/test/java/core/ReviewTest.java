@@ -34,13 +34,13 @@ public class ReviewTest {
     @Test
     public void testValidateRating() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            review.validateRating(0);
+            new Review(0, "This is a comment", profile.getUsername());
         });
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            review.validateRating(6);
+            new Review(6, "This is a comment", profile.getUsername());
         });
         Assertions.assertDoesNotThrow(() -> {
-            review.validateRating(5);
+            new Review(5, "This is a comment", profile.getUsername());
         });
     }
 }
