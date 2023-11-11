@@ -100,7 +100,7 @@ public class DirectRecipeHubAccessTest {
             new ArrayList<>(List.of(new Profile("Username1", "Password1"))));
         Assertions.assertNotNull(directRecipeHubAccess.getProfiles(), "Should not return null.");
         Assertions.assertEquals(1, directRecipeHubAccess.getProfiles().size(), 
-            "The list returnes should have length 1.");
+            "The returned list should have length equal to 1.");
         Assertions.assertEquals("Username1", 
             directRecipeHubAccess.getProfiles().get(0).getUsername(), 
             "The username of the first profile in the list should be 'Username1'");
