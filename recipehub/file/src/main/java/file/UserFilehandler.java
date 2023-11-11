@@ -88,10 +88,11 @@ public class UserFilehandler {
      * This method sets the getFilePath.
      * 
      * @param file - File to write to
+     * @throws IllegalArgumentException if the filename is empty
      */
     public static void setFileName(String file) {
-        if (file.isEmpty() || file == null) {
-            throw new IllegalArgumentException("Filename cannot be an empty string or null");
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Filename cannot be an empty string");
         }
         fileName = file;
         FileUtil.createFile(getFilePath());

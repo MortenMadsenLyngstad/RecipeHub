@@ -65,8 +65,12 @@ public class RecipeFilehandler {
      * This method sets the filePath.
      * 
      * @param file - File to write to
+     * @throws IllegalArgumentException if the filename is empty
      */
     public static void setFileName(String file) {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Filename cannot be an empty string");
+        }
         fileName = file;
         FileUtil.createFile(getFilePath());
     }
