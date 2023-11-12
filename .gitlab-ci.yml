@@ -1,9 +1,9 @@
-image: maven:3.8.3-openjdk-17
+image: adriansolberg/maven-openjdk-openjfx
 
 variables:
   MAVEN_OPTS: "-Djava.awt.headless=true -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
-  MAVEN_CLI_OPTS: "--batch-mode -DskipCoreTests=true -DskipFileTests=true -DskipUiTests=true"
-  MAVEN_TEST_OPTS: "--batch-mode -DskipUiTests=true"
+  MAVEN_CLI_OPTS: "--batch-mode -DskipTests=true"
+  MAVEN_TEST_OPTS: "--batch-mode -P headless"
 
 stages:
   - build
@@ -29,16 +29,24 @@ test:
   script:
     - "mvn clean test $MAVEN_TEST_OPTS"
 
-jacoco:
+  jacoco:
   stage: validation
   before_script:
     - "cd recipehub"
     - "mvn clean test $MAVEN_TEST_OPTS"
   script:
     - "mvn jacoco:report --batch-mode"
-    - "cat file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/'"
-    - "cat core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/'"
-  coverage: '/Total.*?([0-9]{1,3})%/'
+    - "file_coverage=$(cat file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/')"
+    - "core_coverage=$(cat core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/')"
+    - "ui_coverage=$(cat ui/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Ui Coverage Total:/')"
+    - "springboot_coverage=$(cat springboot/restserver/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Springboot Coverage Total:/')"
+    - "echo \"$file_coverage\""
+    - "echo \"$core_coverage\""
+    - "echo \"$ui_coverage\""
+    - "echo \"$springboot_coverage\""
+    - "average=$(echo -e \"$file_coverage\n$core_coverage\n$ui_coverage\n$springboot_coverage\" | grep -o '[0-9]*' | awk '{ total += $1; count++ } END { printf \"%.2f\", total/count }')"
+    - "echo \"Average Coverage: $average%\""
+  coverage: "/Average Coverage: ([0-9]+\\.[0-9]+)%/"
 
 checkstyle:
   stage: validation
