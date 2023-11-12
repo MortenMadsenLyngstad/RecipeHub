@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -39,7 +40,11 @@ public class App extends Application {
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
+        Image logo = new Image(
+            getClass().getResource("images/recipehub_logo_no_text.png").toExternalForm());
+        stage.getIcons().add(logo);
         stage.setScene(scene);
+        stage.setTitle("RecipeHub");
         SuperController controller = fxmlLoader.getController();
         controller.setCurrentRecipeHubAccess(new DirectRecipeHubAccess());
         stage.show();
