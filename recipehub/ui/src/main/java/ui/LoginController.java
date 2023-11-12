@@ -1,4 +1,4 @@
-package ui.controllers;
+package ui;
 
 import core.PasswordHasher;
 import core.Profile;
@@ -33,12 +33,12 @@ public class LoginController extends SuperController {
      * 
      * @param event The ActionEvent triggered by a login button click
      * @throws Exception   if the validateLogin method throws an exception
-     * @throws IOException if the SwitchController.switchSceneMain method throws
+     * @throws IOException if the SwitchController.switchToMainScreen method throws
      *                     an exception
-     * @see SuperController#switchSceneMain(ActionEvent, String)
+     * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
      */
     public void login(ActionEvent event) throws Exception {
-        if (validateLogin(usernameField.getText(), passwordField.getText(), userFilehandler)) {
+        if (validateLogin(usernameField.getText(), passwordField.getText())) {
             setProfile(currentProfile);
             switchSceneMain(event, "Mainscreen.fxml");
         }
@@ -48,10 +48,9 @@ public class LoginController extends SuperController {
      * Switches to the register screen.
      * 
      * @param event The ActionEvent that triggers the screen switch
-     * @throws IOException if the SwitchController.switchSceneWithInfo method throws
-     *                     an
+     * @throws IOException if the SwitchController.switchSceneMain method throws an
      *                     exception
-     * @see SuperController#switchSceneWithInfo(ActionEvent, String)
+     * @see SuperController#switchSceneMain(ActionEvent, String)
      */
     public void switchToRegisterScreen(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "RegisterScreen.fxml");
@@ -60,42 +59,26 @@ public class LoginController extends SuperController {
     /**
      * Validates the login information.
      * 
-     * @param uname The username to validate
-     * @param pword The password to validate
+     * @param username The username to validate
+     * @param password The password to validate
      * @return true if the login information is correct, false otherwise
      * @throws Exception if the userFilehandler.getUserinfo() method throws an
      *                   exception
      * @see UserFilehandler#getUserinfo()
      */
-    public boolean validateLogin(String uname, String pword, UserFilehandler userFilehandler) {
-        String storedPassword = userFilehandler.readUsernamesAndPasswords().get(uname);
+    public boolean validateLogin(String username, String password) {
+        Profile profile = currentRecipeHubAccess.loadProfile(username);
+                
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
             return false;
-        } else if (userFilehandler.readUsernamesAndPasswords().get(uname) == null) {
+        } else if (profile == null || !PasswordHasher.verifyPassword(
+                password, profile.getHashedPassword())) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
-        } else if (PasswordHasher.verifyPassword(pword, storedPassword)) {
-            loadProfile(uname, PasswordHasher.hashPassword(pword));
-            return true;
         } else {
-            loginMessageLabel.setText("Incorrect username or password");
-            return false;
-        }
-    }
-
-    /**
-     * This method will load currentProfile with it's username, password and all.
-     * it's recipes
-     * 
-     * @param uname - String with the username for the profile
-     * @param pword - String with the password for the profile
-     */
-    public void loadProfile(String uname, String pword) {
-        for (Profile profile : userFilehandler.readProfiles()) {
-            if (profile.getUsername().equals(uname)) {
-                currentProfile = profile;
-            }
+            currentProfile = profile;
+            return true;
         }
     }
 

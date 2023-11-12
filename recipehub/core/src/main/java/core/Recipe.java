@@ -32,7 +32,7 @@ public class Recipe {
         setName(name);
         setPortions(portions);
         this.authorUsername = author.getUsername();
-        author.addRecipe(this);
+        author.putRecipe(this);
         ingredients = new HashMap<>();
         steps = new ArrayList<>();
         ingredientUnits = new HashMap<>();

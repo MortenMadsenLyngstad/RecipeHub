@@ -1,6 +1,5 @@
-package ui.controllers;
+package ui;
 
-import core.PasswordHasher;
 import core.Profile;
 import file.UserFilehandler;
 import java.io.IOException;
@@ -45,7 +44,7 @@ public class RegisterController extends SuperController {
      * @param event - The ActionEvent that triggers the screen switch
      * @throws IOException if the switchSceneMain method throws an
      *                     exception
-     * @see SuperController#switchSceneWithInfo(ActionEvent, String)
+     * @see SuperController#switchSceneMain(ActionEvent, String)
      */
     public void switchToLoginScreen(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "UserLogin.fxml");
@@ -60,7 +59,7 @@ public class RegisterController extends SuperController {
      * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
      */
     public void register(ActionEvent event) throws IOException {
-        if (validateRegister(usernameField.getText(), passwordField.getText(), userFilehandler)) {
+        if (validateRegister(usernameField.getText(), passwordField.getText())) {
             setProfile(currentProfile);
             switchSceneMain(event, "Mainscreen.fxml");
         }
@@ -69,8 +68,8 @@ public class RegisterController extends SuperController {
     /**
      * Validates the register information.
      * 
-     * @param uname The username to validate
-     * @param pword The password to validate
+     * @param username The username to validate
+     * @param password The password to validate
      * @return true if the register information is correct, false otherwise
      * 
      * @see Profile#isValidUsername(String)
@@ -78,31 +77,28 @@ public class RegisterController extends SuperController {
      * @see UserFilehandler#writeProfile(String, String)
      * @see UserFilehandler#readUsernamesAndPasswords()
      */
-    public boolean validateRegister(String uname, String pword, UserFilehandler userFilehandler) {
+    public boolean validateRegister(String username, String password) {
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
                 || confirmPasswordField.getText().isBlank()) {
             registerMessageLabel.setText("Please enter a username and password");
             return false;
         }
         try {
-            Profile.isValidUsername(uname);
-            Profile.isValidPassword(pword);
+            Profile.isValidUsername(username);
+            Profile.isValidPassword(password);
         } catch (IllegalArgumentException e) {
             registerMessageLabel.setText(e.getMessage());
             return false;
         }
-        if (userFilehandler.readUsernamesAndPasswords().get(uname) != null) {
+        if (currentRecipeHubAccess.loadProfile(username) != null) {
             registerMessageLabel.setText("Username already exists");
             return false;
         } else if (!passwordField.getText().equals(confirmPasswordField.getText())) {
             registerMessageLabel.setText("Passwords do not match");
             return false;
         } else {
-            String hashedInput = PasswordHasher.hashPassword(pword);
-            currentProfile = new Profile(uname, pword);
-            currentProfile.setHashedPassword(hashedInput);
-            userFilehandler.writeProfile(currentProfile);
-            userFilehandler.readUsernamesAndPasswords().put(uname, hashedInput);
+            currentProfile = new Profile(username, password);
+            currentRecipeHubAccess.saveProfile(currentProfile);
             return true;
         }
     }

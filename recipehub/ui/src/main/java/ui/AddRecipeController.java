@@ -1,4 +1,4 @@
-package ui.controllers;
+package ui;
 
 import core.Recipe;
 import file.RecipeFilehandler;
@@ -21,7 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
- * This class is the controller for the AddRecipe.fxml file
+ * This class is the controller for the PutRecipe.fxml file
  */
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
@@ -399,8 +399,8 @@ public class AddRecipeController extends SuperController {
      * @see UserFilehandler #writeProfile(Profile)
      */
     private void saveRecipeToLibrary() {
-        recipeFilehandler.writeRecipe(newRecipe);
-        userFilehandler.writeProfile(currentProfile);
+        currentRecipeHubAccess.saveRecipe(newRecipe);
+        currentRecipeHubAccess.saveProfile(currentProfile);
     }
 
     /**

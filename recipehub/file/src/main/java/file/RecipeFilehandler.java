@@ -8,34 +8,28 @@ import java.nio.file.Path;
  * This class handles file operations for recipes.
  */
 public class RecipeFilehandler {
-    private Path filePath;
+    private static String fileName = "recipes.json";
 
     /**
      * This constructor initializes the filePath.
-     * 
-     * @param file - File to write to
      */
-    public RecipeFilehandler(String file) {
-        this.filePath = Path.of(System.getProperty("user.home")
-                + System.getProperty("file.separator") + file);
-        FileUtil.createFile(this.filePath);
+    public RecipeFilehandler() {
+        FileUtil.createFile(getFilePath());
     }
 
     /**
      * This method writes a recipe to the file.
      * 
      * @param recipe - Recipe object to write
+     * @return - Returns true if the recipe was written, false if null or not written
      */
-    public void writeRecipe(Recipe recipe) {
-        RecipeLibrary recipeLibrary = readRecipeLibrary();
-
-        if (recipeLibrary.getRecipes().stream()
-                .anyMatch(r -> r.getName().equals(recipe.getName()))) {
-            recipeLibrary.removeRecipe(recipe);
+    public boolean writeRecipe(Recipe recipe) {
+        if (recipe == null) {
+            return false;
         }
-            
-        recipeLibrary.addRecipe(recipe);
-        FileUtil.writeFile(filePath, recipeLibrary);
+        RecipeLibrary recipeLibrary = readRecipeLibrary();
+        recipeLibrary.putRecipe(recipe);
+        return FileUtil.writeFile(getFilePath(), recipeLibrary);
     }
 
     /**
@@ -45,7 +39,7 @@ public class RecipeFilehandler {
      */
     public RecipeLibrary readRecipeLibrary() {
         RecipeLibrary recipeLibrary = null;
-        recipeLibrary = FileUtil.readFile(filePath, recipeLibrary, RecipeLibrary.class);
+        recipeLibrary = FileUtil.readFile(getFilePath(), recipeLibrary, RecipeLibrary.class);
         if (recipeLibrary == null) {
             return new RecipeLibrary();
         }
@@ -56,10 +50,37 @@ public class RecipeFilehandler {
      * This method removes a recipe from the file.
      * 
      * @param recipe - Recipe object to remove
+     * @return - Returns true if the recipe was removed, false if null or not removed
      */
-    public void removeRecipe(Recipe recipe) {
+    public boolean removeRecipe(Recipe recipe) {
+        if (recipe == null) {
+            return false;
+        }
         RecipeLibrary recipeLibrary = readRecipeLibrary();
         recipeLibrary.removeRecipe(recipe);
-        FileUtil.writeFile(filePath, recipeLibrary);
+        return FileUtil.writeFile(getFilePath(), recipeLibrary);
+    }
+
+    /**
+     * This method sets the filePath.
+     * 
+     * @param file - File to write to
+     * @throws IllegalArgumentException if the filename is empty
+     */
+    public static void setFileName(String file) {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Filename cannot be an empty string");
+        }
+        fileName = file;
+        FileUtil.createFile(getFilePath());
+    }
+
+    public static String getFileName() {
+        return fileName;
+    }
+
+    public static Path getFilePath() {
+        return Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + fileName);
     }
 }

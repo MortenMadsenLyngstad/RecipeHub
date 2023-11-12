@@ -1,4 +1,4 @@
-package ui.controllers;
+package ui;
 
 import core.Profile;
 import core.Recipe;
@@ -322,11 +322,11 @@ public class RecipeController extends SuperController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            recipeFilehandler.removeRecipe(recipe);
+            currentRecipeHubAccess.removeRecipe(recipe);
             // If another profile has the removed recipe favorited it is also removed from
             // their favorites
             List<Profile> profiles = new ArrayList<>();
-            for (Profile p : userFilehandler.readProfiles()) {
+            for (Profile p : currentRecipeHubAccess.getProfiles()) {
                 if (p.getUsername().equals(currentProfile.getUsername())) {
                     currentProfile.removeFavorite(recipe);
                     currentProfile.removeRecipe(recipe);
@@ -336,7 +336,7 @@ public class RecipeController extends SuperController {
                     profiles.add(p);
                 }
             }
-            userFilehandler.writeAllProfiles(profiles);
+            currentRecipeHubAccess.saveProfiles(profiles);
             flag = true;
         } else {
             flag = false;
@@ -393,7 +393,7 @@ public class RecipeController extends SuperController {
      */
     public void addRating(double rating, String comment) throws IllegalArgumentException {
         recipe.addReview(new Review(rating, comment, currentProfile.getUsername()));
-        recipeFilehandler.writeRecipe(this.recipe);
+        currentRecipeHubAccess.saveRecipe(this.recipe);
         showRating();
         showComments();
     }

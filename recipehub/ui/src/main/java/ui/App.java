@@ -1,14 +1,12 @@
 package ui;
 
-import file.RecipeFilehandler;
-import file.UserFilehandler;
+import file.DirectRecipeHubAccess;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ui.controllers.SuperController;
 
 /**
  * This class starts the application.
@@ -43,8 +41,7 @@ public class App extends Application {
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         SuperController controller = fxmlLoader.getController();
-        controller.setFilehandlers(new RecipeFilehandler("recipes.json"),
-                new UserFilehandler("userInfo.json"));
+        controller.setCurrentRecipeHubAccess(new DirectRecipeHubAccess());
         stage.show();
     }
 

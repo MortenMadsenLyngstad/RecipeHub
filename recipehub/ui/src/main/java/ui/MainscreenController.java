@@ -1,4 +1,4 @@
-package ui.controllers;
+package ui;
 
 import core.Profile;
 import core.Recipe;
@@ -263,7 +263,7 @@ public class MainscreenController extends SuperController {
             if (heart.getFill().equals(Color.RED)) {
                 heart.setFill(Color.WHITE);
                 currentProfile.removeFavorite(recipe);
-                userFilehandler.writeProfile(currentProfile);
+                currentRecipeHubAccess.saveProfile(currentProfile);
                 if (this.titleLabel != null) {
                     if (this.titleLabel.getText().equals("Favorites")) {
                         load();
@@ -273,25 +273,25 @@ public class MainscreenController extends SuperController {
             } else {
                 heart.setFill(Color.RED);
                 currentProfile.addFavorite(recipe);
-                userFilehandler.writeProfile(currentProfile);
+                currentRecipeHubAccess.saveProfile(currentProfile);
             }
         });
     }
 
     /**
-     * This method will switch screen to addRecipe.fxml when the addRecipe button is
+     * This method will switch screen to addRecipe.fxml when the putRecipe button is
      * clicked on.
      * 
      * @param event - The event of the Add Recipe-button beign clicked on
      * @throws IOException - if the switchSceneWithInfo method throws an exception
      */
     @FXML
-    public void addRecipe(ActionEvent event) throws IOException {
+    public void putRecipe(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "addRecipe.fxml");
     }
 
     /**
-     * This method will switch screen to UserLogin.fxml when the addRecipe button is
+     * This method will switch screen to UserLogin.fxml when the putRecipe button is
      * clicked on.
      * 
      * @param event - The event of the Log Out-button beign clicked on
@@ -299,7 +299,6 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void logout(ActionEvent event) throws IOException {
-        setProfile(null);
         switchSceneWithInfo(event, "UserLogin.fxml");
     }
 
@@ -367,8 +366,7 @@ public class MainscreenController extends SuperController {
      * @param profile - The profile which is logged in
      */
     protected void loadLibrary() {
-        allRecipes = recipeFilehandler.readRecipeLibrary();
+        allRecipes = currentRecipeHubAccess.getRecipeLibrary();
         loadAllRecipes();
-        System.out.println("hei");
     }
 }

@@ -1,12 +1,17 @@
-package ui.controllers;
+package ui;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import core.Profile;
+import core.RecipeLibrary;
+import file.DirectRecipeHubAccess;
+import file.RecipeFilehandler;
+import file.UserFilehandler;
 import java.io.IOException;
-import java.util.Hashtable;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -15,17 +20,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import ui.App;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import core.Profile;
-import file.UserFilehandler;
-
+/**
+ * This is a test class for RegisterController.
+ */
 public class RegisterControllerTest extends ApplicationTest {
 
     private RegisterController controller;
@@ -35,7 +38,6 @@ public class RegisterControllerTest extends ApplicationTest {
     private Hyperlink loginLink;
 
     private Label registerMessageLabel;
-    private Hashtable<String, String> userInfo = new Hashtable<>();
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
 
@@ -55,12 +57,18 @@ public class RegisterControllerTest extends ApplicationTest {
         stage.show();
     }
 
+    /**
+     * This method sets up the test environment.
+     */
     @BeforeEach
     public void setUp() {
         registerMessageLabel = lookup("#registerMessageLabel").query();
         loginLink = findHyperlink(root);
         registerButton = lookup("#registerButton").query();
-        controller.setUserFilehandler(mockUserFileHandler);
+        RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
+        when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(new RecipeLibrary());
+        controller.setCurrentRecipeHubAccess(
+                new DirectRecipeHubAccess(mockUserFileHandler, mockRecipeFilehandler));
         controller.setProfile(mockProfile);
     }
 
@@ -83,9 +91,9 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateRegisterWithValidData() {
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
-        doNothing().when(mockUserFileHandler).writeProfile(any(Profile.class));
-
+        Profile profile = new Profile("testuser", "Password123");
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
+        when(mockUserFileHandler.writeProfile(any(Profile.class))).thenReturn(true);
 
         write("newuser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.TAB);
@@ -98,7 +106,8 @@ public class RegisterControllerTest extends ApplicationTest {
 
     @Test
     public void testValidateRegisterWithInvalidPassword() {
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
+        Profile profile = new Profile("testuser", "Password123");
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
         write("testuser").push(javafx.scene.input.KeyCode.TAB);
         write("weak").push(javafx.scene.input.KeyCode.TAB);
@@ -106,26 +115,27 @@ public class RegisterControllerTest extends ApplicationTest {
 
         clickOn(registerButton);
 
-        Assertions.assertFalse(controller.validateRegister("testuser", "weak",  mockUserFileHandler));
+        Assertions.assertFalse(controller.validateRegister("testuser", "weak"));
         Assertions.assertEquals("Password is too short", registerMessageLabel.getText());
     }
 
     @Test
     public void testValidateRegisterWithUsernameExists() {
-        userInfo.put("existinguser", "Password123");
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
+        Profile profile = new Profile("Existinguser", "Password123");
+        when(mockUserFileHandler.loadProfile(any())).thenReturn(profile);
 
-        write("existinguser").push(javafx.scene.input.KeyCode.TAB);
+        write("Existinguser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.ENTER);
 
-        assertFalse(controller.validateRegister("existinguser", "Password123", mockUserFileHandler));
+        assertFalse(controller.validateRegister(profile.getUsername(), profile.getPassword()));
         assertEquals("Username already exists", registerMessageLabel.getText());
     }
 
     @Test
     public void testValidateLoginWithBlankFields() {
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
+        Profile profile = new Profile("testuser", "Password123");
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
         write("").push(javafx.scene.input.KeyCode.TAB);
         write("").push(javafx.scene.input.KeyCode.TAB);
@@ -133,13 +143,13 @@ public class RegisterControllerTest extends ApplicationTest {
 
         clickOn(registerButton);
 
-        assertFalse(controller.validateRegister("", "", mockUserFileHandler));
+        assertFalse(controller.validateRegister("", ""));
         assertEquals("Please enter a username and password", registerMessageLabel.getText());
     }
 
     @Test
     public void testValidateRegisterWithPasswordsNotMatching() {
-        when(mockUserFileHandler.readUsernamesAndPasswords()).thenReturn(this.userInfo);
+        when(mockUserFileHandler.loadProfile("testuser")).thenReturn(null);
 
         write("testuser").push(javafx.scene.input.KeyCode.TAB);
         write("Password123").push(javafx.scene.input.KeyCode.TAB);
@@ -147,13 +157,14 @@ public class RegisterControllerTest extends ApplicationTest {
 
         clickOn(registerButton);
 
-        assertFalse(controller.validateRegister("testuser", "Password123", mockUserFileHandler));
+        assertFalse(controller.validateRegister("testuser", "Password123"));
         assertEquals("Passwords do not match", registerMessageLabel.getText());
     }
 
     @Test
     public void testClickOnLoginHyperlink() {
         clickOn(loginLink);
+
         assertEquals("UserLogin.fxml", controller.getFileName());
     }
 }

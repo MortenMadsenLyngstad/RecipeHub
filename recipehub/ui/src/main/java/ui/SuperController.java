@@ -1,7 +1,8 @@
-package ui.controllers;
+package ui;
 
 import core.Profile;
 import file.RecipeFilehandler;
+import file.RecipeHubAccess;
 import file.UserFilehandler;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -22,6 +23,8 @@ public class SuperController {
     protected Parent root;
     static Profile currentProfile;
     private String fileName;
+    // exchange with remote or direct access
+    static RecipeHubAccess currentRecipeHubAccess;
     static RecipeFilehandler recipeFilehandler;
     static UserFilehandler userFilehandler;
 
@@ -64,28 +67,7 @@ public class SuperController {
         this.fileName = fileName;
     }
 
-    /**
-     * This method will set make new filehandlers with new filenames.
-     * The method is implemented so that we can run proper tests on the controller
-     * 
-     * @param recipeFilehandler - RecipeFilhandler for the MainscreenController to
-     *                          use
-     * @param userFilehandler   - UserFilhandler for the MainscreenController to use
-     */
-    public void setFilehandlers(RecipeFilehandler recipeFilehandler,
-            UserFilehandler userFilehandler) {
-        SuperController.recipeFilehandler = recipeFilehandler;
-        SuperController.userFilehandler = userFilehandler;
+    public void setCurrentRecipeHubAccess(RecipeHubAccess recipeHubAccess) {
+        currentRecipeHubAccess = recipeHubAccess;
     }
-
-    /**
-     * Changes the userFilehandler.
-     * Used for unit tests.
-     * 
-     * @param userFilehandler - the new userFilehandler
-     */
-    public void setUserFilehandler(UserFilehandler userFilehandler) {
-        SuperController.userFilehandler = userFilehandler;
-    }
-
 }

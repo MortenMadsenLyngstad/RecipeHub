@@ -27,6 +27,7 @@ public class Profile {
         this.username = username;
         isValidPassword(password);
         this.password = password;
+        this.hashedPassword = PasswordHasher.hashPassword(password);
         recipeLibrary = new RecipeLibrary();
         favorites = new RecipeLibrary();
     }
@@ -94,6 +95,7 @@ public class Profile {
 
     /**
      * This method will return the hashed password of the given profile.
+     * 
      * @return String value for hashed password
      */
     public String getHashedPassword() {
@@ -124,6 +126,8 @@ public class Profile {
 
     /**
      * This method will set the hashed password of the profile.
+     * This method will set the hashed password of the profile.
+     * 
      * @param hashedPassword - String value to set as hashed password
      */
     public void setHashedPassword(String hashedPassword) {
@@ -144,8 +148,8 @@ public class Profile {
      * 
      * @param recipe - Recipe to add to the profile's recipes
      */
-    public void addRecipe(Recipe recipe) {
-        recipeLibrary.addRecipe(recipe);
+    public void putRecipe(Recipe recipe) {
+        recipeLibrary.putRecipe(recipe);
     }
 
     /**
@@ -170,7 +174,7 @@ public class Profile {
      * @param recipe - Recipe to add to the profile's favorites
      */
     public void addFavorite(Recipe recipe) {
-        favorites.addRecipe(recipe);
+        favorites.putRecipe(recipe);
     }
 
     /**

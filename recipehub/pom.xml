@@ -97,6 +97,7 @@
                     </dependencies>
                     <configuration>
                         <configLocation>config/checkstyle/checkstyle-checker.xml</configLocation>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
                         <consoleOutput>false</consoleOutput>
                         <violationSeverity>warning</violationSeverity>
                         <failsOnError>true</failsOnError>
@@ -132,5 +133,6 @@
         <module>core</module>
         <module>file</module>
         <module>ui</module>
+        <module>springboot/restserver</module>
     </modules>
 </project>

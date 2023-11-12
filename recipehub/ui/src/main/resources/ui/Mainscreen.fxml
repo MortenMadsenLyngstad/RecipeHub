@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controllers.MainscreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainscreenController">
    <children>
       <ScrollPane fx:id="scrollPane" layoutY="170.0" prefHeight="330.0" prefWidth="700.0">
          <padding>
@@ -35,7 +35,7 @@
             <FontAwesomeIconView glyphName="SPOON" layoutX="64.0" layoutY="49.0" rotate="56.3" size="50" />
          </children></AnchorPane>
       <Button fx:id="allBtn" layoutX="310.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadAllRecipes" prefWidth="80.0" styleClass="green_button" text="All recipes" />
-      <Button fx:id="addBtn" layoutX="171.0" layoutY="98.0" mnemonicParsing="false" onAction="#addRecipe" styleClass="green_button" text="+ Add Recipe" />
+      <Button fx:id="addBtn" layoutX="171.0" layoutY="98.0" mnemonicParsing="false" onAction="#putRecipe" styleClass="green_button" text="+ Add Recipe" />
       <Button fx:id="myBtn" layoutX="395.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadMyRecipes" prefWidth="80.0" styleClass="green_button" text="My recipes" />
       <TextField fx:id="txtField" layoutX="270.0" layoutY="99.0" onKeyTyped="#search" promptText="Search here..." />
       <Button fx:id="favoritesBtn" layoutX="225.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadFavoriteRecipes" prefHeight="28.0" prefWidth="80.0" styleClass="green_button" text="Favorites" />

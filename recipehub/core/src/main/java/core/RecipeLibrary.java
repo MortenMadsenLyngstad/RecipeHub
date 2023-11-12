@@ -60,10 +60,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
      * 
      * @param recipe - Recipe object you wish to add
      */
-    public void addRecipe(Recipe recipe) {
-        if (containsRecipe(recipe)) {
-            throw new IllegalArgumentException("The recipe is already added");
-        }
+    private void addRecipe(Recipe recipe) {
         if (recipe == null) {
             throw new IllegalArgumentException("Can't add null");
         }
@@ -71,11 +68,21 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will remove thee given recipe from the ArrayList recipes.
+     * This mehtod will update a recipe if it exists, or add it if it doesn't.
+     * 
+     * @param recipe - The recipe to be updated or added
+     */
+    public void putRecipe(Recipe recipe) {
+        if (containsRecipe(recipe)) {
+            removeRecipe(recipe);
+        }
+        addRecipe(recipe);
+    }
+
+    /**
+     * This method will remove the given recipe from the ArrayList recipes.
      * 
      * @param recipe - Recipe object you wish to remove
-     * @throws IllegalArgumentException if the recipe given does not exist in
-     *                                  recipes
      */
     public void removeRecipe(Recipe recipe) {
         for (Recipe r : recipes) {
@@ -84,7 +91,6 @@ public class RecipeLibrary implements Iterable<Recipe> {
                 return;
             }
         }
-        throw new IllegalArgumentException("The recipe does not exist");
     }
 
     /**
@@ -99,7 +105,15 @@ public class RecipeLibrary implements Iterable<Recipe> {
                         && r.getAuthor().equals(recipe.getAuthor())));
     }
 
+    /**
+     * This method sets the recipe library to the given list of recipes.
+     * 
+     * @param newRecipes - List of recipes you wish to set the recipe library to
+     */
     public void setRecipeLibrary(List<Recipe> newRecipes) {
+        if (newRecipes == null) {
+            throw new IllegalArgumentException("Recipes cannot be null");
+        }
         recipes = newRecipes;
     }
 

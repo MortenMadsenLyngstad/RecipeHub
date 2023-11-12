@@ -5,32 +5,31 @@ import core.Profile;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 /**
  * This class handles file operations for users.
  */
 public class UserFilehandler {
-    private Path filePath;
+    private static String fileName = "userInfo.json";
 
     /**
      * This constructor initializes the filePath.
-     * 
-     * @param file - File to write to
      */
-    public UserFilehandler(String file) {
-        this.filePath = Path.of(System.getProperty("user.home")
-                + System.getProperty("file.separator") + file);
-        FileUtil.createFile(this.filePath);
+    public UserFilehandler() {
+        FileUtil.createFile(getFilePath());
     }
 
     /**
      * This method writes a profile to the file.
      * 
      * @param profile - Profile object to write
+     * @return - Returns true if the profile was written, false if null or not written
      */
-    public void writeProfile(Profile profile) {
+    public boolean writeProfile(Profile profile) {
+        if (profile == null) {
+            return false;
+        }
         List<Profile> profiles = readProfiles();
 
         profiles.remove(profiles.stream()
@@ -39,7 +38,7 @@ public class UserFilehandler {
                 .orElse(null));
 
         profiles.add(profile);
-        FileUtil.writeFile(filePath, profiles);
+        return FileUtil.writeFile(getFilePath(), profiles);
     }
 
     /**
@@ -51,7 +50,7 @@ public class UserFilehandler {
         List<Profile> profiles = new ArrayList<>();
         Type profileListType = new TypeToken<List<Profile>>() {
         }.getType();
-        profiles = FileUtil.readFile(filePath, profiles, profileListType);
+        profiles = FileUtil.readFile(getFilePath(), profiles, profileListType);
         if (profiles == null) {
             return new ArrayList<>();
         }
@@ -62,29 +61,49 @@ public class UserFilehandler {
      * This method writes all profiles to the file.
      * 
      * @param profiles - List of profiles to write
+     * @return - Returns true if the profiles were written, false if null or not written
      */
-    public void writeAllProfiles(List<Profile> profiles) {
-        FileUtil.writeFile(filePath, profiles);
+    public boolean writeAllProfiles(List<Profile> profiles) {
+        if (profiles == null) {
+            return false;
+        }
+        return FileUtil.writeFile(getFilePath(), profiles);
     }
 
     /**
-     * This method reads usernames and passwords from the file.
+     * This method loads a profile from the file.
      * 
-     * @return - Returns a hashtable with usernames as keys and passwords as values
+     * @param username - Username of the profile to load
+     * @return Returns the profile
      */
-    public Hashtable<String, String> readUsernamesAndPasswords() {
-        Hashtable<String, String> userinfo = new Hashtable<>();
-
+    public Profile loadProfile(String username) {
         List<Profile> profiles = readProfiles();
+        return profiles.stream()
+                .filter(p -> p.getUsername().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
 
-        for (Profile profile : profiles) {
-            String username = profile.getUsername();
-            String hashedPassword = profile.getHashedPassword();
-
-            // Check if the username is not already in the map (to handle duplicates if
-            // necessary)
-            userinfo.put(username, hashedPassword);
+    /**
+     * This method sets the getFilePath.
+     * 
+     * @param file - File to write to
+     * @throws IllegalArgumentException if the filename is empty
+     */
+    public static void setFileName(String file) {
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Filename cannot be an empty string");
         }
-        return userinfo;
+        fileName = file;
+        FileUtil.createFile(getFilePath());
+    }
+
+    public static String getFileName() {
+        return fileName;
+    }
+
+    public static Path getFilePath() {
+        return Path.of(System.getProperty("user.home")
+                + System.getProperty("file.separator") + fileName);
     }
 }
