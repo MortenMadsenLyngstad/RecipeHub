@@ -29,7 +29,7 @@ test:
   script:
     - "mvn clean test $MAVEN_TEST_OPTS"
 
-  jacoco:
+jacoco:
   stage: validation
   before_script:
     - "cd recipehub"
