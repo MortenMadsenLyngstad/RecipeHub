@@ -149,4 +149,4 @@ You have found the recipe you want to make, it has a lot of ingredients and you 
 - Rate and favourite the recipe without making scaled versions of it
 
 #### Sequence diagram for user story 5: 
-![User story 5 sequence diagram](link)
+![User story 5 sequence diagram](https://imgur.com/3MQCxfN.png)

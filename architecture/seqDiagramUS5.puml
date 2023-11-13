@@ -1,0 +1,19 @@
+@startuml sequenceDiagramUserStory2
+
+!define MyGreen #009000
+
+skinparam participant {
+  BackgroundColor MyGreen
+}
+
+Actor User
+participant RecipeController
+
+
+activate RecipeController
+User <-- RecipeController: populate()
+User --> RecipeController: plussButtonClick(),minusButtonClick() or manual input of portions 
+RecipeController --> RecipeController: handlePortions()
+User <-- RecipeController: populate()
+deactivate RecipeController
+@enduml
