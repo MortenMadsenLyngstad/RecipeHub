@@ -129,3 +129,24 @@ The user is in need of an application where they can easily remove a recipe they
 
 #### Sequence diagram for user story 4: 
 ![User story 4 sequence diagram](https://i.imgur.com/SrmVIpg.png)
+
+
+### User story 5: Scaling a recipe
+
+You have found the recipe you want to make, it has a lot of ingredients and you want to make it for more people than the recipe is made for. You want to scale the recipe so that you can make it for the amount of people you want, without having to calculate the amount of ingredients yourself.
+
+#### Important to be able to see
+
+- Buttons to add or subtract the amount of portions
+- Field for writing the amount of portions you want to make
+- The amount of portions the recipe is made for
+- The amount of ingredients needed for the amount of portions you want to make
+
+#### Important to be able to do
+
+- Add and remove portions
+- Type in the amount of portions
+- Rate and favourite the recipe without making scaled versions of it
+
+#### Sequence diagram for user story 5: 
+![User story 5 sequence diagram](link)
