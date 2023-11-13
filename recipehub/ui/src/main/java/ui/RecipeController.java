@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -95,7 +96,8 @@ public class RecipeController extends SuperController {
             stepsText.appendText("Step " + i + ":  " + steps.get(i - 1) + "\n");
         }
         for (String ingredient : recipe.getIngredients()) {
-            String amount = String.format("%.1f", recipe.getIngredientAmount(ingredient) * scale);
+            String amount = String.format(Locale.US, "%.1f", 
+                recipe.getIngredientAmount(ingredient) * scale);
             ingredientsText.appendText(amount
                     + " " + recipe.getIngredientUnit(ingredient)
                     + " : " + ingredient + "\n");
