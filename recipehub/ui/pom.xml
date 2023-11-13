@@ -179,12 +179,11 @@
                         <appVersion>1.0.0</appVersion>
                         <vendor>it1901</vendor>
                         <destination>target/dist</destination>
-                        <module>ui.controllers/ui.App</module>
+                        <module>ui/ui.App</module>
                         <runtimeImage>target/recipehub</runtimeImage>
                         <javaOptions>
                             <option>-Dfile.encoding=UTF-8</option>
                         </javaOptions>
-                        <icon>./src/main/resources/ui/controllers/recipehubIcon.png</icon>
                         <!-- linux options --> 
                         <linuxShortcut>true</linuxShortcut>
                         <linuxMenuGroup>recipehub</linuxMenuGroup>
