@@ -249,6 +249,28 @@ public class AddRecipeControllerTest extends ApplicationTest {
     }
 
     /**
+     * This method will test the functionality of the createRecipe method.
+     * This test will test that it is not possible to create a recipe with a
+     * name that already exists.
+     */
+    @Test
+    public void testCreateRecipeWithDuplicateName() {
+        RecipeLibrary recipeLibrary = new RecipeLibrary();
+        when(mockProfile.getUsername()).thenReturn("testUser");
+        recipeLibrary.putRecipe(new Recipe("testRecipe", 1, mockProfile));
+        when(mockRecipeFileHandler.readRecipeLibrary()).thenReturn(recipeLibrary);
+        recipeNameField.setText("testRecipe");
+        clickOn(addRecipeNameButton);
+        assertTrue(controller.getDuplicateRecipeAlert() != null);
+
+        Button cancelButton = (Button) controller.getDuplicateRecipeAlert().getDialogPane()
+                .lookupButton(ButtonType.OK);
+        clickOn(cancelButton);
+        assertTrue(controller.getDuplicateRecipeAlert() == null);
+
+    }
+
+    /**
      * This method will test the functionality of the addDescription method.
      */
     @Test
