@@ -68,12 +68,12 @@
             <Text layoutX="15.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" />
             <TextField fx:id="addDescriptionText" layoutX="15.0" layoutY="28.0" prefHeight="26.0" prefWidth="252.0" promptText="Describe your dish:" />
             <Button fx:id="addDescriptionButton" layoutX="273.0" layoutY="28.0" mnemonicParsing="false" onAction="#addDescription" styleClass="green_button" text="Add" />
-            <Text fx:id="descriptionError" fill="#ff0505" layoutX="94.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please write in a discription!" visible="false" />
+            <Text fx:id="descriptionError" fill="#ff0505" layoutX="94.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please write in a description!" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="addStepPane" layoutX="1.0" layoutY="265.0" prefHeight="84.0" prefWidth="391.0" visible="false">
          <children>
-            <Text layoutX="15.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please descpribe step by step how to make the dish:" />
+            <Text layoutX="15.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please describe step by step how to make the dish:" />
             <TextField fx:id="addStepText" layoutX="15.0" layoutY="31.0" prefHeight="26.0" prefWidth="230.0" promptText="Step 1:" />
             <Button fx:id="addStepButton" layoutX="257.0" layoutY="31.0" mnemonicParsing="false" onAction="#addStep" styleClass="green_button" text="Add Step" />
             <Button fx:id="addStepNext" layoutX="331.0" layoutY="31.0" mnemonicParsing="false" onAction="#addedAllSteps" styleClass="green_button" text="Next" />
