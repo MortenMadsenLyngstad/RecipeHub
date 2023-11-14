@@ -16,8 +16,11 @@ public class PasswordHasher {
     /**
      * This method hashes a password.
      * 
-     * @param password - Password to be hashed
+     * @param password password to be hashed
      * @return String value for hashed password
+     * @see #generateSalt()
+     * @see #hashPasswordWithSalt(String, byte[])
+     * @see #bytesToHex(byte[])
      */
     public static String hashPassword(String password) {
         byte[] salt = generateSalt();
@@ -31,12 +34,16 @@ public class PasswordHasher {
 
     /**
      * This method verifies a password.
+     * Hashes the input password with the same salt as the stored password, 
+     * and checks if they are then equal.
      * 
-     * @param input          - Password to be verified
-     * @param storedPassword - Stored password used in verification
+     * @param inputPassword input password to be verified
+     * @param storedPassword - Stored, hashed password used in verification
      * @return Boolean value for whether the password is verified or not
+     * @see #hexToBytes(String)
+     * @see #hashPasswordWithSalt(String, byte[])
      */
-    public static Boolean verifyPassword(String input, String storedPassword) {
+    public static Boolean verifyPassword(String inputPassword, String storedPassword) {
         String[] parts = storedPassword.split(":");
         if (parts.length != 2) {
             return false;
@@ -44,7 +51,7 @@ public class PasswordHasher {
         byte[] salt = hexToBytes(storedPassword.split(":")[0]);
         byte[] storedHashedPassword = hexToBytes(storedPassword.split(":")[1]);
 
-        byte[] hashedInput = hashPasswordWithSalt(input, salt);
+        byte[] hashedInput = hashPasswordWithSalt(inputPassword, salt);
 
         return MessageDigest.isEqual(storedHashedPassword, hashedInput);
     }
@@ -63,11 +70,10 @@ public class PasswordHasher {
     /**
      * This method hashes a password with a salt.
      * 
-     * @param password - Password to be hashed
-     * @param salt     - Salt used in hashing
+     * @param password password to be hashed
+     * @param salt salt used in hashing
      * @return Byte array for hashed password
-     * @throws RuntimeException - Exception thrown if hashing algorithm
-     *                          is not found
+     * @throws RuntimeException if hashing algorithm is not found
      */
     private static byte[] hashPasswordWithSalt(String password, byte[] salt) {
         try {
@@ -85,7 +91,7 @@ public class PasswordHasher {
     /**
      * This method converts a byte array to a hex string.
      * 
-     * @param bytes - Byte array to be converted
+     * @param bytes byte array to be converted
      * @return String value for hex string
      */
     private static String bytesToHex(byte[] bytes) {
@@ -99,7 +105,7 @@ public class PasswordHasher {
     /**
      * This method converts a hex string to a byte array.
      * 
-     * @param hex - Hex string to be converted
+     * @param hex hex string to be converted
      * @return Byte array for hex string
      */
     private static byte[] hexToBytes(String hex) {
