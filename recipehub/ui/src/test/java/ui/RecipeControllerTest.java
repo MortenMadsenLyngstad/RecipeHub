@@ -37,7 +37,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -45,14 +44,11 @@ import org.testfx.framework.junit5.ApplicationTest;
  * Controller for displaying the information of a recipe on a RecipeSreen.
  */
 public class RecipeControllerTest extends ApplicationTest {
-
     private RecipeController controller;
     private Parent root;
-
     private List<Profile> profiles = new ArrayList<>();
     private RecipeLibrary recipes = new RecipeLibrary();
     private Hashtable<String, String> userInfo = new Hashtable<>();
-
     private Label nameField, authorLabel, descriptionLabel, stepsLabel, portionsLabel;
     private Button backButton;
     private TextArea descriptionText, stepsText, ingredientsText;
@@ -62,7 +58,6 @@ public class RecipeControllerTest extends ApplicationTest {
     private Text averageRating;
     private Hyperlink numberOfRaters, numberOfcomments;
     private VBox scrollPaneBox;
-
     private Profile mockProfile = mock(Profile.class);
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
@@ -70,7 +65,7 @@ public class RecipeControllerTest extends ApplicationTest {
     /**
      * This method will set up the application for headless mode (tests will
      * runwithout GUI).
-     * 
+     *
      * @see App#supportHeadless()
      */
     @BeforeAll
@@ -80,18 +75,20 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will start the application.
-     * 
+     *
      * @param stage the stage to start
      * @throws IOException if the FXMLLoader.load() method throws an exception
-     * @see MainscreenControllerTest#setUp()
+     * @see RecipeControllerTest#setUp()
      */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Recipe.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         setUp();
-        stage.setScene(new Scene(root));
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -129,10 +126,14 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will set up the buttons for the test.
+     * This method will test if the set up is correct.
+     * It will check if the correct information is displayed.
+     * It will also check if the correct buttons are visible.
+     *
+     * @see RecipeController#populate()
      */
-    @BeforeEach
-    public void setUpButtons() {
+    @Test
+    public void testPopulate() {
         nameField = lookup("#nameField").query();
         authorLabel = lookup("#authorLabel").query();
         descriptionLabel = lookup("#descriptionLabel").query();
@@ -144,24 +145,11 @@ public class RecipeControllerTest extends ApplicationTest {
         ingredientsText = lookup("#ingredientsText").query();
         deleteButton = lookup("#deleteButton").query();
         heartButton = lookup("#heartButton").query();
-        plusButton = lookup("#plusButton").query();
-        minusButton = lookup("#minusButton").query();
         portionsField = lookup("#portionsField").query();
         rating = lookup("#recipeRating").query();
         averageRating = lookup("#averageRating").query();
         numberOfRaters = lookup("#numberOfRaters").query();
-        numberOfcomments = lookup("#numberOfComments").query();
-        scrollPaneBox = lookup("#scrollPaneBox").query();
-        controller.setCurrentRecipeHubAccess(
-                new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
-        controller.setProfile(profiles.get(0));
-    }
 
-    /**
-     * This method will test if the set up is correct.
-     */
-    @Test
-    public void testPopulate() {
         when(mockProfile.getUsername()).thenReturn("Username");
         assertEquals("Pizza", nameField.getText());
         assertEquals("Posted by: Username", authorLabel.getText());
@@ -173,8 +161,8 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("Best way to start the weekend", descriptionText.getText());
         assertEquals("Step 1:  Make the dough\nStep 2:  Add toppings\n", stepsText.getText());
         assertEquals(
-            "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
-             ingredientsText.getText());
+                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                ingredientsText.getText());
         assertEquals("TRASH", deleteButton.getGlyphName());
         assertEquals("HEART", heartButton.getGlyphName());
         assertEquals(0, rating.getRating());
@@ -185,10 +173,19 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * Tests scaling functionality.
+     * This method tests scaling functionality.
+     * It tests if clicking on the plus and minus buttons will scale the recipe.
+     * It also tests if illegal input is ignored.
+     *
+     * @see RecipeController#scale()
      */
     @Test
     public void testScale() {
+        ingredientsText = lookup("#ingredientsText").query();
+        plusButton = lookup("#plusButton").query();
+        minusButton = lookup("#minusButton").query();
+        portionsField = lookup("#portionsField").query();
+
         // Checks setUp
         assertEquals("4", portionsField.getText());
         assertEquals(
@@ -238,9 +235,13 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test if the back button works.
+     *
+     * @see RecipeController#backButtonClick()
      */
     @Test
     public void backButtonTest() {
+        backButton = lookup("#backButton").query();
+
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
         when(mockProfile.getUsername()).thenReturn("Username");
@@ -251,9 +252,12 @@ public class RecipeControllerTest extends ApplicationTest {
     /**
      * This method will test if the delete button changes strokewidth when hovered
      * over.
+     *
+     * @see RecipeController#showDeleteButton()
      */
     @Test
     public void testHoverOverDelete() {
+        deleteButton = lookup("#deleteButton").query();
         moveTo(deleteButton);
         assertEquals(0.7, deleteButton.getStrokeWidth(),
                 "The StrokeWidth of the delete button should "
@@ -262,30 +266,14 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test if a recipe can be deleted, and switched back to the
-     * mainscreen.
-     * if the user confirms the deletion
+     * mainscreen if the user confirms the deletion.
+     *
+     * @see RecipeController#deleteRecipe()
      */
     @Test
     public void testDeleteRecipe() {
-        controller.setCurrentRecipeHubAccess(
-                new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
-        when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
-        when(mockProfile.getUsername()).thenReturn("Username");
-        doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
-        clickOn(deleteButton);
-        Button okButton = (Button) controller.getAlert().getDialogPane()
-                .lookupButton(ButtonType.OK);
-        clickOn(okButton);
-        assertEquals("Mainscreen.fxml", controller.getFileName());
-    }
+        deleteButton = lookup("#deleteButton").query();
 
-    /**
-     * This method will test if a recipe can be deleted, and switched back to the
-     * mainscreen.
-     * if the user confirms the deletion
-     */
-    @Test
-    public void testDeleteRecipe2() {
         controller.setCurrentRecipeHubAccess(
                 new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
         when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
@@ -299,10 +287,14 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test if a recipe can be deleted, and check if
-     * the user is sent back to recipe.fxml if the user cancels the deletion
+     * the user is sent back to recipe.fxml if the user cancels the deletion.
+     *
+     * @see RecipeController#deleteRecipe()
      */
     @Test
     public void testDeleteRecipeCancel() {
+        deleteButton = lookup("#deleteButton").query();
+
         controller.setCurrentRecipeHubAccess(
                 new DirectRecipeHubAccess(mockUserFilehandler, mockRecipeFilehandler));
         doNothing().when(mockProfile).removeRecipe(recipes.getRecipe(0));
@@ -320,9 +312,13 @@ public class RecipeControllerTest extends ApplicationTest {
     /**
      * This method will test if the heart button changes strokewidth when hovered
      * over.
+     *
+     * @see MainscreenController#setHeart(FontAwesomeIconView, Recipe, Profile)
      */
     @Test
     public void testHoverOverFavorite() {
+        heartButton = lookup("#heartButton").query();
+
         moveTo(heartButton);
         assertEquals(2, heartButton.getStrokeWidth(),
                 "The StrokeWidth of the heart should increase to 2 when moving you mouse over it");
@@ -330,9 +326,14 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test if the heart button changes color when clicked.
+     * It will also test if the heart button changes back to white when clicked.
+     *
+     * @see MainscreenController#setHeart(FontAwesomeIconView, Recipe, Profile)
      */
     @Test
     public void testClickOnFavoriteButton() {
+        heartButton = lookup("#heartButton").query();
+
         when(mockUserFilehandler.writeProfile(profiles.get(0))).thenReturn(true);
         clickOn(heartButton);
         assertEquals(Color.RED, heartButton.getFill(),
@@ -344,10 +345,19 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if a review with a comment is added correctly.
+     * This method will test if a review without a comment is added correctly.
+     * It will also test if the average rating and number of raters is displayed, if
+     * the number of reviews is displayed correctly and if the user is sent back to
+     * recipe.fxml if the user cancels the review.
+     *
+     * @see RecipeController#showRatingPopup()
      */
     @Test
     public void testReviewWithoutComment() {
+        averageRating = lookup("#averageRating").query();
+        numberOfRaters = lookup("#numberOfRaters").query();
+        numberOfcomments = lookup("#numberOfComments").query();
+
         controller.setProfile(new Profile("Username2", "Test1234"));
         when(mockRecipeFilehandler.writeRecipe(recipes.getRecipe(0))).thenReturn(true);
         numberOfRaters.setDisable(false);
@@ -378,10 +388,16 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test if a review with a comment is added correctly.
-     * Also tests if the comment is displayed correctly
+     * Also tests if the comment is displayed with the correct username and text.
+     *
+     * @see RecipeController#showRatingPopup()
      */
     @Test
     public void testComment() {
+        numberOfRaters = lookup("#numberOfRaters").query();
+        numberOfcomments = lookup("#numberOfComments").query();
+        scrollPaneBox = lookup("#scrollPaneBox").query();
+
         controller.setProfile(new Profile("Username2", "Test1234"));
         when(mockRecipeFilehandler.writeRecipe(recipes.getRecipe(0))).thenReturn(true);
         numberOfRaters.setDisable(false);

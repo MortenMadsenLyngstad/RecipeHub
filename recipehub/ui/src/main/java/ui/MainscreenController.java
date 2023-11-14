@@ -276,7 +276,7 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch screen to addRecipe.fxml when the addRecipe button is
+     * This method will switch screen to AddRecipe.fxml when the addRecipe button is
      * clicked on.
      *
      * @param event the event of the Add Recipe-button beign clicked on
@@ -284,7 +284,7 @@ public class MainscreenController extends SuperController {
      */
     @FXML
     public void putRecipe(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "addRecipe.fxml");
+        switchSceneWithInfo(event, "AddRecipe.fxml");
     }
 
     /**
@@ -355,8 +355,9 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * Custom loadLibrary-method. This method will load all recipes.
-     * Custom method needed because of favorites functionality and testing
+     * Custom loadLibrary-method.
+     * This method will load all recipes.
+     * Custom method needed because of favorites functionality and testing.
      *
      * @param profile the profile which is logged in
      */

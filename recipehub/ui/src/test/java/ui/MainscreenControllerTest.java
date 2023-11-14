@@ -44,18 +44,16 @@ import org.testfx.framework.junit5.ApplicationTest;
  * This is a test class for MainscreenController.
  */
 public class MainscreenControllerTest extends ApplicationTest {
-
     private MainscreenController controller;
     private Parent root;
-
     private List<Profile> profiles = new ArrayList<>();
     private RecipeLibrary recipes = new RecipeLibrary();
-
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
-     * This method will set up the application for headless mode (tests will run without GUI).
+     * This method will set up the application for headless mode (tests will run
+     * without GUI).
      *
      * @see App#supportHeadless()
      */
@@ -76,9 +74,9 @@ public class MainscreenControllerTest extends ApplicationTest {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Mainscreen.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
-        setUp();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
+        setUp();
         stage.setScene(scene);
         stage.show();
     }
@@ -114,9 +112,10 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the GridPane loads properly when first loading the. Mainscreen This
-     * includes checking if everything is built correct, but also that all recipes are shown when
-     * the mainscreen is first loaded
+     * This method will test if the GridPane loads properly when first loading the
+     * Mainscreen.
+     * This includes checking if everything is built correct, but also that all
+     * recipes are shown when the mainscreen is first loaded.
      *
      * @see MainscreenControllerTest#getRecipeNames()
      */
@@ -176,7 +175,8 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the "Log out"-button logs you out and sends you to UserLogin.fxml
+     * This method will test if the "Log out"-button logs you out and sends you to
+     * UserLogin.fxml.
      */
     @Test
     @DisplayName("Log out test")
@@ -184,24 +184,23 @@ public class MainscreenControllerTest extends ApplicationTest {
         clickOn("#logoutBtn");
         assertEquals("UserLogin.fxml", controller.getFileName(),
                 "Should have switched to UserLogin.fxml");
-
     }
 
     /**
-     * This method will test if the "+ Add Recipe"-button will send you to addRecipe.fxml
+     * This method will test if the "+ Add Recipe"-button will send you to
+     * AddRecipe.fxml.
      */
     @Test
     @DisplayName("Add recipe test")
-    public void testPutRecipeButton() {
+    public void testAddRecipeButton() {
         clickOn("#addRecipeButton");
-        assertEquals("addRecipe.fxml", controller.getFileName(),
-                "Should have switched to addRecipe.fxml");
-
+        assertEquals("AddRecipe.fxml", controller.getFileName(),
+                "Should have switched to AddRecipe.fxml");
     }
 
     /**
-     * This method tests the "My Recipes"-button. It tests if the GridPane only shows the logged in
-     * profile's recipes
+     * This method tests the "My Recipes"-button.
+     * It tests if the GridPane only shows the logged in profile's recipes.
      *
      * @see MainscreenControllerTest#getRecipeNames()
      */
@@ -226,7 +225,8 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the "All Recipes"-button will make the GridPane show. all recipes
+     * This method will test if the "All Recipes"-button will make the GridPane
+     * show all recipes.
      *
      * @see MainscreenControllerTest#getRecipeNames()
      */
@@ -258,7 +258,8 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the "Favorites"-button will make the GridPane show. all favorites
+     * This method will test if the "Favorites"-button will make the GridPane show
+     * all favorites.
      *
      * @see MainscreenControllerTest#getRecipeNames()
      */
@@ -352,9 +353,10 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This supportmethod will go through the GridPane and collect all the recipe names shown. The
-     * method is built upon the fact that the loading of the grid is already tested in
-     * testLoadGrid(), so there is no need to check it twice
+     * This supportmethod will go through the GridPane and collect all the recipe
+     * names shown.
+     * The method is built upon the fact that the loading of the grid is already
+     * tested in testLoadGrid(), so there is no need to check it twice.
      *
      * @return List with all the recipe names in the GridPane
      */
@@ -478,8 +480,8 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the "Read More"-buttons sends you to Recipe.fxml (the dedicated page
-     * for the given recipe)
+     * This method will test if the "Read More"-buttons sends you to Recipe.fxml
+     * (the dedicated page for the given recipe)
      *
      * @see MainscreenControllerTest#getBottomHbox()
      */
@@ -498,9 +500,10 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This supportmethod will return the bottom HBox in the first SplitPane in the GridPane. The
-     * method is built upon the fact that the loading of the grid is already tested in
-     * testLoadGrid(), so there is no need to check it twice
+     * This supportmethod will return the bottom HBox in the first SplitPane in the
+     * GridPane.
+     * The method is built upon the fact that the loading of the grid is already
+     * tested in testLoadGrid(), so there is no need to check it twice.
      *
      * @return HBox at the bottom of the SplitPane
      */

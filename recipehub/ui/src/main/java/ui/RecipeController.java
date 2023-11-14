@@ -134,7 +134,6 @@ public class RecipeController extends SuperController {
      * @see #clearText()
      * @see #populate()
      */
-
     public void handlePortions() {
         int por = 0;
         String fault = "" + portions;

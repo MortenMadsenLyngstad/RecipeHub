@@ -250,7 +250,6 @@ public class AddRecipeController extends SuperController {
             addStepPane.setVisible(true);
             ingredientAndSteps.setText(ingredientAndSteps.getText() + "\n" + "\n");
         }
-
     }
 
     /**
@@ -378,7 +377,7 @@ public class AddRecipeController extends SuperController {
      * If the user has selected an amount of portions the recipe will be saved.
      */
     public void saveRecipe() {
-        if (valdatePortions()) {
+        if (validatePortions()) {
             newRecipe.setPortions(Integer.parseInt(numberOfPortionsMenu.getText()));
             portionAndConfirmPane.setVisible(false);
             newRecipe.setSaved(true);
@@ -405,7 +404,7 @@ public class AddRecipeController extends SuperController {
      *
      * @return true if portions is selected and false otherwise
      */
-    private boolean valdatePortions() {
+    private boolean validatePortions() {
         if (numberOfPortionsMenu.getText().matches("[1-9]")) {
             return true;
         } else {

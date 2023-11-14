@@ -13,7 +13,6 @@ import file.RecipeFilehandler;
 import file.UserFilehandler;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,22 +29,31 @@ import org.testfx.framework.junit5.ApplicationTest;
  * This is a test class for RegisterController.
  */
 public class RegisterControllerTest extends ApplicationTest {
-
     private RegisterController controller;
     private Parent root;
-
     private Button registerButton;
-    private Hyperlink loginLink;
-
     private Label registerMessageLabel;
+    private Hyperlink loginLink;
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
 
+    /**
+     * This method will set up the application for headless mode (tests will run
+     * without GUI).
+     *
+     * @see App#supportHeadless()
+     */
     @BeforeAll
     public static void setupHeadless() {
         App.supportHeadless();
     }
 
+    /**
+     * This method will start the application.
+     *
+     * @param stage the stage to start
+     * @throws IOException if the FXMLLoader.load() method throws an exception
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("RegisterScreen.fxml"));
@@ -63,7 +71,6 @@ public class RegisterControllerTest extends ApplicationTest {
     @BeforeEach
     public void setUp() {
         registerMessageLabel = lookup("#registerMessageLabel").query();
-        loginLink = findHyperlink(root);
         registerButton = lookup("#registerButton").query();
         RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
         when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(new RecipeLibrary());
@@ -72,23 +79,11 @@ public class RegisterControllerTest extends ApplicationTest {
         controller.setProfile(mockProfile);
     }
 
-    private Hyperlink findHyperlink(Parent parent) {
-        if (parent instanceof Hyperlink) {
-            return (Hyperlink) parent;
-        }
-
-        for (Node child : parent.getChildrenUnmodifiable()) {
-            if (child instanceof Parent) {
-                Hyperlink hyperlink = findHyperlink((Parent) child);
-                if (hyperlink != null) {
-                    return hyperlink;
-                }
-            }
-        }
-
-        return null;
-    }
-
+    /**
+     * This method tests the register button with valid data.
+     *
+     * @see RegisterController#validateRegister(String, String)
+     */
     @Test
     public void testValidateRegisterWithValidData() {
         Profile profile = new Profile("testuser", "Password123");
@@ -104,6 +99,11 @@ public class RegisterControllerTest extends ApplicationTest {
         assertEquals("Mainscreen.fxml", controller.getFileName());
     }
 
+    /**
+     * This method tests the register button with invalid password.
+     *
+     * @see RegisterController#validateRegister(String, String)
+     */
     @Test
     public void testValidateRegisterWithInvalidPassword() {
         Profile profile = new Profile("testuser", "Password123");
@@ -119,6 +119,11 @@ public class RegisterControllerTest extends ApplicationTest {
         Assertions.assertEquals("Password is too short", registerMessageLabel.getText());
     }
 
+    /**
+     * This method tests the register button with invalid username.
+     *
+     * @see RegisterController#validateRegister(String, String)
+     */
     @Test
     public void testValidateRegisterWithUsernameExists() {
         Profile profile = new Profile("Existinguser", "Password123");
@@ -132,6 +137,11 @@ public class RegisterControllerTest extends ApplicationTest {
         assertEquals("Username already exists", registerMessageLabel.getText());
     }
 
+    /**
+     * This method tests the register button with blank fields.
+     *
+     * @see RegisterController#validateRegister(String, String)
+     */
     @Test
     public void testValidateLoginWithBlankFields() {
         Profile profile = new Profile("testuser", "Password123");
@@ -147,6 +157,11 @@ public class RegisterControllerTest extends ApplicationTest {
         assertEquals("Please enter a username and password", registerMessageLabel.getText());
     }
 
+    /**
+     * This method tests the register button with passwords not matching.
+     *
+     * @see RegisterController#validateRegister(String, String)
+     */
     @Test
     public void testValidateRegisterWithPasswordsNotMatching() {
         when(mockUserFileHandler.loadProfile("testuser")).thenReturn(null);
@@ -161,8 +176,14 @@ public class RegisterControllerTest extends ApplicationTest {
         assertEquals("Passwords do not match", registerMessageLabel.getText());
     }
 
+    /**
+     * This method tests the click on login hyperlink.
+     *
+     * @see RegisterController#switchToLoginScreen()
+     */
     @Test
     public void testClickOnLoginHyperlink() {
+        loginLink = lookup("#loginLink").query();
         clickOn(loginLink);
 
         assertEquals("UserLogin.fxml", controller.getFileName());

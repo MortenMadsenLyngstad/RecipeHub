@@ -40,7 +40,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
     private Parent root;
 
     private TextField recipeNameField, addDescriptionField, testIngredientNameInputField,
-            testIngredientAmounInputtField, addStepField;
+            testIngredientAmountInputField, addStepField;
 
     private Button addRecipeNameButton, addDescriptionButton, addIngredientButton, removeIngredient,
             ingredientsNextButton, addStepButton,
@@ -63,14 +63,26 @@ public class AddRecipeControllerTest extends ApplicationTest {
     private Profile mockProfile = mock(Profile.class);
     private Recipe mockRecipe = mock(Recipe.class);
 
+    /**
+     * This method will set up the application for headless mode (tests will run
+     * without GUI).
+     *
+     * @see App#supportHeadless()
+     */
     @BeforeAll
     public static void setupHeadless() {
         App.supportHeadless();
     }
 
+    /**
+     * This method will start the application.
+     *
+     * @param stage the stage to start
+     * @throws IOException if the FXMLLoader.load() method throws an exception
+     */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("addRecipe.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("AddRecipe.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
         Scene scene = new Scene(root);
@@ -84,42 +96,8 @@ public class AddRecipeControllerTest extends ApplicationTest {
      */
     @BeforeEach
     public void setUp() {
-        recipeNameField = lookup("#recipeName").query();
-        testNameError = lookup("#nameError").query();
-        addRecipeNameButton = lookup("#addName").query();
-        name = lookup("#name").query();
-        addRecipePane = lookup("#recipeNamePane").query();
-        addDescriptionPane = lookup("#descriptionPane").query();
-        addDescriptionField = lookup("#addDescriptionText").query();
-        description = lookup("#description").query();
-        addDescriptionButton = lookup("#addDescriptionButton").query();
-        testDescriptionError = lookup("#descriptionError").query();
-        addIngredientPane = lookup("#addIngredientPane").query();
-        testIngredientNameInputField = lookup("#ingredientNameInput").query();
-        testIngredientAmounInputtField = lookup("#ingredientAmount").query();
-        testIngredientAndSteps = lookup("#ingredientAndSteps").query();
-        testIngredientNameError = lookup("#ingredientNameError").query();
-        testAmountError = lookup("#amountError").query();
-        testPropertyError = lookup("#propertyError").query();
-        addIngredientButton = lookup("#addIngredientButton").query();
-        testIngredientPropertyMenu = lookup("#ingredientPropertyMenu").query();
-        removeIngredient = lookup("#removeIngredient").query();
-        ingredientsNextButton = lookup("#ingredientsNextButton").query();
-        addStepPane = lookup("#addStepPane").query();
-        noAddedIngredientError = lookup("#noAddedIngredientError").query();
-        addStepField = lookup("#addStepText").query();
-        addStepButton = lookup("#addStepButton").query();
-        noAddedStepError = lookup("#noAddedStepError").query();
-        addStepField = lookup("#addStepText").query();
-        notValidStepError = lookup("#notValidStepError").query();
-        stepsNextButton = lookup("#addStepNext").query();
-        removeStepButton = lookup("#removeStep").query();
-        portionAndConfirmPane = lookup("#portionAndConfirmPane").query();
         testAddPortionMenu = lookup("#numberOfPortionsMenu").query();
-        saveRecipeButton = lookup("#saveRecipeButten").query();
-        noAddedPortionsError = lookup("#noAddedPortionsError").query();
-        backButton = lookup("#backButton").query();
-
+        testIngredientPropertyMenu = lookup("#ingredientPropertyMenu").query();
         fixMockMenuItems();
 
         when(mockRecipeFileHandler.readRecipeLibrary()).thenReturn(new RecipeLibrary());
@@ -127,7 +105,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         controller.setProfile(mockProfile);
         mockProfile.setHashedPassword(PasswordHasher.hashPassword("testPassword"));
         controller.setCurrentRecipeHubAccess(
-                 new DirectRecipeHubAccess(mockUserFileHandler, mockRecipeFileHandler));
+                new DirectRecipeHubAccess(mockUserFileHandler, mockRecipeFileHandler));
     }
 
     /**
@@ -151,13 +129,14 @@ public class AddRecipeControllerTest extends ApplicationTest {
                 }
             }
         });
-
     }
 
     /**
      * This method will set up the recipeNameField and create a recipe.
      */
     private void setUpRecipeName() {
+        recipeNameField = lookup("#recipeName").query();
+
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
             controller.createRecipe();
@@ -169,6 +148,9 @@ public class AddRecipeControllerTest extends ApplicationTest {
      * description.
      */
     private void setUpDescription() {
+        recipeNameField = lookup("#recipeName").query();
+        addDescriptionField = lookup("#addDescriptionText").query();
+
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
             controller.createRecipe();
@@ -179,16 +161,21 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will set up the recipeNameField.
-     * Creates a recipe, adds a description and adds an ingredient
+     * Creates a recipe, adds a description and adds an ingredient.
      */
     private void setUpIngredient() {
+        recipeNameField = lookup("#recipeName").query();
+        addDescriptionField = lookup("#addDescriptionText").query();
+        testIngredientNameInputField = lookup("#ingredientNameInput").query();
+        testIngredientAmountInputField = lookup("#ingredientAmount").query();
+
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
             controller.createRecipe();
             addDescriptionField.setText("Enjoy the best test recipe ever!");
             controller.addDescription();
             testIngredientNameInputField.setText("testIngredient");
-            testIngredientAmounInputtField.setText("1");
+            testIngredientAmountInputField.setText("1");
             testIngredientPropertyMenu.setText("g");
             controller.addIngredient();
         });
@@ -199,13 +186,19 @@ public class AddRecipeControllerTest extends ApplicationTest {
      * Create a recipe, adds a description, adds an ingredient and adds a step
      */
     private void setUpStep() {
+        recipeNameField = lookup("#recipeName").query();
+        addDescriptionField = lookup("#addDescriptionText").query();
+        testIngredientNameInputField = lookup("#ingredientNameInput").query();
+        testIngredientAmountInputField = lookup("#ingredientAmount").query();
+        addStepField = lookup("#addStepText").query();
+
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
             controller.createRecipe();
             addDescriptionField.setText("Enjoy the best test recipe ever!");
             controller.addDescription();
             testIngredientNameInputField.setText("testIngredient");
-            testIngredientAmounInputtField.setText("1");
+            testIngredientAmountInputField.setText("1");
             testIngredientPropertyMenu.setText("g");
             controller.addIngredient();
             controller.addedAllIngredients();
@@ -217,9 +210,15 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the createRecipe method.
+     *
+     * @see AddRecipeController#createRecipe()
      */
     @Test
     public void testCreateRecipeWithBlankName() {
+        recipeNameField = lookup("#recipeName").query();
+        testNameError = lookup("#nameError").query();
+        addRecipeNameButton = lookup("#addName").query();
+
         recipeNameField.setText("");
         assertFalse(controller.validateRecipeName());
         clickOn(addRecipeNameButton);
@@ -228,17 +227,39 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the createRecipe method.
+     *
+     * Tests if a too long name is not accepted and gives an error message.
+     *
+     * @see AddRecipeController#createRecipe()
      */
     @Test
     public void testCreateRecipeWithTooLongName() {
+        recipeNameField = lookup("#recipeName").query();
+        addRecipeNameButton = lookup("#addName").query();
+        testNameError = lookup("#nameError").query();
+
         recipeNameField.setText("This string is too long to be accepted");
         assertFalse(controller.validateRecipeName());
         clickOn(addRecipeNameButton);
         assertTrue(testNameError.isVisible());
     }
 
+    /**
+     * This method will test the functionality of the createRecipe method.
+     *
+     * Tests if a valid name is accepted and if the name is set correctly.
+     *
+     * @see AddRecipeController#createRecipe()
+     */
     @Test
     public void testCreateRecipeWithValidName() {
+        recipeNameField = lookup("#recipeName").query();
+        testNameError = lookup("#nameError").query();
+        addRecipeNameButton = lookup("#addName").query();
+        name = lookup("#name").query();
+        addRecipePane = lookup("#recipeNamePane").query();
+        addDescriptionPane = lookup("#descriptionPane").query();
+
         recipeNameField.setText("testRecipe");
         assertTrue(controller.validateRecipeName());
         clickOn(addRecipeNameButton);
@@ -250,9 +271,20 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addDescription method.
+     *
+     * Tests if an invalid description is not accepted and gives an error message.
+     *
+     * @see AddRecipeController#addDescription()
      */
     @Test
     public void testAddDescriptionWithInvalidDescription() {
+        name = lookup("#name").query();
+        addRecipePane = lookup("#recipeNamePane").query();
+        addDescriptionPane = lookup("#descriptionPane").query();
+        addDescriptionField = lookup("#addDescriptionText").query();
+        addDescriptionButton = lookup("#addDescriptionButton").query();
+        testDescriptionError = lookup("#descriptionError").query();
+
         addRecipePane.setVisible(false);
         addDescriptionPane.setVisible(true);
 
@@ -261,14 +293,27 @@ public class AddRecipeControllerTest extends ApplicationTest {
         clickOn(addDescriptionButton);
         assertTrue(testDescriptionError.isVisible());
         assertEquals("testRecipe", name.getText());
-
     }
 
     /**
      * This method will test the functionality of the addDescription method.
+     *
+     * Tests if a valid description is accepted and if the description is set
+     * correctly.
+     *
+     * @see AddRecipeController#addDescription()
      */
     @Test
     public void testAddDescriptionWithValidDescription() {
+        name = lookup("#name").query();
+        addRecipePane = lookup("#recipeNamePane").query();
+        addDescriptionPane = lookup("#descriptionPane").query();
+        addDescriptionField = lookup("#addDescriptionText").query();
+        description = lookup("#description").query();
+        addDescriptionButton = lookup("#addDescriptionButton").query();
+        testDescriptionError = lookup("#descriptionError").query();
+        addIngredientPane = lookup("#addIngredientPane").query();
+
         addRecipePane.setVisible(false);
         addDescriptionPane.setVisible(true);
 
@@ -284,9 +329,24 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addIngredient method.
+     *
+     * Tests if an invalid ingredient is not accepted and gives an error message.
+     *
+     * @see AddRecipeController#addIngredient()
      */
     @Test
     public void testAddInvalidIngredient() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        addIngredientPane = lookup("#addIngredientPane").query();
+        testIngredientNameInputField = lookup("#ingredientNameInput").query();
+        testIngredientAmountInputField = lookup("#ingredientAmount").query();
+        testIngredientNameError = lookup("#ingredientNameError").query();
+        testAmountError = lookup("#amountError").query();
+        testPropertyError = lookup("#propertyError").query();
+        addIngredientButton = lookup("#addIngredientButton").query();
+        ingredientsNextButton = lookup("#ingredientsNextButton").query();
+        noAddedIngredientError = lookup("#noAddedIngredientError").query();
+
         addRecipePane.setVisible(false);
         addIngredientPane.setVisible(true);
 
@@ -298,19 +358,19 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertTrue(testPropertyError.isVisible());
 
         testIngredientNameInputField.setText("testIngredient");
-        testIngredientAmounInputtField.setText("");
+        testIngredientAmountInputField.setText("");
         clickOn(addIngredientButton);
         assertFalse(testIngredientNameError.isVisible());
         assertTrue(testAmountError.isVisible());
 
         testIngredientNameInputField.setText("");
-        testIngredientAmounInputtField.setText("1");
+        testIngredientAmountInputField.setText("1");
         clickOn(addIngredientButton);
         assertTrue(testIngredientNameError.isVisible());
         assertFalse(testAmountError.isVisible());
 
         testIngredientNameInputField.setText("");
-        testIngredientAmounInputtField.setText("");
+        testIngredientAmountInputField.setText("");
         clickOn(testIngredientPropertyMenu);
         Platform.runLater(() -> {
             testGrams.fire();
@@ -325,9 +385,24 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addIngredient method.
+     *
+     * Tests if a valid ingredient is accepted and if the ingredient is set
+     * correctly.
+     *
+     * @see AddRecipeController#addIngredient()
      */
     @Test
     public void testAddValidIngredient() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        addIngredientPane = lookup("#addIngredientPane").query();
+        testIngredientAndSteps = lookup("#ingredientAndSteps").query();
+        testIngredientNameError = lookup("#ingredientNameError").query();
+        testAmountError = lookup("#amountError").query();
+        testPropertyError = lookup("#propertyError").query();
+        removeIngredient = lookup("#removeIngredient").query();
+        ingredientsNextButton = lookup("#ingredientsNextButton").query();
+        addStepPane = lookup("#addStepPane").query();
+
         addRecipePane.setVisible(false);
         addIngredientPane.setVisible(true);
         setUpIngredient();
@@ -349,17 +424,33 @@ public class AddRecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test the functionality of the addIngredient method.
+     * This method will test the functionality of the removeIngredient method.
+     *
+     * Tests if the removeIngredient button is visible when there is an ingredient
+     * to remove.
+     * Tests if the removeIngredient button's functionality works.
+     * Tests if the removeIngredient button is not visible when there is no
+     * ingredient to remove.
+     *
+     * @see AddRecipeController#removeIngredient()
      */
     @Test
     public void testRemoveIngredient() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        addIngredientPane = lookup("#addIngredientPane").query();
+        testIngredientNameInputField = lookup("#ingredientNameInput").query();
+        testIngredientAmountInputField = lookup("#ingredientAmount").query();
+        testIngredientAndSteps = lookup("#ingredientAndSteps").query();
+        addIngredientButton = lookup("#addIngredientButton").query();
+        removeIngredient = lookup("#removeIngredient").query();
+
         addRecipePane.setVisible(false);
         addIngredientPane.setVisible(true);
         setUpIngredient();
 
         Platform.runLater(() -> {
             testIngredientNameInputField.setText("testIngredient2");
-            testIngredientAmounInputtField.setText("1");
+            testIngredientAmountInputField.setText("1");
             clickOn(testIngredientPropertyMenu);
             Platform.runLater(() -> {
                 testGrams.fire();
@@ -379,9 +470,21 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
+     *
+     * Tests if an invalid step is not accepted and gives an error message.
+     *
+     * @see AddRecipeController#addStep()
      */
     @Test
     public void testAddInvalidStep() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        addStepPane = lookup("#addStepPane").query();
+        addStepField = lookup("#addStepText").query();
+        addStepButton = lookup("#addStepButton").query();
+        noAddedStepError = lookup("#noAddedStepError").query();
+        notValidStepError = lookup("#notValidStepError").query();
+        stepsNextButton = lookup("#addStepNext").query();
+
         addRecipePane.setVisible(false);
         addStepPane.setVisible(true);
         setUpIngredient();
@@ -400,9 +503,23 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
+     *
+     * Tests if a valid step is accepted and if the step is set correctly.
+     *
+     * @see AddRecipeController#addStep()
      */
     @Test
     public void testAddValidStep() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        testIngredientAndSteps = lookup("#ingredientAndSteps").query();
+        addStepPane = lookup("#addStepPane").query();
+        addStepField = lookup("#addStepText").query();
+        addStepButton = lookup("#addStepButton").query();
+        noAddedStepError = lookup("#noAddedStepError").query();
+        notValidStepError = lookup("#notValidStepError").query();
+        stepsNextButton = lookup("#addStepNext").query();
+        portionAndConfirmPane = lookup("#portionAndConfirmPane").query();
+
         addRecipePane.setVisible(false);
         addStepPane.setVisible(true);
         setUpIngredient();
@@ -428,9 +545,22 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
+     *
+     * Tests if the remove stop button is visible when there is a step to remove.
+     * Tests if the remove step button's functionality works.
+     * Tests if the remove step button is not visible when there is no step to
+     * remove.
+     *
+     * @see AddRecipeController#removeStep()
      */
     @Test
     public void testRemoveStep() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        testIngredientAndSteps = lookup("#ingredientAndSteps").query();
+        addStepPane = lookup("#addStepPane").query();
+        addStepField = lookup("#addStepText").query();
+        removeStepButton = lookup("#removeStep").query();
+
         addRecipePane.setVisible(false);
         addStepPane.setVisible(true);
         setUpIngredient();
@@ -464,9 +594,18 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
+     *
+     * Tests if an invalid portion is not accepted and gives an error message.
+     *
+     * @see AddRecipeController#saveRecipe()
      */
     @Test
     public void testNotValidPortions() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        portionAndConfirmPane = lookup("#portionAndConfirmPane").query();
+        saveRecipeButton = lookup("#saveRecipeButten").query();
+        noAddedPortionsError = lookup("#noAddedPortionsError").query();
+
         addRecipePane.setVisible(false);
         portionAndConfirmPane.setVisible(true);
         setUpStep();
@@ -477,9 +616,18 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
+     *
+     * Tests if a valid portion is accepted and if the recipe is saved.
+     *
+     * @see AddRecipeController#saveRecipe()
      */
     @Test
     public void testValidPortions() {
+        addRecipePane = lookup("#recipeNamePane").query();
+        portionAndConfirmPane = lookup("#portionAndConfirmPane").query();
+        saveRecipeButton = lookup("#saveRecipeButten").query();
+        noAddedPortionsError = lookup("#noAddedPortionsError").query();
+
         when(mockRecipeFileHandler.writeRecipe(mockRecipe)).thenReturn(true);
         when(mockUserFileHandler.writeProfile(mockProfile)).thenReturn(true);
         addRecipePane.setVisible(false);
@@ -497,9 +645,15 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the backButton.
+     *
+     * Tests if the user can go back to the mainscreen.
+     *
+     * @see AddRecipeController#backButtonClick()
      */
     @Test
     public void testBackButtonClick() {
+        backButton = lookup("#backButton").query();
+
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         clickOn(backButton);
         assertEquals("Mainscreen.fxml", controller.getFileName());
@@ -507,17 +661,24 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the backButton.
+     *
+     * Tests if the alert is shown when the user tries to go back if the recipe
+     * is not saved.
+     *
+     * @see AddRecipeController#backButtonClick()
      */
     @Test
     public void testAlert() {
-        controller.setFileName("addRecipe.fxml");
+        backButton = lookup("#backButton").query();
+
+        controller.setFileName("AddRecipe.fxml");
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         setUpRecipeName();
         clickOn(backButton);
         Button cancelButton = (Button) controller.getAlert().getDialogPane()
                 .lookupButton(ButtonType.CANCEL);
         clickOn(cancelButton);
-        assertEquals("addRecipe.fxml", controller.getFileName());
+        assertEquals("AddRecipe.fxml", controller.getFileName());
         clickOn(backButton);
         Button okButton = (Button) controller.getAlert().getDialogPane()
                 .lookupButton(ButtonType.OK);
@@ -526,5 +687,4 @@ public class AddRecipeControllerTest extends ApplicationTest {
             assertEquals("Mainscreen.fxml", controller.getFileName());
         });
     }
-
 }
