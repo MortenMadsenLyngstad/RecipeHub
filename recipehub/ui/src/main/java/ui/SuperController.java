@@ -16,8 +16,8 @@ import javafx.stage.Stage;
  * It contains methods needed by all the controllers
  */
 public class SuperController {
-    protected static RecipeHubAccess currentRecipeHubAccess;
-    protected static Profile currentProfile;
+    static RecipeHubAccess currentRecipeHubAccess;
+    static Profile currentProfile;
 
     protected Scene scene;
     protected Stage stage;
@@ -32,11 +32,11 @@ public class SuperController {
      * @throws IOException if the switchSceneMain method throws an exception
      */
     protected void switchSceneMain(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Mainscreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(SuperController.class.getResource("Mainscreen.fxml"));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -53,11 +53,11 @@ public class SuperController {
      * @throws IOException if the switchSceneWithInfo method throws an exception
      */
     protected void switchSceneWithInfo(ActionEvent event, String file) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(file));
+        FXMLLoader loader = new FXMLLoader(SuperController.class.getResource(file));
         root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
