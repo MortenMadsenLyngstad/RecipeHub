@@ -71,7 +71,7 @@ public class AddRecipeController extends SuperController {
     public void createRecipe() throws IllegalArgumentException {
         allRecipes = currentRecipeHubAccess.getRecipeLibrary();
 
-        if (validateRecipeName() == false) {
+        if (!validateRecipeName()) {
             nameError.setVisible(true);
         } else if (allRecipes.containsRecipe(new Recipe(recipeName.getText(), 1, currentProfile))) {
             showDuplicateRecipePopup();
