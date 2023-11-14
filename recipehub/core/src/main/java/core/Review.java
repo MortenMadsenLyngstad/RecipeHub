@@ -1,7 +1,7 @@
 package core;
 
 /**
- * This class represents a review.
+ * Information centered class for storing a review.
  */
 public class Review {
     private double rating;
@@ -11,19 +11,21 @@ public class Review {
     /**
      * This constructor initializes the rating, comment and profile.
      * 
-     * @param r        - An integer value of the rating
-     * @param comment  - A string value of the comment
-     * @param username - The profile that made the rating
+     * @param rating integer value of the rating
+     * @param comment string value of the comment
+     * @param username username of the profile that made the review
      */
-    public Review(double r, String comment, String username) {
-        validateRating(r);
-        this.rating = r;
+    public Review(double rating, String comment, String username) {
+        validateRating(rating);
+        this.rating = rating;
         this.comment = comment;
         this.username = username;
     }
 
     /**
-     * This method validates the rating.
+     * This method validates that the rating is between 1 and 5.
+     * 
+     * @throws IllegalArgumentException if rating is below 1 or above 5
      */
     private void validateRating(double r) {
         if (r < 1.0 || r > 5.0) {
@@ -32,29 +34,29 @@ public class Review {
     }
 
     /**
-     * This method gives the rating the to this review.
+     * This method gets the rating of this review.
      * 
-     * @return - Returns an integer value of the rating
+     * @return Integer value of the rating
      */
     public double getRating() {
-        return this.rating;
+        return rating;
     }
 
     /**
-     * This method gives the comment to this review.
+     * This method gets the comment of this review.
      * 
-     * @return - Returns a string value of the comment
+     * @return String value of the comment
      */
     public String getComment() {
-        return this.comment;
+        return comment;
     }
 
     /**
      * This method gives the username that made the review.
      * 
-     * @return - Returns a Profile object
+     * @return String value with the username of the profile who made the review
      */
     public String getReviewer() {
-        return this.username;
+        return username;
     }
 }
