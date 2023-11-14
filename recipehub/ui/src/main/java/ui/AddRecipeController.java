@@ -86,7 +86,8 @@ public class AddRecipeController extends SuperController {
     /**
      * This method shows a pop up window if the user tries to create a recipe with
      * the same name as an existing recipe the user has created, and gives the user
-     * feedbback that they need to choose another name for the recipe.
+     * feedback that they need to choose another name for the recipe or delete the 
+     * existing recipe with the same name.
      */
     private void showDuplicateRecipePopup() {
         duplicateRecipeAlert = new Alert(AlertType.INFORMATION);
