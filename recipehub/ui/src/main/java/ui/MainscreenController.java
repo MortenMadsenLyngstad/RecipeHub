@@ -37,30 +37,32 @@ import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
 
 /**
- * This is the controller class for the main screen, connecting the UI to the core logic. Manages
- * the display of recipes, allows filtering by all recipes, users recipes, and favorites, and
- * supports searching for specific recipes. Also handles navigation to the add recipe screen, log
- * out, and individual recipe pages.
+ * The MainscreenController class connects the UI to the core logic.
+ * Manages the display of recipes, allows filtering by all recipes, users
+ * recipes, and favorites, and supports searching for specific recipes.
+ * Also handles navigation to the add recipe screen, log out, and individual
+ * recipe pages.
+ *
+ * This class extends the SuperController class.
+ *
+ * @see SuperController
  */
 public class MainscreenController extends SuperController {
-
-    @FXML
-    private ScrollPane scrollPane;
-
-    @FXML
-    private Button allRecipesButton, myRecipesButton, favoritesButton;
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private TextField txtField;
-
     private RecipeLibrary allRecipes;
     private RecipeLibrary currentLibrary;
 
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private Button allRecipesButton, myRecipesButton, favoritesButton, addRecipeButton;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private TextField txtField;
+
     /**
-     * This method will load the gridPane with all recipes when the allRecipesButton is clicked on.
+     * This method will load the gridPane with all recipes when the allRecipesButton
+     * is clicked on.
      */
     @FXML
     public void loadAllRecipes() {
@@ -73,8 +75,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will load the gridPane with the logged in profile's recipes when the
-     * allRecipesButton is clicked on.
+     * This method will load the gridPane with the logged in profile's recipes when
+     * the allRecipesButton is clicked on.
      */
     @FXML
     public void loadMyRecipes() {
@@ -87,8 +89,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will load the gridPane with the logged in profile's favorite recipes when the
-     * favoritesButton is clicked on.
+     * This method will load the gridPane with the logged in profile's favorite
+     * recipes when the favoritesButton is clicked on.
      */
     @FXML
     public void loadFavoriteRecipes() {
@@ -101,7 +103,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This helper method will decide how to load the grid. Made to hinder repetition of code.
+     * This helper method will decide how to load the grid.
+     * Made to hinder repetition of code.
      */
     private void load() {
         if (txtField.getText().isEmpty()) {
@@ -148,9 +151,10 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will make a SplitPane for the given recipe. The top half will contain the recipe
-     * name. The bottom half will contain a two buttons, one for going to the recipe's own page and
-     * one for marking the recipe as a favorite.
+     * This method will make a SplitPane for the given recipe.
+     * The top half will contain the recipe name.
+     * The bottom half will contain a two buttons, one for going to the recipe's own
+     * page and one for marking the recipe as a favorite.
      *
      * @param recipe the recipe to make the SplitPane for
      * @return splitpane customized for the given recipe
@@ -225,9 +229,11 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will set the heart to red if the recipe is a favorite of the current profile. If
-     * not, it will set the heart to white and make it clickable. When clicked on, the heart will
-     * turn red and the recipe will be added to the current profile's favorites.
+     * This method will set the heart to red if the recipe is a favorite of the
+     * current profile.
+     * If not, it will set the heart to white and make it clickable. When clicked
+     * on, the heart will turn red and the recipe will be added to the current
+     * profile's favorites.
      *
      * This method is protected because it is used in RecipeController.
      *
@@ -270,7 +276,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch screen to addRecipe.fxml when the addRecipe button is clicked on.
+     * This method will switch screen to addRecipe.fxml when the addRecipe button is
+     * clicked on.
      *
      * @param event the event of the Add Recipe-button beign clicked on
      * @throws IOException if the switchSceneWithInfo method throws an exception
@@ -281,7 +288,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch screen to UserLogin.fxml when the addRecipe button is clicked on.
+     * This method will switch screen to UserLogin.fxml when the addRecipe button is
+     * clicked on.
      *
      * @param event the event of the Log Out-button beign clicked on
      * @throws IOException if the switchSceneWithInfo method throws an exception
@@ -292,7 +300,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch scene to Recipe.fxml and give RecipeController the given recipe.
+     * This method will switch scene to Recipe.fxml and give RecipeController the
+     * given recipe.
      *
      * @param event   the ActionEvent
      * @param recipe  the recipe the user clicked on
@@ -317,8 +326,9 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will handle searching for recipes. It makes a modified RecipeLibrary, in
-     * accordance with the search, to be loaded in the grid.
+     * This method will handle searching for recipes.
+     * It makes a modified RecipeLibrary, in accordance with the search, to be
+     * loaded in the grid.
      */
     @FXML
     public void search() {
@@ -345,8 +355,8 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * Custom loadLibrary-method. This method will load all recipes. Custom method needed because of
-     * favorites functionality and testing
+     * Custom loadLibrary-method. This method will load all recipes.
+     * Custom method needed because of favorites functionality and testing
      *
      * @param profile the profile which is logged in
      */

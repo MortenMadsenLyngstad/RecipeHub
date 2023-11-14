@@ -10,12 +10,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- * This class starts the application.
+ * The App class starts the application with direct access.
  */
 public class App extends Application {
 
     /**
-     * This helper method used by tests needing to run headless. Taken from todo-list-example.
+     * This helper method used by tests needing to run headless. Taken from
+     * "todo-list-example".
      */
     public static void supportHeadless() {
         if (Boolean.getBoolean("headless")) {
