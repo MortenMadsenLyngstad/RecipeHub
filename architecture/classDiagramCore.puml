@@ -11,8 +11,6 @@ package recipehub.core {
         + static void isValidPassword(password: String)
         + string getUsername()
         + string getPassword()
-        + void setUsername(username: String)
-        + void setPassword(password: String)
         + RecipeLibrary getRecipes()
         + void putRecipe(recipe: Recipe)
         + void removeRecipe(recipe: Recipe)

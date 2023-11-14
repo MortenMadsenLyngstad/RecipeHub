@@ -4,11 +4,8 @@ import java.util.regex.Pattern;
 
 
 /**
- * This class is used to contain Profile information.
- * 
- * @author Adrian Haabpiht Solberg
+ * Information centered class for storing and changing profiles.
  */
-
 public class Profile {
     private String username;
     private transient String password;
@@ -17,10 +14,12 @@ public class Profile {
     private RecipeLibrary favorites;
 
     /**
-     * This constructor initializes the username, password and recipes.
+     * Contructor for creating a new Profile object.
      * 
-     * @param username - String value to set as username
-     * @param password - String value to set as password
+     * @param username string value to set as username
+     * @param password string value to set as password
+     * @see #isValidUsername(String)
+     * @see #isValidPassword(String)
      */
     public Profile(String username, String password) {
         isValidUsername(username);
@@ -35,10 +34,10 @@ public class Profile {
     /**
      * This metod checks if a username is valid.
      * These are the criterias:
-     * - Must have length of at least 5
-     * - Must only contain letters and numbers
+     * 1. Must have length of at least 5
+     * 2. Must only contain letters and numbers
      * 
-     * @param username - String value to check
+     * @param username string value to check
      * @throws IllegalArgumeentException if username is invalid
      */
     public static void isValidUsername(String username) {
@@ -53,11 +52,11 @@ public class Profile {
     /**
      * This metod checks if a password is valid.
      * These are the criterias:
-     * - Must have length of at least 8
-     * - Must contain a lower case letter
-     * - Must contain an upper case letter
+     * 1. Must have length of at least 8
+     * 2. Must contain a lower case letter
+     * 3. Must contain an upper case letter
      * 
-     * @param password - String value to check
+     * @param password string value to check
      * @throws IllegalArgumeentException if password is invalid
      */
     public static void isValidPassword(String password) {
@@ -103,32 +102,9 @@ public class Profile {
     }
 
     /**
-     * This method will set thee prfile's username to the string sent in if the
-     * string is a valid username.
-     * 
-     * @param username - String value to set as username
-     */
-    public void setUsername(String username) {
-        isValidUsername(username);
-        this.username = username;
-    }
-
-    /**
-     * This method will set thee prfile's password to the string sent in if the
-     * string is a valid password.
-     * 
-     * @param password - String value to set as password
-     */
-    public void setPassword(String password) {
-        isValidPassword(password);
-        this.password = password;
-    }
-
-    /**
-     * This method will set the hashed password of the profile.
      * This method will set the hashed password of the profile.
      * 
-     * @param hashedPassword - String value to set as hashed password
+     * @param hashedPassword string value to set as hashed password
      */
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
@@ -146,7 +122,8 @@ public class Profile {
     /**
      * This method adds the given recipe to the profile's recipes.
      * 
-     * @param recipe - Recipe to add to the profile's recipes
+     * @param recipe recipe to add to the profile's recipes
+     * @see RecipeLibrary#putRecipe(Recipe)
      */
     public void putRecipe(Recipe recipe) {
         recipeLibrary.putRecipe(recipe);
@@ -154,6 +131,8 @@ public class Profile {
 
     /**
      * This method will remove the recipe from the profile's recipes.
+     * 
+     * @see RecipeLibrary#removeRecipe(Recipe)
      */
     public void removeRecipe(Recipe recipe) {
         this.recipeLibrary.removeRecipe(recipe);
@@ -171,21 +150,22 @@ public class Profile {
     /**
      * This method adds the given recipe to the profile's favorites.
      * 
-     * @param recipe - Recipe to add to the profile's favorites
+     * @param recipe recipe to add to the profile's favorites
+     * @see RecipeLibrary#putRecipe(Recipe)
      */
     public void addFavorite(Recipe recipe) {
         favorites.putRecipe(recipe);
     }
 
     /**
-     * This method will remove the given recipee from the profile's favorites.
+     * This method will remove the given recipe from the profile's favorites 
+     * if it is contained in the favorites.
      * 
-     * @param recipe - Recipe to remove from the profile's favorite
+     * @param recipe recipe to remove from the profile's favorite
+     * @see RecipeLibrary#removeRecipe(Recipe)
      */
     public void removeFavorite(Recipe recipe) {
-        if (favorites.containsRecipe(recipe)) {
-            favorites.removeRecipe(recipe);
-        }
+        favorites.removeRecipe(recipe);
     }
 
 }

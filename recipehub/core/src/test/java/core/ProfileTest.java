@@ -6,16 +6,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Testclass with JUnit test to check if the logic in Profile-class works
- * properly.
- * 
- * @author Adrian Haabpiht Solberg
- * @author Trygve Eriksen
+ * Junit test class for the Profile class.
  */
 public class ProfileTest {
 
     private Profile profile;
 
+    /**
+     * This method makes a standard profile before each test.
+     */
     @BeforeEach
     public void setUp() {
         profile = new Profile("Username123", "Password123");
@@ -45,13 +44,19 @@ public class ProfileTest {
         Assertions.assertEquals("Password123", profile.getPassword(),
                 "The password should be 'Password123'");
         Assertions.assertNotNull(profile.getRecipes(),
-                "The recipes of the profilee should not be null");
+                "The recipes of the profile should not be null");
         Assertions.assertTrue(profile.getRecipes().getSize() == 0,
-                "The RecipeLibrary should be empty");
+                "The RecipeLibrary with the profile's recipes should be empty");
+        Assertions.assertNotNull(profile.getFavorites(), 
+                "The favorites of the profile should not be null");
+        Assertions.assertTrue(profile.getFavorites().getSize() == 0,
+                "The RecipeLibrary with the profile's favorites should be empty");
     }
 
     /**
      * This method tests if the username validation works properly.
+     * 
+     * @see Profile#isValidUsername(String)
      */
     @Test
     @DisplayName("Username validation test")
@@ -67,11 +72,12 @@ public class ProfileTest {
                 "Should throw exception because the username is null");
         Assertions.assertDoesNotThrow(() -> Profile.isValidUsername("Username123"),
                 "Should not throw exception when the username is valid");
-
     }
 
     /**
      * This method tests if the password validation works properly.
+     * 
+     * @see Profile#isValidPassword(String)
      */
     @Test
     @DisplayName("Password validation test")
@@ -99,82 +105,36 @@ public class ProfileTest {
     }
 
     /**
-     * This method tests if getters and setters for the username works properly.
+     * This method tests if getUsername() works properly.
+     * 
+     * @see Profile#getUsername()
      */
     @Test
-    @DisplayName("Username tests")
-    public void testUsername() {
-
-        // Cheks if getUsername() works
+    @DisplayName("getUsername() test")
+    public void testGetUsername() {
         Assertions.assertEquals("Username123", profile.getUsername(),
                 "getUsername() should return the profile's username, 'Username123'");
-
-        // Checks that you cannot set username to an invalid one
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> profile.setUsername("Aa1"),
-                "Should not be able to set username to an invalid one (too short)");
-        Assertions.assertFalse(profile.getUsername().equals("Aa1"),
-                "Username should not have cahnged");
-
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> profile.setUsername("Username.,-"),
-                "Should not be able to set username to an invalid one (invalid characters)");
-        Assertions.assertFalse(profile.getUsername().equals("Username.,-"),
-                "Username should not have cahnged");
-
-        // Checks if the username changes when you set a valid username
-        profile.setUsername("newUsername321");
-        Assertions.assertEquals("newUsername321", profile.getUsername(),
-                "The username should be changed to 'newUsername321'");
-
     }
 
     /**
-     * This method tests if getters and setters for the password works properly.
+     * This method tests if getPassword() works properly.
+     * 
+     * @see Profile#getPassword()
      */
     @Test
-    @DisplayName("Password tests")
-    public void testPassword() {
-
-        // Cheks if getPassword() works
+    @DisplayName("getPassword() tests")
+    public void testGetPassword() {
         Assertions.assertEquals("Password123", profile.getPassword(),
                 "getPassword() should return the profile's password, 'Password123'");
-
-        // Checks that you cannot set password to an invalid one
-        Assertions.assertThrows(IllegalArgumentException.class, () -> profile.setPassword("Aa1"),
-                "Should not be able to set password to an invalid one (too short)");
-        Assertions.assertFalse(profile.getPassword().equals("Aa1"),
-                "Password should not have cahnged");
-
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> profile.setPassword("ABCDEFGH1"),
-                "Should not be able to set password to an invalid one (no lower case letter)");
-        Assertions.assertFalse(profile.getPassword().equals("ABCDEFGH1"),
-                "Password should not have cahnged");
-
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> profile.setPassword("abcdefgh1"),
-                "Should not be able to set password to an invalid one (no upper case letter)");
-        Assertions.assertFalse(profile.getPassword().equals("abcdefgh1"),
-                "Password should not have cahnged");
-
-        Assertions.assertThrows(IllegalArgumentException.class,
-                () -> profile.setPassword("ABCDefgh"),
-                "Should not be able to set password to an invalid one (no number)");
-        Assertions.assertFalse(profile.getPassword().equals("ABCDefgh"),
-                "Password should not have cahnged");
-
-        // Checks if the password changes when you send in a valid password
-        profile.setPassword("newPassword321");
-        Assertions.assertEquals("newPassword321", profile.getPassword(),
-                "The password should be changed to 'newPassword321'");
-
     }
 
     /**
-     * This method tests if getters and setters for the recipes works properly,
-     * also.
-     * checks removeRecipe()
+     * This method tests everything related to recipes for the Profile class.
+     * This means testing getters, setters, and removal of recipes.
+     * 
+     * @see Profile#getRecipes()
+     * @see Profile#putRecipe(Recipe)
+     * @see Profile#removeRecipe(Recipe)
      */
     @Test
     @DisplayName("Recipes tests")
@@ -186,7 +146,7 @@ public class ProfileTest {
         Assertions.assertTrue(profile.getRecipes().getSize() == 0,
                 "The RecipeLibrary should be empty");
 
-        // Checks if putRecipe() works and if getRecipes() works after adding recipes
+        // Checks if putRecipe() works to add recipes
         Recipe r1 = new Recipe("Pasta Carbonara", 2, profile);
         Recipe r2 = new Recipe("Hamburger", 1, profile);
 
@@ -197,8 +157,19 @@ public class ProfileTest {
         Assertions.assertEquals(
                 r2, profile.getRecipes().getRecipe(profile.getRecipes().getSize() - 1),
                 "r2 should be the last recipe in the recipeLibrary");
-        // Checks if removeRecipe() works and that removing all recipes returns an empty
-        // RecipeLibrary
+        
+        // Checks if putRecipe() works to update recipes
+        Assertions.assertEquals(0, profile.getRecipes().getRecipe(0).getIngredients().size(), 
+                "The first recipe should not have any ingredients yet");
+        r1.addIngredient("Flour", 200.0, "g");
+        profile.putRecipe(r1);
+        Assertions.assertEquals(2, profile.getRecipes().getSize(), 
+                "The profile should still have two recipes");
+        // Note: The index of the recipe will change after using putRecipe()
+        Assertions.assertEquals(1, profile.getRecipes().getRecipe(1).getIngredients().size(), 
+                "The recipe should now have one ingredient");
+
+        // Checks if removeRecipe() works and that removing all recipes returns empty recipeLibrary
         profile.removeRecipe(r2);
         Assertions.assertEquals(1, profile.getRecipes().getSize());
         Assertions.assertEquals(r1, profile.getRecipes().getRecipe(0));
@@ -210,7 +181,12 @@ public class ProfileTest {
     }
 
     /**
-     * This method will tests if everything related to favorites works properly.
+     * This method tests if everything related to favorites works properly.
+     * This means testing getters, setters and removal of favorites.
+     * 
+     * @see Profile#getFavorites()
+     * @see Profile#addFavorite(Recipe)
+     * @see Profile#removeFavorite(Recipe)
      */
     @Test
     @DisplayName("Favorites test")
@@ -221,35 +197,50 @@ public class ProfileTest {
                 "getFavorites() should return an empty RecipeLibrary");
         Assertions.assertTrue(profile.getFavorites().getSize() == 0,
                 "The RecipeLibrary should be empty");
-        // Checks that the favorites is added the the Profile
+        // Checks that the favorites is added to the Profile
         Recipe r1 = new Recipe("Pasta Carbonara", 2, p2);
         Recipe r2 = new Recipe("Hamburger", 1, profile);
         profile.addFavorite(r1);
         profile.addFavorite(r2);
 
-        Assertions.assertEquals(2, profile.getFavorites().getSize());
-        Assertions.assertEquals(r1, profile.getFavorites().getRecipe(0));
-        Assertions.assertEquals(r2, profile.getFavorites().getRecipe(1));
+        Assertions.assertEquals(2, profile.getFavorites().getSize(), 
+                "The profile should now have two favorites");
+        Assertions.assertEquals(r1, profile.getFavorites().getRecipe(0), 
+                "r1 should be the first favorite");
+        Assertions.assertEquals(r2, profile.getFavorites().getRecipe(1), 
+                "r2 should be the first favorite");
 
         // Checks that removeFavorite() works
         profile.removeFavorite(r1);
 
-        Assertions.assertEquals(1, profile.getFavorites().getSize());
-        Assertions.assertEquals(r2, profile.getFavorites().getRecipe(0));
+        Assertions.assertEquals(1, profile.getFavorites().getSize(), 
+                "The profile should now have one favorite");
+        Assertions.assertEquals(r2, profile.getFavorites().getRecipe(0),
+                "r2 should now be the profile's first favorite");
 
         // Removing r1 again should do nothing
-        profile.removeFavorite(r1);
-
-        Assertions.assertEquals(1, profile.getFavorites().getSize());
-        Assertions.assertEquals(r2, profile.getFavorites().getRecipe(0));
+        Assertions.assertDoesNotThrow(() -> profile.removeFavorite(r1), 
+                "Removing the same favorite again should not throw exception.");
+        Assertions.assertEquals(1, profile.getFavorites().getSize(), 
+                "The profile should still have one favorite");
+        Assertions.assertEquals(r2, profile.getFavorites().getRecipe(0), 
+                "r2 should still be the profile's first favorite");
 
         profile.removeFavorite(r2);
-        Assertions.assertNotNull(profile.getFavorites());
-        Assertions.assertEquals(0, profile.getFavorites().getSize());
+        Assertions.assertNotNull(profile.getFavorites(), 
+                "The RecipeLibrary with favorites should not be null");
+        Assertions.assertEquals(0, profile.getFavorites().getSize(), 
+                "The profile should not have any favorites");
     }
 
+    /**
+     * This method tests if the getters and setters for hashed password works properly.
+     * 
+     * @see Profile#setHashedPassword(String)
+     * @see Profile#getHashedPassword()
+     */
     @Test
-    @DisplayName("Check if setHashedPassword() works")
+    @DisplayName("setHashedPassword() test")
     public void testSetAndGetHashedPassword() {
         String hashedPassword = PasswordHasher.hashPassword("newHashedPassword");
         profile.setHashedPassword(hashedPassword);
