@@ -11,7 +11,7 @@ import java.security.SecureRandom;
 public class PasswordHasher {
     private static final String HASHING_ALGORITHM = "SHA-256";
     private static final int SALT_LENGTH = 16;
-    private static final SecureRandom random = new SecureRandom();
+    private static final SecureRandom RANDOM = new SecureRandom();
 
     /**
      * This method hashes a password.
@@ -63,7 +63,7 @@ public class PasswordHasher {
      */
     private static byte[] generateSalt() {
         byte[] salt = new byte[SALT_LENGTH];
-        random.nextBytes(salt);
+        RANDOM.nextBytes(salt);
         return salt;
     }
 
