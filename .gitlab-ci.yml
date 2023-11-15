@@ -68,7 +68,7 @@ jacoco_average_coverage:
     - "core_coverage=$(cat recipehub/core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/')"
     - "ui_coverage=$(cat recipehub/ui/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Ui Coverage Total:/')"
     - "springboot_coverage=$(cat recipehub/springboot/restserver/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Springboot Coverage Total:/')"
-    - "average=$(echo -e \"$file_coverage\n$core_coverage\n$ui_coverage\" | grep -o '[0-9]*' | awk '{ total += $1; count++ } END { printf \"%.2f\", total/count }')"
+    - "average=$(echo -e \"$file_coverage\n$core_coverage\n$ui_coverage\n$springboot_coverage\" | grep -o '[0-9]*' | awk '{ total += $1; count++ } END { printf \"%.2f\", total/count }')"
     - "echo \"Average Coverage: $average%\""
   coverage: "/Average Coverage: ([0-9]+\\.[0-9]+)%/"
 
