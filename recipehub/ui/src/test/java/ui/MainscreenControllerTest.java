@@ -370,13 +370,13 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if searching for recipes works properly.
+     * This method will test if the basics of searching for recipes works properly.
      *
      * @see MainscreenControllerTest#getRecipeNames()
      */
     @Test
     @DisplayName("Search test")
-    public void testSearch() {
+    public void testSearchBasics() {
         TextField searchBar = lookup("#txtField").query();
 
         // Testing if the basics work
@@ -420,24 +420,16 @@ public class MainscreenControllerTest extends ApplicationTest {
             assertEquals("Pizza", recipeNames.get(3),
                     "The name of the forth recipe should be 'Pizza'");
         });
+    }
 
-        // Testing if if lower case matters
-        Platform.runLater(() -> {
-            searchBar.setText("taco");
-            searchBar.fireEvent(
-                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
-            List<String> recipeNames = getRecipeNames();
-            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
-        });
-
-        // Testing if if upper case matters
-        Platform.runLater(() -> {
-            searchBar.setText("TACO");
-            searchBar.fireEvent(
-                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
-            List<String> recipeNames = getRecipeNames();
-            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
-        });
+    /**
+     * This method will test if the search works when switching sorting.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSearchSwitchedSorting() {
+        TextField searchBar = lookup("#txtField").query();
 
         // Testing if search still works when switching sorting
         Platform.runLater(() -> {
@@ -452,18 +444,67 @@ public class MainscreenControllerTest extends ApplicationTest {
                     "There should still only be one recipe showing after switching to new sorting");
             assertEquals("Taco", recipeNames.get(0), "The recipe 'Taco' should be showing");
         });
+    }
+
+    /**
+     * This method will test if the searching works independent of upper and lower
+     * case.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSeachCaseInsensitive() {
+        TextField searchBar = lookup("#txtField").query();
+
+        // Testing if lower case matters
+        Platform.runLater(() -> {
+            searchBar.setText("taco");
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
+            List<String> recipeNames = getRecipeNames();
+            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
+        });
+
+        // Testing if upper case matters
+        Platform.runLater(() -> {
+            searchBar.setText("TACO");
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
+            List<String> recipeNames = getRecipeNames();
+            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
+        });
+    }
+
+    /**
+     * This method will test if the search works with multiple matches.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSeachForMultiple() {
+        TextField searchBar = lookup("#txtField").query();
 
         // Testing if search works with multiple matches
         Platform.runLater(() -> {
             searchBar.setText("p");
-            searchBar.fireEvent(
-                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
+            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
+                    "", "", null, false, false, false, false));
             List<String> recipeNames = getRecipeNames();
             assertEquals(2, recipeNames.size(), "There should be two recipes showing");
             assertEquals("Pasta Carbonara", recipeNames.get(0),
                     "The recipe 'Pasta Carbonara' should be first");
             assertEquals("Pizza", recipeNames.get(1), "The recipe 'Pizza' should be first");
         });
+    }
+
+    /**
+     * This methods will test if the search works when there are no matches.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSeachNoMatches() {
+        TextField searchBar = lookup("#txtField").query();
 
         // Testing if search works when there are no matches
         Platform.runLater(() -> {
