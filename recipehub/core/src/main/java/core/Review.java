@@ -27,8 +27,8 @@ public class Review {
      * 
      * @throws IllegalArgumentException if rating is below 1 or above 5
      */
-    private void validateRating(double r) {
-        if (r < 1.0 || r > 5.0) {
+    private void validateRating(double rating) {
+        if (rating < 1.0 || rating > 5.0) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
         }
     }
