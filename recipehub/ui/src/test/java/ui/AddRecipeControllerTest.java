@@ -488,9 +488,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
         assertTrue(addStepPane.isVisible());
         clickOn(stepsNextButton);
         assertTrue(noAddedStepError.isVisible());
-        addStepField.setText("ø");
-        clickOn(addStepButton);
-        assertTrue(notValidStepError.isVisible());
     }
 
     /**

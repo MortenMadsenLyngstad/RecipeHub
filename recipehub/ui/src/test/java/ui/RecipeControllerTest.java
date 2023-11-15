@@ -367,6 +367,13 @@ public class RecipeControllerTest extends ApplicationTest {
         when(mockRecipeFilehandler.writeRecipe(recipes.getRecipe(0))).thenReturn(true);
         numberOfRaters.setDisable(false);
 
+        Profile profile = profiles.get(0);
+        profile.addFavorite(recipes.getRecipe(0));
+        when(mockUserFilehandler.writeProfile(profile)).thenReturn(true);
+        when(mockUserFilehandler.readProfiles()).thenReturn(profiles);
+        when(mockRecipeFilehandler.readRecipeLibrary()).thenReturn(recipes);
+        when(mockUserFilehandler.loadProfile(profile.getUsername())).thenReturn(profile);
+
         clickOn(numberOfRaters);
         Alert alert = controller.getRatingAlert();
         SplitPane sp = (SplitPane) alert.getGraphic();
