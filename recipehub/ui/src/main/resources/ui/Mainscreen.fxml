@@ -36,7 +36,7 @@
             </ImageView>
          </children></AnchorPane>
       <Button fx:id="allRecipesButton" layoutX="310.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadAllRecipes" prefWidth="80.0" styleClass="green_button" text="All recipes" />
-      <Button fx:id="addRecipeButton" layoutX="171.0" layoutY="98.0" mnemonicParsing="false" onAction="#putRecipe" styleClass="green_button" text="+ Add Recipe" />
+      <Button fx:id="addRecipeButton" layoutX="171.0" layoutY="98.0" mnemonicParsing="false" onAction="#addRecipe" styleClass="green_button" text="+ Add Recipe" />
       <Button fx:id="myRecipesButton" layoutX="395.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadMyRecipes" prefWidth="80.0" styleClass="green_button" text="My recipes" />
       <TextField fx:id="txtField" layoutX="270.0" layoutY="99.0" onKeyTyped="#search" promptText="Search here..." />
       <Button fx:id="favoritesButton" layoutX="225.0" layoutY="131.0" mnemonicParsing="false" onAction="#loadFavoriteRecipes" prefHeight="28.0" prefWidth="80.0" styleClass="green_button" text="Favorites" />
