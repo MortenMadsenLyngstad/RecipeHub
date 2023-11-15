@@ -305,8 +305,7 @@ public class AddRecipeController extends SuperController {
      * @return true if added step meets the requirements, false otherwise
      */
     private boolean validateStep() {
-        if (!addStepText.getText().isEmpty()
-                && addStepText.getText().matches("[a-zA-Z ,.0-9!?]+")) {
+        if (!addStepText.getText().isEmpty()) {
             return true;
         } else {
             return false;
