@@ -17,9 +17,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.RecipeController">
    <children>
-      <AnchorPane prefHeight="90.0" prefWidth="700.0" style="-fx-background-color: #AEF359;">
+      <AnchorPane prefHeight="90.0" prefWidth="700.0" style="-fx-background-color: #1BAC6D;">
          <children>
-            <Button fx:id="backButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" styleClass="blue_button" text="Back">
+            <Button fx:id="backButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" styleClass="green_button" text="Back">
                <graphic>
                   <FontAwesomeIconView disable="true" glyphName="LONG_ARROW_LEFT" selectionEnd="0" size="40" stroke="BLACK" wrappingWidth="45.80854034423828" />
                </graphic>
