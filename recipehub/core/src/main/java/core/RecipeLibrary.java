@@ -5,27 +5,25 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This class is used to contain several recipes.
- * 
- * @author Adrian Haabpiht Solberg
+ * Class for storing several recipes.
  */
 public class RecipeLibrary implements Iterable<Recipe> {
 
     private List<Recipe> recipes;
 
     /**
-     * This contructor initilizes an empty ArrayList.
+     * This contructor initilizes an empty list.
      */
     public RecipeLibrary() {
         recipes = new ArrayList<>();
     }
 
     /**
-     * This contructor initilizes a new ArrayList using the ArrayList sent in.
+     * This contructor initilizes the recipe list using the list sent in.
      * 
-     * @param recipes - Arraylist filled with recipes
+     * @param recipes list filled with recipes
      */
-    public RecipeLibrary(ArrayList<Recipe> recipes) {
+    public RecipeLibrary(List<Recipe> recipes) {
         if (recipes == null) {
             throw new IllegalArgumentException("Recipes cannot be null");
         }
@@ -35,9 +33,9 @@ public class RecipeLibrary implements Iterable<Recipe> {
     /**
      * This metod returns the recipe with the given index.
      * 
-     * @param n - The index of the given recipe
-     * @throws IllegalArgumentException if the index is invalid
+     * @param n index of the given recipe
      * @return The recipe with index n in recipes
+     * @throws IllegalArgumentException if the index is invalid
      */
     public Recipe getRecipe(int n) {
         if (n < 0 || n >= getSize()) {
@@ -47,7 +45,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * Method to get the amount of recipes in the RecipeLibrary.
+     * This method gets the amount of recipes in the recipe library.
      * 
      * @return Integer value with the amount of recipes
      */
@@ -56,21 +54,24 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will add the recipe to the ArrayList recipes.
+     * This method adds the recipe to recipe library.
      * 
-     * @param recipe - Recipe object you wish to add
+     * @param recipe recipe to be added
      */
     private void addRecipe(Recipe recipe) {
         if (recipe == null) {
-            throw new IllegalArgumentException("Can't add null");
+            throw new IllegalArgumentException("Can't add null to the RecipeLibrary");
         }
         recipes.add(recipe);
     }
 
     /**
-     * This mehtod will update a recipe if it exists, or add it if it doesn't.
+     * This mehtod updates a recipe if it exists, or adds it if it doesn't.
      * 
-     * @param recipe - The recipe to be updated or added
+     * @param recipe recipe to be updated or added
+     * @see #containsRecipe(Recipe)
+     * @see #removeRecipe(Recipe)
+     * @see #addRecipe(Recipe)
      */
     public void putRecipe(Recipe recipe) {
         if (containsRecipe(recipe)) {
@@ -80,9 +81,9 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will remove the given recipe from the ArrayList recipes.
+     * This method removes the given recipe from the recipe library.
      * 
-     * @param recipe - Recipe object you wish to remove
+     * @param recipe recipe to be removed
      */
     public void removeRecipe(Recipe recipe) {
         for (Recipe r : recipes) {
@@ -94,10 +95,10 @@ public class RecipeLibrary implements Iterable<Recipe> {
     }
 
     /**
-     * This method will check if the given recipe exists in the ArrayList recipes.
+     * This method checks if the given recipe exists in the recipe library.
      * 
-     * @param recipe - Recipe object you wish to check
-     * @return Boolean value, true if the recipe exists in recipes, false if not
+     * @param recipe recipe to check
+     * @return Boolean value, true if the recipe exists in the recipe library, false otherwise
      */
     public boolean containsRecipe(Recipe recipe) {
         return recipes.stream()
@@ -108,7 +109,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     /**
      * This method sets the recipe library to the given list of recipes.
      * 
-     * @param newRecipes - List of recipes you wish to set the recipe library to
+     * @param newRecipes list of recipes you wish to set the recipe library to
      */
     public void setRecipeLibrary(List<Recipe> newRecipes) {
         if (newRecipes == null) {
@@ -120,7 +121,7 @@ public class RecipeLibrary implements Iterable<Recipe> {
     /**
      * This method defines an iterator for the class, which makes it iterable.
      * 
-     * @return Iterator which iterates over the elements in recipes
+     * @return Iterator which iterates over the elements of the recipe library
      */
     @Override
     public Iterator<Recipe> iterator() {
