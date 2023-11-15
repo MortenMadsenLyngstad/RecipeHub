@@ -36,7 +36,6 @@ activate RecipeFilehandler
 RecipeFilehandler -> FileUtil: writeFile(Path filepath, Recipelibrary library)
 activate FileUtil
 FileUtil -> recipes.json: Writes recipelibrary to recipes.json
-FileUtil <-- recipes.json: Returns true if recipelibrary was written to recipes.json
 RecipeFilehandler <-- FileUtil: Returns true if recipelibrary was written to recipes.json
 deactivate FileUtil
 RecipeFilehandler --> DirectRecipehubAccess: Returns true if recipe was saved
