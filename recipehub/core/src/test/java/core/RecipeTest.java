@@ -278,7 +278,7 @@ public class RecipeTest {
         recipe.addReview(new Review(4, "", "User12345"));
         Assertions.assertEquals(2, recipe.getNumberOfReviewers(), 
             "The recipe should now have two reviewers");
-        Assertions.assertEquals(1, recipe.getNumberOfcomments(), 
+        Assertions.assertEquals(1, recipe.getNumberOfComments(), 
             "The recipe should only have one comments");
         Assertions.assertEquals(4.5, recipe.getAverageRating(), 
             "The average rating for the recipe should be (5+4)/2=4.5");

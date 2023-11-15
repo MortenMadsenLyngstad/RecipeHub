@@ -308,7 +308,7 @@ public class Recipe {
      * @return The number of comments the recipe has as integer
      * @see Review#getComment()
      */
-    public int getNumberOfcomments() {
+    public int getNumberOfComments() {
         return (int) reviewList.stream().filter(r -> !r.getComment().equals("")).count();
     }
 
