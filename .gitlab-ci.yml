@@ -39,35 +39,30 @@ test:
 
 jacoco_file_coverage:
   stage: "coverage"
-  needs: ["test"]
   script:
     - "cat recipehub/file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/'"
   coverage: '/Total.*?([0-9]{1,3})%/'
 
 jacoco_core_coverage:
   stage: "coverage"
-  needs: ["test"]
   script:
     - "cat recipehub/core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/'"
   coverage: '/Total.*?([0-9]{1,3})%/'
 
 jacoco_ui_coverage:
   stage: "coverage"
-  needs: ["test"]
   script:
     - "cat recipehub/ui/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Ui Coverage Total:/'"
   coverage: '/Total.*?([0-9]{1,3})%/'
 
 jacoco_springboot_coverage:
   stage: "coverage"
-  needs: ["test"]
   script:
     - "cat recipehub/springboot/restserver/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Springboot Coverage Total:/'"
   coverage: '/Total.*?([0-9]{1,3})%/'
 
 jacoco_average_coverage:
   stage: "coverage"
-  needs: ["test"]
   script:
     - "file_coverage=$(cat recipehub/file/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco File Coverage Total:/')"
     - "core_coverage=$(cat recipehub/core/target/site/jacoco/index.html | grep -o 'Total[^%]*%' | sed 's/<.*>/ /; s/Total/Jacoco Core Coverage Total:/')"
