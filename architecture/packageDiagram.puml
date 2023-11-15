@@ -1,26 +1,49 @@
 @startuml packageDiagram
 
-component "core" {
-    package "recipehub.core"
+title Package Diagram - RecipeHub
+
+component core {
+    package recipehub.core
 }
 
-component "file" {
-    package "recipehub.file"
+component file {
+    package recipehub.file
 }
 
-component "ui" {
-    package "recipehub.ui.controllers"
-    package "recipehub.ui"
-}
-
-component Gson { 
-}
-
-recipehub.ui.controllers .right.> recipehub.core
-recipehub.ui.controllers ..> recipehub.ui
-recipehub.ui.controllers .right.> recipehub.file
 recipehub.file .right.> recipehub.core
-recipehub.file ..> Gson
+
+component ui {
+    package recipehub.ui
+}
+
+recipehub.ui .up.> recipehub.file
+recipehub.ui .right.> recipehub.core
+
+component springboot.restserver {
+    package recipehub.springboot.restserver
+}
+
+recipehub.springboot.restserver ..right..> file
+recipehub.springboot.restserver .right.> Gson
+recipehub.springboot.restserver .down.> core
+
+component Gson {
+}
+
+recipehub.file .up.> Gson
+
+component Springframwork {
+}
+
+component javafx {
+    component fxml
+    component controls
+    component graphics
+    component base
+
+}
+
+recipehub.springboot.restserver .left.> Springframwork
+recipehub.ui .up.> javafx
 
 @enduml
-

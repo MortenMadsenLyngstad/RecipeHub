@@ -8,9 +8,9 @@ skinparam participant {
 
 Actor User
 participant App
-participant LoginController
 participant MainscreenController
 participant RecipeController
+participant DirectRecipeHubController
 participant RecipeFilehandler
 participant UserFilehandler
 participant Profile
@@ -18,17 +18,11 @@ participant FileUtil
 database recipes.json
 database userinfo.json
 
-User -> App: Opens the application
 activate App
-User -> LoginController: Enters login information
-activate LoginController
-User -> LoginController: Clicks on: "Login"
-LoginController -> MainscreenController: login(ActionEvent event)
-deactivate LoginController
 activate MainscreenController
 User <-- MainscreenController: Shows all recipes to user
 User -> MainscreenController: Clicks on: "Read more" on own recipe
-MainscreenController -> RecipeController: showRecipe(ActionEvent event, Recipe recipe, Profile profile)
+MainscreenController -> RecipeController: showRecipe(ActionEvent event, Recipe recipe)
 deactivate MainscreenController
 activate RecipeController
 User <-- RecipeController: Shows recipe to user
@@ -36,16 +30,25 @@ User -> RecipeController: Clicks on trash-icon
 RecipeController -> RecipeController: deleteRecipe(MouseEvent event)
 User <-- RecipeController: Shows confirmation popup
 User -> RecipeController: Clicks on: "OK"
-RecipeController -> RecipeFilehandler: "OK-click"
+RecipeController -> DirectRecipeHubController: "OK-click"
+DirectRecipeHubController -> RecipeFilehandler: removeRecipe(recipe)
 RecipeFilehandler -> FileUtil: removeRecipe(recipe)
-FileUtil -> recipes.json: writeFile(Path filepath, Data T)
+FileUtil -> recipes.json: writeFile(Path filepath, RecipeLibrary recipeLibrary)
+FileUtil -> RecipeFilehandler: true if deleted successfully
+RecipeFilehandler -> DirectRecipeHubController: true if deleted successfully
+
 loop profiles.size() times
     RecipeController -> Profile: removeFavorite(Recipe recipe)
     RecipeController -> Profile: removeRecipe(Recipe recipe)
 end
-RecipeController -> UserFilehandler: "OK-click"
-UserFilehandler -> FileUtil: writeAllProfiles(List<Profile> profiles)
-FileUtil -> userinfo.json: writeFile(Path filepath, Data T)
-RecipeController -> MainscreenController: switchSceneWithInfo(actionEvent, "Mainscreen.fxml", currentProfile);
 
+RecipeController -> DirectRecipeHubController: "OK-click"
+DirectRecipeHubController -> UserFilehandler: saveProfiles(List<Profile> profiles)
+UserFilehandler -> FileUtil: writeAllProfiles(List<Profile> profiles)
+FileUtil -> userinfo.json: writeFile(Path filepath, List<Profile> profiles)
+FileUtil -> UserFilehandler: true if updated successfully
+UserFilehandler -> DirectRecipeHubController: true if updated successfully
+
+RecipeController -> MainscreenController: switchSceneMain(actionEvent, "Mainscreen.fxml");
+MainscreenController -> User: Shows all recipes to user without the deleted recipe
 @enduml
