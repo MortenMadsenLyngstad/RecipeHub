@@ -281,7 +281,7 @@ public class MainscreenController extends SuperController {
      * @throws IOException if the switchSceneWithInfo method throws an exception
      */
     @FXML
-    public void putRecipe(ActionEvent event) throws IOException {
+    public void addRecipe(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "AddRecipe.fxml");
     }
 
