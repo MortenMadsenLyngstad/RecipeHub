@@ -23,7 +23,6 @@ import javafx.scene.text.Text;
 /**
  * The AddRecipeController class is the controller class for the AddRecipe.fxml.
  * It handles the user input and creates a new recipe with the given input.
- *
  * This class extends the SuperController class.
  *
  * @see SuperController
@@ -59,7 +58,7 @@ public class AddRecipeController extends SuperController {
      * DescriptionPane will appear.
      *
      * @throws IllegalArgumentException if the createNewRecipe method throws an
-     *                                  illegal argument exception (e.g., if the
+     *                                  IllegalArgumentException (e.g., if the
      *                                  name is empty).
      * @see Recipe#Recipe(String, int, Profile)
      */
@@ -112,8 +111,7 @@ public class AddRecipeController extends SuperController {
      * This method checks if there is added an description and checks that the
      * description is a string.
      *
-     * @return true if the description meets the requierments and false if it
-     *         does not
+     * @return true if the description meets the requierments, false otherwise
      */
     private boolean validateDescrition() {
         return !addDescriptionText.getText().isEmpty();
@@ -128,7 +126,7 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method validates if an added ingredient follow the requirements.
+     * This method validates if an added ingredient follows the requirements.
      * If one or more off the inputs does not meet the requirements the user
      * will receive feedback.
      * If the requirements are met, the ingredient will be added to the recipe.
@@ -159,8 +157,7 @@ public class AddRecipeController extends SuperController {
     /**
      * This method validates if the added ingredient meets the requirements.
      *
-     * @return true if the added ingredient meets the requirements and false if
-     *         it does not
+     * @return true if the added ingredient meets the requirements, false otherwise
      */
     private boolean validateIngredient() {
         if (!ingredientNameInput.getText().isEmpty()
@@ -277,7 +274,6 @@ public class AddRecipeController extends SuperController {
     /**
      * This method adds a step and shows it in the prewiew if the step meets the
      * requirements.
-     *
      * If the added step does not meet the requirements, the user gets feedback.
      */
     public void addStep() {
@@ -306,7 +302,7 @@ public class AddRecipeController extends SuperController {
     /**
      * This method checks if the added step meets the requirements.
      *
-     * @return true if added step meets the requirements and false otherwise
+     * @return true if added step meets the requirements, false otherwise
      */
     private boolean validateStep() {
         if (!addStepText.getText().isEmpty()
@@ -327,8 +323,8 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method validates if there is added a step or not. Gives feedback if
-     * there is not added any step.
+     * This method validates if there is added a step or not. 
+     * Gives feedback if there is not added any step.
      */
     public void addedAllSteps() {
         if (!newRecipe.getSteps().isEmpty()) {
@@ -402,7 +398,7 @@ public class AddRecipeController extends SuperController {
     /**
      * This method checks if the user has selected an amount of portions.
      *
-     * @return true if portions is selected and false otherwise
+     * @return true if portions is selected, false otherwise
      */
     private boolean validatePortions() {
         if (numberOfPortionsMenu.getText().matches("[1-9]")) {
@@ -426,9 +422,7 @@ public class AddRecipeController extends SuperController {
 
     /**
      * This method is called when the user clicks on the back button.
-     *
      * If the recipe is saved the user will be sent back to the mainscreen.
-     *
      * If the recipe is not saved the user will get a pop up window where the
      * user can choose to go back without saving the recipe or to go back and
      * complete the recipe.

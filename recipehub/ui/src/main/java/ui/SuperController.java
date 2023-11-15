@@ -92,7 +92,7 @@ public class SuperController {
     }
 
     /**
-     * This method is used to set the access to the recipe hub.
+     * This method is used to set the access used by the app.
      * Either direct or remote.
      *
      * @param recipeHubAccess the type of access to set

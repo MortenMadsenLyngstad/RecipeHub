@@ -65,7 +65,7 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will set up the application for headless mode (tests will
-     * runwithout GUI).
+     * run without GUI).
      *
      * @see App#supportHeadless()
      */

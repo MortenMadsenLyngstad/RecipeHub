@@ -15,8 +15,7 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     /**
-     * This helper method used by tests needing to run headless. Taken from
-     * "todo-list-example".
+     * This helper method is used by tests needing to run in headless mode. 
      */
     public static void supportHeadless() {
         if (Boolean.getBoolean("headless")) {

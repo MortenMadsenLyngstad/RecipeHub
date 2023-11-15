@@ -21,7 +21,6 @@ import javafx.stage.Stage;
  * screens.
  * Manages user registration, switching to the login screen, and transitioning
  * to the main screen.
- *
  * This class extends the SuperController class.
  *
  * @see SuperController
@@ -123,4 +122,5 @@ public class RegisterController extends SuperController {
             registerButton.fire();
         }
     }
+
 }

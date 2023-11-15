@@ -34,7 +34,6 @@ import org.controlsfx.control.Rating;
  * The RecipeController class manages the functionality of displaying recipe
  * details, allowing users to interact with a recipe, such as adding or removing
  * portions, rating, reviewing, favoriting and deleting recipes.
- *
  * This class extends the SuperController class.
  *
  * @see SuperController
@@ -85,7 +84,6 @@ public class RecipeController extends SuperController {
 
     /**
      * This method populates the RecipeScreen with the information from the recipe.
-     *
      * The helper methods showDeleteButton, showRating and showComments are called
      * to populate different parts of the screen.
      *
@@ -127,7 +125,6 @@ public class RecipeController extends SuperController {
     /**
      * This method handles the adding of portions through writing in the
      * portionsField.
-     *
      * Portions must be an int larger than 0. Calls the clearText and populate
      * method to update the screen.
      *
@@ -251,8 +248,8 @@ public class RecipeController extends SuperController {
     }
 
     /**
-     * <p>
      * Displays comments associated with the recipe.
+     * <p>
      * If there are comments available, this method organizes and presents them,
      * showcasing the reviewers' usernames, ratings, and comments.
      * The comments are shown in a scrollable pane and arranged to highlight the
@@ -334,7 +331,6 @@ public class RecipeController extends SuperController {
 
     /**
      * This method handels the click of the deleteButton.
-     *
      * If the user confirms the deletion, the recipe is deleted and the user is sent
      * back to the mainscreen.
      *

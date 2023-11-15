@@ -17,7 +17,6 @@ import javafx.scene.input.KeyEvent;
  * The LoginController class handles user login and navigation between screens.
  * Manages user authentication, switching to the main screen, and transitioning
  * to the registration screen.
- *
  * This class extends the SuperController class.
  *
  * @see SuperController
@@ -60,10 +59,8 @@ public class LoginController extends SuperController {
 
     /**
      * This method validates the login information.
-     *
      * Checks if the username or password fields are empty. Checks if the username
-     * exists and if the
-     * password matches the saved password.
+     * exists and if the password matches the saved password.
      *
      * @param username the username to validate
      * @param password the password to validate

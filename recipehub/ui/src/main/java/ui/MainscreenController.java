@@ -42,7 +42,6 @@ import org.controlsfx.control.Rating;
  * recipes, and favorites, and supports searching for specific recipes.
  * Also handles navigation to the add recipe screen, log out, and individual
  * recipe pages.
- *
  * This class extends the SuperController class.
  *
  * @see SuperController
@@ -234,7 +233,6 @@ public class MainscreenController extends SuperController {
      * If not, it will set the heart to white and make it clickable. When clicked
      * on, the heart will turn red and the recipe will be added to the current
      * profile's favorites.
-     *
      * This method is protected because it is used in RecipeController.
      *
      * @param heart          - The heart to be set
@@ -288,7 +286,7 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch screen to UserLogin.fxml when the addRecipe button is
+     * This method will switch screen to UserLogin.fxml when the log out button is
      * clicked on.
      *
      * @param event the event of the Log Out-button beign clicked on

@@ -227,7 +227,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the createRecipe method.
-     *
      * Tests if a too long name is not accepted and gives an error message.
      *
      * @see AddRecipeController#createRecipe()
@@ -246,7 +245,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the createRecipe method.
-     *
      * Tests if a valid name is accepted and if the name is set correctly.
      *
      * @see AddRecipeController#createRecipe()
@@ -271,7 +269,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addDescription method.
-     *
      * Tests if an invalid description is not accepted and gives an error message.
      *
      * @see AddRecipeController#addDescription()
@@ -297,7 +294,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addDescription method.
-     *
      * Tests if a valid description is accepted and if the description is set
      * correctly.
      *
@@ -329,7 +325,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addIngredient method.
-     *
      * Tests if an invalid ingredient is not accepted and gives an error message.
      *
      * @see AddRecipeController#addIngredient()
@@ -385,7 +380,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addIngredient method.
-     *
      * Tests if a valid ingredient is accepted and if the ingredient is set
      * correctly.
      *
@@ -425,7 +419,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the removeIngredient method.
-     *
      * Tests if the removeIngredient button is visible when there is an ingredient
      * to remove.
      * Tests if the removeIngredient button's functionality works.
@@ -470,7 +463,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
-     *
      * Tests if an invalid step is not accepted and gives an error message.
      *
      * @see AddRecipeController#addStep()
@@ -503,7 +495,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
-     *
      * Tests if a valid step is accepted and if the step is set correctly.
      *
      * @see AddRecipeController#addStep()
@@ -545,7 +536,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
-     *
      * Tests if the remove stop button is visible when there is a step to remove.
      * Tests if the remove step button's functionality works.
      * Tests if the remove step button is not visible when there is no step to
@@ -594,7 +584,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
-     *
      * Tests if an invalid portion is not accepted and gives an error message.
      *
      * @see AddRecipeController#saveRecipe()
@@ -616,7 +605,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the addStep method.
-     *
      * Tests if a valid portion is accepted and if the recipe is saved.
      *
      * @see AddRecipeController#saveRecipe()
@@ -645,7 +633,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the backButton.
-     *
      * Tests if the user can go back to the mainscreen.
      *
      * @see AddRecipeController#backButtonClick()
@@ -661,7 +648,6 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will test the functionality of the backButton.
-     *
      * Tests if the alert is shown when the user tries to go back if the recipe
      * is not saved.
      *
