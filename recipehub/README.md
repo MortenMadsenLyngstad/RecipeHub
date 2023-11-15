@@ -168,4 +168,4 @@ The user is in need of an application where they can easily give reviews as well
 - Read other reviews
 
 #### Sequence diagram for user story 6: 
-![User story 6 sequence diagram] (https://i.imgur.com/KFvzoZg.png)
+![User story 6 sequence diagram] (https://i.imgur.com/56aUSgD.png)
