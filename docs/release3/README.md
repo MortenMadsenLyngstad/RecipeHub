@@ -110,9 +110,9 @@ When everything was good, and the pipelines ran fine, we made merge requests. He
 
 This sprint we continued to utilize pair programming, where two group members work on the same issue on the same computer. While one of us wrote the code, the other looked over everything that was written and came with suggestions. This helped us solve difficult problems and find better solutions, as well as ensuring a higher level of code quality. An example where we used pair programming is for the implementation of the Rest API. This was new for the whole group, so we thought pair programming this part would be a good idea. By using pair programming, we could discuss different ideas and how things should be implemented, but also build upon each other's understanding of how the Rest API should work. We think this made the process of implementing the Rest API go much smoother, while also resulting in a higher level of code quality.
 
-## Choices made for third release
+## Decisions made for third release
 
-The following paragraphs aims to explain some of the choices we've made for the third release.
+The following paragraphs aims to explain some of the decisions we've made for the third release.
 
 ### Rest API
 
@@ -123,6 +123,12 @@ Other than that, we also made the choice of having the Rest API only include met
 ### New functionality
 
 Although we added several new functionalities for this third deliverable, such as the scaling of portions or reviews, we realised that our application already had quite a lot of functionalities. Therefore, in order to follow the principle of quality over quantity, we decided to not add an excessive amount of new functionality for this third deliverable, and rather focus on making sure that the once we have, had high quality. This meant that for example adding images, which was an idea that occured during this sprint, was de-prioritized. It also meant that we spent some time refactoring functionality we had implemented earlier, like the search bar or the recipe screen. We think this was a good choice when considering the position we found ourselves in after release 2, where we already had quite a lot of functionality.
+
+### Indexing of recipes
+
+During the sprint, we thought of indexing the recipes to avoid having to save the same recipes several times in several files. We made such an implementation, and it worked, but we realized that the implementation also had it's disadvantages. How we implemented the indexation required us to iterate through all the recipes in the app each time we wanted to load a profile's recipes, which would have a negative impact on the app's runtime. In addition, the implementation would make the usage of the core module individually cumbersome, while also making our codebase more difficult to understand. Because of these reasons, we decided to not implement the indexing of recipes, but rather stick to the implementation we had previously, prioritizing runtime and clearity over storage space.
+
+However, this descision was made before having all new functionality added, which added new complexity to the app. This made us realize that the implementation we had settled on also ended up requiring iteration through all the data, in order to update all the recipes who were saved several places. With this in mind, despite the other disadvantaged that came with indexation, this would probably be something we would have looked back into if we had time. At the time, the decision we made seemed right, but upon futher inspection at a later stage of the development, this is something that could've reconsidered.
 
 ## Issues encountered for third release
 
@@ -144,6 +150,7 @@ Documentation about the the app in general, core features in the finalized produ
 ## Example data
 
 To have some example recipes and users to run the project with, we have run the project for a while and added the files in the [exampledata](./exampledata/) directory. Move the files from the directory to the position "user.home" on your computer, and the app can use them as example data.  
-Logininfo for example users:  
-**Username:** Profile1 , **Password:** Password1  
-**Username:** Exampleuser1 , **Password:** Exampleuser1Pass  
+Logininfo for the example users:  
+**Username:** TestUser , **Password:** Test1234
+**Username:** Testuser2 , **Password:** Test1234
+**Username:** Testuser3 , **Password:** Test1234
