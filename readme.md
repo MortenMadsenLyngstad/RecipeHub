@@ -15,7 +15,7 @@ This project is an application with both front-end and back-end. It is structure
 
 ## Class diagram for core module
 
-![Diagram](https://i.imgur.com/3Fc1ZcB.png)
+![Diagram](https://i.imgur.com/083smoE.png)
 
 ## Requirements
 
