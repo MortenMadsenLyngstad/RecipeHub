@@ -3,14 +3,17 @@
 package recipehub.core {
     class Profile {
         - username: String 
-        - password: String
+        - password: transient String
+        - hashedPassword: String
         - recipeLibrary: RecipeLibrary
         - favorites: RecipeLibrary
         + Profile(username: String, password: String)
-        + static void isValidUsername(username: String)
-        + static void isValidPassword(password: String)
-        + string getUsername()
-        + string getPassword()
+        + {static} void isValidUsername(username: String)
+        + {static} void isValidPassword(password: String)
+        + String getUsername()
+        + String getPassword()
+        + String getHashedPassword()
+        + void setHashedPassword(hashedPassword: String)
         + RecipeLibrary getRecipes()
         + void putRecipe(recipe: Recipe)
         + void removeRecipe(recipe: Recipe)
@@ -28,6 +31,7 @@ package recipehub.core {
         - ingredientsUnits: Map<String, String>
         - authorUsername: String
         - isSaved: boolean
+        - reviewList: List<Review>
         + Recipe(name: String, portions: int, author: Profile)
         + void setName(name: String)
         + String getName()
@@ -35,6 +39,7 @@ package recipehub.core {
         + String getDescription()
         + void setPortions(portions: int)
         + int getPortions()
+        + List<String> getSteps()
         + void addStep(step: String)
         + void removeStep(step: String)
         + Set<String> getIngredients()
@@ -44,6 +49,12 @@ package recipehub.core {
         + void removeIngredientAmount(ingredient: String, amount: Double)
         + String getIngredientUnit(ingredient: String)
         + void setIngredientUnit(ingredient: String, unit: String)
+        + void addReview(rating: Review)
+        + boolean hasRated(username: String)
+        + double getAverageRating()
+        + int getNumberOfReviewers()
+        + int getNumberOfComments()
+        + List<Review> getReviews()
         + String getAuthor()
         + boolean isSaved()
         + void setSaved(saved: boolean) 
@@ -52,13 +63,39 @@ package recipehub.core {
     class RecipeLibrary {
         - recipes: List<Recipe>
         + RecipeLibrary()
-        + RecipeLibrary(ArrayList<Recipe> recipes)
+        + RecipeLibrary(List<Recipe> recipes)
         + Recipe getRecipe(n: int)
         + int getSize()
+        - void addRecipe(recipe: Recipe)
         + void putRecipe(recipe: Recipe)
         + void removeRecipe(recipe: Recipe)
         + boolean containsRecipe(recipe: Recipe)
+        + void setRecipeLibrary(newRecipes: List<Recipe>)
         + Iterator<Recipe> iterator()
+        + List<Recipe> getRecipes()
+    }
+
+    class PasswordHasher {
+        - {static} HASHING_ALGORITHM: String = "SHA-256" {readOnly}
+        - {static} SALT_LENGTH: int = 16 {readOnly}
+        - {static} RANDOM: SecureRandom = new SecureRandom {readOnly}
+        + {static} String hashPassword(password: String)
+        + {static} Boolean verifyPassword(inputPassword: String, storedPassword: String)
+        - {static} byte[] generateSalt()
+        - {static} bute[] hashPasswordWithSalt(password: String, salt: byte[])
+        - {static} String bytesToHex(bytes: byte[])
+        - {static} byte[] hexToBytes(hex: String)
+    }
+
+    class Review {
+        - rating: double
+        - comment: String
+        - username: String
+        + Review(rating: double, comment: String, username: String)
+        - void validateRating(rating: double)
+        + double getRating()
+        + String getComment()
+        + String getReviewer()
     }
 
     interface Iterable {
@@ -67,8 +104,10 @@ package recipehub.core {
 
 RecipeLibrary  -right-> "recipes: *" Recipe
 Profile -up-> "recipeLibraries: 2" RecipeLibrary
-Recipe -right-> "profiles: 1" Profile
-Iterable <|.left. RecipeLibrary
+Profile -.-> "uses PasswordHasher.hashPassword(String)" PasswordHasher
+Recipe -down-> "profiles: 1" Profile
+RecipeLibrary .down.|> Iterable
+Review -right->  "profiles: 1" Profile
 }
 
 @enduml
