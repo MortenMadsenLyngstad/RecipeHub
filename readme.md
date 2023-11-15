@@ -11,7 +11,7 @@ This project is an application with both front-end and back-end. It is structure
 
 ## Package diagram for RecipeHub project
 
-![Diagram](https://i.imgur.com/snBvFjR.png)
+![Diagram](https://i.imgur.com/eoW6Ppw.png)
 
 ## Class diagram for core module
 
@@ -51,16 +51,16 @@ These are the dependencies for the project:
 
 ## Instructions
 
-- To run the project, navigate to the recipehub file and use the command `mvn clean install`.  
-- After the build is successful, you can navigate to the ui-directory and run the application using the command `mvn javafx:run`.  
-- To run the tests, use the command `mvn test` in the recipehub directory. This will run all the tests in the project.  
+- To run the project, navigate to the recipehub file and use the command `mvn clean install`.
+- After the build is successful, you can navigate to the ui-directory and run the application using the command `mvn javafx:run`.
+- To run the tests, use the command `mvn test` in the recipehub directory. This will run all the tests in the project.
 - To generate a test coverage report, use the command `mvn jacoco:report`. The report can be found in the target/site/jacoco/index.html file.
 
 ## Directory Structure
 
 The following figure shows the directory structure of the project:
 
-    
+
 ```
 └───recipehub
     ├───core
@@ -68,13 +68,13 @@ The following figure shows the directory structure of the project:
     │       ├───main
     │       │   └───java
     │       │       └───core
-    │       │           -- The Profile- Recipe- and RecipeLibrary-classes are in this package.            
+    │       │           -- The Profile- Recipe- and RecipeLibrary-classes are in this package.
     │       │           -- They are responsible for the main logic of the application.
     │       └───test
     │           └───java
-    │               └───core 
+    │               └───core
     │                   -- The testfiles for the core module are located in this file.
-    │   
+    │
     ├───file
     │   ├───src
     │       │───main
@@ -83,9 +83,9 @@ The following figure shows the directory structure of the project:
     │       │            -- The file-handling for the project is located in this file.
     │       └───test
     │           └───java
-    │               └───core 
+    │               └───core
     │                    -- The testfiles for the file module are located in thios file
-    │       
+    │
     └───ui
         ├───src
             ├───main
@@ -102,6 +102,3 @@ The following figure shows the directory structure of the project:
                    └───ui
                        └───controllers
                             -- The testfiles for the ui module are located in this file.
-                               
-
-
