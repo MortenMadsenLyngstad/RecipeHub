@@ -247,8 +247,6 @@ public class RecipeController extends SuperController {
         if (recipe.hasRated(currentProfile.getUsername())
                 || this.recipe.getAuthor().equals(currentProfile.getUsername())) {
             numberOfRaters.setDisable(true);
-        } else {
-            return;
         }
     }
 

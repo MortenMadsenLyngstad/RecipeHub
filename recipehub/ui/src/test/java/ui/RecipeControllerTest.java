@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import core.Profile;
 import core.Recipe;
 import core.RecipeLibrary;
+import core.Review;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import file.DirectRecipeHubAccess;
 import file.RecipeFilehandler;
@@ -94,6 +95,10 @@ public class RecipeControllerTest extends ApplicationTest {
 
     /**
      * This method will set up the necessary variables for the test.
+     * We initialize the recipe with two revies.
+     * This is done to test {@link RecipeController#showComments()} properly.
+     * This implies that we don't test a recipe with no reviews - however, the logic
+     * is the same.
      */
     private void setUp() {
         Profile profile1 = new Profile("Username", "Password1");
@@ -111,6 +116,8 @@ public class RecipeControllerTest extends ApplicationTest {
         recipe.addIngredient("Cheese", 100.0, "g");
         recipe.addIngredient("Pepperoni", 100.0, "g");
         recipe.setPortions(4);
+        recipe.addReview(new Review(3.0, "This is a comment", "Username2"));
+        recipe.addReview(new Review(3.0, "This is a comment", "Username3"));
         recipes.putRecipe(recipe);
 
         when(mockUserFilehandler.writeProfile(profile1)).thenReturn(true);
@@ -165,9 +172,9 @@ public class RecipeControllerTest extends ApplicationTest {
                 ingredientsText.getText());
         assertEquals("TRASH", deleteButton.getGlyphName());
         assertEquals("HEART", heartButton.getGlyphName());
-        assertEquals(0, rating.getRating());
-        assertEquals("0.0", averageRating.getText());
-        assertEquals("(0)", numberOfRaters.getText());
+        assertEquals(3.0, rating.getRating());
+        assertEquals("3.0", averageRating.getText());
+        assertEquals("(2)", numberOfRaters.getText());
         assertTrue(numberOfRaters.isDisable());
         assertTrue(deleteButton.isVisible());
     }
@@ -345,48 +352,6 @@ public class RecipeControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if a review without a comment is added correctly.
-     * It will also test if the average rating and number of raters is displayed, if
-     * the number of reviews is displayed correctly and if the user is sent back to
-     * recipe.fxml if the user cancels the review.
-     *
-     * @see RecipeController#showRatingPopup()
-     */
-    @Test
-    public void testReviewWithoutComment() {
-        averageRating = lookup("#averageRating").query();
-        numberOfRaters = lookup("#numberOfRaters").query();
-        numberOfcomments = lookup("#numberOfComments").query();
-
-        controller.setProfile(new Profile("Username2", "Test1234"));
-        when(mockRecipeFilehandler.writeRecipe(recipes.getRecipe(0))).thenReturn(true);
-        numberOfRaters.setDisable(false);
-        clickOn(numberOfRaters);
-        Button cancelButton = (Button) controller.getRatingAlert().getDialogPane()
-                .lookupButton(ButtonType.CANCEL);
-        clickOn(cancelButton);
-        Platform.runLater(() -> {
-            assertNotEquals("Mainscreen.fxml", controller.getFileName());
-        });
-
-        clickOn(numberOfRaters);
-        Alert alert = controller.getRatingAlert();
-        SplitPane sp = (SplitPane) alert.getGraphic();
-        VBox vbox = (VBox) sp.getItems().get(0);
-        Rating r = (Rating) vbox.getChildren().get(0);
-        moveTo(r);
-
-        Button okButton = (Button) controller.getRatingAlert().getDialogPane()
-                .lookupButton(ButtonType.OK);
-        clickOn(okButton);
-        Platform.runLater(() -> {
-            assertEquals("(1)", numberOfRaters.getText());
-            assertEquals("3.0", averageRating.getText());
-            assertEquals("(0)", numberOfcomments.getText());
-        });
-    }
-
-    /**
      * This method will test if a review with a comment is added correctly.
      * Also tests if the comment is displayed with the correct username and text.
      *
@@ -398,7 +363,7 @@ public class RecipeControllerTest extends ApplicationTest {
         numberOfcomments = lookup("#numberOfComments").query();
         scrollPaneBox = lookup("#scrollPaneBox").query();
 
-        controller.setProfile(new Profile("Username2", "Test1234"));
+        controller.setProfile(new Profile("Username4", "Test1234"));
         when(mockRecipeFilehandler.writeRecipe(recipes.getRecipe(0))).thenReturn(true);
         numberOfRaters.setDisable(false);
 
@@ -421,7 +386,7 @@ public class RecipeControllerTest extends ApplicationTest {
         VBox vbox3 = (VBox) hbox.getChildren().get(0);
         Label l = (Label) vbox3.getChildren().get(0);
         TextArea comment = (TextArea) hbox.getChildren().get(1);
-        assertEquals("Username2: ", l.getText());
+        assertEquals("Username4: ", l.getText());
         assertEquals("This is a comment", comment.getText());
         clickOn(numberOfcomments);
     }
