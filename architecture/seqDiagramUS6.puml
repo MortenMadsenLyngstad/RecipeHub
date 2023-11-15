@@ -17,6 +17,7 @@ participant FileUtil
 database recipes.json
 activate RecipeHubController
 activate RecipeController
+
 User <-- RecipeController: Shows recipe to user
 User -> RecipeController: Clicks on: "Rating stars"
 RecipeController -> RecipeController: showRatingPopup()
