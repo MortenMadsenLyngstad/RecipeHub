@@ -21,7 +21,8 @@ public class UserFilehandler {
     }
 
     /**
-     * This method writes a profile to the file.
+     * This method writes a profile to the file. If the profile already exists,
+     * it will be overwritten to update the profile.
      * 
      * @param profile - Profile object to write
      * @return - Returns true if the profile was written, false if null or not written
@@ -58,13 +59,14 @@ public class UserFilehandler {
     }
 
     /**
-     * This method writes all profiles to the file.
+     * This method writes all profiles to the file. If the list of profiles is emty
+     * or null, nothing is written.
      * 
      * @param profiles - List of profiles to write
      * @return - Returns true if the profiles were written, false if null or not written
      */
     public boolean writeAllProfiles(List<Profile> profiles) {
-        if (profiles == null) {
+        if (profiles == null || profiles.isEmpty()) {
             return false;
         }
         return FileUtil.writeFile(getFilePath(), profiles);
@@ -85,7 +87,7 @@ public class UserFilehandler {
     }
 
     /**
-     * This method sets the getFilePath.
+     * This method sets the filename.
      * 
      * @param file - File to write to
      * @throws IllegalArgumentException if the filename is empty
@@ -98,10 +100,20 @@ public class UserFilehandler {
         FileUtil.createFile(getFilePath());
     }
 
+    /**
+     * This method gets the filename.
+     * 
+     * @return - String value of the filename
+     */
     public static String getFileName() {
         return fileName;
     }
 
+    /**
+     * This method gets the filePath.
+     * 
+     * @return - Path object of the filePath
+     */
     public static Path getFilePath() {
         return Path.of(System.getProperty("user.home")
                 + System.getProperty("file.separator") + fileName);

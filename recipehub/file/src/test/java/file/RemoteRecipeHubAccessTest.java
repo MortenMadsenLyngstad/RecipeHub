@@ -58,6 +58,8 @@ public class RemoteRecipeHubAccessTest {
 
     /**
      * Tests the retrieval of the RecipeLibrary from the remote server.
+     * 
+     * @see RemoteRecipeHubAccess#getRecipeLibrary()
      */
     @Test
     public void testGetRecipeLibrary() {
@@ -92,6 +94,8 @@ public class RemoteRecipeHubAccessTest {
 
     /**
      * Tests the removal of a recipe from the remote server.
+     * 
+     * @see RemoteRecipeHubAccess#removeRecipe(Recipe)
      */
     @Test
     public void testRemoveRecipe() {
@@ -124,6 +128,8 @@ public class RemoteRecipeHubAccessTest {
 
     /**
      * Tests the saving of a recipe to the remote server.
+     * 
+     * @see RemoteRecipeHubAccess#saveRecipe(Recipe)
      */
     @Test
     public void testSaveRecipe() {
@@ -151,6 +157,8 @@ public class RemoteRecipeHubAccessTest {
 
     /**
      * Tests the saving of a profile to the remote server.
+     * 
+     * @see RemoteRecipeHubAccess#saveProfile(Profile)
      */
     @Test
     public void testSaveProfile() {
@@ -180,6 +188,8 @@ public class RemoteRecipeHubAccessTest {
 
     /**
      * Tests the retrieval of a list of all profiles from the remote server.
+     * 
+     * @see RemoteRecipeHubAccess#getProfiles()
      */
     @Test
     public void testGetProfiles() {
@@ -211,6 +221,8 @@ public class RemoteRecipeHubAccessTest {
 
     /**
      * Tests the saving of a list of profiles to the remote server.
+     * 
+     * @see RemoteRecipeHubAccess#saveProfiles(List)
      */
     @Test
     public void testSaveProfiles() {
@@ -241,6 +253,8 @@ public class RemoteRecipeHubAccessTest {
 
     /**
      * Tests the loading of a profile from the remote server.
+     * 
+     * @see RemoteRecipeHubAccess#loadProfile(String)
      */
     @Test
     public void testLoadProfile() {
