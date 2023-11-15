@@ -63,7 +63,8 @@ public class RecipeController extends SuperController {
     private VBox scrollPaneBox;
     @FXML
     private ScrollPane scrollPane;
-    
+    @FXML
+    private SplitPane commentsPane;
 
     /**
      * Handels the click of the backButton, sends the user back to the mainscreen.
@@ -236,33 +237,35 @@ public class RecipeController extends SuperController {
             reviewLabel.setFont(new javafx.scene.text.Font("System", 24));
             scrollPaneBox.getChildren().add(1, reviewLabel);
 
-            //Makes the splitpane for the comments
-            SplitPane commentsPane = new SplitPane();
-            commentsPane.setPrefWidth(462);
+            // Makes the splitpane for the comments
+            commentsPane = new SplitPane();
+            commentsPane.setMinSize(462, 370);
             commentsPane.setOrientation(Orientation.VERTICAL);
             
-            //Sorts the list of comments so the newest is on top
+
+            // Sorts the list of comments so the newest is on top
             List<Review> reviews = new ArrayList<>(recipe.getReviews().stream()
                     .filter(r -> !r.getComment().equals("")).toList());
             Collections.reverse(reviews);
 
-            //Makes a vbox for each comment
+            double totalHeight = 0;
+            // Makes a vbox for each comment
             for (Review r : reviews) {
                 if (!r.getComment().equals("")) {
                     VBox vbox2 = new VBox();
 
-                    //Adds the username, rating and comment to the vbox
+                    // Adds the username, rating, and comment to the VBox
                     vbox2.getChildren().add(new Label(r.getReviewer() + ": "));
                     Rating rating = new Rating();
                     rating.setRating(1);
                     rating.setMax(1);
                     rating.setDisable(true);
                     vbox2.getChildren().add(rating);
-                    vbox2.getChildren()
-                            .add(new Label(String.valueOf(r.getRating()).charAt(0) + "/5"));
+                    vbox2.getChildren().add(new Label(String.valueOf(r.getRating())
+                            .charAt(0) + "/5"));
                     vbox2.setPrefWidth(140);
 
-                    //Adds the vbox to a hbox with the comment
+                    // Adds the VBox to an HBox with the comment
                     HBox hbox = new HBox();
                     hbox.getChildren().add(vbox2);
                     HBox.setHgrow(vbox2, Priority.ALWAYS);
@@ -272,13 +275,24 @@ public class RecipeController extends SuperController {
                     textArea.setPrefHeight(40);
                     textArea.setPrefWidth(350);
                     textArea.setEditable(false);
+                    textArea.setPrefHeight(65);
                     hbox.getChildren().add(textArea);
-                    hbox.setDisable(true);
-                    commentsPane.getItems().add(hbox);
+                    hbox.setScaleShape(false);
+                    hbox.setMinHeight(65);
+                    hbox.setMaxHeight(65);
+                    commentsPane.getItems().add(hbox); 
+
+                    totalHeight += vbox2.getPrefHeight();
                 }
             }
-            scrollPaneBox.getChildren().add(2, commentsPane);
-        } 
+            if (totalHeight <= 370 && commentsPane.getItems().size() > 0) {
+                HBox hbox2 = new HBox();
+                hbox2.setMinHeight(65);
+                hbox2.setMaxHeight(65);
+                commentsPane.getItems().add(hbox2);
+            }
+            scrollPaneBox.getChildren().add(2, commentsPane); 
+        }
     }
 
     /**
@@ -346,7 +360,7 @@ public class RecipeController extends SuperController {
         this.alert = null;
         return flag;
     }
-    
+
     /**
      * Shows a popup for the user to review the recipe.
      * The user can give a rating from 1 to 5 and write a comment.
@@ -388,7 +402,7 @@ public class RecipeController extends SuperController {
     /**
      * Adds a rating to the recipe.
      * 
-     * @param rating The rating to be added
+     * @param rating  The rating to be added
      * @param comment The comment to be added
      * @throws IllegalArgumentException If the rating is not between 1 and 5,
      *                                  or if the user has already rated the recipe
@@ -399,17 +413,19 @@ public class RecipeController extends SuperController {
         showRating();
         showComments();
     }
-    
+
     /**
      * Shows a popup with the comments on the recipe.
      * The comments are shown in a scrollable list.
      */
     public void scrollDownToComments() {
-        Double height = scrollPaneBox.getHeight();
-        Double position = stepsLabel.getLayoutY();
-        scrollPane.setVvalue(1 - ((position + 240) / height));
+        if (commentsPane == null) {
+            return;
+        }
+        scrollPane.setVvalue(
+                1.0 - (commentsPane.getHeight() - 385) / commentsPane.getHeight());
     }
-    
+
     /**
      * Returns the current ratingAlert.
      * 
