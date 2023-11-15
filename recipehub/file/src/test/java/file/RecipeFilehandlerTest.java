@@ -21,10 +21,12 @@ public class RecipeFilehandlerTest {
     private Recipe recipe;
 
     /**
-     * This method is run before each test.
-     * This method uses the RecipeFilehandler constructor which uses createFile from
+     * This method is a helper method that run before each test.
+     * This method uses creates a RecipeFilehandler at  which uses createFile from
      * FileUtil
      * createFile is tested in FileUtilTest
+     * 
+     * @see RecipeFilehandler#setFileName(String)
      */
     @BeforeEach
     public void setup() {
@@ -36,7 +38,7 @@ public class RecipeFilehandlerTest {
     }
 
     /**
-     * Helper method to delete testfiles.
+     * Helper method to delete testfiles from the home repository.
      */
     private void deleteFile(String filename) {
         try {
@@ -48,7 +50,10 @@ public class RecipeFilehandlerTest {
     }
 
     /**
-     * Tests if the recipe is written to and read from file correctly.
+     * Tests if the recipe is wrting to and reading from file correctly.
+     * 
+     * @see RecipeFilehandler#writeRecipe(Recipe)
+     * @see RecipeFilehandler#readRecipeLibrary()
      */
     @Test
     @DisplayName("Test if correct info is written to and read from file")
@@ -66,7 +71,22 @@ public class RecipeFilehandlerTest {
     }
 
     /**
+     * This method test if setfilename throws ecxeption when filename is empty string.
+     * 
+     * @see RecipeFilehandler#setFileName(Recipe)
+     */
+    @Test
+    @DisplayName("Test if exception is thrown when filename is an empty string")
+    public void testEmptyFileName() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> RecipeFilehandler.setFileName(""), "When filename is empty, "
+                        + "IllegalArgumentException should be thrown.");
+    }
+
+    /**
      * Tests if the recipe is removed from file correctly.
+     * 
+     * @see RecipeFilehandler#removeRecipe(Recipe)
      */
     @Test
     @DisplayName("Test if remove recipe works")
@@ -82,6 +102,9 @@ public class RecipeFilehandlerTest {
 
     /**
      * This method tests if the getters and setters work properly.
+     * 
+     * @see RecipeFilehandler#setFileName(String)
+     * @see RecipeFilehandler#getFileName()
      */
     @Test
     @DisplayName("Test getFileName")
@@ -104,6 +127,9 @@ public class RecipeFilehandlerTest {
     /**
      * This method is run after each test.
      * It deletes test.json and newtest.json if it exists.
+     * 
+     * @see RecipeFilehandler#setFileName(String)
+     * @see RecipeFilehandler#getFileName()
      */
     @AfterEach
     public void cleanUp() {

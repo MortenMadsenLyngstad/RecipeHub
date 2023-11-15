@@ -49,7 +49,7 @@ public class DirectRecipeHubAccess implements RecipeHubAccess {
     }
 
     /**
-     * This method will remove the give recipe from the saved recipes.
+     * This method will remove the given recipe from the saved recipes.
      * 
      * @param recipe - Recipe to be removed
      * @see RecipeFilehandler#removeRecipe()

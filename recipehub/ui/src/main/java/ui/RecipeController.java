@@ -242,7 +242,7 @@ public class RecipeController extends SuperController {
         averageRating.setText(String.valueOf(recipe.getAverageRating()));
         numberOfRaters.setText(String.valueOf("(" + recipe.getNumberOfReviewers()) + ")");
 
-        numberOfComments.setText(String.valueOf("(" + recipe.getNumberOfcomments()) + ")");
+        numberOfComments.setText(String.valueOf("(" + recipe.getNumberOfComments()) + ")");
 
         if (recipe.hasRated(currentProfile.getUsername())
                 || this.recipe.getAuthor().equals(currentProfile.getUsername())) {
@@ -266,7 +266,7 @@ public class RecipeController extends SuperController {
      * </p>
      */
     private void showComments() {
-        if (recipe.getNumberOfcomments() > 0) {
+        if (recipe.getNumberOfComments() > 0) {
             if (scrollPaneBox.getChildren().size() > 1) {
                 scrollPaneBox.getChildren().remove(1);
                 scrollPaneBox.getChildren().remove(1);

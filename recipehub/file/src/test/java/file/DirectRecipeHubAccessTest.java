@@ -27,6 +27,8 @@ public class DirectRecipeHubAccessTest {
 
     /**
      * This method tests if the empty contructor works properly.
+     * 
+     * @see DirectRecipeHubAccess#DirectRecipeHubAccess()
      */
     @Test
     @DisplayName("Empty contructor test")
@@ -37,7 +39,9 @@ public class DirectRecipeHubAccessTest {
 
     /**
      * This method tests if the contructor whcih takes in two filehandlers works properly.
-     * The filehandlers should never be null
+     * The contructed filehandlers should never be null
+     * 
+     * @see DirectRecipeHubAccess#DirectRecipeHubAccess(UserFilehandler, RecipeFilehandler)
      */
     @Test
     @DisplayName("Non-empty contructor test")
@@ -55,6 +59,8 @@ public class DirectRecipeHubAccessTest {
 
     /**
      * This method tests if you can get all recipes properly, using getRecipeLibrary.
+     * 
+     * @see DirectRecipeHubAccess#getRecipeLibrary()
      */
     @Test
     @DisplayName("getRecipeLibrary() test")
@@ -68,6 +74,8 @@ public class DirectRecipeHubAccessTest {
 
     /**
      * This method tests if you can remove a recipe properly, using removeRecipe().
+     * 
+     * @see DirectRecipeHubAccess#removeRecipe(Recipe)
      */
     @Test
     @DisplayName("removeRecipe() test")
@@ -80,6 +88,8 @@ public class DirectRecipeHubAccessTest {
 
     /**
      * This method tests if you can save a recipe properly, using saveRecipe().
+     * 
+     * @see DirectRecipeHubAccess#saveRecipe(Recipe)
      */
     @Test
     @DisplayName("saveRecipe() test")
@@ -92,6 +102,8 @@ public class DirectRecipeHubAccessTest {
 
     /**
      * This method tests if you can get all saved profiles properly, using getProfiles().
+     * 
+     * @see DirectRecipeHubAccess#getProfiles()
      */
     @Test
     @DisplayName("getProfiles() test")
@@ -107,10 +119,12 @@ public class DirectRecipeHubAccessTest {
     }
 
     /**
-     * This method tests if you can load a profile from file properly, using loadProfile().
+     * This method tests if you can load a profile from file properly.
      * The method checks for the two predicates used in the application:
      * - Checking username and password
      * - Only checking username
+     * 
+     * @see DirectRecipeHubAccess#loadProfile(String)
      */
     @Test
     @DisplayName("loadProfile() test")
@@ -131,7 +145,9 @@ public class DirectRecipeHubAccessTest {
     }
 
     /**
-     * This method tests you can save a list of profiles to file properly, using saveProfiles().
+     * This method tests you can save a list of profiles to file properly.
+     * 
+     * @see DirectRecipeHubAccess#saveProfiles(List)
      */
     @Test
     @DisplayName("saveProfiles() test")
@@ -143,7 +159,9 @@ public class DirectRecipeHubAccessTest {
     }
 
     /**
-     * This method tests if you can save a recipe properly, using saveRecipe().
+     * This method tests if you can save a recipe properly.
+     * 
+     * @see DirectRecipeHubAccess#saveRecipe(Recipe)
      */
     @Test
     @DisplayName("saveRecipe() test")
