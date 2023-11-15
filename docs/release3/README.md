@@ -6,7 +6,7 @@ Content:
 
 - [New implementations for the third release](#new-implementations-for-the-third-release)
 - [Workflow](#workflow)
-- [Choices made for third release](#choices-made-for-third-release)
+- [Decisions made for third release](#decisions-made-for-third-release)
 - [Issues encountered for third release](#issues-encountered-for-third-release)
 - [Other relevant documentation](#other-relevant-documentation)
 - [Example data](#example-data)
