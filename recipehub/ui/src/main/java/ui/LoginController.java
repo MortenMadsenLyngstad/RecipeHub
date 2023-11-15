@@ -2,7 +2,7 @@ package ui;
 
 import core.PasswordHasher;
 import core.Profile;
-import file.UserFilehandler;
+import file.RecipeHubAccess;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +14,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
- * This controller class is used to connect the loginscreen to the logic in
- * core.
+ * The LoginController class handles user login and navigation between screens.
+ * Manages user authentication, switching to the main screen, and transitioning
+ * to the registration screen.
+ * This class extends the SuperController class.
+ *
+ * @see SuperController
  */
 public class LoginController extends SuperController {
 
@@ -29,51 +33,49 @@ public class LoginController extends SuperController {
     private PasswordField passwordField;
 
     /**
-     * Logs the user in if the login information is correct.
-     * 
-     * @param event The ActionEvent triggered by a login button click
-     * @throws Exception   if the validateLogin method throws an exception
-     * @throws IOException if the SwitchController.switchToMainScreen method throws
-     *                     an exception
-     * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
+     * This method logs the user in if the login information is correct.
+     *
+     * @param event the ActionEvent triggered by a login button click
+     * @throws IOException if the switchSceneMain method throws an exception
+     * @see SuperController#switchSceneMain(ActionEvent)
      */
-    public void login(ActionEvent event) throws Exception {
+    public void login(ActionEvent event) throws IOException {
         if (validateLogin(usernameField.getText(), passwordField.getText())) {
             setProfile(currentProfile);
-            switchSceneMain(event, "Mainscreen.fxml");
+            switchSceneMain(event);
         }
     }
 
     /**
-     * Switches to the register screen.
-     * 
-     * @param event The ActionEvent that triggers the screen switch
-     * @throws IOException if the SwitchController.switchSceneMain method throws an
-     *                     exception
-     * @see SuperController#switchSceneMain(ActionEvent, String)
+     * This method switches to the register screen.
+     *
+     * @param event the ActionEvent that triggers the screen switch
+     * @throws IOException if the switchSceneMain method throws an exception
+     * @see SuperController#switchSceneWithInfo(ActionEvent, String)
      */
     public void switchToRegisterScreen(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "RegisterScreen.fxml");
     }
 
     /**
-     * Validates the login information.
-     * 
-     * @param username The username to validate
-     * @param password The password to validate
+     * This method validates the login information.
+     * Checks if the username or password fields are empty. Checks if the username
+     * exists and if the password matches the saved password.
+     *
+     * @param username the username to validate
+     * @param password the password to validate
      * @return true if the login information is correct, false otherwise
-     * @throws Exception if the userFilehandler.getUserinfo() method throws an
-     *                   exception
-     * @see UserFilehandler#getUserinfo()
+     * @see RecipeHubAccess#loadProfile(String)
+     * @see PasswordHasher#verifyPassword(String, String)
      */
     public boolean validateLogin(String username, String password) {
         Profile profile = currentRecipeHubAccess.loadProfile(username);
-                
+
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
             loginMessageLabel.setText("Please enter a username and password");
             return false;
-        } else if (profile == null || !PasswordHasher.verifyPassword(
-                password, profile.getHashedPassword())) {
+        } else if (profile == null
+                || !PasswordHasher.verifyPassword(password, profile.getHashedPassword())) {
             loginMessageLabel.setText("Incorrect username or password");
             return false;
         } else {
@@ -84,13 +86,11 @@ public class LoginController extends SuperController {
 
     /**
      * This method will try to log the user in if the enter key is pressed.
-     * 
-     * @param e - KeyEvent
-     * @throws Exception if the validateLogin method throws an exception
-     * @see #validateLogin(String, String, UserFilehandler)
+     *
+     * @param event keyEvent
      */
-    public void keyPressed(KeyEvent e) {
-        if (e.getCode().equals(KeyCode.ENTER)) {
+    public void keyPressed(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ENTER)) {
             loginButton.fire();
         }
     }

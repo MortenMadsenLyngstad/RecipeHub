@@ -31,23 +31,32 @@ import org.testfx.framework.junit5.ApplicationTest;
  * This is a test class for LoginController.
  */
 public class LoginControllerTest extends ApplicationTest {
-
     private LoginController controller;
     private Parent root;
-
     private Button loginButton;
     private Hyperlink registerLink;
-
     private Label loginMessageLabel;
     private Hashtable<String, String> userInfo = new Hashtable<>();
     private UserFilehandler mockUserFileHandler = mock(UserFilehandler.class);
     private Profile mockProfile = mock(Profile.class);
 
+    /**
+     * This method will set up the application for headless mode (tests will run
+     * without GUI).
+     *
+     * @see App#supportHeadless()
+     */
     @BeforeAll
     public static void setupHeadless() {
         App.supportHeadless();
     }
 
+    /**
+     * This method will start the application.
+     *
+     * @param stage the stage to start
+     * @throws IOException if the FXMLLoader.load() method throws an exception
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("UserLogin.fxml"));
@@ -91,8 +100,13 @@ public class LoginControllerTest extends ApplicationTest {
         return null;
     }
 
+    /**
+     * This method tests the validateLogin method with valid credentials.
+     *
+     * @see LoginController#validateLogin(String, String)
+     */
     @Test
-    public void testValidateLoginWithValidCredentials() throws Exception {
+    public void testValidateLoginWithValidCredentials() {
         Profile profile = new Profile("Testuser", "Password123");
         when(mockUserFileHandler.loadProfile("Testuser")).thenReturn(profile);
 
@@ -109,8 +123,13 @@ public class LoginControllerTest extends ApplicationTest {
         });
     }
 
+    /**
+     * This method tests the validateLogin method with invalid credentials.
+     *
+     * @see LoginController#validateLogin(String, String)
+     */
     @Test
-    public void testValidateLoginWithInvalidUsername() throws Exception {
+    public void testValidateLoginWithInvalidUsername() {
         Profile profile = new Profile("testuser", "Password123");
         when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
@@ -120,11 +139,15 @@ public class LoginControllerTest extends ApplicationTest {
         Platform.runLater(() -> {
             assertEquals("Incorrect username or password", loginMessageLabel.getText());
         });
-
     }
 
+    /**
+     * This method tests the validateLogin method with incorrect password.
+     *
+     * @see LoginController#validateLogin(String, String)
+     */
     @Test
-    public void testValidateLoginWithIncorrectPassword() throws Exception {
+    public void testValidateLoginWithIncorrectPassword() {
         userInfo.put("testuser", "Password123");
         Profile profile = new Profile("testuser", "Password123");
         when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
@@ -140,8 +163,13 @@ public class LoginControllerTest extends ApplicationTest {
         });
     }
 
+    /**
+     * This method tests the validateLogin method with blank fields.
+     *
+     * @see LoginController#validateLogin(String, String)
+     */
     @Test
-    public void testValidateLoginWithBlankFields() throws Exception {
+    public void testValidateLoginWithBlankFields() {
         Profile profile = new Profile("testuser", "Password123");
         when(mockUserFileHandler.loadProfile("testuser")).thenReturn(profile);
 
@@ -156,8 +184,11 @@ public class LoginControllerTest extends ApplicationTest {
         });
     }
 
+    /**
+     * This method tests the hyperlink in the login screen.
+     */
     @Test
-    public void testClickOnRegisterHyperlink() throws IOException {
+    public void testClickOnRegisterHyperlink() {
         clickOn(registerLink);
 
         Platform.runLater(() -> {
