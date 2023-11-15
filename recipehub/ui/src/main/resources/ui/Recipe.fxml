@@ -116,7 +116,7 @@
                         </AnchorPane>
                      </children>
                      <cursor>
-                        <Cursor fx:constant="H_RESIZE" />
+                        <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </VBox>
                </content>
