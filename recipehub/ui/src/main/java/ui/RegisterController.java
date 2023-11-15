@@ -1,13 +1,14 @@
 package ui;
 
 import core.Profile;
-import file.UserFilehandler;
+import file.RecipeHubAccess;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -16,8 +17,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 /**
- * This controller class is used to connect the registercreeen to the logic in
- * core.
+ * The RegisterController class handles user registration and navigation between
+ * screens.
+ * Manages user registration, switching to the login screen, and transitioning
+ * to the main screen.
+ * This class extends the SuperController class.
+ *
+ * @see SuperController
  */
 public class RegisterController extends SuperController {
 
@@ -32,6 +38,8 @@ public class RegisterController extends SuperController {
     @FXML
     private PasswordField confirmPasswordField;
     @FXML
+    private Hyperlink loginLink;
+    @FXML
     private Scene scene;
     @FXML
     private Stage stage;
@@ -39,43 +47,44 @@ public class RegisterController extends SuperController {
     private Parent root;
 
     /**
-     * Switches to the login screen.
-     * 
-     * @param event - The ActionEvent that triggers the screen switch
-     * @throws IOException if the switchSceneMain method throws an
-     *                     exception
-     * @see SuperController#switchSceneMain(ActionEvent, String)
+     * This method switches to the login screen.
+     *
+     * @param event the ActionEvent that triggers the screen switch
+     * @throws IOException if the switchSceneWithInfo method throws an exception
+     * @see SuperController#switchSceneWithInfo(ActionEvent, String)
      */
     public void switchToLoginScreen(ActionEvent event) throws IOException {
         switchSceneWithInfo(event, "UserLogin.fxml");
     }
 
     /**
-     * Registers the user if the register information is correct.
-     * 
-     * @param event - The ActionEvent triggered by a register button click
-     * @throws IOException if the switchSceneWithInfo method throws
-     *                     an exception
-     * @see SuperController#switchSceneWithInfo(ActionEvent, String, Profile)
+     * This method registers the user if the information is correct.
+     *
+     * @param event the ActionEvent triggered by a register button click
+     * @throws IOException if the switchSceneMain method throws an exception
+     * @see SuperController#switchSceneMain(ActionEvent)
      */
     public void register(ActionEvent event) throws IOException {
         if (validateRegister(usernameField.getText(), passwordField.getText())) {
             setProfile(currentProfile);
-            switchSceneMain(event, "Mainscreen.fxml");
+            switchSceneMain(event);
         }
     }
 
     /**
-     * Validates the register information.
-     * 
-     * @param username The username to validate
-     * @param password The password to validate
+     * This method validates the register information.
+     * Checks if the username and password are valid and if the username already
+     * exists.
+     * If the information is valid, a new profile is created and saved.
+     *
+     * @param username the username to validate
+     * @param password the password to validate
      * @return true if the register information is correct, false otherwise
-     * 
+     *
      * @see Profile#isValidUsername(String)
      * @see Profile#isValidPassword(String)
-     * @see UserFilehandler#writeProfile(String, String)
-     * @see UserFilehandler#readUsernamesAndPasswords()
+     * @see RecipeHubAccess#loadProfile(String)
+     * @see RecipeHubAccess#saveProfile(Profile)
      */
     public boolean validateRegister(String username, String password) {
         if (usernameField.getText().isBlank() || passwordField.getText().isBlank()
@@ -104,15 +113,14 @@ public class RegisterController extends SuperController {
     }
 
     /**
-     * Tries to register the user if the enter key is pressed.
-     * 
-     * @param e - The KeyEvent associated with the a key press
-     * @throws IOException if the register method throws an exception
-     * @see RegisterController#register(ActionEvent)
+     * This method tries to register the user if the enter key is pressed.
+     *
+     * @param e the KeyEvent associated with the a key press
      */
     public void keyPressed(KeyEvent e) {
         if (e.getCode().equals(KeyCode.ENTER)) {
             registerButton.fire();
         }
     }
+
 }
