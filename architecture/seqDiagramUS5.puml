@@ -15,4 +15,5 @@ User --> RecipeController: plussButtonClick(),minusButtonClick() or manual input
 RecipeController --> RecipeController: handlePortions()
 User <-- RecipeController: populate()
 deactivate RecipeController
-+@enduml
+
+@enduml
