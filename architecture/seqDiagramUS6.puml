@@ -1,0 +1,57 @@
+@startuml sequenceDiagramUserStory2
+
+!define MyGreen #009000
+
+skinparam participant {
+  BackgroundColor MyGreen
+}
+
+Actor User
+participant RecipeController
+participant Recipe
+participant RemoteRecipeHubAccess
+participant RecipeHubController
+participant DirectRecipehubAccess
+participant RecipeFilehandler
+participant FileUtil
+database recipes.json
+
+
+activate RecipeHubController
+activate RecipeController
+User <-- RecipeController: Shows recipe to user
+User -> RecipeController: Clicks on: "Rating stars"
+RecipeController -> RecipeController: showRatingPopup()
+User <-- RecipeController: Shows popup to user
+User -> RecipeController: Marks stars, writes comment, and confirms
+RecipeController -> Recipe: addReview(Review review)
+group Recipe is saved to remote server
+RecipeController -> RemoteRecipeHubAccess: PUT /recipelibrary
+activate RemoteRecipeHubAccess
+RemoteRecipeHubAccess -> RecipeHubController: saveRecipe(Recipe recipe)
+RecipeHubController -> DirectRecipehubAccess: saveRecipe(Recipe recipe)
+activate DirectRecipehubAccess
+DirectRecipehubAccess -> RecipeFilehandler: wirteRecipe(Recipe recipe)
+activate RecipeFilehandler
+RecipeFilehandler -> FileUtil: writeFile(Path filepath, Recipelibrary library)
+activate FileUtil
+FileUtil -> recipes.json: Writes recipelibrary to recipes.json
+FileUtil <-- recipes.json: Returns true if recipelibrary was written to recipes.json
+RecipeFilehandler <-- FileUtil: Returns true if recipelibrary was written to recipes.json
+deactivate FileUtil
+RecipeFilehandler --> DirectRecipehubAccess: Returns true if recipe was saved
+deactivate RecipeFilehandler
+DirectRecipehubAccess --> RecipeHubController: Returns true if recipe was saved
+deactivate DirectRecipehubAccess
+RecipeHubController --> RemoteRecipeHubAccess: Returns true if recipe was saved
+
+
+RemoteRecipeHubAccess --> RecipeController: Returns true if recipe was saved
+deactivate RemoteRecipeHubAccess
+end
+User <-- RecipeController: Shows recipe with the added review to user
+User -> RecipeController: Clicks on: "Comments icon"
+RecipeController -> RecipeController: scrollDownToComments()
+User <-- RecipeController: Scrolls down to comments on the recipe page
+
+@enduml
