@@ -44,20 +44,17 @@ import org.testfx.framework.junit5.ApplicationTest;
  * This is a test class for MainscreenController.
  */
 public class MainscreenControllerTest extends ApplicationTest {
-
     private MainscreenController controller;
     private Parent root;
-
     private List<Profile> profiles = new ArrayList<>();
     private RecipeLibrary recipes = new RecipeLibrary();
-
     private RecipeFilehandler mockRecipeFilehandler = mock(RecipeFilehandler.class);
     private UserFilehandler mockUserFilehandler = mock(UserFilehandler.class);
 
     /**
      * This method will set up the application for headless mode (tests will run
      * without GUI).
-     * 
+     *
      * @see App#supportHeadless()
      */
     @BeforeAll
@@ -67,7 +64,7 @@ public class MainscreenControllerTest extends ApplicationTest {
 
     /**
      * This method will start the application.
-     * 
+     *
      * @param stage - the stage to start
      * @throws IOException if the FXMLLoader.load() method throws an exception
      * @see MainscreenControllerTest#setUp()
@@ -77,9 +74,9 @@ public class MainscreenControllerTest extends ApplicationTest {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Mainscreen.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
-        setUp();
         Scene scene = new Scene(root);
         scene.getStylesheets().add(SuperController.class.getResource("style.css").toExternalForm());
+        setUp();
         stage.setScene(scene);
         stage.show();
     }
@@ -115,12 +112,11 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the GridPane loads properly when first loading the.
-     * Mainscreen
+     * This method will test if the GridPane loads properly when first loading the
+     * Mainscreen.
      * This includes checking if everything is built correct, but also that all
-     * recipes are shown when
-     * the mainscreen is first loaded
-     * 
+     * recipes are shown when the mainscreen is first loaded.
+     *
      * @see MainscreenControllerTest#getRecipeNames()
      */
     @Test
@@ -143,8 +139,7 @@ public class MainscreenControllerTest extends ApplicationTest {
 
         HBox hbox1 = (HBox) splitPane.getItems().get(0);
         HBox hbox2 = (HBox) splitPane.getItems().get(1);
-        assertEquals(1, hbox1.getChildren().size(),
-                "The first HBox should have one child");
+        assertEquals(1, hbox1.getChildren().size(), "The first HBox should have one child");
         assertTrue(hbox1.getChildren().get(0) instanceof Label,
                 "The first HBox should contain a label with the name of a recipe");
 
@@ -181,7 +176,7 @@ public class MainscreenControllerTest extends ApplicationTest {
 
     /**
      * This method will test if the "Log out"-button logs you out and sends you to
-     * UserLogin.fxml
+     * UserLogin.fxml.
      */
     @Test
     @DisplayName("Log out test")
@@ -189,32 +184,30 @@ public class MainscreenControllerTest extends ApplicationTest {
         clickOn("#logoutBtn");
         assertEquals("UserLogin.fxml", controller.getFileName(),
                 "Should have switched to UserLogin.fxml");
-
     }
 
     /**
      * This method will test if the "+ Add Recipe"-button will send you to
-     * addRecipe.fxml
+     * AddRecipe.fxml.
      */
     @Test
     @DisplayName("Add recipe test")
-    public void testPutRecipeButton() {
-        clickOn("#addBtn");
-        assertEquals("addRecipe.fxml", controller.getFileName(),
-                "Should have switched to addRecipe.fxml");
-
+    public void testAddRecipeButton() {
+        clickOn("#addRecipeButton");
+        assertEquals("AddRecipe.fxml", controller.getFileName(),
+                "Should have switched to AddRecipe.fxml");
     }
 
     /**
      * This method tests the "My Recipes"-button.
-     * It tests if the GridPane only shows the logged in profile's recipes
-     * 
+     * It tests if the GridPane only shows the logged in profile's recipes.
+     *
      * @see MainscreenControllerTest#getRecipeNames()
      */
     @Test
     @DisplayName("My recipes test")
     public void testMyRecipesButton() {
-        clickOn("#myBtn");
+        clickOn("#myRecipesButton");
         List<String> recipeNames = getRecipeNames();
         assertEquals(2, recipeNames.size(), "There should be 2 recipes showing");
         assertEquals("Taco", recipeNames.get(0), "The name of the first recipe should be 'Taco'");
@@ -225,18 +218,16 @@ public class MainscreenControllerTest extends ApplicationTest {
         // Recipes"-button after the profile's recipes are already loaded
         ScrollPane scrollPane = lookup("#scrollPane").query();
         GridPane gridPaneBefore = (GridPane) scrollPane.getContent();
-        clickOn("#myBtn");
+        clickOn("#myRecipesButton");
         GridPane gridPaneAfter = (GridPane) scrollPane.getContent();
-        assertTrue(gridPaneBefore == gridPaneAfter,
-                "When clicking on a sorting option which is "
-                        + "already shown, the grid should not be reloaded");
+        assertTrue(gridPaneBefore == gridPaneAfter, "When clicking on a sorting option which is "
+                + "already shown, the grid should not be reloaded");
     }
 
     /**
      * This method will test if the "All Recipes"-button will make the GridPane
-     * show.
-     * all recipes
-     * 
+     * show all recipes.
+     *
      * @see MainscreenControllerTest#getRecipeNames()
      */
     @Test
@@ -244,8 +235,8 @@ public class MainscreenControllerTest extends ApplicationTest {
     public void testAllRecipesButton() {
         // Since the app start with all the recipes, we have to click on "My recipes"
         // and then on "All Recipes" again
-        clickOn("#myBtn");
-        clickOn("#allBtn");
+        clickOn("#myRecipesButton");
+        clickOn("#allRecipesButton");
         List<String> recipeNames = getRecipeNames();
         assertEquals(4, recipeNames.size(), "There should be 4 recipes showing");
         assertEquals("Hamburger", recipeNames.get(0),
@@ -259,7 +250,7 @@ public class MainscreenControllerTest extends ApplicationTest {
         // Recipes"-button after all the recipes already loaded
         ScrollPane scrollPane = lookup("#scrollPane").query();
         GridPane gridPaneBefore = (GridPane) scrollPane.getContent();
-        clickOn("#allBtn");
+        clickOn("#allRecipesButton");
         GridPane gridPaneAfter = (GridPane) scrollPane.getContent();
         assertTrue(gridPaneBefore == gridPaneAfter,
                 "When clicking on a sorting option which is already shown, "
@@ -267,15 +258,15 @@ public class MainscreenControllerTest extends ApplicationTest {
     }
 
     /**
-     * This method will test if the "Favorites"-button will make the GridPane show.
-     * all favorites
-     * 
+     * This method will test if the "Favorites"-button will make the GridPane show
+     * all favorites.
+     *
      * @see MainscreenControllerTest#getRecipeNames()
      */
     @Test
     @DisplayName("Favorites test")
     public void testFavoritesButton() {
-        clickOn("#favoritesBtn");
+        clickOn("#favoritesButton");
         List<String> recipeNames = getRecipeNames();
         assertEquals(1, recipeNames.size(), "There should only be one recipe shown");
         assertEquals("Pizza", recipeNames.get(0), "The name of the recipe should be 'Pizza'");
@@ -288,7 +279,7 @@ public class MainscreenControllerTest extends ApplicationTest {
         // "Favorites"-button after the favorites are already loaded
         ScrollPane scrollPane = lookup("#scrollPane").query();
         GridPane gridPaneBefore = (GridPane) scrollPane.getContent();
-        clickOn("#favoritesBtn");
+        clickOn("#favoritesButton");
         GridPane gridPaneAfter = (GridPane) scrollPane.getContent();
         assertTrue(gridPaneBefore == gridPaneAfter,
                 "When clicking on a sorting option which is already shown, "
@@ -297,7 +288,7 @@ public class MainscreenControllerTest extends ApplicationTest {
 
     /**
      * This method will test if the Heart-buttons work to add and remove favorites.
-     * 
+     *
      * @see MainscreenControllerTest#getRecipeNames()
      */
     @Test
@@ -340,7 +331,7 @@ public class MainscreenControllerTest extends ApplicationTest {
                 "The last added favorite should be 'Hamburger'");
 
         // Checks if it shows up correctly when sorting for favorites
-        clickOn("#favoritesBtn");
+        clickOn("#favoritesButton");
         List<String> recipeNames = getRecipeNames();
         assertEquals(2, recipeNames.size(), "There should be two recipe shown");
         recipeNames = getRecipeNames();
@@ -365,39 +356,34 @@ public class MainscreenControllerTest extends ApplicationTest {
      * This supportmethod will go through the GridPane and collect all the recipe
      * names shown.
      * The method is built upon the fact that the loading of the grid is already
-     * tested in testLoadGrid(),
-     * so there is no need to check it twice
-     * 
+     * tested in testLoadGrid(), so there is no need to check it twice.
+     *
      * @return List with all the recipe names in the GridPane
      */
     private List<String> getRecipeNames() {
         ScrollPane scrollPane = lookup("#scrollPane").query();
         GridPane gridPane = (GridPane) scrollPane.getContent();
-        return gridPane.getChildren().stream()
-                .map(node -> (SplitPane) node)
-                .map(sp -> sp.getItems().get(0))
-                .map(node -> (HBox) node)
-                .map(hbox -> hbox.getChildren().get(0))
-                .map(node -> (Label) node)
-                .map(label -> label.getText())
-                .collect(Collectors.toList());
+        return gridPane.getChildren().stream().map(node -> (SplitPane) node)
+                .map(sp -> sp.getItems().get(0)).map(node -> (HBox) node)
+                .map(hbox -> hbox.getChildren().get(0)).map(node -> (Label) node)
+                .map(label -> label.getText()).collect(Collectors.toList());
     }
 
     /**
-     * This method will test if searching for recipes works properly.
-     * 
+     * This method will test if the basics of searching for recipes works properly.
+     *
      * @see MainscreenControllerTest#getRecipeNames()
      */
     @Test
     @DisplayName("Search test")
-    public void testSearch() {
+    public void testSearchBasics() {
         TextField searchBar = lookup("#txtField").query();
 
         // Testing if the basics work
         Platform.runLater(() -> {
             searchBar.setText("Taco");
-            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", "", null, false, false, false, false));
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
             List<String> recipeNames = getRecipeNames();
             assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
             assertEquals("Taco", recipeNames.get(0), "The recipe 'Taco' should be showing");
@@ -406,8 +392,8 @@ public class MainscreenControllerTest extends ApplicationTest {
         // Testing if the basics work
         Platform.runLater(() -> {
             searchBar.setText("A");
-            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", "", null, false, false, false, false));
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
             List<String> recipeNames = getRecipeNames();
             assertEquals(4, recipeNames.size(), "There should be four recipes showing");
             assertEquals("Hamburger", recipeNames.get(0),
@@ -421,8 +407,8 @@ public class MainscreenControllerTest extends ApplicationTest {
         // Testing if the basics work
         Platform.runLater(() -> {
             searchBar.setText("");
-            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", "", null, false, false, false, false));
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
             List<String> recipeNames = getRecipeNames();
             assertEquals(4, recipeNames.size(), "There should be 4 recipes showing");
             assertEquals("Hamburger", recipeNames.get(0),
@@ -434,31 +420,23 @@ public class MainscreenControllerTest extends ApplicationTest {
             assertEquals("Pizza", recipeNames.get(3),
                     "The name of the forth recipe should be 'Pizza'");
         });
+    }
 
-        // Testing if if lower case matters
-        Platform.runLater(() -> {
-            searchBar.setText("taco");
-            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", "", null, false, false, false, false));
-            List<String> recipeNames = getRecipeNames();
-            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
-        });
-
-        // Testing if if upper case matters
-        Platform.runLater(() -> {
-            searchBar.setText("TACO");
-            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", "", null, false, false, false, false));
-            List<String> recipeNames = getRecipeNames();
-            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
-        });
+    /**
+     * This method will test if the search works when switching sorting.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSearchSwitchedSorting() {
+        TextField searchBar = lookup("#txtField").query();
 
         // Testing if search still works when switching sorting
         Platform.runLater(() -> {
             searchBar.setText("Taco");
-            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", "", null, false, false, false, false));
-            clickOn("#myBtn");
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
+            clickOn("#myRecipesButton");
             assertEquals("Taco", searchBar.getText(),
                     "The text in the searchbar should not change when switching to new sorting");
             List<String> recipeNames = getRecipeNames();
@@ -466,6 +444,45 @@ public class MainscreenControllerTest extends ApplicationTest {
                     "There should still only be one recipe showing after switching to new sorting");
             assertEquals("Taco", recipeNames.get(0), "The recipe 'Taco' should be showing");
         });
+    }
+
+    /**
+     * This method will test if the searching works independent of upper and lower
+     * case.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSeachCaseInsensitive() {
+        TextField searchBar = lookup("#txtField").query();
+
+        // Testing if lower case matters
+        Platform.runLater(() -> {
+            searchBar.setText("taco");
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
+            List<String> recipeNames = getRecipeNames();
+            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
+        });
+
+        // Testing if upper case matters
+        Platform.runLater(() -> {
+            searchBar.setText("TACO");
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
+            List<String> recipeNames = getRecipeNames();
+            assertEquals(1, recipeNames.size(), "There should only be one recipe (Taco) showing");
+        });
+    }
+
+    /**
+     * This method will test if the search works with multiple matches.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSeachForMultiple() {
+        TextField searchBar = lookup("#txtField").query();
 
         // Testing if search works with multiple matches
         Platform.runLater(() -> {
@@ -478,12 +495,22 @@ public class MainscreenControllerTest extends ApplicationTest {
                     "The recipe 'Pasta Carbonara' should be first");
             assertEquals("Pizza", recipeNames.get(1), "The recipe 'Pizza' should be first");
         });
+    }
+
+    /**
+     * This methods will test if the search works when there are no matches.
+     *
+     * @see MainscreenController#search()
+     */
+    @Test
+    public void testSeachNoMatches() {
+        TextField searchBar = lookup("#txtField").query();
 
         // Testing if search works when there are no matches
         Platform.runLater(() -> {
             searchBar.setText("Tomato soup");
-            searchBar.fireEvent(new KeyEvent(KeyEvent.KEY_TYPED,
-                    "", "", null, false, false, false, false));
+            searchBar.fireEvent(
+                    new KeyEvent(KeyEvent.KEY_TYPED, "", "", null, false, false, false, false));
             ScrollPane scrollPane = lookup("#scrollPane").query();
             assertTrue(scrollPane.getContent() instanceof Label,
                     "There should be a label if there are no recipes matching with the search");
@@ -495,9 +522,8 @@ public class MainscreenControllerTest extends ApplicationTest {
 
     /**
      * This method will test if the "Read More"-buttons sends you to Recipe.fxml
-     * (the dedicated page for the
-     * given recipe)
-     * 
+     * (the dedicated page for the given recipe)
+     *
      * @see MainscreenControllerTest#getBottomHbox()
      */
     @Test
@@ -518,9 +544,8 @@ public class MainscreenControllerTest extends ApplicationTest {
      * This supportmethod will return the bottom HBox in the first SplitPane in the
      * GridPane.
      * The method is built upon the fact that the loading of the grid is already
-     * tested in testLoadGrid(),
-     * so there is no need to check it twice
-     * 
+     * tested in testLoadGrid(), so there is no need to check it twice.
+     *
      * @return HBox at the bottom of the SplitPane
      */
     private HBox getBottomHbox() {
