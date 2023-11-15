@@ -149,4 +149,23 @@ You have found the recipe you want to make, it has a lot of ingredients and you 
 - Rate and favourite the recipe without making scaled versions of it
 
 #### Sequence diagram for user story 5: 
-+![User story 5 sequence diagram](https://i.imgur.com/t3QXj1S.png)
+![User story 5 sequence diagram](https://i.imgur.com/t3QXj1S.png)
+
+### User Story 6: Reviewing a recipe
+
+As a food enthusiat, you have tried to make one of the recipes you found at recipehub. You are really impressed and wants to share your experiece with other users. 
+
+The user is in need of an application where they can easily give reviews as well as reading other reviews. It should be obvious how to add a review and the users should get feedback that shows that if they click on the rating stars they will add a review. To give the reviews credibility, the author of a recipe should not be able to review its own recipe and a user should not be able to give review more than one time.
+
+#### Important to be able to see
+
+- The rating stars and average rating that shows how other user has reviewed this recipe
+- Read the reviews other users have written
+
+#### Important to be able to do
+
+- Create a review
+- Read other reviews
+
+#### Sequence diagram for user story 6: 
+![User story 6 sequence diagram] (https://i.imgur.com/KFvzoZg.png)
