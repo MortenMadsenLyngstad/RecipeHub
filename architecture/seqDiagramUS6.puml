@@ -9,12 +9,14 @@ skinparam participant {
 Actor User
 participant RecipeController
 participant Recipe
+participant Profile
 participant RemoteRecipeHubAccess
 participant RecipeHubController
 participant DirectRecipehubAccess
 participant RecipeFilehandler
 participant FileUtil
 database recipes.json
+database userinfo.json
 activate RecipeHubController
 activate RecipeController
 
@@ -47,6 +49,37 @@ RecipeHubController --> RemoteRecipeHubAccess: Returns true if recipe was saved
 RemoteRecipeHubAccess --> RecipeController: Returns true if recipe was saved
 deactivate RemoteRecipeHubAccess
 end
+
+loop
+RecipeController -> Profile: getFavorites()
+RecipeController -> Profile: putRecipe(Recipe recipe)
+end
+
+group Updated profiles is saved to "remote server"
+RecipeController -> RemoteRecipeHubAccess: PUT /profiles
+activate RemoteRecipeHubAccess
+RemoteRecipeHubAccess -> RecipeHubController: saveProfiles(List<Profile> profiles)
+RecipeHubController -> DirectRecipehubAccess: saveProfiles(List<Profile> profiles)
+activate DirectRecipehubAccess
+DirectRecipehubAccess -> RecipeFilehandler: wirteProfiles(List<Profile> profiles)
+activate RecipeFilehandler
+RecipeFilehandler -> FileUtil: writeFile(Path filepath, List<Profile> profiles)
+activate FileUtil
+FileUtil -> userinfo.json: Writes profiles to userinfo.json
+RecipeFilehandler <-- FileUtil: Returns true if profiles was written to userinfo.json
+deactivate FileUtil
+RecipeFilehandler --> DirectRecipehubAccess: Returns true if profiles was saved
+deactivate RecipeFilehandler
+DirectRecipehubAccess --> RecipeHubController: Returns true if profiles was saved
+deactivate DirectRecipehubAccess
+RecipeHubController --> RemoteRecipeHubAccess: Returns true if profiles was saved
+RemoteRecipeHubAccess --> RecipeController: Returns true if profiles was saved
+deactivate RemoteRecipeHubAccess
+end
+
+
+
+
 User <-- RecipeController: Shows recipe with the added review to user
 User -> RecipeController: Clicks on: "Comments icon"
 RecipeController -> RecipeController: scrollDownToComments()
