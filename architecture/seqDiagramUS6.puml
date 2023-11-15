@@ -25,7 +25,7 @@ RecipeController -> RecipeController: showRatingPopup()
 User <-- RecipeController: Shows popup to user
 User -> RecipeController: Marks stars, writes comment, and confirms
 RecipeController -> Recipe: addReview(Review review)
-group Recipe is saved to remote server
+group Recipe is saved to "remote server"
 RecipeController -> RemoteRecipeHubAccess: PUT /recipelibrary
 activate RemoteRecipeHubAccess
 RemoteRecipeHubAccess -> RecipeHubController: saveRecipe(Recipe recipe)
