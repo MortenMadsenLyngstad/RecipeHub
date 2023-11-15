@@ -15,8 +15,6 @@ participant DirectRecipehubAccess
 participant RecipeFilehandler
 participant FileUtil
 database recipes.json
-
-
 activate RecipeHubController
 activate RecipeController
 User <-- RecipeController: Shows recipe to user
