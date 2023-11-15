@@ -20,10 +20,11 @@ public class UserFilehandlerTest {
     private UserFilehandler userFilehandler;
 
     /**
-     * This method is run before each test.
-     * This method uses the UserFilehandler constructor which uses createFile from
-     * FileUtil
-     * createFile is tested in FileUtilTest
+     * This is a helper method that run before each test.
+     * This method creates a testfile named "test.json" by constructing a UserFilehandler
+     * and sets the filename to "test.json" by using fileutil.
+     * 
+     * @see UserFilehandler#setFileName(String)
      */
     @BeforeEach
     public void setup() {
@@ -45,6 +46,8 @@ public class UserFilehandlerTest {
 
     /**
      * Tests if the profile is written to the file correctly.
+     * 
+     * @see UserFilehandler#writeProfile(Profile)
      */
     @Test
     public void testWriteProfile() {
@@ -56,7 +59,10 @@ public class UserFilehandlerTest {
     }
 
     /**
-     * Tests if the Profile is written and read from file correctly.
+     * Tests if a Profile is written to and read from file correctly.
+     * 
+     * @see UserFilehandler#writeProfile(Profile)
+     * @see UserFilehandler#loadProfile(String)
      */
     @Test
     @DisplayName("Test if correct info is written to and read from file")
@@ -73,6 +79,25 @@ public class UserFilehandlerTest {
                 "The file should contain the hashed password for the profile.");
     }
 
+    /**
+     * Tests if writeProfile(Profile) returns false if profiles is empty or null.
+     * 
+     * @see UserFilehandler#writeProfile(Profile)
+     */
+    @Test
+    @DisplayName("Test if loadProfile returns false if profiles is null")
+    public void testLoadWithEmptyProfiles() {
+        boolean result = userFilehandler.writeAllProfiles(null);
+        Assertions.assertFalse(result);
+        result = userFilehandler.writeAllProfiles(new ArrayList<>());
+        Assertions.assertFalse(result);
+    }
+    
+    /**
+     * This method tests if the writeAllProfiles method writes all profiles to file properly.
+     * 
+     * @see UserFilehandler#writeAllProfiles(List)
+     */
     @Test
     @DisplayName("Test if writeAllProfiles writes all profiles to file")
     public void testWriteAllProfiles() {
@@ -98,7 +123,25 @@ public class UserFilehandlerTest {
     }
 
     /**
+     * This method tests if the loadProfile method throws exception if the file is an empty string.
+     * 
+     * @see UserFilehandler#setFileName(String)
+     */
+    @Test
+    @DisplayName("Test if setFileName throws exception if filename is null")
+    public void testSetFileName() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> UserFilehandler.setFileName(""), "When filename is empty, "
+                        + "IllegalArgumentException should be thrown.");
+    }
+
+
+    /**
      * This method tests if the getters and setters work properly.
+     * 
+     * @see UserFilehandler#getFileName()
+     * @see UserFilehandler#getFilePath()
+     * @see UserFilehandler#setFileName(String)
      */
     @Test
     @DisplayName("Test getFileName")

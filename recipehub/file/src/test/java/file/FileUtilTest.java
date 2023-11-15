@@ -25,6 +25,8 @@ public class FileUtilTest {
 
     /**
      * Tests if the file is created correctly.
+     * 
+     * @see FileUtil#createFile(Path)
      */
     @Test
     @DisplayName("Test createFile")
@@ -38,6 +40,9 @@ public class FileUtilTest {
 
     /**
      * Tests if the file is written to and read from correctly.
+     * 
+     * @see FileUtil#writeFile(Path, Object)
+     * @see FileUtil#readFile(Path, Object, Class)
      */
     @Test
     @DisplayName("Test writeFile and readFile")
