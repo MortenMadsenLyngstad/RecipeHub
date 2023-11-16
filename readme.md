@@ -2,20 +2,22 @@
 
 [open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2304/gr2304?new)
 
-This project is an application with both front-end and back-end. It is structured into three main modules: Core, File, and UI.
+This project is an application with both front-end and back-end. It is structured into four main modules: core, file, springboot and ui.
 
-- The Core module contains the main logic of the application.
-- The File module is responsible for file handling.
+- The core module contains the main logic of the application.
+- The file module is responsible for file handling.
     - The files are stored in user.home
-- The UI module contains all the user interface related code.
+- The springboot module is responsible for the Rest API.
+- The ui module contains all the user interface related code.
+
 
 ## Package diagram for RecipeHub project
 
-![Diagram](https://i.imgur.com/snBvFjR.png)
+![Diagram](https://i.imgur.com/eoW6Ppw.png)
 
 ## Class diagram for core module
 
-![Diagram](https://i.imgur.com/3Fc1ZcB.png)
+![Diagram](https://i.imgur.com/083smoE.png)
 
 ## Requirements
 
@@ -48,60 +50,76 @@ These are the dependencies for the project:
 - FontAwesomeFX-FontAwesome
 - Checkstyle
 - Spotbugs
+- Log4j
+- Springboot framework
+
 
 ## Instructions
 
-- To run the project, navigate to the recipehub file and use the command `mvn clean install`.  
-- After the build is successful, you can navigate to the ui-directory and run the application using the command `mvn javafx:run`.  
-- To run the tests, use the command `mvn test` in the recipehub directory. This will run all the tests in the project.  
+- To run the project, navigate to the recipehub directory and use the command `mvn clean install`.
+- After the build is successful, you can navigate to the ui-directory and run the application using the command `mvn javafx:run`.
+- To run the tests, use the command `mvn test` in the recipehub directory. This will run all the tests in the project.
 - To generate a test coverage report, use the command `mvn jacoco:report`. The report can be found in the target/site/jacoco/index.html file.
+- To pack the project as an app use the command `mvn javafx:jlink -f ui/pom.xml`. Then use the command `mvn jpackage:jpackage -f ui/pom.xml`. Follow the instructions from your computer, and the application will appear in your applications.
+- For instructions on how to run the project with the Rest API, see the [restapi.md](./docs/release3/restapi.md) file.
 
 ## Directory Structure
 
 The following figure shows the directory structure of the project:
 
-    
+
 ```
 └───recipehub
     ├───core
-    │   ├───src
+    │   └───src
     │       ├───main
     │       │   └───java
     │       │       └───core
-    │       │           -- The Profile- Recipe- and RecipeLibrary-classes are in this package.            
+    │       │           -- The Profile- Recipe- and RecipeLibrary-classes are in this package.
     │       │           -- They are responsible for the main logic of the application.
     │       └───test
     │           └───java
-    │               └───core 
+    │               └───core
     │                   -- The testfiles for the core module are located in this file.
-    │   
+    │
     ├───file
-    │   ├───src
+    │   └───src
     │       │───main
-    │       │    └───java
-    │       │        └───file
-    │       │            -- The file-handling for the project is located in this file.
+    │       │   └───java
+    │       │       └───file
+    │       │           -- The file-handling for the project is located in this file.
     │       └───test
     │           └───java
-    │               └───core 
-    │                    -- The testfiles for the file module are located in thios file
-    │       
+    │               └───file
+    │                    -- The testfiles for the file module are located in this file
+    │
+    ├───springboot
+    │   └───restserver
+    │       └───src
+    │           │───main
+    │           │   └───java
+    │           │       └───springboot
+    │           │           └───restserver
+    │           │               -- The Rest API for the project is located in this file.
+    │           └───test
+    │               └───java
+    │                   └───springboot
+    │                       └───restserver
+    │                           -- Tests for the restserver module are located in this file.
     └───ui
-        ├───src
+        └───src
             ├───main
             │   ├───java
             │   │   └───ui
-            │   │       └───controllers
-            │   │           -- The controllers used in the project is located in this file.
+            │   │       -- The controllers used in the project is located in this file.
             │   └───resources
-            │       └───ui
-            │           └───controllers
-            │               -- This is where the fxml-files and style.css for the UI are located.
+            │       ├───ui
+            │       │    -- This is where the fxml-files and style.css for the UI are located.
+            │       │
+            │       └───images
+            │            -- This is where the images used in the UI are located.
             └───test
-               └───java
-                   └───ui
-                       └───controllers
-                            -- The testfiles for the ui module are located in this file.
-                               
-
-
+                └───java
+                    └───ui
+                        -- The testfiles for the ui module are located in this file.
+```

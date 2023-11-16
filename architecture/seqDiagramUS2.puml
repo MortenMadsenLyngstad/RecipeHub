@@ -10,13 +10,30 @@ Actor User
 participant App
 participant LoginController
 participant MainscreenController
+participant DirectRecipeHubController
+participant UserFilehandler
+participant FileUtil
 participant RecipeController
+database userinfo.json
 
 User -> App: Opens the application
 activate App
 User -> LoginController: Enters login information
 activate LoginController
 User -> LoginController: Clicks on: "Login"
+LoginController -> DirectRecipeHubController: loadProfile(String username)
+activate DirectRecipeHubController
+DirectRecipeHubController -> UserFilehandler: loadProfile(String username)
+activate UserFilehandler
+UserFilehandler -> UserFilehandler: readProfiles()
+UserFilehandler -> FileUtil: readFile(Path filePath, List<Profile> profiles, Type List<Profiles>)
+activate FileUtil
+FileUtil -> userinfo.json: Reads from file
+FileUtil -> UserFilehandler: Returns list of profiles
+deactivate FileUtil
+UserFilehandler -> DirectRecipeHubController: Returns profile
+deactivate UserFilehandler
+DirectRecipeHubController -> LoginController: Returns profile
 LoginController -> MainscreenController: login(ActionEvent event)
 deactivate LoginController
 activate MainscreenController

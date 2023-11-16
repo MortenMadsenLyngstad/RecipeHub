@@ -60,7 +60,7 @@
             <Text fx:id="propertyError" fill="#f80000" layoutX="18.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select property!" visible="false" />
             <Text fx:id="amountError" fill="RED" layoutX="18.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add amount as number!" visible="false" />
             <Text fx:id="noAddedIngredientError" fill="RED" layoutX="196.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Need to add at least one ingredient!" visible="false" />
-            <Button fx:id="removeIngredient" layoutX="263.0" layoutY="57.0" mnemonicParsing="false" onAction="#removeIngredient" styleClass="green_button" text="Remove Igredient" visible="false" />
+            <Button fx:id="removeIngredient" layoutX="263.0" layoutY="57.0" mnemonicParsing="false" onAction="#removeIngredient" styleClass="green_button" text="Remove ingredient" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="descriptionPane" layoutY="136.0" prefHeight="64.0" prefWidth="391.0" visible="false">
@@ -77,7 +77,7 @@
             <TextField fx:id="addStepText" layoutX="15.0" layoutY="31.0" prefHeight="26.0" prefWidth="230.0" promptText="Step 1:" />
             <Button fx:id="addStepButton" layoutX="257.0" layoutY="31.0" mnemonicParsing="false" onAction="#addStep" styleClass="green_button" text="Add Step" />
             <Button fx:id="addStepNext" layoutX="331.0" layoutY="31.0" mnemonicParsing="false" onAction="#addedAllSteps" styleClass="green_button" text="Next" />
-            <Text fx:id="notValidStepError" fill="RED" layoutX="15.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nedd to add åa descriptive step!" visible="false" />
+            <Text fx:id="notValidStepError" fill="RED" layoutX="15.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Need to add a descriptive step!" visible="false" />
             <Text fx:id="noAddedStepError" fill="RED" layoutX="257.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Need to add a step first!" visible="false" />
             <Button fx:id="removeStep" layoutX="284.0" layoutY="62.0" mnemonicParsing="false" onAction="#removeStep" styleClass="green_button" text="Remove Step" visible="false" />
          </children>

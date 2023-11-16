@@ -24,9 +24,13 @@ public class Recipe {
     /**
      * Contructor for creating a new Recipe object.
      * 
-     * @param name     The name of the recipe.
-     * @param portions The amount of portions this recipe makes.
-     * @param author   The author of this recipe, a Profile object
+     * @param name name of the recipe.
+     * @param portions amount of portions this recipe makes.
+     * @param author author of this recipe, a Profile object
+     * @see #setName(String)
+     * @see #setPortions(int)
+     * @see Profile#getUsername()
+     * @see Profile#putRecipe(Recipe)
      */
     public Recipe(String name, int portions, Profile author) {
         setName(name);
@@ -41,56 +45,51 @@ public class Recipe {
     }
 
     /**
-     * Sets the name of the recipe.
+     * This method sets the name of the recipe.
      * 
-     * @param name the string which is set as name, cannot be empty
+     * @param name new name of the recipe
      * @throws IllegalArgumentException if name is an empty string
      */
-
     public void setName(String name) {
-        if (name.equals("")) {
+        if (name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be an empty String");
         }
         this.name = name;
     }
 
     /**
-     * Getter for the name attribute.
+     * This method gets the recipe name.
      * 
-     * @return The name attribute of the recipe
+     * @return The name of the recipe
      */
-
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the description of the recipe.
+     * This method sets the description of the recipe.
      * 
-     * @param description The description to be set
+     * @param description description to be set
      */
-
     public void setDescription(String description) {
         this.description = description;
     }
 
     /**
-     * Getter for the decription attribute.
+     * This method gets the recipe's description.
      * 
      * @return The String description of the recipe
      */
-
     public String getDescription() {
         return description;
     }
 
     /**
-     * Sets the portions attribute for the recipe.
+     * This method sets the portions for the recipe.
      * 
-     * @param portions The amount of portions the ingredients for this recipe make
-     * @throws IllegalArgumentException If portions is less than one
+     * @param portions amount of portions the ingredients for this recipe make
+     * @throws IllegalArgumentException if portions is less than one
      */
-
     public void setPortions(int portions) {
         if (portions < 1) {
             throw new IllegalArgumentException("Portions must be at least one");
@@ -99,17 +98,16 @@ public class Recipe {
     }
 
     /**
-     * Getter for the portions attribute.
+     * This method gets the recipe's portions.
      * 
-     * @return The portions attribute for the recipe
+     * @return The portions for the recipe
      */
-
     public int getPortions() {
         return portions;
     }
 
     /**
-     * A method to fetch the preparation steps of the recipe.
+     * This method fetches the preparation steps of the recipe.
      * 
      * @return A List of the steps in the recipe
      */
@@ -118,19 +116,19 @@ public class Recipe {
     }
 
     /**
-     * Method to add a step to the list of steps in the recipe.
+     * This method adds a step to the list of steps in the recipe.
      * 
-     * @param step The step to add
+     * @param step string with step to add
      */
     public void addStep(String step) {
         steps.add(step);
     }
 
     /**
-     * Method to remove a step from the list of steps in the recipe.
+     * This method removes a step from the list of steps in the recipe.
      * 
-     * @param step The step to remove
-     * @throws IllegalArgumentException If the step is not in the list of steps
+     * @param step step to remove
+     * @throws IllegalArgumentException if the step is not in the list of steps
      */
     public void removeStep(String step) {
         if (!steps.remove(step)) {
@@ -139,7 +137,7 @@ public class Recipe {
     }
 
     /**
-     * Method to fetch all the different ingredients in the recipe.
+     * This method fetches all the different ingredients in the recipe.
      * 
      * @return A set containing every ingredient in the set
      */
@@ -150,9 +148,9 @@ public class Recipe {
     /**
      * A method to get the amount needed for a single ingredient in the recipe.
      * 
-     * @param ingredient The ingredient in question
-     * @throws IllegalArgumentException If the ingredient is not in the recipe
+     * @param ingredient ingredient to get amount of
      * @return The amount needed as a double
+     * @throws IllegalArgumentException if the ingredient is not in the recipe
      */
     public Double getIngredientAmount(String ingredient) {
         if (!ingredients.containsKey(ingredient)) {
@@ -162,15 +160,14 @@ public class Recipe {
     }
 
     /**
-     * Add an amount of an ingredient as a double.
+     * This method adds the given amount of the given ingredient to the recipe.
      * 
-     * @param ingredient The ingredient to be added
-     * @param amount     The amount to be added, must be over 0
-     * @param unit       The unit of measurement
-     * 
+     * @param ingredient ingredient to be added
+     * @param amount amount to be added
+     * @param unit unit of measurement
+     * @throws IllegalArgumentException If amount is below 0
      * @throws IllegalArgumentException If the ingredient is already in the recipe
      *                                  and the unit is not the same
-     * @throws IllegalArgumentException If amount is below 0
      */
     public void addIngredient(String ingredient, Double amount, String unit) {
         if (amount < 0) {
@@ -189,9 +186,9 @@ public class Recipe {
     }
 
     /**
-     * A method to remove an ingredient completely from the recipe.
+     * This method removes an ingredient completely from the recipe.
      * 
-     * @param ingredient The ingredient to remove
+     * @param ingredient ingredient to remove
      * @throws IllegalArgumentException if the ingredient is not in the keyset
      */
     public void removeIngredient(String ingredient) {
@@ -204,21 +201,17 @@ public class Recipe {
     }
 
     /**
-     * Method to remove a specific amount of an ingredient.
+     * This method removes a specific amount of an ingredient.
      * 
-     * @param ingredient The ingredient to remove
-     * @param amount     The amount of the ingredient to remove, must be lower than
-     *                   the amount of the ingredient, and over 0
-     * 
-     * @throws IllegalargumentException If amount is below 0
-     * @throws IllegalargumentException If the ingredient is not in the keyset
-     * @throws IllegalargumentException If the amount to remove is larger than what
-     *                                  is in the recipe
+     * @param ingredient ingredient to remove an amount from
+     * @param amount amount of the ingredient to remove
+     * @throws IllegalargumentException if amount is below 0
+     * @throws IllegalargumentException if the ingredient is not in the keyset
+     * @throws IllegalargumentException if the amount to remove is larger than what is in the recipe
      */
-
     public void removeIngredientAmount(String ingredient, Double amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Removed amount must be over 0");
+            throw new IllegalArgumentException("Amount to remove must be over 0");
         }
         if (!ingredients.containsKey(ingredient)) {
             throw new IllegalArgumentException("Ingredient not found in recipe");
@@ -231,28 +224,26 @@ public class Recipe {
     }
 
     /**
-     * Method to get the ingredientunit of an ingredient in the recipe.
+     * This method gets the ingredientunit of an ingredient in the recipe.
      * 
-     * @param ingredient The ingredient to find the unit of
+     * @param ingredient ingredient to find the unit of
      * @return A string of the unit of the ingredient
-     * 
-     * @throws IllegalargumentException If the ingredient is not in the recipe
+     * @throws IllegalArgumentException if the ingredient is not in the recipe
      */
     public String getIngredientUnit(String ingredient) {
         if (!ingredientUnits.containsKey(ingredient)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Ingredient not found in recipe");
         }
         return ingredientUnits.get(ingredient);
     }
 
     /**
-     * Used to set the unit of the ingredient.
+     * This method sets the unit of the ingredient.
      * 
-     * @param ingredient The ingredient to set the unit of
-     * @param unit       the unit to be set
+     * @param ingredient ingredient to set the unit of
+     * @param unit unit to be set
      * @throws IllegalArgumentException if unit is not pcs, g or dL
      */
-
     public void setIngredientUnit(String ingredient, String unit) {
         if (!(unit.equals("pcs") || unit.equals("g") || unit.equals("dL"))) {
             throw new IllegalArgumentException("Unit must be pcs, g or dL");
@@ -261,9 +252,10 @@ public class Recipe {
     }
 
     /**
-     * Adds a rarings to the recipe.
+     * This method adds a rarings to the recipe.
      * 
-     * @param rating  The rating given by the user
+     * @param rating rating given by the user
+     * @see #hasRated(String)
      */
     public void addReview(Review rating) {
         if (hasRated(rating.getReviewer())) {
@@ -273,32 +265,28 @@ public class Recipe {
     }
 
     /**
-     * Checks if the recipe has been rated by the user.
+     * This method checks if the recipe has been rated by the user.
      * 
-     * @return true of the recipe has been rated by the user, false otherwise
+     * @return true if the recipe has been rated by the user, false otherwise
+     * @see Review#getReviewer()
      */
     public boolean hasRated(String username) {
         return reviewList.stream().anyMatch(r -> r.getReviewer().equals(username));
     }
 
     /**
-     * Gets the average rating of the recipe as double with two decimals.
+     * This method gets the average rating of the recipe as double with two decimals.
      * 
      * @return The average rating of the recipe
      */
     public double getAverageRating() {
-        String number = String.format("%.2f", reviewList.stream()
-                .mapToDouble(r -> r.getRating()).average().orElse(0.0));
-        StringBuilder sb = new StringBuilder();
-        sb.append(number.charAt(0));
-        sb.append('.');
-        sb.append(number.charAt(2));
-        number = sb.toString();
-        return Double.parseDouble(number);
+        double number = reviewList.stream().mapToDouble(r -> r.getRating()).average().orElse(0.00);
+        double roundedNumber = Math.round(number * 100) / 100.0;
+        return roundedNumber;
     }
 
     /**
-     * Gets the number of reviews the recipe has.
+     * This method gets the number of reviews the recipe has.
      * 
      * @return The number of reviews the recipe has as integer
      */
@@ -307,16 +295,17 @@ public class Recipe {
     }
 
     /**
-     * Gets the number of comments the recipe has.
+     * This method gets the number of comments the recipe has.
      * 
      * @return The number of comments the recipe has as integer
+     * @see Review#getComment()
      */
-    public int getNumberOfcomments() {
+    public int getNumberOfComments() {
         return (int) reviewList.stream().filter(r -> !r.getComment().equals("")).count();
     }
 
     /**
-     * Gets the reviews of the recipe.
+     * This method gets the reviews of the recipe.
      * 
      * @return The reviews of the recipe as a list
      */
@@ -325,7 +314,7 @@ public class Recipe {
     }
 
     /**
-     * Gets the author of the recipe.
+     * This method gets the author of the recipe.
      * 
      * @return The author attribute of the recipe
      */
@@ -334,19 +323,18 @@ public class Recipe {
     }
 
     /**
-     * Gets the isSaved attribute of the recipe.
+     * This method will return whether the recipe is saved or not.
      * 
-     * @return boolean value for the isSaved boolean value
+     * @return boolean value for whether the recipe is saved or not
      */
     public boolean isSaved() {
         return isSaved;
     }
 
     /**
-     * This method sets the boolean value for if the recipe has been saved to the
-     * database.
+     * This method sets the boolean value for if the recipe has been saved or not.
      * 
-     * @param saved - boolean value for if the recipe has been saved to the database
+     * @param saved boolean value for whether the recipe has been saved or not
      */
     public void setSaved(boolean saved) {
         this.isSaved = saved;

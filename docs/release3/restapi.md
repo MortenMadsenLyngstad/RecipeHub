@@ -6,7 +6,9 @@ First you need to navigate to the recipehub folder and use the command `mvn clea
 
 Then you need to start the server, which you can either do by using the command `mvn spring-boot:run -f springboot/restserver/pom.xml` from the recipehub folder or navigate to the restserver folder by using `cd springboot/restserver/` and then use the command `mvn spring-boot:run`.
 
-To now run the application with it using the API, you can use the command `mvn javafx:run -P remoteapp -f ui/pom.xml` from the recipehub folder or navigate to the ui folder by using `cd ui/` and then use the command `mvn javafx:run -P remoteapp`.
+To now run the application with it using the API, you can use the command `mvn javafx:run -P remoteapp -f ui/pom.xml` from the recipehub folder or navigate to the ui folder by using `cd ui/` and then use the command `mvn javafx:run -P remoteapp`. 
+
+If you wish to run the app with a server which is hosted on another computer, you can change the Uri in the remoteapp start method to the IP of the computer which hosts the server. Format: `http://<ip-adress>:<port>/recipehub/`.
 
 ## Overview
 

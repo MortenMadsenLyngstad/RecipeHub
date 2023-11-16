@@ -20,7 +20,7 @@ public class RecipeFilehandler {
     /**
      * This method writes a recipe to the file.
      * 
-     * @param recipe - Recipe object to write
+     * @param recipe - Recipe object to save to file
      * @return - Returns true if the recipe was written, false if null or not written
      */
     public boolean writeRecipe(Recipe recipe) {
