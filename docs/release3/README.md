@@ -124,6 +124,10 @@ Other than that, we also made the choice of having the Rest API only include met
 
 Although we added several new functionalities for this third deliverable, such as the scaling of portions or reviews, we realised that our application already had quite a lot of functionalities. Therefore, in order to follow the principle of quality over quantity, we decided to not add an excessive amount of new functionality for this third deliverable, and rather focus on making sure that the once we have, had high quality. This meant that for example adding images, which was an idea that occured during this sprint, was de-prioritized. It also meant that we spent some time refactoring functionality we had implemented earlier, like the search bar or the recipe screen. We think this was a good choice when considering the position we found ourselves in after release 2, where we already had quite a lot of functionality.
 
+### Mainclass for jlink and jpackage
+
+When configuring jlink (javafx) and jpackage, we chose to state the normal ui/App.java as the mainclass. We could have used ui/RemoteApp.java, but if we had, someone would have needed to host the restserver any time anyone would want to run the app. Since we have no plans of publishing this project to the general public, we will not have a server running constantly, and therefore chose to use ui/App.java as the mainclass.
+
 ### Indexing of recipes
 
 During the sprint, we thought of indexing the recipes to avoid having to save the same recipes several times in several files. We made such an implementation, and it worked, but we realized that the implementation also had it's disadvantages. How we implemented the indexation required us to iterate through all the recipes in the app each time we wanted to load a profile's recipes, which would have a negative impact on the app's runtime. In addition, the implementation would make the usage of the core module individually cumbersome, while also making our codebase more difficult to understand. Because of these reasons, we decided to not implement the indexing of recipes, but rather stick to the implementation we had previously, prioritizing runtime and clearity over storage space.
@@ -136,7 +140,7 @@ The following paragraphs aims to explain some of the issues encountered during t
 
 ### Eclipse Che
 
-We encountered some issues when it comes to eclips che, more specifically that some tests that ran perfectly locally failed in eclipse che. This caused some of frustration, because the problems were not related to the logic, but rather the enviroment they were ran in. However, we managed to fix it at the end.
+We encountered some issues when it comes to eclips che, more specifically that some tests that ran perfectly locally failed in eclipse che. This caused some of frustration, because the problems were not related to the logic, but rather the enviroment they were ran in. However, we managed to fix it at the end. We have seen that the app looks a bit "crammed together" in the desktop in eclipse che. This issue would be something we would look at in a later sprint. 
 
 ### Pipelines
 
@@ -153,6 +157,6 @@ Documentation about the Rest API can be found [here](restapi.md).
 
 To have some example recipes and users to run the project with, we have run the project for a while and added the files in the [exampledata](./exampledata/) directory. Move the files from the directory to the position "user.home" on your computer, and the app can use them as example data.  
 Logininfo for the example users:  
-**Username:** TestUser , **Password:** Test1234
-**Username:** Testuser2 , **Password:** Test1234
-**Username:** Testuser3 , **Password:** Test1234
+**Username:** TestUser , **Password:** Test1234  
+**Username:** Testuser2 , **Password:** Test1234  
+**Username:** Testuser3 , **Password:** Test1234  

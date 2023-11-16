@@ -41,7 +41,8 @@ public class RecipeHubApplicationTest {
     private Profile profile;
 
     /**
-     * This method is run before all tests.
+     * This method is run before the rest of the tests. It sets up the file names
+     * for the filehandlers used in the tests to avoid overwriting the actual files.
      * 
      * @throws Exception - if an error occurs
      */
@@ -51,16 +52,29 @@ public class RecipeHubApplicationTest {
         RecipeFilehandler.setFileName("testRecipes.json");
     }
 
+    /**
+     * This method is run before each test.
+     */
     @BeforeEach
     public void beforeEachSetUp() {
         profile = new Profile("testUser", "Password123");
         recipe1 = new Recipe("Recipe1", 1, profile);
     }
 
+    /**
+     * Helper method to create a URL for the tests.
+     * 
+     * @return the URL
+     */
     private String getUrl() {
         return "http://localhost:" + port + "/recipehub/";
     }
 
+    /**
+     * Tests the PutRecipe method.
+     * 
+     * @see RecipeHubController#putRecipe(Recipe)
+     */
     @Test
     public void testPutRecipe() {
         testRestTemplate.put(getUrl() + "recipelibrary", recipe1);
@@ -81,6 +95,11 @@ public class RecipeHubApplicationTest {
                 "Should have a review after adding review");
     }
 
+    /**
+     * Tests the GetRecipe method.
+     * 
+     * @see RecipeHubController#getRecipe(String)
+     */
     @Test
     public void testGetRecipeLibrary() {
         Assertions.assertNotNull(testRestTemplate.getForObject(getUrl() + "recipelibrary",
@@ -96,6 +115,11 @@ public class RecipeHubApplicationTest {
                 "Should have recipe with name Recipe2");
     }
 
+    /**
+     * Tests the RemoveRecipe method.
+     * 
+     * @see RecipeHubController#removeRecipe(Recipe)
+     */
     @Test
     public void testRemoveRecipe() {
         access.saveRecipe(recipe1);
@@ -112,6 +136,11 @@ public class RecipeHubApplicationTest {
                 new HttpEntity<>(recipe1), Boolean.class).getBody(), "Should return true");
     }
 
+    /**
+     * Tests the putProfile method.
+     * 
+     * @see RecipeHubController#putProfile(Profile)
+     */
     @Test
     public void testPutProfile() {
         // Tests if putProfile adds new profile
@@ -132,6 +161,11 @@ public class RecipeHubApplicationTest {
                 "Should contain recipe1");
     }
 
+    /**
+     * Tests the GetProfiles method.
+     * 
+     * @see RecipeHubController#getProfiles()
+     */
     @Test
     public void testGetProfiles() {
         Profile profile2 = new Profile("testUser2", "Password123");
@@ -152,6 +186,11 @@ public class RecipeHubApplicationTest {
                 "Should have username testUser2");
     }
 
+    /**
+     * Tests the GetProfile method.
+     * 
+     * @see RecipeHubController#getProfile(String)
+     */
     @Test
     public void testGetProfile() {
         access.saveProfile(profile);
@@ -163,6 +202,9 @@ public class RecipeHubApplicationTest {
                 Profile.class), "Should return null");
     }
 
+    /**
+     * This method is run after each test. It deletes the
+     */
     @AfterEach
     private void deleteTestFiles() {
         try {

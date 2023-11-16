@@ -10,45 +10,81 @@ Actor User
 participant App
 participant LoginController
 participant MainscreenController
-participant PutRecipeController
+participant AddRecipeController
+participant RemoteRecipeHubAccess
+participant RecipeHubController
+participant DirectRecipeHubAccess
 participant RecipeFilehandler
 participant UserFilehandler
 participant FileUtil
 database recipes.json
 database userinfo.json
 
+activate RecipeHubController
 User -> App: Opens the application
 activate App
 User -> LoginController: Enters login information
 activate LoginController
 User -> LoginController: Clicks on: "Login"
+
+group Gets profile from "remote server"
+LoginController -> RemoteRecipeHubAccess: loadProfile(String username)
+activate RemoteRecipeHubAccess
+RemoteRecipeHubAccess -> RecipeHubController: GET /profiles/{username}
+RecipeHubController -> DirectRecipeHubAccess: getProfile(String username)
+activate DirectRecipeHubAccess
+DirectRecipeHubAccess -> UserFilehandler: loadProfile(String username)
+activate UserFilehandler
+UserFilehandler -> UserFilehandler: readProfiles()
+UserFilehandler -> FileUtil: readFile(Path filePath, List<Profile> profiles, Type List<Profile>)
+activate FileUtil
+FileUtil -> userinfo.json: Reads userinfo.json
+userinfo.json -> FileUtil: List<Profile>
+FileUtil -> UserFilehandler: List<Profile>
+deactivate FileUtil
+DirectRecipeHubAccess <-- UserFilehandler: Profile
+deactivate UserFilehandler
+RecipeHubController <-- DirectRecipeHubAccess: Profile
+deactivate DirectRecipeHubAccess
+RemoteRecipeHubAccess <-- RecipeHubController: Profile
+LoginController <-- RemoteRecipeHubAccess: Profile
+deactivate RemoteRecipeHubAccess
+end
 LoginController -> MainscreenController: login(ActionEvent event)
 deactivate LoginController
 activate MainscreenController
 User -> MainscreenController: Clicks on: "+ Add Recipe"
-MainscreenController -> PutRecipeController: putRecipe(ActionEvent event)
+MainscreenController -> AddRecipeController: addRecipe(ActionEvent event)
 deactivate MainscreenController
-activate PutRecipeController
-User -> PutRecipeController: Fills in recipe details
-User -> PutRecipeController: Clicks on: "Save Recipe"
-PutRecipeController -> PutRecipeController: saveRecipe()
-PutRecipeController -> RecipeFilehandler: saveRecipeToLibrary()
+activate AddRecipeController
+User -> AddRecipeController: Fills in recipe details
+User -> AddRecipeController: Clicks on: "Save Recipe"
+
+group Saves recipe to "remote server"
+AddRecipeController -> RemoteRecipeHubAccess: saveRecipe()
+activate RemoteRecipeHubAccess
+RemoteRecipeHubAccess -> RecipeHubController: PUT /recipelibrary
+RecipeHubController -> DirectRecipeHubAccess: saveRecipe(Recipe recipe)
+activate DirectRecipeHubAccess
+DirectRecipeHubAccess -> RecipeFilehandler: writeRecipe(Recipe recipe)
 activate RecipeFilehandler
-RecipeFilehandler -> FileUtil: writeRecipe(Recipe recipe)
+RecipeFilehandler -> FileUtil: writeRecipe(Path filePath, RecipeLibrary recipelibrary)
+activate FileUtil
+FileUtil -> recipes.json: Writes recipelibrary to recipes.json
+FileUtil -> RecipeFilehandler: true if the file was written successfully
+deactivate FileUtil
+RecipeFilehandler -> DirectRecipeHubAccess: true if the file was written successfully
 deactivate RecipeFilehandler
-activate FileUtil
-FileUtil -> recipes.json: writeFile(Path filePath, T data)
-deactivate FileUtil
-PutRecipeController -> UserFilehandler: saveRecipeToLibrary()
-activate UserFilehandler
-UserFilehandler -> FileUtil: writeProfile(Profile profile)
-deactivate UserFilehandler
-activate FileUtil
-FileUtil -> userinfo.json: writeFile(Path filePath, T data)
-deactivate FileUtil
-User -> PutRecipeController: Clicks on: "Back"
-PutRecipeController -> MainscreenController: back(ActionEvent event)
-deactivate PutRecipeController
+DirectRecipeHubAccess -> RecipeHubController: true if the file was written successfully
+deactivate DirectRecipeHubAccess
+RecipeHubController -> RemoteRecipeHubAccess: true if the file was written successfully
+RemoteRecipeHubAccess -> AddRecipeController: true if the file was written successfully
+deactivate RemoteRecipeHubAccess
+end
+
+User -> AddRecipeController: Clicks on: "Back"
+AddRecipeController -> MainscreenController: back(ActionEvent event)
+deactivate AddRecipeController
 activate MainscreenController
 User <-- MainscreenController: Recipe shows in feed
 User -> MainscreenController: Clicks on: "Logout"
@@ -58,5 +94,6 @@ activate LoginController
 User -> App: Closes the application
 deactivate LoginController
 deactivate App
+deactivate RecipeHubController
 
 @enduml

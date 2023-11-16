@@ -4,7 +4,7 @@
 
 RecipeHub is a social media platform where you can make and share food recipes, while also exploring recipes posted by others. When you make a recipe, it will be saved in your profile, making RecipeHub a helpful tool for those who enjoy making food. A feed of all recipes posted on the app also gives the user the oppertunity to explore others new and exciting recipes. All in all, RecipeHub is applicable in several ways by having the oppertunity for saving, sharing and exploring new recipes, which makes it the perfect app for those with an interest for cooking.
 
-![Mainscreen](https://i.imgur.com/Ojy8xZQ.png)
+![Mainscreen](https://i.imgur.com/yoJq5jO.png)
 
 ## Core feratures for final finished product
 
@@ -56,8 +56,8 @@ The user is in need of an application which can store their new recipe for a lat
 - Read a previously made recipe
 
 
-#### Sequence diagram for user story 1: 
-![User story 1 sequence diagram](https://i.imgur.com/770zMrO.png)
+#### Sequence diagram for user story 1:
+![User story 1 sequence diagram](https://i.imgur.com/v9f7zCa.png)
 
 
 ### User story 2: Finding new recipes
@@ -78,8 +78,8 @@ The user is in need of an application where they can easily find new recipes to 
 - Click on a recipee to get in depth information about it (ingredients, preperation steps, etc.)
 
 
-#### Sequence diagram for user story 2: 
-![User story 2 sequence diagram](https://i.imgur.com/ifausrt.png)
+#### Sequence diagram for user story 2:
+![User story 2 sequence diagram](https://i.imgur.com/B1JCTbn.png)
 
 
 
@@ -104,8 +104,8 @@ The user is in need of an application where they can easily mark a recipe as a f
 
 
 
-#### Sequence diagram for user story 3: 
-![User story 3 sequence diagram](https://i.imgur.com/dXIv6rc.png)
+#### Sequence diagram for user story 3:
+![User story 3 sequence diagram](https://i.imgur.com/CcpTG1k.png)
 
 
 ### User story 4: Removing a recipe
@@ -127,5 +127,45 @@ The user is in need of an application where they can easily remove a recipe they
 - Cancel the removal of a recipe
 
 
-#### Sequence diagram for user story 4: 
-![User story 4 sequence diagram](https://i.imgur.com/SrmVIpg.png)
+#### Sequence diagram for user story 4:
+![User story 4 sequence diagram](https://i.imgur.com/BmLDxPz.png)
+
+
+### User story 5: Scaling a recipe
+
+You have found the recipe you want to make, it has a lot of ingredients and you want to make it for more people than the recipe is made for. You want to scale the recipe so that you can make it for the amount of people you want, without having to calculate the amount of ingredients yourself.
+
+#### Important to be able to see
+
+- Buttons to add or subtract the amount of portions
+- Field for writing the amount of portions you want to make
+- The amount of portions the recipe is made for
+- The amount of ingredients needed for the amount of portions you want to make
+
+#### Important to be able to do
+
+- Add and remove portions
+- Type in the amount of portions
+- Rate and favourite the recipe without making scaled versions of it
+
+#### Sequence diagram for user story 5:
+![User story 5 sequence diagram](https://i.imgur.com/t3QXj1S.png)
+
+### User Story 6: Reviewing a recipe
+
+As a food enthusiat, you have tried to make one of the recipes you found at recipehub. You are really impressed and wants to share your experiece with other users.
+
+The user is in need of an application where they can easily give reviews as well as reading other reviews. It should be obvious how to add a review and the users should get feedback that shows that if they click on the rating stars they will add a review. To give the reviews credibility, the author of a recipe should not be able to review its own recipe and a user should not be able to give review more than one time.
+
+#### Important to be able to see
+
+- The rating stars and average rating that shows how other user has reviewed this recipe
+- Read the reviews other users have written
+
+#### Important to be able to do
+
+- Create a review
+- Read other reviews
+
+#### Sequence diagram for user story 6:
+![User story 6 sequence diagram](https://i.imgur.com/56aUSgD.png)

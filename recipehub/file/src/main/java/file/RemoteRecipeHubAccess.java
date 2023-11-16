@@ -110,7 +110,6 @@ public class RemoteRecipeHubAccess implements RecipeHubAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             String responseString = response.body();
-            System.out.println(recipeLibraryUri());
             Boolean success = gson.fromJson(responseString, Boolean.class);
             return success;
         } catch (IOException | InterruptedException e) {

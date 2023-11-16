@@ -10,29 +10,73 @@ Actor User
 participant App
 participant LoginController
 participant MainscreenController
+participant RemoteRecipeHubAccess
+participant RecipeHubController
+participant DirectRecipeHubAccess
 participant UserFilehandler
 participant FileUtil
 database userinfo.json
 
+activate RecipeHubController
 User -> App: Opens the application
 activate App
 User -> LoginController: Enters login information
 activate LoginController
 User -> LoginController: Clicks on: "Login"
+
+group Gets profile from "remote server"
+LoginController -> RemoteRecipeHubAccess: loadProfile(String username)
+activate RemoteRecipeHubAccess
+RemoteRecipeHubAccess -> RecipeHubController: GET /profiles/{username}
+RecipeHubController -> DirectRecipeHubAccess: getProfile(String username)
+activate DirectRecipeHubAccess
+DirectRecipeHubAccess -> UserFilehandler: loadProfile(String username)
+activate UserFilehandler
+UserFilehandler -> UserFilehandler: readProfiles()
+UserFilehandler -> FileUtil: readFile(Path filePath, List<Profile> profiles, Type List<Profile>)
+activate FileUtil
+FileUtil -> userinfo.json: Reads userinfo.json
+userinfo.json -> FileUtil: List<Profile>
+FileUtil -> UserFilehandler: List<Profile>
+deactivate FileUtil
+DirectRecipeHubAccess <-- UserFilehandler: Profile
+deactivate UserFilehandler
+RecipeHubController <-- DirectRecipeHubAccess: Profile
+deactivate DirectRecipeHubAccess
+RemoteRecipeHubAccess <-- RecipeHubController: Profile
+LoginController <-- RemoteRecipeHubAccess: Profile
+deactivate RemoteRecipeHubAccess
+end
+
 LoginController -> MainscreenController: login(ActionEvent event)
 deactivate LoginController
 activate MainscreenController
 User <-- MainscreenController: Shows all recipes to user
 User -> MainscreenController: Clicks on: Heart-icon
 User <-- MainscreenController: Heart turns red
-MainscreenController -> UserFilehandler: setHeart(FontAwesomeIconView heart, Recipe recipe, Profile currentProfile)
-activate UserFilehandler
+
+group Updates profile on "remote server"
+MainscreenController -> RemoteRecipeHubAccess: setHeart(FontAwesomeIconView heart, Recipe recipe, Profile currentProfile)
+activate RemoteRecipeHubAccess
+RemoteRecipeHubAccess -> RecipeHubController: PUT /profiles
+RecipeHubController -> DirectRecipeHubAccess: saveProfile(Profile profile)
+activate DirectRecipeHubAccess
+DirectRecipeHubAccess -> UserFilehandler: saveProfile(Profile profile)
 UserFilehandler -> FileUtil: writeProfile(Profile profile)
 activate FileUtil
-deactivate UserFilehandler
-FileUtil -> userinfo.json: writeFile(Path filepath, T data)
+FileUtil -> userinfo.json: Writes the new profile to the file
+FileUtil -> UserFilehandler: true if the file was written successfully
 deactivate FileUtil
+UserFilehandler -> DirectRecipeHubAccess: true if the file was written successfully
+deactivate UserFilehandler
+DirectRecipeHubAccess -> RecipeHubController: true if the file was written successfully
+deactivate DirectRecipeHubAccess
+RecipeHubController -> RemoteRecipeHubAccess: true if the file was written successfully
+deactivate RemoteRecipeHubAccess
+end
+
 User -> MainscreenController: Clicks on: "Favorites"
 User <-- MainscreenController: Shows favorited recipe(s) to user
+deactivate RecipeHubController
 
 @enduml

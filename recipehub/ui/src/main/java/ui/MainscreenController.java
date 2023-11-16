@@ -37,75 +37,73 @@ import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
 
 /**
- * This controller class is used to connect the mainscreeen to the logic in
- * core.
- * 
- * @author Adrian Haabpiht Solberg
+ * The MainscreenController class connects the UI to the core logic.
+ * Manages the display of recipes, allows filtering by all recipes, users
+ * recipes, and favorites, and supports searching for specific recipes.
+ * Also handles navigation to the add recipe screen, log out, and individual
+ * recipe pages.
+ * This class extends the SuperController class.
+ *
+ * @see SuperController
  */
 public class MainscreenController extends SuperController {
-
-    @FXML
-    private ScrollPane scrollPane;
-
-    @FXML
-    private Button addBtn, allBtn, myBtn, favoritesBtn;
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private TextField txtField;
-
     private RecipeLibrary allRecipes;
     private RecipeLibrary currentLibrary;
 
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private Button allRecipesButton, myRecipesButton, favoritesButton, addRecipeButton;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private TextField txtField;
+
     /**
-     * This method will load the gridPane with all recipes when the All
-     * Recipes-button
+     * This method will load the gridPane with all recipes when the allRecipesButton
      * is clicked on.
      */
     @FXML
     public void loadAllRecipes() {
-        if (titleLabel.getText().equals(allBtn.getText())) {
+        if (titleLabel.getText().equals(allRecipesButton.getText())) {
             return;
         }
-        titleLabel.setText(allBtn.getText());
+        titleLabel.setText(allRecipesButton.getText());
         currentLibrary = allRecipes;
         load();
     }
 
     /**
-     * This method will load the gridPane with the logged in profile's recipes
-     * when the All Recipes-button is clicked on.
+     * This method will load the gridPane with the logged in profile's recipes when
+     * the allRecipesButton is clicked on.
      */
     @FXML
     public void loadMyRecipes() {
-        if (titleLabel.getText().equals(myBtn.getText())) {
+        if (titleLabel.getText().equals(myRecipesButton.getText())) {
             return;
         }
-        titleLabel.setText(myBtn.getText());
+        titleLabel.setText(myRecipesButton.getText());
         currentLibrary = currentProfile.getRecipes();
         load();
     }
 
     /**
      * This method will load the gridPane with the logged in profile's favorite
-     * recipes
-     * when the Favorites-button is clicked on.
+     * recipes when the favoritesButton is clicked on.
      */
     @FXML
     public void loadFavoriteRecipes() {
-        if (titleLabel.getText().equals(favoritesBtn.getText())) {
+        if (titleLabel.getText().equals(favoritesButton.getText())) {
             return;
         }
-        titleLabel.setText(favoritesBtn.getText());
+        titleLabel.setText(favoritesButton.getText());
         currentLibrary = currentProfile.getFavorites();
         load();
     }
 
     /**
-     * This support method will decide how to load grid.
-     * Made to hinder repetition of code
+     * This helper method will decide how to load the grid.
+     * Made to hinder repetition of code.
      */
     private void load() {
         if (txtField.getText().isEmpty()) {
@@ -117,8 +115,8 @@ public class MainscreenController extends SuperController {
 
     /**
      * This method will fill the grid with the recipes in the given recipeLibrary.
-     * 
-     * @param recipeLibrary - RecipeLibrary with with recipes to fill the grid with
+     *
+     * @param recipeLibrary recipeLibrary with with recipes to fill the grid with
      */
     public void loadGrid(RecipeLibrary recipeLibrary) {
         GridPane gridPane = new GridPane();
@@ -153,13 +151,13 @@ public class MainscreenController extends SuperController {
 
     /**
      * This method will make a SplitPane for the given recipe.
-     * The top half will contain the recipe name
+     * The top half will contain the recipe name.
      * The bottom half will contain a two buttons, one for going to the recipe's own
-     * page
-     * and one for marking the recipe as a favorite
-     * 
-     * @param recipe - The recipe to make the SplitPane for
-     * @return Splitpane customized for the given recipe
+     * page and one for marking the recipe as a favorite. The bottom part will as well 
+     * show the recipes average rating.  
+     *
+     * @param recipe the recipe to make the SplitPane for
+     * @return splitpane customized for the given recipe
      */
     private SplitPane makeSplitPane(Recipe recipe) {
         // Makes vertical SplitPane
@@ -233,13 +231,11 @@ public class MainscreenController extends SuperController {
     /**
      * This method will set the heart to red if the recipe is a favorite of the
      * current profile.
-     * If not, it will set the heart to white and make it clickable
-     * When clicked on, the heart will turn red and the recipe will be added to the
-     * current
-     * profile's favorites
-     * 
-     * This method is protected because it is used in RecipeController
-     * 
+     * If not, it will set the heart to white and make it clickable. When clicked
+     * on, the heart will turn red and the recipe will be added to the current
+     * profile's favorites.
+     * This method is protected because it is used in RecipeController.
+     *
      * @param heart          - The heart to be set
      * @param recipe         - The recipe to check if it is a favorite
      * @param currentProfile - The profile to check if the recipe is a favorite
@@ -279,23 +275,24 @@ public class MainscreenController extends SuperController {
     }
 
     /**
-     * This method will switch screen to addRecipe.fxml when the putRecipe button is
+     * This method will switch screen to AddRecipeScreen.fxml when the addRecipe
+     * button is
      * clicked on.
-     * 
-     * @param event - The event of the Add Recipe-button beign clicked on
-     * @throws IOException - if the switchSceneWithInfo method throws an exception
+     *
+     * @param event the event of the Add Recipe-button beign clicked on
+     * @throws IOException if the switchSceneWithInfo method throws an exception
      */
     @FXML
-    public void putRecipe(ActionEvent event) throws IOException {
-        switchSceneWithInfo(event, "addRecipe.fxml");
+    public void addRecipe(ActionEvent event) throws IOException {
+        switchSceneWithInfo(event, "AddRecipeScreen.fxml");
     }
 
     /**
-     * This method will switch screen to UserLogin.fxml when the putRecipe button is
+     * This method will switch screen to UserLogin.fxml when the log out button is
      * clicked on.
-     * 
-     * @param event - The event of the Log Out-button beign clicked on
-     * @throws IOException - if the switchSceneWithInfo method throws an exception
+     *
+     * @param event the event of the Log Out-button beign clicked on
+     * @throws IOException if the switchSceneWithInfo method throws an exception
      */
     @FXML
     public void logout(ActionEvent event) throws IOException {
@@ -305,14 +302,13 @@ public class MainscreenController extends SuperController {
     /**
      * This method will switch scene to Recipe.fxml and give RecipeController the
      * given recipe.
-     * 
-     * @param event   - ActionEvent
-     * @param recipe  - The recipe the user clicked on
-     * @param profile - the current profile
+     *
+     * @param event   the ActionEvent
+     * @param recipe  the recipe the user clicked on
+     * @param profile the current profile
      * @throws IOException if there are problems with the filehandling
      */
-    protected void switchSceneRecipe(ActionEvent event, Recipe recipe)
-            throws IOException {
+    protected void switchSceneRecipe(ActionEvent event, Recipe recipe) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Recipe.fxml"));
         root = loader.load();
 
@@ -332,7 +328,7 @@ public class MainscreenController extends SuperController {
     /**
      * This method will handle searching for recipes.
      * It makes a modified RecipeLibrary, in accordance with the search, to be
-     * loaded in the grid
+     * loaded in the grid.
      */
     @FXML
     public void search() {
@@ -346,10 +342,11 @@ public class MainscreenController extends SuperController {
         List<Recipe> modifiedLibrary = currentLibrary.getRecipes().stream()
                 .filter(recipe -> recipe.getName().trim().toLowerCase().contains(searchTerm))
                 .collect(Collectors.toList());
-        Collections.sort(modifiedLibrary, Comparator
-                .comparingInt((Recipe r1) -> r1.getName().toLowerCase().indexOf(searchTerm))
-                .reversed()
-                .thenComparing((r1, r2) -> r2.getName().compareToIgnoreCase(r1.getName())));
+        Collections.sort(modifiedLibrary,
+                Comparator
+                        .comparingInt((Recipe r1) -> r1.getName().toLowerCase().indexOf(searchTerm))
+                        .reversed()
+                        .thenComparing((r1, r2) -> r2.getName().compareToIgnoreCase(r1.getName())));
 
         RecipeLibrary modifiedRecipeLibrary = new RecipeLibrary();
         modifiedRecipeLibrary.setRecipeLibrary(modifiedLibrary);
@@ -359,11 +356,10 @@ public class MainscreenController extends SuperController {
 
     /**
      * Custom loadLibrary-method.
-     * This method will set currentProfile to the given profile, and then load all
-     * recipes
-     * Custom method needed because of favorites functionality and testing
-     * 
-     * @param profile - The profile which is logged in
+     * This method will load all recipes.
+     * Custom method needed because of favorites functionality and testing.
+     *
+     * @param profile the profile which is logged in
      */
     protected void loadLibrary() {
         allRecipes = currentRecipeHubAccess.getRecipeLibrary();
