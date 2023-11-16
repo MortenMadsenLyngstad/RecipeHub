@@ -22,7 +22,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
- * The AddRecipeController class is the controller class for the AddRecipe.fxml.
+ * The AddRecipeController class is the controller class for the
+ * AddRecipeScreen.fxml.
  * It handles the user input and creates a new recipe with the given input.
  * This class extends the SuperController class.
  *

@@ -82,7 +82,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("AddRecipe.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("AddRecipeScreen.fxml"));
         root = fxmlLoader.load();
         controller = fxmlLoader.getController();
         Scene scene = new Scene(root);
@@ -678,14 +678,14 @@ public class AddRecipeControllerTest extends ApplicationTest {
     public void testAlert() {
         backButton = lookup("#backButton").query();
 
-        controller.setFileName("AddRecipe.fxml");
+        controller.setFileName("AddRecipeScreen.fxml");
         when(mockProfile.getFavorites()).thenReturn(new RecipeLibrary());
         setUpRecipeName();
         clickOn(backButton);
         Button cancelButton = (Button) controller.getAlert().getDialogPane()
                 .lookupButton(ButtonType.CANCEL);
         clickOn(cancelButton);
-        assertEquals("AddRecipe.fxml", controller.getFileName());
+        assertEquals("AddRecipeScreen.fxml", controller.getFileName());
         clickOn(backButton);
         Button okButton = (Button) controller.getAlert().getDialogPane()
                 .lookupButton(ButtonType.OK);
