@@ -449,16 +449,19 @@ public class RecipeController extends SuperController {
         currentRecipeHubAccess.saveRecipe(this.recipe);
         Profile authorProfile = currentRecipeHubAccess.loadProfile(recipe.getAuthor());
         authorProfile.putRecipe(recipe);
+        if (authorProfile.getFavorites().containsRecipe(recipe)) {
+            authorProfile.getFavorites().putRecipe(recipe);
+        }
 
         List<Profile> profiles = new ArrayList<>();
+        profiles.add(authorProfile);
         for (Profile p : currentRecipeHubAccess.getProfiles()) {
             if (p.getFavorites().containsRecipe(recipe)) {
                 p.getFavorites().putRecipe(recipe);
             }
-            if ((p.getUsername().equals(authorProfile.getUsername()))) {
-                profiles.add(authorProfile);
+            if (!(p.getUsername().equals(authorProfile.getUsername()))) {
+                profiles.add(p);
             }
-            profiles.add(p);
         }
         currentRecipeHubAccess.saveProfiles(profiles);
 
