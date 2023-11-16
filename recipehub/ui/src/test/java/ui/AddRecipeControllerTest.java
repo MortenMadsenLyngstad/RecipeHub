@@ -48,7 +48,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
 
     private Text testNameError, testDescriptionError, testIngredientNameError, testAmountError,
             testPropertyError, noAddedIngredientError, noAddedStepError, notValidStepError,
-            noAddedPortionsError;
+            noAddedPortionsError, recipeUnitError;
 
     private Pane addRecipePane, addDescriptionPane,
             addIngredientPane, addStepPane, portionAndConfirmPane;
@@ -410,7 +410,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
      * @see AddRecipeController#addIngredient()
      */
     @Test
-    public void testAddValidIngredient() {
+    public void testAddValidIngredientAndUnitError() {
         addRecipePane = lookup("#recipeNamePane").query();
         addIngredientPane = lookup("#addIngredientPane").query();
         testIngredientAndSteps = lookup("#ingredientAndSteps").query();
@@ -420,10 +420,23 @@ public class AddRecipeControllerTest extends ApplicationTest {
         removeIngredient = lookup("#removeIngredient").query();
         ingredientsNextButton = lookup("#ingredientsNextButton").query();
         addStepPane = lookup("#addStepPane").query();
+        recipeUnitError = lookup("#recipeUnitError").query();
+        addIngredientButton = lookup("#addIngredientButton").query();
 
         addRecipePane.setVisible(false);
         addIngredientPane.setVisible(true);
         setUpIngredient();
+
+        Platform.runLater(() -> {
+            recipeNameField.setText("testRecipe");
+            addDescriptionField.setText("Enjoy the best test recipe ever!");
+            testIngredientNameInputField.setText("testIngredient");
+            testIngredientAmountInputField.setText("1");
+            testIngredientPropertyMenu.setText("pcs");
+        });
+
+        clickOn(addIngredientButton);
+        assertTrue(recipeUnitError.isVisible());
 
         Platform.runLater(() -> {
             assertFalse(testIngredientNameError.isVisible());
@@ -439,6 +452,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         clickOn(ingredientsNextButton);
         assertTrue(addStepPane.isVisible());
         assertFalse(addIngredientPane.isVisible());
+
     }
 
     /**

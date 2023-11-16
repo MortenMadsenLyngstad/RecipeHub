@@ -61,6 +61,7 @@
             <Text fx:id="amountError" fill="RED" layoutX="18.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add amount as number!" visible="false" />
             <Text fx:id="noAddedIngredientError" fill="RED" layoutX="196.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Need to add at least one ingredient!" visible="false" />
             <Button fx:id="removeIngredient" layoutX="263.0" layoutY="57.0" mnemonicParsing="false" onAction="#removeIngredient" styleClass="green_button" text="Remove ingredient" visible="false" />
+            <Text fx:id="recipeUnitError" fill="RED" layoutX="15.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unit must be the same as previously given!" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="descriptionPane" layoutY="136.0" prefHeight="64.0" prefWidth="391.0" visible="false">

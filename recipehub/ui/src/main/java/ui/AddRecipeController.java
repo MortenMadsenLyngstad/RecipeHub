@@ -48,7 +48,8 @@ public class AddRecipeController extends SuperController {
     private MenuButton ingredientPropertyMenu, numberOfPortionsMenu;
     @FXML
     private Text nameError, descriptionError, propertyError, noAddedPortionsError, amountError,
-            notValidStepError, ingredientNameError, noAddedIngredientError, noAddedStepError;
+            notValidStepError, ingredientNameError, noAddedIngredientError, noAddedStepError,
+            recipeUnitError;
     @FXML
     private Label description, name, ingredientAndSteps;
 
@@ -165,18 +166,22 @@ public class AddRecipeController extends SuperController {
      */
     public void addIngredient() {
         if (validateIngredient()) {
-            newRecipe.addIngredient(ingredientNameInput.getText(),
-                    Double.parseDouble(ingredientAmount.getText()),
-                    ingredientPropertyMenu.getText());
-            newRecipe.setIngredientUnit(ingredientNameInput.getText(),
-                    ingredientPropertyMenu.getText());
-            showIngredientPreview();
-            cleanIngredientButtons();
-            amountError.setVisible(false);
-            ingredientNameError.setVisible(false);
-            propertyError.setVisible(false);
-            noAddedIngredientError.setVisible(false);
-            removeIngredient.setVisible(true);
+            try {
+                newRecipe.addIngredient(ingredientNameInput.getText(),
+                        Double.parseDouble(ingredientAmount.getText()),
+                        ingredientPropertyMenu.getText());
+                newRecipe.setIngredientUnit(ingredientNameInput.getText(),
+                        ingredientPropertyMenu.getText());
+                showIngredientPreview();
+                cleanIngredientButtons();
+                amountError.setVisible(false);
+                ingredientNameError.setVisible(false);
+                propertyError.setVisible(false);
+                noAddedIngredientError.setVisible(false);
+                removeIngredient.setVisible(true);
+            } catch (IllegalArgumentException e) {
+                recipeUnitError.setVisible(true);
+            }
         } else {
             ingredientError();
         }
