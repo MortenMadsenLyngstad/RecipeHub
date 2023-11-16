@@ -179,6 +179,7 @@ public class AddRecipeController extends SuperController {
                 propertyError.setVisible(false);
                 noAddedIngredientError.setVisible(false);
                 removeIngredient.setVisible(true);
+                recipeUnitError.setVisible(false);
             } catch (IllegalArgumentException e) {
                 recipeUnitError.setVisible(true);
             }

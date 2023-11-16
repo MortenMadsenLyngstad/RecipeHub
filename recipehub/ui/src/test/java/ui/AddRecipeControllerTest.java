@@ -426,7 +426,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         addRecipePane.setVisible(false);
         addIngredientPane.setVisible(true);
         setUpIngredient();
-
+        // Checks if unit error shows up
         Platform.runLater(() -> {
             recipeNameField.setText("testRecipe");
             addDescriptionField.setText("Enjoy the best test recipe ever!");
@@ -438,6 +438,7 @@ public class AddRecipeControllerTest extends ApplicationTest {
         clickOn(addIngredientButton);
         assertTrue(recipeUnitError.isVisible());
 
+        // Checks if adding valid ingredient works
         Platform.runLater(() -> {
             assertFalse(testIngredientNameError.isVisible());
             assertFalse(testAmountError.isVisible());
