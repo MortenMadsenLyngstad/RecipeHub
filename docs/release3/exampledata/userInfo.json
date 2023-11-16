@@ -1,0 +1,509 @@
+[
+  {
+    "username": "TestUser2",
+    "hashedPassword": "2EB833DCFEA08A0BB0209223976B737B:9220430901E77A55035BB08B8344C5FB11A2AEAE4404AC26C9ABC2290B0D5314",
+    "recipeLibrary": {
+      "recipes": [
+        {
+          "steps": [
+            "Cut the meat into cubes and put it in a bowl",
+            "Chop the onion and garlic and put it in the bowl together with lemon juice. Mix everything well, so that the meat is covered with marinade. Set cold. Turn the meat a couple of times while it marinates.",
+            "Take the meat out of the marinade and thread the pieces onto barbecue skewers together with the super stat onions.",
+            "Grill the meat for approximately 5 minutes on each side."
+          ],
+          "portions": 4,
+          "name": "Kebab",
+          "description": "Turkish kebab!",
+          "ingredients": {
+            "Super star onion": 5.0,
+            "Onion": 1.0,
+            "Lamb beef": 800.0,
+            "Lemon": 1.0,
+            "Cloves of garlic": 2.0
+          },
+          "ingredientUnits": {
+            "Super star onion": "pcs",
+            "Onion": "pcs",
+            "Lamb beef": "g",
+            "Lemon": "pcs",
+            "Cloves of garlic": "pcs"
+          },
+          "authorUsername": "TestUser2",
+          "isSaved": true,
+          "reviewList": [{
+              "rating": 5.0,
+              "comment": "Just like a turkish resturant!",
+              "username": "TestUser3"
+            }]
+        },
+        {
+          "steps": [
+            "Cut the bacon into cubes and fry them in a medium hot frying pan until golden.",
+            "Boil up water and add the spagetti. Let the spagetti cook in boiling water for 5 minutes.",
+            "Whisk together whole eggs",
+            "Pour cooked pasta into the pan with the meat. Remove the pan from the heat and fold in the egg mixture",
+            "Enjoy!"
+          ],
+          "portions": 3,
+          "name": "Pasta",
+          "description": "Italian style carbonara!",
+          "ingredients": {
+            "Egg": 5.0,
+            "Spagetti": 500.0,
+            "Bacon": 200.0
+          },
+          "ingredientUnits": {
+            "Egg": "pcs",
+            "Spagetti": "g",
+            "Bacon": "g"
+          },
+          "authorUsername": "TestUser2",
+          "isSaved": true,
+          "reviewList": [
+              {
+                "rating": 3.0,
+                "comment": "",
+                "username": "TestUser3"
+              }
+          ]
+        }
+      ]
+    },
+    "favorites": {
+      "recipes": []
+    }
+  },
+  {
+    "username": "TestUser3",
+    "hashedPassword": "51AC78FCBF01B844B2D519F061A2509A:F27EF9E3F3EA2926777428A29F2C7D1BBF43830027D8553C9B1D698BB605C8DA",
+    "recipeLibrary": {
+      "recipes": [
+        {
+          "steps": [
+            "Cut the salmon fillet in half down the middle. Place the fillets with the skin side down in a form or long pan. Mix together sugar and salt and rub the fish with the mixture.",
+            "Sprinkle white pepper and dill over the fish and drizzle over grape spirit.",
+            "Place one part over the other and cover the fish with plastic wrap",
+            "Put the salomon in the fridge for 3 days ",
+            "Pour off the sheet and let the fish dry"
+          ],
+          "portions": 4,
+          "name": "Salomon",
+          "description": "Make your own grav salmon!",
+          "ingredients": {
+            "Salt": 30.0,
+            "Bunch of chopped fresh dill": 1.0,
+            "White pepper": 5.0,
+            "Salomon": 1000.0,
+            "Grape spirit": 1.0
+          },
+          "ingredientUnits": {
+            "Salt": "g",
+            "Bunch of chopped fresh dill": "pcs",
+            "White pepper": "g",
+            "Salomon": "g",
+            "Grape spirit": "dL"
+          },
+          "authorUsername": "TestUser3",
+          "isSaved": true,
+          "reviewList": [
+              {
+                "rating": 4.0,
+                "comment": "Tasty salomon!",
+                "username": "TestUser"
+              }
+          ]
+        },
+        {
+          "steps": [
+            "Cut up the vegetables into small pieces",
+            "Fry the meat in a pan",
+            "Add the spicemix to the meat, and let the meat reast for a couple of minutes",
+            "Warm the tortillas in the microwave oven",
+            "Blend all the ingredients in the tortillas and enjoy the taco"
+          ],
+          "portions": 3,
+          "name": "Taco",
+          "description": "Real mexican taco",
+          "ingredients": {
+            "Paprika": 1.0,
+            "Tortilla": 6.0,
+            "Spice mix": 1.0,
+            "Grated cheese": 300.0,
+            "Cucumber": 1.0,
+            "Salad": 100.0,
+            "Meat": 400.0
+          },
+          "ingredientUnits": {
+            "Paprika": "pcs",
+            "Tortilla": "pcs",
+            "Spice mix": "pcs",
+            "Grated cheese": "g",
+            "Cucumber": "pcs",
+            "Salad": "g",
+            "Meat": "g"
+          },
+          "authorUsername": "TestUser3",
+          "isSaved": true,
+          "reviewList": [
+              {
+                "rating": 5.0,
+                "comment": "",
+                "username": "TestUser"
+              }
+          ]
+        }
+      ]
+    },
+    "favorites": {
+      "recipes": [
+        {
+          "steps": [
+            "Cut up the vegetables into small pieces",
+            "Fry the meat in a pan",
+            "Add the spicemix to the meat, and let the meat reast for a couple of minutes",
+            "Warm the tortillas in the microwave oven",
+            "Blend all the ingredients in the tortillas and enjoy the taco"
+          ],
+          "portions": 3,
+          "name": "Taco",
+          "description": "Real mexican taco",
+          "ingredients": {
+            "Paprika": 1.0,
+            "Tortilla": 6.0,
+            "Spice mix": 1.0,
+            "Grated cheese": 300.0,
+            "Cucumber": 1.0,
+            "Salad": 100.0,
+            "Meat": 400.0
+          },
+          "ingredientUnits": {
+            "Paprika": "pcs",
+            "Tortilla": "pcs",
+            "Spice mix": "pcs",
+            "Grated cheese": "g",
+            "Cucumber": "pcs",
+            "Salad": "g",
+            "Meat": "g"
+          },
+          "authorUsername": "TestUser3",
+          "isSaved": true,
+          "reviewList": [
+              {
+                "rating": 5.0,
+                "comment": "",
+                "username": "TestUser"
+              }
+          ]
+        },
+        {
+          "steps": [
+            "Fry the meat in a pan",
+            "Cut the vegetables",
+            "Put the fried meat on the bottom part of the bread",
+            "Apply som barbecue sauce",
+            "Add the vegetables and apply the top part of the bread"
+          ],
+          "portions": 1,
+          "name": "Hamburger",
+          "description": "Real american burger!",
+          "ingredients": {
+            "Burgerbread": 1.0,
+            "Tomato": 1.0,
+            "Salad": 1.0,
+            "Barbecue sauce": 1.0,
+            "Meat": 200.0
+          },
+          "ingredientUnits": {
+            "Burgerbread": "pcs",
+            "Tomato": "pcs",
+            "Salad": "pcs",
+            "Barbecue sauce": "pcs",
+            "Meat": "g"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+            {
+              "rating": 5.0,
+              "comment": "Nice!",
+              "username": "TestUser2"
+            }
+          ]
+        },
+        {
+          "steps": [
+            "Boil water in a pot, and add rice when the water is boiling",
+            "Fry the chicken in a pan",
+            "Add the tikka masala paste to the chicken when fried",
+            "Add the onion to the pan and let it cook in the sauce"
+          ],
+          "portions": 3,
+          "name": "Tikka Masala",
+          "description": "Enjoy a traditional indian meal",
+          "ingredients": {
+            "Tikka Masala Paste": 1.0,
+            "Onion ": 1.0,
+            "Chicken": 400.0,
+            "Rice": 200.0
+          },
+          "ingredientUnits": {
+            "Tikka Masala Paste": "pcs",
+            "Onion ": "pcs",
+            "Chicken": "g",
+            "Rice": "g"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+            {
+              "rating": 5.0,
+              "comment": "Amazing!",
+              "username": "TestUser2"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "username": "TestUser",
+    "hashedPassword": "047D8460D0405B1FD246099FBC9C3E16:9CE737A52C72830A4E8E2DF23A3A81B4A9E561ED3DCBF4F00704F82DC3BC88F4",
+    "recipeLibrary": {
+      "recipes": [
+        {
+          "steps": [
+            "Fry the meat in a pan",
+            "Cut the vegetables",
+            "Put the fried meat on the bottom part of the bread",
+            "Apply som barbecue sauce",
+            "Add the vegetables and apply the top part of the bread"
+          ],
+          "portions": 1,
+          "name": "Hamburger",
+          "description": "Real american burger!",
+          "ingredients": {
+            "Burgerbread": 1.0,
+            "Tomato": 1.0,
+            "Salad": 1.0,
+            "Barbecue sauce": 1.0,
+            "Meat": 200.0
+          },
+          "ingredientUnits": {
+            "Burgerbread": "pcs",
+            "Tomato": "pcs",
+            "Salad": "pcs",
+            "Barbecue sauce": "pcs",
+            "Meat": "g"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+              {
+                  "rating": 4.0,
+                  "comment": "",
+                  "username": "TestUser"
+              }
+          ]
+        },
+        {
+          "steps": [
+            "Cut the tuna in thin slices."
+          ],
+          "portions": 2,
+          "name": "Bluefin Tuna",
+          "description": "Amazing bluefin tuna",
+          "ingredients": {
+            "Soy sauce": 1.0,
+            "Lemon": 1.0,
+            "Wasabi": 30.0,
+            "Bluefin tuna meat": 250.0
+          },
+          "ingredientUnits": {
+            "Soy sauce": "pcs",
+            "Lemon": "pcs",
+            "Wasabi": "g",
+            "Bluefin tuna meat": "g"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+              {
+                "rating": 4.0,
+                "comment": "",
+                "username": "TestUser3"
+              }
+          ]
+        },
+        {
+          "steps": [
+            "Put the dough on a lightly floured worktop and divide it into four equal pieces. Roll each piece into round balls. Sprinkle some flour over it and cover with a cloth. The subjects must now rest for 20 minutes.",
+            "Spread tomato sauce on the bases before placing the mozzarella on top",
+            "Bake the pizza at 250 degrees for minutes, or until the pizza has a golden color and a crispy bottom.",
+            "Warm the oven to 250 degrees ",
+            "Bake the pizza for 10 minutes, or until the pizza has acquired a golden color and a crispy base."
+          ],
+          "portions": 4,
+          "name": "Pizza",
+          "description": "Real italian pizza!",
+          "ingredients": {
+            "Water": 3.0,
+            "Yeast": 25.0,
+            "Wheat flour": 400.0,
+            "Tomato sauce": 150.0,
+            "Mozarella": 2.0
+          },
+          "ingredientUnits": {
+            "Water": "dL",
+            "Yeast": "g",
+            "Wheat flour": "g",
+            "Tomato sauce": "g",
+            "Mozarella": "pcs"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+              {
+                  "rating": 5.0,
+                  "comment": "Fantastic!",
+                  "username": "TestUser2"
+              }
+          ]
+        },
+        {
+          "steps": [
+            "Spread cream cheese on the two slices",
+            "Add the slices of roastbeef to one of the slices",
+            "Put the other slice on top",
+            "Cut the sandwich in half diagonally"
+          ],
+          "portions": 1,
+          "name": "Sandwich",
+          "description": "Classic sandwich",
+          "ingredients": {
+            "Slices of roastbeef": 4.0,
+            "Slice of bread": 2.0,
+            "Cream cheese": 50.0
+          },
+          "ingredientUnits": {
+            "Slices of roastbeef": "pcs",
+            "Slice of bread": "pcs",
+            "Cream cheese": "g"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+              {
+                  "rating": 4.0,
+                  "comment": "Really enjoyed this one!",
+                  "username": "TestUser2"
+              }
+          ]
+        }
+      ]
+    },
+    "favorites": {
+      "recipes": [
+        {
+          "steps": [
+            "Cut the salmon fillet in half down the middle. Place the fillets with the skin side down in a form or long pan. Mix together sugar and salt and rub the fish with the mixture.",
+            "Sprinkle white pepper and dill over the fish and drizzle over grape spirit.",
+            "Place one part over the other and cover the fish with plastic wrap",
+            "Put the salomon in the fridge for 3 days ",
+            "Pour off the sheet and let the fish dry"
+          ],
+          "portions": 4,
+          "name": "Salomon",
+          "description": "Make your own grav salmon!",
+          "ingredients": {
+            "Salt": 30.0,
+            "Bunch of chopped fresh dill": 1.0,
+            "White pepper": 5.0,
+            "Salomon": 1000.0,
+            "Grape spirit": 1.0
+          },
+          "ingredientUnits": {
+            "Salt": "g",
+            "Bunch of chopped fresh dill": "pcs",
+            "White pepper": "g",
+            "Salomon": "g",
+            "Grape spirit": "dL"
+          },
+          "authorUsername": "TestUser3",
+          "isSaved": true,
+          "reviewList": [
+              {
+                  "rating": 4.0,
+                  "comment": "Tasty salomon!",
+                  "username": "TestUser"
+              }
+          ]
+        },
+        {
+          "steps": [
+            "Spread cream cheese on the two slices",
+            "Add the slices of roastbeef to one of the slices",
+            "Put the other slice on top",
+            "Cut the sandwich in half diagonally"
+          ],
+          "portions": 1,
+          "name": "Sandwich",
+          "description": "Classic sandwich",
+          "ingredients": {
+            "Slices of roastbeef": 4.0,
+            "Slice of bread": 2.0,
+            "Cream cheese": 50.0
+          },
+          "ingredientUnits": {
+            "Slices of roastbeef": "pcs",
+            "Slice of bread": "pcs",
+            "Cream cheese": "g"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+            {
+              "rating": 4.0,
+              "comment": "Really enjoyed this one!",
+              "username": "TestUser2"
+            }
+          ]
+        },
+        {
+          "steps": [
+            "Put the dough on a lightly floured worktop and divide it into four equal pieces. Roll each piece into round balls. Sprinkle some flour over it and cover with a cloth. The subjects must now rest for 20 minutes.",
+            "Spread tomato sauce on the bases before placing the mozzarella on top",
+            "Bake the pizza at 250 degrees for minutes, or until the pizza has a golden color and a crispy bottom.",
+            "Warm the oven to 250 degrees ",
+            "Bake the pizza for 10 minutes, or until the pizza has acquired a golden color and a crispy base."
+          ],
+          "portions": 4,
+          "name": "Pizza",
+          "description": "Real italian pizza!",
+          "ingredients": {
+            "Water": 3.0,
+            "Yeast": 25.0,
+            "Wheat flour": 400.0,
+            "Tomato sauce": 150.0,
+            "Mozarella": 2.0
+          },
+          "ingredientUnits": {
+            "Water": "dL",
+            "Yeast": "g",
+            "Wheat flour": "g",
+            "Tomato sauce": "g",
+            "Mozarella": "pcs"
+          },
+          "authorUsername": "TestUser",
+          "isSaved": true,
+          "reviewList": [
+            {
+              "rating": 5.0,
+              "comment": "Fantastic!",
+              "username": "TestUser2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]
