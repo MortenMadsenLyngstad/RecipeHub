@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -72,6 +73,7 @@ public class RecipeControllerTest extends ApplicationTest {
     @BeforeAll
     public static void setupHeadless() {
         App.supportHeadless();
+        Locale.setDefault(Locale.US);
     }
 
     /**
@@ -168,8 +170,8 @@ public class RecipeControllerTest extends ApplicationTest {
         assertEquals("Best way to start the weekend", descriptionText.getText());
         assertEquals("Step 1:  Make the dough\nStep 2:  Add toppings\n", stepsText.getText());
         assertEquals(
-                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
-                ingredientsText.getText());
+            "100.0 g : Tomato sauce\n100.0 g : Cheese\n100.0 g : Flour\n100.0 g : Pepperoni\n",
+             ingredientsText.getText());
         assertEquals("TRASH", deleteButton.getGlyphName());
         assertEquals("HEART", heartButton.getGlyphName());
         assertEquals(3.0, rating.getRating());
@@ -196,47 +198,47 @@ public class RecipeControllerTest extends ApplicationTest {
         // Checks setUp
         assertEquals("4", portionsField.getText());
         assertEquals(
-                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                "100.0 g : Tomato sauce\n100.0 g : Cheese\n100.0 g : Flour\n100.0 g : Pepperoni\n",
                 ingredientsText.getText());
         // Checks that illegal input does not change the scaling
         clickOn(portionsField).eraseText(1).write("notAnInt")
                 .type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
         assertEquals(
-                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                "100.0 g : Tomato sauce\n100.0 g : Cheese\n100.0 g : Flour\n100.0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(portionsField).eraseText(1).write("12.4").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
         assertEquals(
-                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                "100.0 g : Tomato sauce\n100.0 g : Cheese\n100.0 g : Flour\n100.0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(portionsField).eraseText(1).write("51").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
         assertEquals(
-                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                "100.0 g : Tomato sauce\n100.0 g : Cheese\n100.0 g : Flour\n100.0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(portionsField).eraseText(1).write("-3").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("4", portionsField.getText());
         assertEquals(
-                "100,0 g : Tomato sauce\n100,0 g : Cheese\n100,0 g : Flour\n100,0 g : Pepperoni\n",
+                "100.0 g : Tomato sauce\n100.0 g : Cheese\n100.0 g : Flour\n100.0 g : Pepperoni\n",
                 ingredientsText.getText());
         // Checks minusButton, legal text input and plusButton
         clickOn(minusButton);
         assertEquals("3", portionsField.getText());
-        assertEquals("75,0 g : Tomato sauce\n75,0 g : Cheese\n75,0 g : Flour\n75,0 g : Pepperoni\n",
+        assertEquals("75.0 g : Tomato sauce\n75.0 g : Cheese\n75.0 g : Flour\n75.0 g : Pepperoni\n",
                 ingredientsText.getText());
         portionsField.setText("");
         clickOn(portionsField).eraseText(1).write("1").type(javafx.scene.input.KeyCode.ENTER);
         assertEquals("1", portionsField.getText());
-        assertEquals("25,0 g : Tomato sauce\n25,0 g : Cheese\n25,0 g : Flour\n25,0 g : Pepperoni\n",
+        assertEquals("25.0 g : Tomato sauce\n25.0 g : Cheese\n25.0 g : Flour\n25.0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(minusButton);
         assertEquals("1", portionsField.getText());
-        assertEquals("25,0 g : Tomato sauce\n25,0 g : Cheese\n25,0 g : Flour\n25,0 g : Pepperoni\n",
+        assertEquals("25.0 g : Tomato sauce\n25.0 g : Cheese\n25.0 g : Flour\n25.0 g : Pepperoni\n",
                 ingredientsText.getText());
         clickOn(plusButton);
         assertEquals("2", portionsField.getText());
-        assertEquals("50,0 g : Tomato sauce\n50,0 g : Cheese\n50,0 g : Flour\n50,0 g : Pepperoni\n",
+        assertEquals("50.0 g : Tomato sauce\n50.0 g : Cheese\n50.0 g : Flour\n50.0 g : Pepperoni\n",
                 ingredientsText.getText());
     }
 

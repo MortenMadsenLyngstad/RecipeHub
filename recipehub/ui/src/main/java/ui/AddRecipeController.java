@@ -2,6 +2,7 @@ package ui;
 
 import core.Profile;
 import core.Recipe;
+import core.RecipeLibrary;
 import file.RecipeHubAccess;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +30,8 @@ import javafx.scene.text.Text;
  */
 public class AddRecipeController extends SuperController {
     private Recipe newRecipe;
-    private Alert alert;
+    private Alert alert, duplicateRecipeAlert;
+    private RecipeLibrary allRecipes;
 
     @FXML
     private Button addName, removeStep, backButton, removeIngredient, addIngredientButton,
@@ -63,29 +65,54 @@ public class AddRecipeController extends SuperController {
      * @see Recipe#Recipe(String, int, Profile)
      */
     public void createRecipe() throws IllegalArgumentException {
-        if (validateRecipeName()) {
+        allRecipes = currentRecipeHubAccess.getRecipeLibrary();
+
+        if (!validateRecipeName()) {
+            nameError.setVisible(true);
+        } else if (allRecipes.containsRecipe(new Recipe(recipeName.getText(), 1, currentProfile))) {
+            showDuplicateRecipePopup();
+        } else {
             this.newRecipe = new Recipe(recipeName.getText(), 1, currentProfile);
             recipeNamePane.setVisible(false);
             name.setText(newRecipe.getName());
             descriptionPane.setVisible(true);
-        } else {
-            nameError.setVisible(true);
         }
+        duplicateRecipeAlert = null;
+    }
+
+    /**
+     * This method shows a pop up window if the user tries to create a recipe with
+     * the same name as an existing recipe the user has created, and gives the user
+     * feedback that they need to choose another name for the recipe or delete the
+     * existing recipe with the same name.
+     */
+    private void showDuplicateRecipePopup() {
+        duplicateRecipeAlert = new Alert(AlertType.INFORMATION);
+        duplicateRecipeAlert.setTitle("Duplicate recipe");
+        duplicateRecipeAlert.setHeaderText("Recipe already exists");
+        duplicateRecipeAlert.setContentText(
+                "A recipe with the name " + recipeName.getText() + " already exists." + "\n"
+                        + "Please choose another name for your recipe, "
+                        + "or delete the existing recipe.");
+        Optional<ButtonType> okButton = duplicateRecipeAlert.showAndWait();
+        if (okButton.isPresent() && okButton.get() == ButtonType.OK) {
+            duplicateRecipeAlert.close();
+        }
+        duplicateRecipeAlert = null;
     }
 
     /**
      * This method is called when the user clicks the AddName button.
      * The method validates if the user has added a name to the recipe.
      *
-     * @return true if the user has added a name and the names length is under
-     *         20 characters, false otherwise
+     * @return true if the user has added a name and false if not
      *
      */
     public boolean validateRecipeName() {
-        if (!recipeName.getText().isBlank() && recipeName.getText().length() <= 20) {
-            return true;
-        } else {
+        if (recipeName.getText().isBlank() || recipeName.getText().length() > 20) {
             return false;
+        } else {
+            return true;
         }
     }
 
@@ -322,7 +349,7 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method validates if there is added a step or not. 
+     * This method validates if there is added a step or not.
      * Gives feedback if there is not added any step.
      */
     public void addedAllSteps() {
@@ -440,12 +467,25 @@ public class AddRecipeController extends SuperController {
     }
 
     /**
-     * This method is used when testing the popup alert.
+     * This method gives the alert that is shown when the user tries to go back
+     * without saving the recipe.
      *
-     * @return the alert
+     * @return the alert that is shown when the user tries to go back without
+     *         saving the recipe
      */
     public Alert getAlert() {
         return this.alert;
+    }
+
+    /**
+     * This method gives the alert that is shown when the user tries to create a
+     * recipe with the same name as an existing recipe the user has created.
+     *
+     * @return the alert that is shown when the user tries to create a recipe with
+     *         the same name as an existing recipe the user has created
+     */
+    public Alert getDuplicateRecipeAlert() {
+        return this.duplicateRecipeAlert;
     }
 
     /**

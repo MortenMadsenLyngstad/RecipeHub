@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LoginController">
    <left>
-      <AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #AEF359;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #1BAC6D;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="318.0" fitWidth="350.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -28,10 +28,10 @@
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="usernameField" layoutX="101.0" layoutY="172.0" onKeyPressed="#keyPressed" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField fx:id="passwordField" layoutX="101.0" layoutY="227.0" onKeyPressed="#keyPressed" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #AEF359; -fx-border-width: 0px 0px 2px 0px;" />
-            <FontAwesomeIconView fill="#aef359" glyphName="USER" layoutX="76.0" layoutY="190.0" size="20" />
-            <FontAwesomeIconView fill="#aef359" glyphName="LOCK" layoutX="77.0" layoutY="246.0" size="20" />
+            <TextField fx:id="usernameField" layoutX="101.0" layoutY="172.0" onKeyPressed="#keyPressed" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #1BAC6D; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="passwordField" layoutX="101.0" layoutY="227.0" onKeyPressed="#keyPressed" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #1BAC6D; -fx-border-width: 0px 0px 2px 0px;" />
+            <FontAwesomeIconView fill="#1BAC6D" glyphName="USER" layoutX="76.0" layoutY="190.0" size="20" />
+            <FontAwesomeIconView fill="#1BAC6D" glyphName="LOCK" layoutX="77.0" layoutY="246.0" size="20" />
             <Button fx:id="loginButton" layoutX="129.0" layoutY="283.0" mnemonicParsing="false" onAction="#login" prefHeight="39.0" prefWidth="91.0" styleClass="green_button" text="Login" />
             <Hyperlink layoutX="135.0" layoutY="380.0" onAction="#switchToRegisterScreen" text="Sign up here!" />
             <Text layoutX="168.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="or">
@@ -39,12 +39,12 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text fill="#aef359" layoutX="120.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User login">
+            <Text fill="#1BAC6D" layoutX="120.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User login">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <FontAwesomeIconView fill="#aef359" glyphName="GROUP" layoutX="150.0" layoutY="95.0" size="40" />
+            <FontAwesomeIconView fill="#1BAC6D" glyphName="GROUP" layoutX="150.0" layoutY="95.0" size="40" />
             <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="60.0" layoutY="140.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="17.0" prefWidth="225.0" text="Enter username and password" textAlignment="CENTER" />
          </children>
       </AnchorPane>

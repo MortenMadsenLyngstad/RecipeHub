@@ -16,14 +16,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AddRecipeController">
    <children>
-      <Pane prefHeight="90.0" prefWidth="700.0" style="-fx-background-color: #AEF359;">
+      <Pane prefHeight="90.0" prefWidth="700.0" style="-fx-background-color: #1BAC6D;">
          <children>
             <Text layoutX="200.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a new recipe">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
             </Text>
-            <Button fx:id="backButton" alignment="CENTER" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="49.0" prefWidth="94.5" styleClass="blue_button" text="Back">
+            <Button fx:id="backButton" alignment="CENTER" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="49.0" prefWidth="94.5" styleClass="green_button" text="Back">
                <graphic>
                   <FontAwesomeIconView disable="true" glyphName="LONG_ARROW_LEFT" size="40">
                      <font>
@@ -68,7 +68,7 @@
             <Text layoutX="15.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" />
             <TextField fx:id="addDescriptionText" layoutX="15.0" layoutY="28.0" prefHeight="26.0" prefWidth="252.0" promptText="Describe your dish:" />
             <Button fx:id="addDescriptionButton" layoutX="273.0" layoutY="28.0" mnemonicParsing="false" onAction="#addDescription" styleClass="green_button" text="Add" />
-            <Text fx:id="descriptionError" fill="#ff0505" layoutX="94.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please write in a discription!" visible="false" />
+            <Text fx:id="descriptionError" fill="#ff0505" layoutX="94.0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please write in a description!" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="addStepPane" layoutX="1.0" layoutY="265.0" prefHeight="84.0" prefWidth="391.0" visible="false">
@@ -98,7 +98,7 @@
             </MenuButton>
             <Button fx:id="saveRecipeButten" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="226.0" layoutY="28.0" mnemonicParsing="false" onAction="#saveRecipe" prefHeight="26.0" prefWidth="108.0" styleClass="green_button" text="Save Recipe" textAlignment="JUSTIFY">
                <graphic>
-                  <FontAwesomeIconView fill="GREEN" glyphName="CHECK" selectionFill="#aef359" stroke="BLACK" strokeWidth="0.5" />
+                  <FontAwesomeIconView fill="GREEN" glyphName="CHECK" selectionFill="#1BAC6D" stroke="BLACK" strokeWidth="0.5" />
                </graphic>
             </Button>
             <Text fx:id="noAddedPortionsError" fill="RED" layoutX="103.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select number of portions!" visible="false" />
