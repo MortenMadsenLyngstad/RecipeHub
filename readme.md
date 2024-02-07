@@ -1,6 +1,6 @@
 # Project Description
 
-[open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2304/gr2304?new)
+[![wakatime](https://wakatime.com/badge/user/2dd907da-de6a-4666-be49-93df180978c4/project/ccb900b2-aceb-41eb-8ff6-22c27b3823fc.svg)](https://wakatime.com/badge/user/2dd907da-de6a-4666-be49-93df180978c4/project/ccb900b2-aceb-41eb-8ff6-22c27b3823fc)
 
 This project is an application with both front-end and back-end. It is structured into four main modules: core, file, springboot and ui.
 
